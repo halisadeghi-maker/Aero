@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سامانه بازار کار طراحی هواپیما | روش راسکم</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <!-- Supabase JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- کتابخانه سوپابیس با لینک جایگزین CDN -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2.39.8/dist/umd/supabase.js"></script>
 
     <style>
         body { font-family: 'Vazirmatn', sans-serif; }
@@ -17,7 +18,7 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen">
 
-    <!-- نوار ناوبری اصلی -->
+    <!-- نوار ناوبری -->
     <nav class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <div class="flex items-center space-x-3 space-x-reverse">
             <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold">✈️ AeroMarket</div>
@@ -32,33 +33,31 @@
         </div>
     </nav>
 
-    <!-- بخش اصلی محتوا -->
     <main class="max-w-7xl mx-auto p-6">
 
-        <!-- بخش ورود / ثبت‌نام -->
+        <!-- بخش ورود و ثبت‌نام -->
         <section id="auth-section" class="max-w-md mx-auto mt-12 bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
-            <!-- تب‌های تغییر وضعیت -->
             <div class="flex border-b border-slate-700 mb-6">
                 <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500 cursor-pointer">ورود</button>
                 <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer">ثبت‌نام جدید</button>
             </div>
 
-            <!-- فیلدهای ثبت‌نام اضافی -->
+            <!-- فیلدهای تکمیلی ثبت‌نام -->
             <div id="signup-extra-fields" style="display: none;" class="space-y-4 mb-4">
                 <div>
                     <label class="block text-sm text-slate-400 mb-1">نام و نام خانوادگی</label>
-                    <input type="text" id="auth-name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: علی رضایی">
+                    <input type="text" id="auth-name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: دکتر ...">
                 </div>
                 <div>
-                    <label class="block text-sm text-slate-400 mb-1">شماره دانشجویی / پرسنلی</label>
-                    <input type="text" id="auth-std-id" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: 9912345">
+                    <label class="block text-sm text-slate-400 mb-1">شماره پرسنلی / دانشجویی</label>
+                    <input type="text" id="auth-std-id" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: 0001">
                 </div>
                 <div>
                     <label class="block text-sm text-slate-400 mb-1">نقش در سامانه</label>
                     <select id="auth-role" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500 text-sm">
-                        <option value="member">دانشجو (پیمانکار)</option>
-                        <option value="leader">سرگروه (کارفرما)</option>
                         <option value="professor">استاد درس (رگولاتور)</option>
+                        <option value="leader">سرگروه (کارفرما)</option>
+                        <option value="member">دانشجو (پیمانکار)</option>
                     </select>
                 </div>
             </div>
@@ -82,8 +81,6 @@
 
         <!-- داشبورد اصلی -->
         <div id="dashboard-section" class="hidden space-y-8">
-
-            <!-- کارت‌های وضعیت -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
                     <span class="text-slate-400 text-xs font-medium">نقش شما</span>
@@ -130,7 +127,7 @@
                 <div id="create-team-box" class="pb-4 border-b border-slate-700 hidden">
                     <h3 class="text-md font-bold text-amber-400 mb-2">ثبت نام تیم طراحی هواپیما</h3>
                     <div class="flex space-x-2 space-x-reverse">
-                        <input type="text" id="team-name-input" class="bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm w-80" placeholder="نام تیم (مثلاً: تیم شاهین)">
+                        <input type="text" id="team-name-input" class="bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm w-80" placeholder="نام تیم (مثلاً: بال پرواز)">
                         <button id="register-team-btn" type="button" class="bg-amber-600 hover:bg-amber-500 text-white px-4 rounded-lg text-sm cursor-pointer">ثبت تیم</button>
                     </div>
                 </div>
@@ -157,7 +154,6 @@
 
             <!-- جداول تسک‌ها و قراردادها -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- بازار تسک‌ها -->
                 <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl">
                     <h3 class="text-lg font-bold text-white mb-4">📋 بازار تسک‌های باز و نیازمند پیمانکار</h3>
                     <div class="overflow-x-auto">
@@ -177,7 +173,6 @@
                     </div>
                 </div>
 
-                <!-- قراردادهای هوشمند -->
                 <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl">
                     <h3 class="text-lg font-bold text-white mb-4">📜 قراردادهای هوشمند ثبت‌شده</h3>
                     <div class="overflow-x-auto">
@@ -203,21 +198,31 @@
     </main>
 
 <script>
-    // متغیرهای حالت
     var currentMode = 'login';
     var SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co";
     var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1waWRhamphbGxhcGxjY3l0bmpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxOTQxNjQsImV4cCI6MjEwMzc3MDE2NH0.W6qh3zA-V0QLqLNfPybLpWhjagORAG3_aiBRMoEeUyI";
-    var supabase = null;
+    
+    var client = null;
 
-    if (window.supabase) {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // ایجاد کلاینت با بررسی چندگانه
+    function getSupabaseClient() {
+        if (client) return client;
+        var sbObj = window.supabase || (window.supabaseJs ? window.supabaseJs.createClient : null);
+        if (sbObj) {
+            if (typeof sbObj.createClient === 'function') {
+                client = sbObj.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            } else if (typeof sbObj === 'function') {
+                client = sbObj(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
+        }
+        return client;
     }
 
     var currentUser = null;
     var userProfile = null;
     var currentTeam = null;
 
-    // اتصال رویداد تب‌ها به صورت کاملاً مستقل و تضمین‌شده
+    // تب‌ها
     document.getElementById('tab-login').onclick = function() {
         currentMode = 'login';
         document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500 cursor-pointer";
@@ -242,10 +247,11 @@
         errEl.classList.remove('hidden');
     }
 
-    // دکمه سابمیت فرم ورود/ثبت‌نام
+    // دکمه ورود / ثبت‌نام
     document.getElementById('auth-submit-btn').onclick = async function() {
-        if (!supabase) {
-            showError("خطا: کلاینت پایگاه داده بارگذاری نشده است.");
+        var sb = getSupabaseClient();
+        if (!sb) {
+            showError("کتابخانه پایگاه داده در حال اتصال است؛ چند لحظه دیگر دوباره بزنید یا صفحه را رفرش کنید.");
             return;
         }
 
@@ -259,7 +265,7 @@
         }
 
         if (currentMode === 'login') {
-            var res = await supabase.auth.signInWithPassword({ email: email, password: password });
+            var res = await sb.auth.signInWithPassword({ email: email, password: password });
             if (res.error) {
                 showError('خطا در ورود: ' + res.error.message);
                 return;
@@ -276,16 +282,29 @@
                 return;
             }
 
-            var signRes = await supabase.auth.signUp({ email: email, password: password });
+            var signRes = await sb.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName,
+                        student_id: studentId,
+                        role: role
+                    }
+                }
+            });
+
             if (signRes.error) {
                 showError('خطا در ثبت‌نام: ' + signRes.error.message);
                 return;
             }
 
             currentUser = signRes.data.user;
-            await supabase.from('profiles').insert([
-                { id: currentUser.id, full_name: fullName, student_id: studentId, role: role }
-            ]);
+            if (currentUser) {
+                await sb.from('profiles').upsert([
+                    { id: currentUser.id, full_name: fullName, student_id: studentId, role: role }
+                ]);
+            }
 
             alert('ثبت‌نام با موفقیت انجام شد!');
             await initDashboard();
@@ -294,14 +313,20 @@
 
     // خروج
     document.getElementById('logout-btn').onclick = async function() {
-        if (supabase) await supabase.auth.signOut();
+        var sb = getSupabaseClient();
+        if (sb) await sb.auth.signOut();
         location.reload();
     };
 
     async function initDashboard() {
+        var sb = getSupabaseClient();
         try {
-            var pRes = await supabase.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
-            userProfile = pRes.data || { role: 'member', full_name: currentUser.email, student_id: '0000' };
+            var pRes = await sb.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
+            userProfile = pRes.data || { 
+                role: currentUser.user_metadata?.role || 'member', 
+                full_name: currentUser.user_metadata?.full_name || currentUser.email, 
+                student_id: currentUser.user_metadata?.student_id || '0000' 
+            };
 
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
@@ -320,7 +345,7 @@
                 loadTeamsForProfessor();
             } else if (userProfile.role === 'leader') {
                 document.getElementById('leader-panel').classList.remove('hidden');
-                var tRes = await supabase.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
+                var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
                 currentTeam = tRes.data;
                 if (!currentTeam) {
                     document.getElementById('create-team-box').classList.remove('hidden');
@@ -341,10 +366,11 @@
     }
 
     async function registerTeam() {
+        var sb = getSupabaseClient();
         var name = document.getElementById('team-name-input').value.trim();
         if (!name) return alert('نام تیم را وارد کنید.');
 
-        var res = await supabase.from('teams').insert([{ name: name, leader_id: currentUser.id }]).select().single();
+        var res = await sb.from('teams').insert([{ name: name, leader_id: currentUser.id }]).select().single();
         if (res.error) alert(res.error.message);
         else {
             currentTeam = res.data;
@@ -356,7 +382,8 @@
     document.getElementById('register-team-btn').onclick = registerTeam;
 
     async function loadBooklets() {
-        var res = await supabase.from('booklets').select('*').order('booklet_number');
+        var sb = getSupabaseClient();
+        var res = await sb.from('booklets').select('*').order('booklet_number');
         if (!res.data) return;
         var evalSel = document.getElementById('eval-booklet-select');
         var taskSel = document.getElementById('task-booklet-select');
@@ -370,6 +397,7 @@
     }
 
     async function createTask() {
+        var sb = getSupabaseClient();
         if (!currentTeam) return alert('ابتدا تیم خود را ثبت کنید.');
         var bookletId = document.getElementById('task-booklet-select').value;
         var title = document.getElementById('task-title-input').value.trim();
@@ -377,7 +405,7 @@
 
         if (!title || !coins) return alert('تمام فیلدها را پر کنید.');
 
-        var res = await supabase.from('tasks').insert([{
+        var res = await sb.from('tasks').insert([{
             team_id: currentTeam.id,
             booklet_id: parseInt(bookletId),
             title: title,
@@ -395,7 +423,8 @@
     document.getElementById('create-task-btn').onclick = createTask;
 
     async function loadTasks() {
-        var res = await supabase.from('tasks').select('*, booklets(booklet_number)').eq('status', 'open');
+        var sb = getSupabaseClient();
+        var res = await sb.from('tasks').select('*, booklets(booklet_number)').eq('status', 'open');
         var tbody = document.getElementById('tasks-table-body');
         tbody.innerHTML = '';
 
@@ -415,7 +444,8 @@
     }
 
     window.acceptTask = async function(taskId, teamId, coins) {
-        var res = await supabase.from('contracts').insert([{
+        var sb = getSupabaseClient();
+        var res = await sb.from('contracts').insert([{
             task_id: taskId,
             team_id: teamId,
             contractor_id: currentUser.id,
@@ -425,14 +455,15 @@
 
         if (res.error) alert(res.error.message);
         else {
-            await supabase.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
+            await sb.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
             await loadTasks();
             await loadContracts();
         }
     };
 
     async function loadContracts() {
-        var res = await supabase.from('contracts').select('*, tasks(title), profiles(full_name)');
+        var sb = getSupabaseClient();
+        var res = await sb.from('contracts').select('*, tasks(title), profiles(full_name)');
         var tbody = document.getElementById('contracts-table-body');
         tbody.innerHTML = '';
 
@@ -465,7 +496,8 @@
     }
 
     async function loadTeamsForProfessor() {
-        var res = await supabase.from('teams').select('*');
+        var sb = getSupabaseClient();
+        var res = await sb.from('teams').select('*');
         var sel = document.getElementById('eval-team-select');
         sel.innerHTML = '';
         if (res.data) {
@@ -476,13 +508,14 @@
     }
 
     document.getElementById('eval-submit-btn').onclick = async function() {
+        var sb = getSupabaseClient();
         var teamId = document.getElementById('eval-team-select').value;
         var bookletId = document.getElementById('eval-booklet-select').value;
         var awardedCoins = document.getElementById('eval-coins-input').value;
 
         if (!awardedCoins || !teamId) return alert('تمام موارد را وارد کنید.');
 
-        var res = await supabase.from('team_booklet_evaluations').upsert([
+        var res = await sb.from('team_booklet_evaluations').upsert([
             { team_id: teamId, booklet_id: parseInt(bookletId), awarded_coins: parseInt(awardedCoins) }
         ], { onConflict: 'team_id,booklet_id' });
 
@@ -493,15 +526,17 @@
         }
     };
 
-    // بررسی سشن فعال در لود صفحه
-    if (supabase) {
-        supabase.auth.getSession().then(function(res) {
-            if (res.data && res.data.session) {
-                currentUser = res.data.session.user;
-                initDashboard();
-            }
-        });
-    }
+    window.addEventListener('load', function() {
+        var sb = getSupabaseClient();
+        if (sb) {
+            sb.auth.getSession().then(function(res) {
+                if (res.data && res.data.session) {
+                    currentUser = res.data.session.user;
+                    initDashboard();
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>
