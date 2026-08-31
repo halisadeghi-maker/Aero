@@ -172,80 +172,117 @@
 
     </main>
 
-    <script>
-        // ==========================================
-        // ۱. تنظیمات اتصال به Supabase
-        // ==========================================
-        const SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co/rest/v1/"; // آدرس پروژه شما در سوپابیس
-        const SUPABASE_ANON_KEY = "sb_publishable_JAzYpxV2tlVulw1scPU1iQ_CKEXjfCB";                  // کلید ANON عمومی
+   <script>
+    // ==========================================
+    // ۱. تنظیمات اتصال به Supabase (حتما بررسی کنید دقیق باشد)
+    // ==========================================
+    const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co"; 
+    const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";                  
 
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let currentUser = null;
-        let userProfile = null;
-        let currentTeam = null;
+    let currentUser = null;
+    let userProfile = null;
+    let currentTeam = null;
 
-        // ==========================================
-        // ۲. توابع احراز هویت (Auth)
-        // ==========================================
-        async function login() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-            const errorElement = document.getElementById('auth-error');
+    // نمایش پیام خطا روی صفحه
+    function showError(msg) {
+        const errEl = document.getElementById('auth-error');
+        errEl.innerText = msg;
+        errEl.classList.remove('hidden');
+        console.error("AeroMarket Error:", msg);
+    }
 
-            errorElement.classList.add('hidden');
+    // ==========================================
+    // ۲. توابع لاگین با مدیریت خطای کامل
+    // ==========================================
+    async function login() {
+        const email = document.getElementById('auth-email').value.trim();
+        const password = document.getElementById('auth-password').value;
+        const errEl = document.getElementById('auth-error');
+        errEl.classList.add('hidden');
 
+        if (!email || !password) {
+            showError('لطفاً ایمیل و رمز عبور را وارد کنید.');
+            return;
+        }
+
+        try {
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) {
-                errorElement.innerText = error.message;
-                errorElement.classList.remove('hidden');
+                showError('خطای ورود: ' + error.message);
                 return;
             }
 
             currentUser = data.user;
             await initApp();
+        } catch (err) {
+            showError('خطای سیستمی: ' + err.message);
         }
+    }
 
-        async function logout() {
-            await supabase.auth.signOut();
-            location.reload();
-        }
+    async function logout() {
+        await supabase.auth.signOut();
+        location.reload();
+    }
 
-        // بررسی وضعیت لاگین در شروع برنامه
-        window.addEventListener('DOMContentLoaded', async () => {
+    window.addEventListener('DOMContentLoaded', async () => {
+        try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
                 currentUser = session.user;
                 await initApp();
             }
-        });
+        } catch (e) {
+            console.log("No active session");
+        }
+    });
 
-        // ==========================================
-        // ۳. بارگذاری داده‌های پایه و پنل‌ها
-        // ==========================================
-        async function initApp() {
+    // ==========================================
+    // ۳. مقداردهی اولیه و بارگذاری داشبورد
+    // ==========================================
+    async function initApp() {
+        try {
+            // دریافت پروفایل
+            let { data: profile, error } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', currentUser.id)
+                .maybeSingle();
+
+            // اگر پروفایل در دیتابیس نبود، موقت بساز تا صفحه متوقف نشود
+            if (!profile) {
+                const { data: newProfile, error: insertErr } = await supabase
+                    .from('profiles')
+                    .insert([{
+                        id: currentUser.id,
+                        student_id: '1000',
+                        full_name: currentUser.email.split('@')[0],
+                        role: 'professor'
+                    }])
+                    .select()
+                    .single();
+                
+                profile = newProfile || { role: 'professor', full_name: 'استاد / مدیر', student_id: '0000' };
+            }
+
+            userProfile = profile;
+
+            // پنهان کردن فرم ورود و نمایش داشبورد
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
             document.getElementById('user-nav').classList.remove('hidden');
 
-            // دریافت پروفایل کاربر
-            const { data: profile } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', currentUser.id)
-                .single();
+            document.getElementById('nav-user-info').innerText = `${userProfile.full_name || 'کاربر'} (${userProfile.student_id || ''})`;
+            document.getElementById('stat-role').innerText = getRoleTitle(userProfile.role);
 
-            userProfile = profile;
-            document.getElementById('nav-user-info').innerText = `${profile.full_name} (${profile.student_id})`;
-            document.getElementById('stat-role').innerText = getRoleTitle(profile.role);
-
-            // دریافت اطلاعات تیم
-            if (profile.role !== 'professor') {
+            // دریافت تیم
+            if (userProfile.role !== 'professor') {
                 const { data: team } = await supabase
                     .from('teams')
                     .select('*')
-                    .or(`leader_id.eq.${profile.id}`)
-                    .single();
+                    .or(`leader_id.eq.${currentUser.id}`)
+                    .maybeSingle();
 
                 currentTeam = team;
                 if (team) {
@@ -259,203 +296,199 @@
             await loadBooklets();
             await loadTasks();
             await loadContracts();
+
+        } catch (err) {
+            showError('خطا در بارگذاری اطلاعات: ' + err.message);
+        }
+    }
+
+    function getRoleTitle(role) {
+        if (role === 'professor') return 'استاد درس (رگولاتور)';
+        if (role === 'leader') return 'سرگروه (کارفرما)';
+        return 'دانشجو (پیمانکار)';
+    }
+
+    function setupRolePanels() {
+        if (userProfile.role === 'professor') {
+            document.getElementById('professor-panel').classList.remove('hidden');
+            loadTeamsForProfessor();
+        } else if (userProfile.role === 'leader') {
+            document.getElementById('leader-panel').classList.remove('hidden');
+        }
+    }
+
+    async function loadBooklets() {
+        const { data: booklets } = await supabase.from('booklets').select('*').order('booklet_number');
+        if (!booklets) return;
+        
+        const evalSelect = document.getElementById('eval-booklet-select');
+        const taskSelect = document.getElementById('task-booklet-select');
+
+        evalSelect.innerHTML = '';
+        taskSelect.innerHTML = '';
+
+        booklets.forEach(b => {
+            const opt = `<option value="${b.id}">کتابچه ${b.booklet_number}: ${b.title} (${b.nominal_coins} سکه)</option>`;
+            evalSelect.innerHTML += opt;
+            taskSelect.innerHTML += opt;
+        });
+    }
+
+    async function createTask() {
+        const bookletId = document.getElementById('task-booklet-select').value;
+        const title = document.getElementById('task-title-input').value;
+        const coins = document.getElementById('task-coins-input').value;
+
+        if (!title || !coins || !currentTeam) {
+            alert('لطفاً عنوان و مبلغ تسک را وارد کنید.');
+            return;
         }
 
-        function getRoleTitle(role) {
-            if (role === 'professor') return 'استاد درس (رگولاتور)';
-            if (role === 'leader') return 'سرگروه (کارفرما)';
-            return 'دانشجو (پیمانکار)';
-        }
-
-        function setupRolePanels() {
-            if (userProfile.role === 'professor') {
-                document.getElementById('professor-panel').classList.remove('hidden');
-                loadTeamsForProfessor();
-            } else if (userProfile.role === 'leader') {
-                document.getElementById('leader-panel').classList.remove('hidden');
+        const { error } = await supabase.from('tasks').insert([
+            {
+                team_id: currentTeam.id,
+                booklet_id: parseInt(bookletId),
+                title: title,
+                allocated_nominal_coins: parseInt(coins),
+                status: 'open'
             }
-        }
+        ]);
 
-        // بارگذاری ۱۱ جلد کتابچه راسکم
-        async function loadBooklets() {
-            const { data: booklets } = await supabase.from('booklets').select('*').order('booklet_number');
-            const evalSelect = document.getElementById('eval-booklet-select');
-            const taskSelect = document.getElementById('task-booklet-select');
-
-            evalSelect.innerHTML = '';
-            taskSelect.innerHTML = '';
-
-            booklets.forEach(b => {
-                const opt = `<option value="${b.id}">کتابچه ${b.booklet_number}: ${b.title} (${b.nominal_coins} سکه)</option>`;
-                evalSelect.innerHTML += opt;
-                taskSelect.innerHTML += opt;
-            });
-        }
-
-        // ==========================================
-        // ۴. مدیریت تسک‌ها و بسته‌های کاری (Tasks)
-        // ==========================================
-        async function createTask() {
-            const bookletId = document.getElementById('task-booklet-select').value;
-            const title = document.getElementById('task-title-input').value;
-            const coins = document.getElementById('task-coins-input').value;
-
-            if (!title || !coins || !currentTeam) {
-                alert('لطفاً عنوان و مبلغ تسک را وارد کنید.');
-                return;
-            }
-
-            const { error } = await supabase.from('tasks').insert([
-                {
-                    team_id: currentTeam.id,
-                    booklet_id: parseInt(bookletId),
-                    title: title,
-                    allocated_nominal_coins: parseInt(coins),
-                    status: 'open'
-                }
-            ]);
-
-            if (error) alert(error.message);
-            else {
-                document.getElementById('task-title-input').value = '';
-                document.getElementById('task-coins-input').value = '';
-                await loadTasks();
-            }
-        }
-
-        async function loadTasks() {
-            const { data: tasks } = await supabase
-                .from('tasks')
-                .select('*, booklets(booklet_number, title)')
-                .eq('status', 'open');
-
-            const tbody = document.getElementById('tasks-table-body');
-            tbody.innerHTML = '';
-
-            if (!tasks || tasks.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">تسکی در بازار موجود نیست.</td></tr>`;
-                return;
-            }
-
-            tasks.forEach(t => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-700/50 transition">
-                        <td class="p-3 font-medium text-white">${t.title}</td>
-                        <td class="p-3 text-slate-400">کتابچه ${t.booklets.booklet_number}</td>
-                        <td class="p-3 text-amber-400 font-bold">${t.allocated_nominal_coins} سکه</td>
-                        <td class="p-3">
-                            ${userProfile.role === 'member' ? 
-                                `<button onclick="acceptTask('${t.id}', ${t.allocated_nominal_coins})" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-xs">قبول قرارداد</button>` 
-                                : `<span class="text-slate-500 text-xs">در انتظار پیمانکار</span>`}
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        // ==========================================
-        // ۵. انعقاد قرارداد هوشمند (Smart Contract)
-        // ==========================================
-        async function acceptTask(taskId, coins) {
-            const { error: contractError } = await supabase.from('contracts').insert([
-                {
-                    task_id: taskId,
-                    team_id: currentTeam ? currentTeam.id : null,
-                    contractor_id: currentUser.id,
-                    agreed_base_coins: coins,
-                    status: 'active'
-                }
-            ]);
-
-            if (contractError) {
-                alert(contractError.message);
-                return;
-            }
-
-            // تغییر وضعیت تسک
-            await supabase.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
-
+        if (error) alert(error.message);
+        else {
+            document.getElementById('task-title-input').value = '';
+            document.getElementById('task-coins-input').value = '';
             await loadTasks();
-            await loadContracts();
+        }
+    }
+
+    async function loadTasks() {
+        const { data: tasks } = await supabase
+            .from('tasks')
+            .select('*, booklets(booklet_number, title)')
+            .eq('status', 'open');
+
+        const tbody = document.getElementById('tasks-table-body');
+        tbody.innerHTML = '';
+
+        if (!tasks || tasks.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">تسکی در بازار موجود نیست.</td></tr>`;
+            return;
         }
 
-        async function loadContracts() {
-            const { data: contracts } = await supabase
-                .from('contracts')
-                .select('*, tasks(title), profiles(full_name)');
+        tasks.forEach(t => {
+            tbody.innerHTML += `
+                <tr class="hover:bg-slate-700/50 transition">
+                    <td class="p-3 font-medium text-white">${t.title}</td>
+                    <td class="p-3 text-slate-400">کتابچه ${t.booklets ? t.booklets.booklet_number : '-'}</td>
+                    <td class="p-3 text-amber-400 font-bold">${t.allocated_nominal_coins} سکه</td>
+                    <td class="p-3">
+                        ${userProfile.role === 'member' ? 
+                            `<button onclick="acceptTask('${t.id}', ${t.allocated_nominal_coins})" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-xs">قبول قرارداد</button>` 
+                            : `<span class="text-slate-500 text-xs">در انتظار پیمانکار</span>`}
+                    </td>
+                </tr>
+            `;
+        });
+    }
 
-            const tbody = document.getElementById('contracts-table-body');
-            tbody.innerHTML = '';
+    async function acceptTask(taskId, coins) {
+        const { error: contractError } = await supabase.from('contracts').insert([
+            {
+                task_id: taskId,
+                team_id: currentTeam ? currentTeam.id : null,
+                contractor_id: currentUser.id,
+                agreed_base_coins: coins,
+                status: 'active'
+            }
+        ]);
 
-            if (!contracts || contracts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">قرارداد فعالی وجود ندارد.</td></tr>`;
-                return;
+        if (contractError) {
+            alert(contractError.message);
+            return;
+        }
+
+        await supabase.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
+        await loadTasks();
+        await loadContracts();
+    }
+
+    async function loadContracts() {
+        const { data: contracts } = await supabase
+            .from('contracts')
+            .select('*, tasks(title), profiles(full_name)');
+
+        const tbody = document.getElementById('contracts-table-body');
+        tbody.innerHTML = '';
+
+        if (!contracts || contracts.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">قرارداد فعالی وجود ندارد.</td></tr>`;
+            return;
+        }
+
+        let myTotalCoins = 0;
+        let myContractsCount = 0;
+
+        contracts.forEach(c => {
+            if (c.contractor_id === currentUser.id) {
+                myContractsCount++;
+                if (c.final_payout) myTotalCoins += parseFloat(c.final_payout);
             }
 
-            let myTotalCoins = 0;
-            let myContractsCount = 0;
+            const payoutDisplay = c.final_payout 
+                ? `<span class="text-emerald-400 font-bold">${c.final_payout} سکه نهایی</span>` 
+                : `<span class="text-amber-400 text-xs">در جریان (${c.agreed_base_coins} پایه)</span>`;
 
-            contracts.forEach(c => {
-                if (c.contractor_id === currentUser.id) {
-                    myContractsCount++;
-                    if (c.final_payout) myTotalCoins += parseFloat(c.final_payout);
-                }
+            tbody.innerHTML += `
+                <tr class="hover:bg-slate-700/50 transition">
+                    <td class="p-3 text-white">${c.tasks ? c.tasks.title : '-'}</td>
+                    <td class="p-3 text-slate-300">${c.profiles ? c.profiles.full_name : 'پیمانکار'}</td>
+                    <td class="p-3 text-slate-400">${c.agreed_base_coins} سکه</td>
+                    <td class="p-3">${payoutDisplay}</td>
+                </tr>
+            `;
+        });
 
-                const payoutDisplay = c.final_payout 
-                    ? `<span class="text-emerald-400 font-bold">${c.final_payout} سکه نهایی</span>` 
-                    : `<span class="text-amber-400 text-xs">در جریان (${c.agreed_base_coins} پایه)</span>`;
+        document.getElementById('stat-contracts').innerText = myContractsCount;
+        document.getElementById('stat-coins').innerText = `${myTotalCoins.toFixed(1)} سکه`;
+    }
 
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-700/50 transition">
-                        <td class="p-3 text-white">${c.tasks.title}</td>
-                        <td class="p-3 text-slate-300">${c.profiles.full_name}</td>
-                        <td class="p-3 text-slate-400">${c.agreed_base_coins} سکه</td>
-                        <td class="p-3">${payoutDisplay}</td>
-                    </tr>
-                `;
-            });
-
-            document.getElementById('stat-contracts').innerText = myContractsCount;
-            document.getElementById('stat-coins').innerText = `${myTotalCoins.toFixed(1)} سکه`;
-        }
-
-        // ==========================================
-        // ۶. پنل استاد و تسویه هوشمند
-        // ==========================================
-        async function loadTeamsForProfessor() {
-            const { data: teams } = await supabase.from('teams').select('*');
-            const select = document.getElementById('eval-team-select');
-            select.innerHTML = '';
+    async function loadTeamsForProfessor() {
+        const { data: teams } = await supabase.from('teams').select('*');
+        const select = document.getElementById('eval-team-select');
+        select.innerHTML = '';
+        if (teams) {
             teams.forEach(t => {
                 select.innerHTML += `<option value="${t.id}">${t.name}</option>`;
             });
         }
+    }
 
-        async function submitEvaluation() {
-            const teamId = document.getElementById('eval-team-select').value;
-            const bookletId = document.getElementById('eval-booklet-select').value;
-            const awardedCoins = document.getElementById('eval-coins-input').value;
+    async function submitEvaluation() {
+        const teamId = document.getElementById('eval-team-select').value;
+        const bookletId = document.getElementById('eval-booklet-select').value;
+        const awardedCoins = document.getElementById('eval-coins-input').value;
 
-            if (!awardedCoins) {
-                alert('میزان سکه تاییدشده را وارد کنید.');
-                return;
-            }
-
-            const { error } = await supabase.from('team_booklet_evaluations').upsert([
-                {
-                    team_id: teamId,
-                    booklet_id: parseInt(bookletId),
-                    awarded_coins: parseInt(awardedCoins)
-                }
-            ], { onConflict: 'team_id,booklet_id' });
-
-            if (error) {
-                alert(error.message);
-            } else {
-                alert('ارزیابی ثبت شد و تسویه حساب هوشمند قراردادها انجام گردید.');
-                await loadContracts();
-            }
+        if (!awardedCoins || !teamId) {
+            alert('لطفاً تیم و میزان سکه تاییدشده را وارد کنید.');
+            return;
         }
-    </script>
+
+        const { error } = await supabase.from('team_booklet_evaluations').upsert([
+            {
+                team_id: teamId,
+                booklet_id: parseInt(bookletId),
+                awarded_coins: parseInt(awardedCoins)
+            }
+        ], { onConflict: 'team_id,booklet_id' });
+
+        if (error) {
+            alert(error.message);
+        } else {
+            alert('ارزیابی ثبت شد و تسویه حساب هوشمند قراردادها انجام گردید.');
+            await loadContracts();
+        }
+    }
+</script>
 </body>
 </html>
