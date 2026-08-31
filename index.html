@@ -807,9 +807,7 @@
         }
     });
 </script>
-</body>
-</html>
-window.uploadAndSendReport = async function(taskId, contractId) {
+    window.uploadAndSendReport = async function(taskId, contractId) {
     var sb = getSupabaseClient();
     var fileInput = document.getElementById('file-' + taskId);
     if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
@@ -868,3 +866,6 @@ window.uploadAndSendReport = async function(taskId, contractId) {
         alert('خطای سیستمی در آپلود: ' + err.message);
     }
 };
+</body>
+</html>
+
