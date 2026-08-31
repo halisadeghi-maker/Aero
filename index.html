@@ -34,14 +34,13 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6">
 
-        <!-- بخش ورود و ثبت‌نام -->
+        <!-- ۱. بخش ورود و ثبت‌نام -->
         <section id="auth-section" class="max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl border border-slate-200 shadow-xl shadow-slate-200/50">
             <div class="flex border-b border-slate-200 mb-6">
                 <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600 cursor-pointer">ورود</button>
                 <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer">ثبت‌نام جدید</button>
             </div>
 
-            <!-- فیلدهای تکمیلی ثبت‌نام -->
             <div id="signup-extra-fields" style="display: none;" class="space-y-4 mb-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">نام و نام خانوادگی</label>
@@ -61,7 +60,6 @@
                 </div>
             </div>
 
-            <!-- فیلدهای مشترک -->
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">ایمیل</label>
@@ -78,7 +76,7 @@
             <div id="auth-error" class="text-red-600 text-xs mt-4 text-center hidden bg-red-50 p-3 rounded-xl border border-red-200"></div>
         </section>
 
-        <!-- داشبورد اصلی -->
+        <!-- ۲. داشبورد اصلی کاربر -->
         <div id="dashboard-section" class="hidden space-y-6">
 
             <!-- کارت‌های آماری پویا (KPI) -->
@@ -117,7 +115,7 @@
             <section id="professor-panel" class="hidden bg-white border border-indigo-100 p-6 rounded-3xl shadow-sm space-y-6">
                 <div>
                     <h3 class="text-base font-bold text-indigo-900 mb-4 flex items-center">
-                        <span class="ml-2">🎓</span> پنل نظارت و ارزیابی نمره‌ای استاد
+                        <span class="ml-2">🎓</span> پنل نظارت، ارزیابی نمره‌ای و تایید نهایی استاد
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
@@ -133,7 +131,7 @@
                             <input type="number" id="eval-coins-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="سکه">
                         </div>
                         <div class="flex items-end">
-                            <button id="eval-submit-btn" type="button" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-emerald-600/20 transition cursor-pointer">ثبت و تسویه هوشمند</button>
+                            <button id="eval-submit-btn" type="button" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-emerald-600/20 transition cursor-pointer">ثبت ارزیابی و خاتمه کتابچه</button>
                         </div>
                     </div>
                 </div>
@@ -146,7 +144,7 @@
                             <div id="prof-teams-summary" class="space-y-2 text-xs text-slate-600">در حال بارگذاری...</div>
                         </div>
                         <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50/50">
-                            <h5 class="text-xs font-bold text-amber-700 mb-2">فهرست پیمانکاران آزاد (بدون تیم/ظرفیت باز)</h5>
+                            <h5 class="text-xs font-bold text-amber-700 mb-2">فهرست پیمانکاران آزاد</h5>
                             <div id="prof-freelancers-list" class="space-y-2 text-xs text-slate-600">در حال بارگذاری...</div>
                         </div>
                     </div>
@@ -171,7 +169,7 @@
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs font-semibold text-slate-600 mb-1">عنوان بسته کاری و شرح تسک</label>
-                        <input type="text" id="task-title-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="مثلاً: جلد ۶ - استخراج قطبی پسا و CLmax">
+                        <input type="text" id="task-title-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="مثلاً: جلد ۶ - استخراج قطبی پسا">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1">ارزش اسمی تسک (سکه)</label>
@@ -211,7 +209,7 @@
                 <!-- قراردادهای هوشمند -->
                 <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
                     <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center">
-                        <span class="ml-2">📜</span> قراردادهای هوشمند و وضعیت گزارش‌ها
+                        <span class="ml-2">📜</span> قراردادهای هوشمند و چرخه بررسی گزارش‌ها
                     </h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-right text-xs">
@@ -220,8 +218,8 @@
                                     <th class="p-3">تیم</th>
                                     <th class="p-3">تسک</th>
                                     <th class="p-3">پیمانکار</th>
-                                    <th class="p-3">گزارش و تاییدیه</th>
-                                    <th class="p-3">وضعیت / تسویه</th>
+                                    <th class="p-3">وضعیت ۴ مرحله‌ای</th>
+                                    <th class="p-3">گزارش و عملیات</th>
                                 </tr>
                             </thead>
                             <tbody id="contracts-table-body" class="divide-y divide-slate-100">
@@ -520,22 +518,39 @@
             }
         }
 
+        // با قبول تسک وضعیت به "درحال انجام" تغییر می‌کند
         var res = await sb.from('contracts').insert([{
             task_id: taskId,
             team_id: teamId,
             contractor_id: currentUser.id,
             agreed_base_coins: coins,
-            status: 'active'
+            status: 'in_progress'
         }]);
 
         if (res.error) alert(res.error.message);
         else {
-            await sb.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
+            await sb.from('tasks').update({ status: 'in_progress' }).eq('id', taskId);
             await loadTasks();
             await loadContracts();
         }
     };
 
+    // تبدیل کدهای فنی وضعیت به ۴ وضعیت مصوب و رنگ مربوطه
+    function renderStatusBadge(status) {
+        switch (status) {
+            case 'leader_review':
+                return '<span class="bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full text-[11px] inline-block">⏳ درحال بررسی توسط سرگروه</span>';
+            case 'professor_review':
+                return '<span class="bg-blue-100 text-blue-800 font-bold px-2.5 py-1 rounded-full text-[11px] inline-block">🔍 درحال بررسی توسط استاد</span>';
+            case 'completed':
+                return '<span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-[11px] inline-block">✓ خاتمه یافته</span>';
+            case 'in_progress':
+            default:
+                return '<span class="bg-slate-100 text-slate-700 font-bold px-2.5 py-1 rounded-full text-[11px] inline-block">⚙️ درحال انجام</span>';
+        }
+    }
+
+    // بارگذاری جدول قراردادها و پیاده‌سازی گام‌های تایید و رد
     async function loadContracts() {
         var sb = getSupabaseClient();
         var query = sb.from('contracts').select('*, tasks(*), teams(name), profiles(full_name)');
@@ -566,58 +581,55 @@
             var tTitle = c.tasks ? c.tasks.title : '-';
             var pName = c.profiles ? c.profiles.full_name : 'پیمانکار';
             var taskObj = c.tasks || {};
+            var currentTaskStatus = taskObj.status || c.status || 'in_progress';
 
-            var reportCol = '';
+            var actionCol = '';
 
-            // پیمانکار: آپلود گزارش تا سقف ۳۰ مگابایت
+            // ۱. پنل پیمانکار: آپلود فایل و زدن دکمه ارسال به سرگروه
             if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
-                if (!taskObj.submission_url) {
-                    reportCol = '<div class="space-y-1">' +
-                        '<input type="file" id="file-' + taskObj.id + '" class="text-[10px] text-slate-600 block w-40">' +
-                        '<button onclick="uploadReportFile(\'' + taskObj.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2 py-0.5 rounded font-bold">آپلود گزارش (حداکثر 30MB)</button>' +
+                if (currentTaskStatus === 'in_progress') {
+                    actionCol = '<div class="space-y-1.5">' +
+                        '<input type="file" id="file-' + taskObj.id + '" class="text-[10px] text-slate-600 block w-44">' +
+                        '<button onclick="uploadAndSendReport(\'' + taskObj.id + '\', \'' + c.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-sm">📤 آپلود و ارسال به سرگروه</button>' +
                         '</div>';
                 } else {
-                    reportCol = '<div class="text-[11px]">' +
-                        '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 underline font-semibold">📥 دریافت فایل من</a>' +
-                        (taskObj.leader_approved ? '<span class="text-emerald-600 font-bold block">✓ تایید سرگروه</span>' : '<span class="text-amber-500 block">در انتظار تایید سرگروه</span>') +
+                    actionCol = '<div class="text-[11px] space-y-1">' +
+                        '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 underline font-semibold block">📥 دانلود فایل ارسال‌شده</a>' +
+                        '<span class="text-slate-500 text-[10px]">فایل با موفقیت ارسال شد و در جریان بررسی است.</span>' +
                         '</div>';
                 }
             }
-            // سرگروه
+            // ۲. پنل سرگروه: دانلود فایل و امکان تایید (ارسال به استاد) یا عدم تایید (بازگشت به پیمانکار)
             else if (userProfile.role === 'leader') {
-                if (taskObj.submission_url) {
-                    reportCol = '<div class="space-y-1">' +
-                        '<a href="' + taskObj.submission_url + '" target="_blank" class="text-blue-600 underline font-semibold block text-xs">📥 دانلود گزارش</a>' +
-                        (taskObj.leader_approved 
-                            ? '<span class="text-emerald-600 font-bold text-xs">✓ تایید شده</span>' 
-                            : '<div class="flex space-x-1 space-x-reverse"><button onclick="approveTask(\'' + taskObj.id + '\', true)" class="bg-emerald-600 text-white text-[10px] px-2 py-0.5 rounded">تایید</button><button onclick="approveTask(\'' + taskObj.id + '\', false)" class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded">رد</button></div>') +
+                if (currentTaskStatus === 'leader_review') {
+                    actionCol = '<div class="space-y-1.5">' +
+                        '<a href="' + taskObj.submission_url + '" target="_blank" class="text-blue-600 underline font-bold block text-xs">📥 دانلود و بررسی فایل</a>' +
+                        '<div class="flex space-x-1 space-x-reverse">' +
+                        '<button onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', true)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-2.5 py-1 rounded font-bold shadow-sm">✓ تایید و ارسال به استاد</button>' +
+                        '<button onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', false)" class="bg-red-600 hover:bg-red-700 text-white text-[10px] px-2 py-1 rounded font-bold shadow-sm">✕ عدم تایید</button>' +
+                        '</div>' +
                         '</div>';
+                } else if (taskObj.submission_url) {
+                    actionCol = '<a href="' + taskObj.submission_url + '" target="_blank" class="text-blue-600 underline text-xs font-semibold">📥 مشاهده فایل</a>';
                 } else {
-                    reportCol = '<span class="text-slate-400 text-xs">گزارش ارسال نشده</span>';
+                    actionCol = '<span class="text-slate-400 text-xs">در انتظار انجام توسط پیمانکار</span>';
                 }
             }
-            // استاد
+            // ۳. پنل استاد: مشاهده فایل گزارش تاییدشده توسط سرگروه
             else if (userProfile.role === 'professor') {
                 if (taskObj.submission_url) {
-                    reportCol = '<div class="text-xs">' +
-                        '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 font-semibold underline">📄 مشاهده فایل</a>' +
-                        (taskObj.leader_approved ? '<span class="text-emerald-600 font-bold block text-[10px]">تاییدشده توسط سرگروه</span>' : '<span class="text-amber-500 block text-[10px]">بدون تایید سرگروه</span>') +
-                        '</div>';
+                    actionCol = '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 font-bold underline text-xs">📄 دانلود فایل نهایی</a>';
                 } else {
-                    reportCol = '<span class="text-slate-400 text-xs">ارسال نشده</span>';
+                    actionCol = '<span class="text-slate-400 text-xs">هنوز فایلی ارسال نشده</span>';
                 }
             }
-
-            var payout = c.final_payout 
-                ? '<span class="text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded">' + c.final_payout + ' سکه نهایی</span>'
-                : '<span class="text-amber-600 font-medium text-xs">' + c.agreed_base_coins + ' توافقی</span>';
 
             tbody.innerHTML += '<tr class="hover:bg-slate-50 transition">' +
                 '<td class="p-3 font-semibold text-indigo-700">' + teamName + '</td>' +
                 '<td class="p-3 text-slate-800 font-medium">' + tTitle + '</td>' +
                 '<td class="p-3 text-slate-600">' + pName + '</td>' +
-                '<td class="p-3">' + reportCol + '</td>' +
-                '<td class="p-3">' + payout + '</td>' +
+                '<td class="p-3">' + renderStatusBadge(currentTaskStatus) + '</td>' +
+                '<td class="p-3">' + actionCol + '</td>' +
                 '</tr>';
         });
 
@@ -625,24 +637,21 @@
         document.getElementById('stat-coins').innerText = myTotalCoins.toFixed(1) + ' سکه';
     }
 
-    // تابع آپلود فایل اصلاح‌شده با سقف ۳۰ مگابایت و مسیر بدون خطای نام‌گذاری
-    window.uploadReportFile = async function(taskId) {
+    // پیمانکار: آپلود فایل تا سقف ۳۰ مگابایت و تغییر وضعیت به "درحال بررسی توسط سرگروه"
+    window.uploadAndSendReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            alert('لطفاً یک فایل انتخاب کنید.');
+            alert('لطفاً فایل گزارش پروژه را انتخاب کنید.');
             return;
         }
 
         var file = fileInput.files[0];
-        
-        // بررسی حداکثر حجم ۳۰ مگابایت (30 * 1024 * 1024 bytes)
         if (file.size > 30 * 1024 * 1024) {
-            alert('خطا: حداکثر حجم مجاز برای آپلود فایل گزارش ۳۰ مگابایت است.');
+            alert('خطا: حداکثر حجم مجاز فایل ۳۰ مگابایت است.');
             return;
         }
 
-        // ایجاد نام فایل تمیز و بدون کاراکتر غیرمجاز
         var fileExt = file.name.split('.').pop();
         var fileName = taskId + '_' + Date.now() + '.' + fileExt;
 
@@ -659,31 +668,53 @@
         var publicUrlRes = sb.storage.from('reports').getPublicUrl(fileName);
         var downloadUrl = publicUrlRes.data.publicUrl;
 
-        var updateRes = await sb.from('tasks').update({
+        // تغییر وضعیت تسک و قرارداد به "درحال بررسی توسط سرگروه"
+        await sb.from('tasks').update({
             submission_url: downloadUrl,
-            status: 'submitted'
+            status: 'leader_review',
+            leader_approved: false
         }).eq('id', taskId);
 
-        if (updateRes.error) alert(updateRes.error.message);
-        else {
-            alert('فایل گزارش با موفقیت آپلود شد و برای سرگروه ارسال گردید.');
-            await loadContracts();
-        }
+        await sb.from('contracts').update({
+            status: 'leader_review'
+        }).eq('id', contractId);
+
+        alert('تاییدیه: فایل با موفقیت آپلود شد و جهت بررسی برای سرگروه ارسال گردید. وضعیت تسک: درحال بررسی توسط سرگروه.');
+        await loadContracts();
     };
 
-    window.approveTask = async function(taskId, isApproved) {
+    // سرگروه: تصمیم‌گیری تایید (ارسال به استاد) یا عدم تایید (بازگشت به درحال انجام)
+    window.leaderDecision = async function(taskId, contractId, isApproved) {
         var sb = getSupabaseClient();
-        var res = await sb.from('tasks').update({
-            leader_approved: isApproved,
-            status: isApproved ? 'approved' : 'assigned',
-            submission_url: isApproved ? undefined : null
-        }).eq('id', taskId);
 
-        if (res.error) alert(res.error.message);
-        else {
-            alert(isApproved ? 'گزارش تایید شد و برای ارزیابی استاد ثبت گردید.' : 'گزارش رد شد و فایل حذف گردید تا پیمانکار نسخه اصلاحی را آپلود کند.');
-            await loadContracts();
+        if (isApproved) {
+            // تایید: وضعیت به "درحال بررسی توسط استاد" تغییر می‌کند
+            await sb.from('tasks').update({
+                leader_approved: true,
+                status: 'professor_review'
+            }).eq('id', taskId);
+
+            await sb.from('contracts').update({
+                status: 'professor_review'
+            }).eq('id', contractId);
+
+            alert('گزارش با موفقیت تایید شد و جهت بررسی و نمره‌دهی به پنل استاد ارسال گردید.');
+        } else {
+            // عدم تایید: وضعیت به "درحال انجام" بازمی‌گردد و لینک گزارش پاک می‌شود تا پیمانکار نسخه جدید بفرستد
+            await sb.from('tasks').update({
+                leader_approved: false,
+                status: 'in_progress',
+                submission_url: null
+            }).eq('id', taskId);
+
+            await sb.from('contracts').update({
+                status: 'in_progress'
+            }).eq('id', contractId);
+
+            alert('گزارش رد شد. وضعیت تسک به «درحال انجام» بازگشت تا پیمانکار فایل اصلاح‌شده را مجدداً ارسال کند.');
         }
+
+        await loadContracts();
     };
 
     async function loadTeamsForProfessor() {
@@ -744,21 +775,27 @@
         }
     }
 
+    // استاد: ثبت ارزیابی نهایی و تبدیل وضعیت تسک‌ها به "خاتمه یافته"
     document.getElementById('eval-submit-btn').onclick = async function() {
         var sb = getSupabaseClient();
         var teamId = document.getElementById('eval-team-select').value;
         var bookletId = document.getElementById('eval-booklet-select').value;
         var awardedCoins = document.getElementById('eval-coins-input').value;
 
-        if (!awardedCoins || !teamId) return alert('تمام موارد را وارد کنید.');
+        if (!awardedCoins || !teamId) return alert('لطفاً تیم و میزان سکه تاییدشده را وارد کنید.');
 
         var res = await sb.from('team_booklet_evaluations').upsert([
             { team_id: teamId, booklet_id: parseInt(bookletId), awarded_coins: parseInt(awardedCoins) }
         ], { onConflict: 'team_id,booklet_id' });
 
-        if (res.error) alert(res.error.message);
-        else {
-            alert('ارزیابی ثبت و تسویه هوشمند انجام شد.');
+        if (res.error) {
+            alert(res.error.message);
+        } else {
+            // تغییر وضعیت کلیه تسک‌های مربوط به این کتابچه به "خاتمه یافته"
+            await sb.from('tasks').update({ status: 'completed' }).eq('team_id', teamId).eq('booklet_id', parseInt(bookletId));
+            await sb.from('contracts').update({ status: 'completed' }).eq('team_id', teamId);
+
+            alert('ارزیابی ثبت شد، تسویه هوشمند انجام گردید و وضعیت کتابچه به «خاتمه یافته» تغییر یافت.');
             await loadContracts();
             await loadProfessorSummary();
         }
