@@ -38,16 +38,16 @@
         <!-- بخش ورود / ثبت‌نام -->
         <section id="auth-section" class="max-w-md mx-auto mt-12 bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
             <!-- تب‌های تغییر وضعیت -->
-            <div class="flex border-b border-slate-700 mb-6 cursor-pointer">
-                <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500">ورود</button>
-                <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent">ثبت‌نام جدید</button>
+            <div class="flex border-b border-slate-700 mb-6">
+                <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500 cursor-pointer">ورود</button>
+                <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer">ثبت‌نام جدید</button>
             </div>
 
             <!-- فیلدهای ثبت‌نام اضافی -->
-            <div id="signup-extra-fields" class="hidden space-y-4 mb-4">
+            <div id="signup-extra-fields" style="display: none;" class="space-y-4 mb-4">
                 <div>
                     <label class="block text-sm text-slate-400 mb-1">نام و نام خانوادگی</label>
-                    <input type="text" id="auth-name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: دکتر علیرضا نوری">
+                    <input type="text" id="auth-name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: علی رضایی">
                 </div>
                 <div>
                     <label class="block text-sm text-slate-400 mb-1">شماره دانشجویی / پرسنلی</label>
@@ -56,9 +56,9 @@
                 <div>
                     <label class="block text-sm text-slate-400 mb-1">نقش در سامانه</label>
                     <select id="auth-role" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500 text-sm">
-                        <option value="professor">استاد درس (رگولاتور)</option>
-                        <option value="leader">سرگروه (کارفرما)</option>
                         <option value="member">دانشجو (پیمانکار)</option>
+                        <option value="leader">سرگروه (کارفرما)</option>
+                        <option value="professor">استاد درس (رگولاتور)</option>
                     </select>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     <input type="password" id="auth-password" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
                 </div>
                 
-                <button id="auth-submit-btn" type="button" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg transition duration-200 shadow-lg shadow-indigo-600/30">ورود به سامانه</button>
+                <button id="auth-submit-btn" type="button" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg transition duration-200 shadow-lg shadow-indigo-600/30 cursor-pointer">ورود به سامانه</button>
             </div>
 
             <div id="auth-error" class="text-red-400 text-xs mt-4 text-center hidden bg-red-950/40 p-2.5 rounded-lg border border-red-800"></div>
@@ -120,7 +120,7 @@
                         <input type="number" id="eval-coins-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="سکه">
                     </div>
                     <div class="flex items-end">
-                        <button id="eval-submit-btn" type="button" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg text-sm transition">ثبت و تسویه هوشمند</button>
+                        <button id="eval-submit-btn" type="button" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg text-sm transition cursor-pointer">ثبت و تسویه هوشمند</button>
                     </div>
                 </div>
             </section>
@@ -131,7 +131,7 @@
                     <h3 class="text-md font-bold text-amber-400 mb-2">ثبت نام تیم طراحی هواپیما</h3>
                     <div class="flex space-x-2 space-x-reverse">
                         <input type="text" id="team-name-input" class="bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm w-80" placeholder="نام تیم (مثلاً: تیم شاهین)">
-                        <button id="register-team-btn" type="button" class="bg-amber-600 hover:bg-amber-500 text-white px-4 rounded-lg text-sm">ثبت تیم</button>
+                        <button id="register-team-btn" type="button" class="bg-amber-600 hover:bg-amber-500 text-white px-4 rounded-lg text-sm cursor-pointer">ثبت تیم</button>
                     </div>
                 </div>
 
@@ -149,7 +149,7 @@
                         <label class="block text-xs text-slate-400 mb-1">ارزش اسمی تسک (سکه)</label>
                         <div class="flex space-x-2 space-x-reverse">
                             <input type="number" id="task-coins-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="سکه">
-                            <button id="create-task-btn" type="button" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 rounded-lg text-sm">ایجاد</button>
+                            <button id="create-task-btn" type="button" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 rounded-lg text-sm cursor-pointer">ایجاد</button>
                         </div>
                     </div>
                 </div>
@@ -203,394 +203,304 @@
     </main>
 
 <script>
-    // تنظیمات پایگاه داده سوپابیس
-    const SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1waWRhamphbGxhcGxjY3l0bmpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxOTQxNjQsImV4cCI6MjEwMzc3MDE2NH0.W6qh3zA-V0QLqLNfPybLpWhjagORAG3_aiBRMoEeUyI";
+    // متغیرهای حالت
+    var currentMode = 'login';
+    var SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co";
+    var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1waWRhamphbGxhcGxjY3l0bmpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxOTQxNjQsImV4cCI6MjEwMzc3MDE2NH0.W6qh3zA-V0QLqLNfPybLpWhjagORAG3_aiBRMoEeUyI";
+    var supabase = null;
 
-    let supabase = null;
-    try {
+    if (window.supabase) {
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    } catch (e) {
-        console.error("Supabase init error:", e);
     }
 
-    let authMode = 'login';
-    let currentUser = null;
-    let userProfile = null;
-    let currentTeam = null;
+    var currentUser = null;
+    var userProfile = null;
+    var currentTeam = null;
 
-    // ثبت کلیه Event Listenerها به صورت ایمن پس از بارگذاری DOM
-    document.addEventListener('DOMContentLoaded', () => {
-        // ۱. سوئیچ بین تب‌های ورود و ثبت‌نام
-        document.getElementById('tab-login').addEventListener('click', () => setAuthTab('login'));
-        document.getElementById('tab-signup').addEventListener('click', () => setAuthTab('signup'));
+    // اتصال رویداد تب‌ها به صورت کاملاً مستقل و تضمین‌شده
+    document.getElementById('tab-login').onclick = function() {
+        currentMode = 'login';
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500 cursor-pointer";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer";
+        document.getElementById('signup-extra-fields').style.display = 'none';
+        document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
+        document.getElementById('auth-error').classList.add('hidden');
+    };
 
-        // ۲. دکمه سابمیت فرم
-        document.getElementById('auth-submit-btn').addEventListener('click', handleAuthSubmit);
-
-        // ۳. دکمه خروج
-        document.getElementById('logout-btn').addEventListener('click', logout);
-
-        // ۴. سایر دکمه‌ها
-        document.getElementById('eval-submit-btn')?.addEventListener('click', submitEvaluation);
-        document.getElementById('register-team-btn')?.addEventListener('click', registerTeam);
-        document.getElementById('create-task-btn')?.addEventListener('click', createTask);
-
-        // بررسی لاگین قبلی
-        checkSession();
-    });
-
-    function setAuthTab(mode) {
-        authMode = mode;
-        const errEl = document.getElementById('auth-error');
-        errEl.classList.add('hidden');
-
-        const tabLogin = document.getElementById('tab-login');
-        const tabSignup = document.getElementById('tab-signup');
-        const extraFields = document.getElementById('signup-extra-fields');
-        const submitBtn = document.getElementById('auth-submit-btn');
-
-        if (mode === 'login') {
-            tabLogin.className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500";
-            tabSignup.className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent";
-            extraFields.classList.add('hidden');
-            submitBtn.innerText = "ورود به سامانه";
-        } else {
-            tabSignup.className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500";
-            tabLogin.className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent";
-            extraFields.classList.remove('hidden');
-            submitBtn.innerText = "ایجاد حساب کاربری";
-        }
-    }
+    document.getElementById('tab-signup').onclick = function() {
+        currentMode = 'signup';
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500 cursor-pointer";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer";
+        document.getElementById('signup-extra-fields').style.display = 'block';
+        document.getElementById('auth-submit-btn').innerText = "ایجاد حساب کاربری";
+        document.getElementById('auth-error').classList.add('hidden');
+    };
 
     function showError(msg) {
-        const errEl = document.getElementById('auth-error');
+        var errEl = document.getElementById('auth-error');
         errEl.innerText = msg;
         errEl.classList.remove('hidden');
     }
 
-    async function checkSession() {
-        if (!supabase) return;
-        try {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
-                currentUser = session.user;
-                await initApp();
-            }
-        } catch (e) {
-            console.log("No active session");
-        }
-    }
-
-    async function handleAuthSubmit() {
+    // دکمه سابمیت فرم ورود/ثبت‌نام
+    document.getElementById('auth-submit-btn').onclick = async function() {
         if (!supabase) {
-            showError("اتصال به پایگاه داده برقرار نیست.");
+            showError("خطا: کلاینت پایگاه داده بارگذاری نشده است.");
             return;
         }
 
-        const email = document.getElementById('auth-email').value.trim();
-        const password = document.getElementById('auth-password').value;
-        const errEl = document.getElementById('auth-error');
-        errEl.classList.add('hidden');
+        var email = document.getElementById('auth-email').value.trim();
+        var password = document.getElementById('auth-password').value;
+        document.getElementById('auth-error').classList.add('hidden');
 
         if (!email || !password) {
-            showError('لطفاً ایمیل و کلمه عبور را وارد نمایید.');
+            showError('لطفاً ایمیل و کلمه عبور را وارد کنید.');
             return;
         }
 
-        if (authMode === 'login') {
-            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) {
-                showError('اطلاعات ورود اشتباه است: ' + error.message);
+        if (currentMode === 'login') {
+            var res = await supabase.auth.signInWithPassword({ email: email, password: password });
+            if (res.error) {
+                showError('خطا در ورود: ' + res.error.message);
                 return;
             }
-            currentUser = data.user;
-            await initApp();
+            currentUser = res.data.user;
+            await initDashboard();
         } else {
-            const fullName = document.getElementById('auth-name').value.trim();
-            const studentId = document.getElementById('auth-std-id').value.trim();
-            const role = document.getElementById('auth-role').value;
+            var fullName = document.getElementById('auth-name').value.trim();
+            var studentId = document.getElementById('auth-std-id').value.trim();
+            var role = document.getElementById('auth-role').value;
 
             if (!fullName || !studentId) {
-                showError('لطفاً نام و شماره دانشجویی را وارد نمایید.');
+                showError('لطفاً نام و شماره دانشجویی را وارد کنید.');
                 return;
             }
 
-            const { data, error } = await supabase.auth.signUp({ email, password });
-            if (error) {
-                showError('خطا در ایجاد حساب: ' + error.message);
+            var signRes = await supabase.auth.signUp({ email: email, password: password });
+            if (signRes.error) {
+                showError('خطا در ثبت‌نام: ' + signRes.error.message);
                 return;
             }
 
-            currentUser = data.user;
-
-            // ایجاد پروفایل
+            currentUser = signRes.data.user;
             await supabase.from('profiles').insert([
                 { id: currentUser.id, full_name: fullName, student_id: studentId, role: role }
             ]);
 
             alert('ثبت‌نام با موفقیت انجام شد!');
-            await initApp();
+            await initDashboard();
         }
-    }
+    };
 
-    async function logout() {
+    // خروج
+    document.getElementById('logout-btn').onclick = async function() {
         if (supabase) await supabase.auth.signOut();
         location.reload();
-    }
+    };
 
-    async function initApp() {
+    async function initDashboard() {
         try {
-            let { data: profile } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', currentUser.id)
-                .maybeSingle();
-
-            if (!profile) {
-                profile = { role: 'professor', full_name: currentUser.email.split('@')[0], student_id: '0000' };
-            }
-
-            userProfile = profile;
+            var pRes = await supabase.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
+            userProfile = pRes.data || { role: 'member', full_name: currentUser.email, student_id: '0000' };
 
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
             document.getElementById('user-nav').classList.remove('hidden');
 
-            document.getElementById('nav-user-info').innerText = `${userProfile.full_name} (${userProfile.student_id})`;
-            document.getElementById('stat-role').innerText = getRoleTitle(userProfile.role);
+            document.getElementById('nav-user-info').innerText = userProfile.full_name + ' (' + userProfile.student_id + ')';
+            
+            var roleTitle = 'دانشجو (پیمانکار)';
+            if (userProfile.role === 'professor') roleTitle = 'استاد درس (رگولاتور)';
+            if (userProfile.role === 'leader') roleTitle = 'سرگروه (کارفرما)';
+            document.getElementById('stat-role').innerText = roleTitle;
 
-            if (userProfile.role === 'leader') {
-                const { data: team } = await supabase.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
-                currentTeam = team;
-                if (!team) {
+            if (userProfile.role === 'professor') {
+                document.getElementById('professor-panel').classList.remove('hidden');
+                document.getElementById('stat-team').innerText = "ناظر عالی (استاد)";
+                loadTeamsForProfessor();
+            } else if (userProfile.role === 'leader') {
+                document.getElementById('leader-panel').classList.remove('hidden');
+                var tRes = await supabase.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
+                currentTeam = tRes.data;
+                if (!currentTeam) {
                     document.getElementById('create-team-box').classList.remove('hidden');
                 } else {
-                    document.getElementById('stat-team').innerText = team.name;
+                    document.getElementById('stat-team').innerText = currentTeam.name;
                 }
-            } else if (userProfile.role === 'member') {
-                document.getElementById('stat-team').innerText = "پیمانکار آزاد";
             } else {
-                document.getElementById('stat-team').innerText = "ناظر عالی (استاد)";
+                document.getElementById('stat-team').innerText = "پیمانکار آزاد";
             }
 
-            setupRolePanels();
             await loadBooklets();
             await loadTasks();
             await loadContracts();
 
-        } catch (err) {
-            showError('خطا در بارگذاری اطلاعات: ' + err.message);
-        }
-    }
-
-    function getRoleTitle(role) {
-        if (role === 'professor') return 'استاد درس (رگولاتور)';
-        if (role === 'leader') return 'سرگروه (کارفرما)';
-        return 'دانشجو (پیمانکار)';
-    }
-
-    function setupRolePanels() {
-        if (userProfile.role === 'professor') {
-            document.getElementById('professor-panel').classList.remove('hidden');
-            loadTeamsForProfessor();
-        } else if (userProfile.role === 'leader') {
-            document.getElementById('leader-panel').classList.remove('hidden');
+        } catch (e) {
+            showError("خطا در بارگذاری داده‌ها: " + e.message);
         }
     }
 
     async function registerTeam() {
-        const name = document.getElementById('team-name-input').value.trim();
+        var name = document.getElementById('team-name-input').value.trim();
         if (!name) return alert('نام تیم را وارد کنید.');
 
-        const { data, error } = await supabase.from('teams').insert([
-            { name: name, leader_id: currentUser.id }
-        ]).select().single();
-
-        if (error) alert(error.message);
+        var res = await supabase.from('teams').insert([{ name: name, leader_id: currentUser.id }]).select().single();
+        if (res.error) alert(res.error.message);
         else {
-            currentTeam = data;
+            currentTeam = res.data;
             document.getElementById('create-team-box').classList.add('hidden');
-            document.getElementById('stat-team').innerText = data.name;
-            alert('تیم شما با موفقیت ثبت شد.');
+            document.getElementById('stat-team').innerText = res.data.name;
+            alert('تیم با موفقیت ایجاد شد.');
         }
     }
+    document.getElementById('register-team-btn').onclick = registerTeam;
 
     async function loadBooklets() {
-        const { data: booklets } = await supabase.from('booklets').select('*').order('booklet_number');
-        if (!booklets) return;
-
-        const evalSelect = document.getElementById('eval-booklet-select');
-        const taskSelect = document.getElementById('task-booklet-select');
-        evalSelect.innerHTML = '';
-        taskSelect.innerHTML = '';
-
-        booklets.forEach(b => {
-            const opt = `<option value="${b.id}">کتابچه ${b.booklet_number}: ${b.title} (${b.nominal_coins} سکه)</option>`;
-            evalSelect.innerHTML += opt;
-            taskSelect.innerHTML += opt;
+        var res = await supabase.from('booklets').select('*').order('booklet_number');
+        if (!res.data) return;
+        var evalSel = document.getElementById('eval-booklet-select');
+        var taskSel = document.getElementById('task-booklet-select');
+        evalSel.innerHTML = '';
+        taskSel.innerHTML = '';
+        res.data.forEach(function(b) {
+            var opt = '<option value="' + b.id + '">کتابچه ' + b.booklet_number + ': ' + b.title + ' (' + b.nominal_coins + ' سکه)</option>';
+            evalSel.innerHTML += opt;
+            taskSel.innerHTML += opt;
         });
     }
 
     async function createTask() {
-        if (!currentTeam) {
-            alert('ابتدا باید نام تیم خود را ثبت کنید.');
-            return;
-        }
+        if (!currentTeam) return alert('ابتدا تیم خود را ثبت کنید.');
+        var bookletId = document.getElementById('task-booklet-select').value;
+        var title = document.getElementById('task-title-input').value.trim();
+        var coins = document.getElementById('task-coins-input').value;
 
-        const bookletId = document.getElementById('task-booklet-select').value;
-        const title = document.getElementById('task-title-input').value.trim();
-        const coins = document.getElementById('task-coins-input').value;
+        if (!title || !coins) return alert('تمام فیلدها را پر کنید.');
 
-        if (!title || !coins) {
-            alert('لطفاً تمام فیلدها را پر کنید.');
-            return;
-        }
+        var res = await supabase.from('tasks').insert([{
+            team_id: currentTeam.id,
+            booklet_id: parseInt(bookletId),
+            title: title,
+            allocated_nominal_coins: parseInt(coins),
+            status: 'open'
+        }]);
 
-        const { error } = await supabase.from('tasks').insert([
-            {
-                team_id: currentTeam.id,
-                booklet_id: parseInt(bookletId),
-                title: title,
-                allocated_nominal_coins: parseInt(coins),
-                status: 'open'
-            }
-        ]);
-
-        if (error) alert(error.message);
+        if (res.error) alert(res.error.message);
         else {
             document.getElementById('task-title-input').value = '';
             document.getElementById('task-coins-input').value = '';
             await loadTasks();
         }
     }
+    document.getElementById('create-task-btn').onclick = createTask;
 
     async function loadTasks() {
-        const { data: tasks } = await supabase
-            .from('tasks')
-            .select('*, booklets(booklet_number, title)')
-            .eq('status', 'open');
-
-        const tbody = document.getElementById('tasks-table-body');
+        var res = await supabase.from('tasks').select('*, booklets(booklet_number)').eq('status', 'open');
+        var tbody = document.getElementById('tasks-table-body');
         tbody.innerHTML = '';
 
-        if (!tasks || tasks.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">تسکی در بازار موجود نیست.</td></tr>`;
+        if (!res.data || res.data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-500">تسکی در بازار موجود نیست.</td></tr>';
             return;
         }
 
-        tasks.forEach(t => {
-            tbody.innerHTML += `
-                <tr class="hover:bg-slate-700/50 transition">
-                    <td class="p-3 font-medium text-white">${t.title}</td>
-                    <td class="p-3 text-slate-400">کتابچه ${t.booklets ? t.booklets.booklet_number : '-'}</td>
-                    <td class="p-3 text-amber-400 font-bold">${t.allocated_nominal_coins} سکه</td>
-                    <td class="p-3">
-                        ${userProfile.role === 'member' ? 
-                            `<button type="button" onclick="acceptTask('${t.id}', '${t.team_id}', ${t.allocated_nominal_coins})" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-xs">قبول قرارداد</button>` 
-                            : `<span class="text-slate-500 text-xs">در انتظار پیمانکار</span>`}
-                    </td>
-                </tr>
-            `;
+        res.data.forEach(function(t) {
+            var bNum = t.booklets ? t.booklets.booklet_number : '-';
+            var btn = userProfile.role === 'member' 
+                ? '<button type="button" onclick="acceptTask(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-xs cursor-pointer">قبول قرارداد</button>'
+                : '<span class="text-slate-500 text-xs">در انتظار پیمانکار</span>';
+
+            tbody.innerHTML += '<tr class="hover:bg-slate-700/50 transition"><td class="p-3 font-medium text-white">' + t.title + '</td><td class="p-3 text-slate-400">کتابچه ' + bNum + '</td><td class="p-3 text-amber-400 font-bold">' + t.allocated_nominal_coins + ' سکه</td><td class="p-3">' + btn + '</td></tr>';
         });
     }
 
     window.acceptTask = async function(taskId, teamId, coins) {
-        const { error: contractError } = await supabase.from('contracts').insert([
-            {
-                task_id: taskId,
-                team_id: teamId,
-                contractor_id: currentUser.id,
-                agreed_base_coins: coins,
-                status: 'active'
-            }
-        ]);
+        var res = await supabase.from('contracts').insert([{
+            task_id: taskId,
+            team_id: teamId,
+            contractor_id: currentUser.id,
+            agreed_base_coins: coins,
+            status: 'active'
+        }]);
 
-        if (contractError) {
-            alert(contractError.message);
-            return;
+        if (res.error) alert(res.error.message);
+        else {
+            await supabase.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
+            await loadTasks();
+            await loadContracts();
         }
-
-        await supabase.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
-        await loadTasks();
-        await loadContracts();
     };
 
     async function loadContracts() {
-        const { data: contracts } = await supabase
-            .from('contracts')
-            .select('*, tasks(title), profiles(full_name)');
-
-        const tbody = document.getElementById('contracts-table-body');
+        var res = await supabase.from('contracts').select('*, tasks(title), profiles(full_name)');
+        var tbody = document.getElementById('contracts-table-body');
         tbody.innerHTML = '';
 
-        if (!contracts || contracts.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">قراردادی ثبت نشده است.</td></tr>`;
+        if (!res.data || res.data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-500">قراردادی ثبت نشده است.</td></tr>';
             return;
         }
 
-        let myTotalCoins = 0;
-        let myContractsCount = 0;
+        var myTotalCoins = 0;
+        var myContractsCount = 0;
 
-        contracts.forEach(c => {
+        res.data.forEach(function(c) {
             if (c.contractor_id === currentUser.id) {
                 myContractsCount++;
                 if (c.final_payout) myTotalCoins += parseFloat(c.final_payout);
             }
 
-            const payoutDisplay = c.final_payout 
-                ? `<span class="text-emerald-400 font-bold">${c.final_payout} سکه نهایی</span>` 
-                : `<span class="text-amber-400 text-xs">در جریان (${c.agreed_base_coins} پایه)</span>`;
+            var payout = c.final_payout 
+                ? '<span class="text-emerald-400 font-bold">' + c.final_payout + ' سکه نهایی</span>'
+                : '<span class="text-amber-400 text-xs">در جریان (' + c.agreed_base_coins + ' پایه)</span>';
 
-            tbody.innerHTML += `
-                <tr class="hover:bg-slate-700/50 transition">
-                    <td class="p-3 text-white">${c.tasks ? c.tasks.title : '-'}</td>
-                    <td class="p-3 text-slate-300">${c.profiles ? c.profiles.full_name : 'پیمانکار'}</td>
-                    <td class="p-3 text-slate-400">${c.agreed_base_coins} سکه</td>
-                    <td class="p-3">${payoutDisplay}</td>
-                </tr>
-            `;
+            var tTitle = c.tasks ? c.tasks.title : '-';
+            var pName = c.profiles ? c.profiles.full_name : 'پیمانکار';
+
+            tbody.innerHTML += '<tr class="hover:bg-slate-700/50 transition"><td class="p-3 text-white">' + tTitle + '</td><td class="p-3 text-slate-300">' + pName + '</td><td class="p-3 text-slate-400">' + c.agreed_base_coins + ' سکه</td><td class="p-3">' + payout + '</td></tr>';
         });
 
         document.getElementById('stat-contracts').innerText = myContractsCount;
-        document.getElementById('stat-coins').innerText = `${myTotalCoins.toFixed(1)} سکه`;
+        document.getElementById('stat-coins').innerText = myTotalCoins.toFixed(1) + ' سکه';
     }
 
     async function loadTeamsForProfessor() {
-        const { data: teams } = await supabase.from('teams').select('*');
-        const select = document.getElementById('eval-team-select');
-        select.innerHTML = '';
-        if (teams && teams.length > 0) {
-            teams.forEach(t => {
-                select.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+        var res = await supabase.from('teams').select('*');
+        var sel = document.getElementById('eval-team-select');
+        sel.innerHTML = '';
+        if (res.data) {
+            res.data.forEach(function(t) {
+                sel.innerHTML += '<option value="' + t.id + '">' + t.name + '</option>';
             });
         }
     }
 
-    async function submitEvaluation() {
-        const teamId = document.getElementById('eval-team-select').value;
-        const bookletId = document.getElementById('eval-booklet-select').value;
-        const awardedCoins = document.getElementById('eval-coins-input').value;
+    document.getElementById('eval-submit-btn').onclick = async function() {
+        var teamId = document.getElementById('eval-team-select').value;
+        var bookletId = document.getElementById('eval-booklet-select').value;
+        var awardedCoins = document.getElementById('eval-coins-input').value;
 
-        if (!awardedCoins || !teamId) {
-            alert('لطفاً تیم و میزان سکه تاییدشده را مشخص کنید.');
-            return;
-        }
+        if (!awardedCoins || !teamId) return alert('تمام موارد را وارد کنید.');
 
-        const { error } = await supabase.from('team_booklet_evaluations').upsert([
-            {
-                team_id: teamId,
-                booklet_id: parseInt(bookletId),
-                awarded_coins: parseInt(awardedCoins)
-            }
+        var res = await supabase.from('team_booklet_evaluations').upsert([
+            { team_id: teamId, booklet_id: parseInt(bookletId), awarded_coins: parseInt(awardedCoins) }
         ], { onConflict: 'team_id,booklet_id' });
 
-        if (error) {
-            alert(error.message);
-        } else {
-            alert('ارزیابی ثبت شد و تسویه حساب هوشمند قراردادها انجام گردید.');
+        if (res.error) alert(res.error.message);
+        else {
+            alert('ارزیابی ثبت و تسویه هوشمند انجام شد.');
             await loadContracts();
         }
+    };
+
+    // بررسی سشن فعال در لود صفحه
+    if (supabase) {
+        supabase.auth.getSession().then(function(res) {
+            if (res.data && res.data.session) {
+                currentUser = res.data.session.user;
+                initDashboard();
+            }
+        });
     }
 </script>
 </body>
