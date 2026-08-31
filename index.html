@@ -171,32 +171,37 @@
         </div>
 
     </main>
-
-   <script>
+<script>
     // ==========================================
-    // ۱. تنظیمات اتصال به Supabase (حتما بررسی کنید دقیق باشد)
+    // ۱. مقادیر واقعی سوپابیس خود را اینجا جایگزین کنید
     // ==========================================
-    const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co"; 
-    const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";                  
+    const SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co/rest/v1/"; // URL واقعی شما
+    const SUPABASE_ANON_KEY = "sb_publishable_JAzYpxV2tlVulw1scPU1iQ_CKEXjfCB"; // ANON KEY واقعی شما
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let supabase;
+    try {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } catch (e) {
+        alert("خطا در تنظیم کلیدهای اتصال سوپابیس: " + e.message);
+    }
 
     let currentUser = null;
     let userProfile = null;
     let currentTeam = null;
 
-    // نمایش پیام خطا روی صفحه
     function showError(msg) {
         const errEl = document.getElementById('auth-error');
         errEl.innerText = msg;
         errEl.classList.remove('hidden');
-        console.error("AeroMarket Error:", msg);
+        alert(msg); // نمایش آلرت برای اطمینان از دیده شدن خطا
     }
 
-    // ==========================================
-    // ۲. توابع لاگین با مدیریت خطای کامل
-    // ==========================================
     async function login() {
+        if (!supabase) {
+            alert("کلاینت دیتابیس به درستی مقداردهی نشده است.");
+            return;
+        }
+
         const email = document.getElementById('auth-email').value.trim();
         const password = document.getElementById('auth-password').value;
         const errEl = document.getElementById('auth-error');
@@ -217,16 +222,17 @@
             currentUser = data.user;
             await initApp();
         } catch (err) {
-            showError('خطای سیستمی: ' + err.message);
+            showError('خطای سیستمی در ورود: ' + err.message);
         }
     }
 
     async function logout() {
-        await supabase.auth.signOut();
+        if (supabase) await supabase.auth.signOut();
         location.reload();
     }
 
     window.addEventListener('DOMContentLoaded', async () => {
+        if (!supabase) return;
         try {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
@@ -234,41 +240,35 @@
                 await initApp();
             }
         } catch (e) {
-            console.log("No active session");
+            console.log("No session found");
         }
     });
 
-    // ==========================================
-    // ۳. مقداردهی اولیه و بارگذاری داشبورد
-    // ==========================================
     async function initApp() {
         try {
-            // دریافت پروفایل
-            let { data: profile, error } = await supabase
+            let { data: profile } = await supabase
                 .from('profiles')
                 .select('*')
                 .eq('id', currentUser.id)
                 .maybeSingle();
 
-            // اگر پروفایل در دیتابیس نبود، موقت بساز تا صفحه متوقف نشود
             if (!profile) {
-                const { data: newProfile, error: insertErr } = await supabase
+                const { data: newProfile } = await supabase
                     .from('profiles')
                     .insert([{
                         id: currentUser.id,
-                        student_id: '1000',
+                        student_id: '0000',
                         full_name: currentUser.email.split('@')[0],
                         role: 'professor'
                     }])
                     .select()
                     .single();
                 
-                profile = newProfile || { role: 'professor', full_name: 'استاد / مدیر', student_id: '0000' };
+                profile = newProfile || { role: 'professor', full_name: 'استاد درس', student_id: '0000' };
             }
 
             userProfile = profile;
 
-            // پنهان کردن فرم ورود و نمایش داشبورد
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
             document.getElementById('user-nav').classList.remove('hidden');
@@ -276,7 +276,6 @@
             document.getElementById('nav-user-info').innerText = `${userProfile.full_name || 'کاربر'} (${userProfile.student_id || ''})`;
             document.getElementById('stat-role').innerText = getRoleTitle(userProfile.role);
 
-            // دریافت تیم
             if (userProfile.role !== 'professor') {
                 const { data: team } = await supabase
                     .from('teams')
