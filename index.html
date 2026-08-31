@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه بازار کار طراحی هواپیما | روش راسکم</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+
+    <!-- نوار ناوبری اصلی -->
+    <nav class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold">✈️ AeroMarket</div>
+            <div>
+                <h1 class="font-bold text-lg text-white">سامانه بازار کار و قراردادهای طراحی هواپیما</h1>
+                <p class="text-xs text-slate-400">مبتنی بر متدولوژی راسکم و تسویه هوشمند</p>
+            </div>
+        </div>
+        <div id="user-nav" class="hidden flex items-center space-x-4 space-x-reverse">
+            <span id="nav-user-info" class="text-sm bg-slate-700 px-3 py-1.5 rounded-full border border-slate-600"></span>
+            <button onclick="logout()" class="text-sm text-red-400 hover:text-red-300 transition">خروج</button>
+        </div>
+    </nav>
+
+    <!-- بخش اصلی محتوا -->
+    <main class="max-w-7xl mx-auto p-6">
+
+        <!-- ۱. بخش ورود / ثبت‌نام -->
+        <section id="auth-section" class="max-w-md mx-auto mt-16 bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
+            <h2 class="text-xl font-bold mb-6 text-center text-indigo-400">ورود به سامانه طراحی</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">ایمیل دانشگاهی</label>
+                    <input type="email" id="auth-email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500" placeholder="student@kntu.ac.ir">
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">رمز عبور</label>
+                    <input type="password" id="auth-password" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <button onclick="login()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg transition duration-200 shadow-lg shadow-indigo-600/30">ورود</button>
+            </div>
+            <p id="auth-error" class="text-red-400 text-xs mt-4 text-center hidden"></p>
+        </section>
+
+        <!-- ۲. داشبورد اصلی کاربر -->
+        <div id="dashboard-section" class="hidden space-y-8">
+
+            <!-- کارت‌های خلاصه وضعیت -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
+                    <span class="text-slate-400 text-xs font-medium">نقش در سامانه</span>
+                    <h3 id="stat-role" class="text-lg font-bold text-white mt-1">-</h3>
+                </div>
+                <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
+                    <span class="text-slate-400 text-xs font-medium">تیم طراحی</span>
+                    <h3 id="stat-team" class="text-lg font-bold text-indigo-400 mt-1">-</h3>
+                </div>
+                <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
+                    <span class="text-slate-400 text-xs font-medium">قراردادهای من</span>
+                    <h3 id="stat-contracts" class="text-lg font-bold text-emerald-400 mt-1">۰</h3>
+                </div>
+                <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
+                    <span class="text-slate-400 text-xs font-medium">سکه تسویه‌شده</span>
+                    <h3 id="stat-coins" class="text-lg font-bold text-amber-400 mt-1">۰ سکه</h3>
+                </div>
+            </div>
+
+            <!-- بخش استاد (ثبت ارزیابی) -->
+            <section id="professor-panel" class="hidden bg-slate-800 border border-indigo-500/30 p-6 rounded-2xl">
+                <h3 class="text-lg font-bold text-indigo-300 mb-4 flex items-center">
+                    <span class="ml-2">🎓</span> پنل نظارت و ارزیابی استاد
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">انتخاب تیم</label>
+                        <select id="eval-team-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">کتابچه راسکم</label>
+                        <select id="eval-booklet-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">سکه تایید شده (ارزیابی)</label>
+                        <input type="number" id="eval-coins-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="سکه">
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="submitEvaluation()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg text-sm transition">ثبت و اجرای تسویه هوشمند</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش سرگروه (تعریف تسک جدید) -->
+            <section id="leader-panel" class="hidden bg-slate-800 border border-slate-700 p-6 rounded-2xl">
+                <h3 class="text-lg font-bold text-emerald-400 mb-4">➕ تعریف ریزبسته کاری جدید (Task)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">کتابچه مربوطه</label>
+                        <select id="task-booklet-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"></select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-slate-400 mb-1">عنوان بسته کاری و شرح مأموریت</label>
+                        <input type="text" id="task-title-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="مثلاً: جلد ۶ - استخراج قطبی پسا و CLmax">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">ارزش اسمی تسک (سکه)</label>
+                        <div class="flex space-x-2 space-x-reverse">
+                            <input type="number" id="task-coins-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="سکه">
+                            <button onclick="createTask()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 rounded-lg text-sm">ایجاد</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش قراردادها و تسک‌ها -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <!-- جدول بازار تسک‌ها -->
+                <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-white mb-4">📋 تابلو تسک‌های باز و نیازمند پیمانکار</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-sm">
+                            <thead class="bg-slate-900 text-slate-400 border-b border-slate-700">
+                                <tr>
+                                    <th class="p-3">عنوان تسک</th>
+                                    <th class="p-3">کتابچه</th>
+                                    <th class="p-3">سکه اسمی</th>
+                                    <th class="p-3">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tasks-table-body" class="divide-y divide-slate-700">
+                                <tr><td colspan="4" class="p-4 text-center text-slate-500">در حال بارگذاری...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- جدول قراردادهای فعال و تسویه‌شده -->
+                <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl">
+                    <h3 class="text-lg font-bold text-white mb-4">📜 قراردادهای هوشمند تیم</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right text-sm">
+                            <thead class="bg-slate-900 text-slate-400 border-b border-slate-700">
+                                <tr>
+                                    <th class="p-3">تسک / مأموریت</th>
+                                    <th class="p-3">پیمانکار</th>
+                                    <th class="p-3">دستمزد پایه</th>
+                                    <th class="p-3">وضعیت / تسویه</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contracts-table-body" class="divide-y divide-slate-700">
+                                <tr><td colspan="4" class="p-4 text-center text-slate-500">قراردادی ثبت نشده است.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // ==========================================
+        // ۱. تنظیمات اتصال به Supabase
+        // ==========================================
+        const SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co/rest/v1/"; // آدرس پروژه شما در سوپابیس
+        const SUPABASE_ANON_KEY = "sb_publishable_JAzYpxV2tlVulw1scPU1iQ_CKEXjfCB";                  // کلید ANON عمومی
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentUser = null;
+        let userProfile = null;
+        let currentTeam = null;
+
+        // ==========================================
+        // ۲. توابع احراز هویت (Auth)
+        // ==========================================
+        async function login() {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const errorElement = document.getElementById('auth-error');
+
+            errorElement.classList.add('hidden');
+
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) {
+                errorElement.innerText = error.message;
+                errorElement.classList.remove('hidden');
+                return;
+            }
+
+            currentUser = data.user;
+            await initApp();
+        }
+
+        async function logout() {
+            await supabase.auth.signOut();
+            location.reload();
+        }
+
+        // بررسی وضعیت لاگین در شروع برنامه
+        window.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                currentUser = session.user;
+                await initApp();
+            }
+        });
+
+        // ==========================================
+        // ۳. بارگذاری داده‌های پایه و پنل‌ها
+        // ==========================================
+        async function initApp() {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('user-nav').classList.remove('hidden');
+
+            // دریافت پروفایل کاربر
+            const { data: profile } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', currentUser.id)
+                .single();
+
+            userProfile = profile;
+            document.getElementById('nav-user-info').innerText = `${profile.full_name} (${profile.student_id})`;
+            document.getElementById('stat-role').innerText = getRoleTitle(profile.role);
+
+            // دریافت اطلاعات تیم
+            if (profile.role !== 'professor') {
+                const { data: team } = await supabase
+                    .from('teams')
+                    .select('*')
+                    .or(`leader_id.eq.${profile.id}`)
+                    .single();
+
+                currentTeam = team;
+                if (team) {
+                    document.getElementById('stat-team').innerText = team.name;
+                }
+            } else {
+                document.getElementById('stat-team').innerText = "ناظر عالی (استاد)";
+            }
+
+            setupRolePanels();
+            await loadBooklets();
+            await loadTasks();
+            await loadContracts();
+        }
+
+        function getRoleTitle(role) {
+            if (role === 'professor') return 'استاد درس (رگولاتور)';
+            if (role === 'leader') return 'سرگروه (کارفرما)';
+            return 'دانشجو (پیمانکار)';
+        }
+
+        function setupRolePanels() {
+            if (userProfile.role === 'professor') {
+                document.getElementById('professor-panel').classList.remove('hidden');
+                loadTeamsForProfessor();
+            } else if (userProfile.role === 'leader') {
+                document.getElementById('leader-panel').classList.remove('hidden');
+            }
+        }
+
+        // بارگذاری ۱۱ جلد کتابچه راسکم
+        async function loadBooklets() {
+            const { data: booklets } = await supabase.from('booklets').select('*').order('booklet_number');
+            const evalSelect = document.getElementById('eval-booklet-select');
+            const taskSelect = document.getElementById('task-booklet-select');
+
+            evalSelect.innerHTML = '';
+            taskSelect.innerHTML = '';
+
+            booklets.forEach(b => {
+                const opt = `<option value="${b.id}">کتابچه ${b.booklet_number}: ${b.title} (${b.nominal_coins} سکه)</option>`;
+                evalSelect.innerHTML += opt;
+                taskSelect.innerHTML += opt;
+            });
+        }
+
+        // ==========================================
+        // ۴. مدیریت تسک‌ها و بسته‌های کاری (Tasks)
+        // ==========================================
+        async function createTask() {
+            const bookletId = document.getElementById('task-booklet-select').value;
+            const title = document.getElementById('task-title-input').value;
+            const coins = document.getElementById('task-coins-input').value;
+
+            if (!title || !coins || !currentTeam) {
+                alert('لطفاً عنوان و مبلغ تسک را وارد کنید.');
+                return;
+            }
+
+            const { error } = await supabase.from('tasks').insert([
+                {
+                    team_id: currentTeam.id,
+                    booklet_id: parseInt(bookletId),
+                    title: title,
+                    allocated_nominal_coins: parseInt(coins),
+                    status: 'open'
+                }
+            ]);
+
+            if (error) alert(error.message);
+            else {
+                document.getElementById('task-title-input').value = '';
+                document.getElementById('task-coins-input').value = '';
+                await loadTasks();
+            }
+        }
+
+        async function loadTasks() {
+            const { data: tasks } = await supabase
+                .from('tasks')
+                .select('*, booklets(booklet_number, title)')
+                .eq('status', 'open');
+
+            const tbody = document.getElementById('tasks-table-body');
+            tbody.innerHTML = '';
+
+            if (!tasks || tasks.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">تسکی در بازار موجود نیست.</td></tr>`;
+                return;
+            }
+
+            tasks.forEach(t => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-700/50 transition">
+                        <td class="p-3 font-medium text-white">${t.title}</td>
+                        <td class="p-3 text-slate-400">کتابچه ${t.booklets.booklet_number}</td>
+                        <td class="p-3 text-amber-400 font-bold">${t.allocated_nominal_coins} سکه</td>
+                        <td class="p-3">
+                            ${userProfile.role === 'member' ? 
+                                `<button onclick="acceptTask('${t.id}', ${t.allocated_nominal_coins})" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1 rounded text-xs">قبول قرارداد</button>` 
+                                : `<span class="text-slate-500 text-xs">در انتظار پیمانکار</span>`}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // ==========================================
+        // ۵. انعقاد قرارداد هوشمند (Smart Contract)
+        // ==========================================
+        async function acceptTask(taskId, coins) {
+            const { error: contractError } = await supabase.from('contracts').insert([
+                {
+                    task_id: taskId,
+                    team_id: currentTeam ? currentTeam.id : null,
+                    contractor_id: currentUser.id,
+                    agreed_base_coins: coins,
+                    status: 'active'
+                }
+            ]);
+
+            if (contractError) {
+                alert(contractError.message);
+                return;
+            }
+
+            // تغییر وضعیت تسک
+            await supabase.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
+
+            await loadTasks();
+            await loadContracts();
+        }
+
+        async function loadContracts() {
+            const { data: contracts } = await supabase
+                .from('contracts')
+                .select('*, tasks(title), profiles(full_name)');
+
+            const tbody = document.getElementById('contracts-table-body');
+            tbody.innerHTML = '';
+
+            if (!contracts || contracts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-500">قرارداد فعالی وجود ندارد.</td></tr>`;
+                return;
+            }
+
+            let myTotalCoins = 0;
+            let myContractsCount = 0;
+
+            contracts.forEach(c => {
+                if (c.contractor_id === currentUser.id) {
+                    myContractsCount++;
+                    if (c.final_payout) myTotalCoins += parseFloat(c.final_payout);
+                }
+
+                const payoutDisplay = c.final_payout 
+                    ? `<span class="text-emerald-400 font-bold">${c.final_payout} سکه نهایی</span>` 
+                    : `<span class="text-amber-400 text-xs">در جریان (${c.agreed_base_coins} پایه)</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-700/50 transition">
+                        <td class="p-3 text-white">${c.tasks.title}</td>
+                        <td class="p-3 text-slate-300">${c.profiles.full_name}</td>
+                        <td class="p-3 text-slate-400">${c.agreed_base_coins} سکه</td>
+                        <td class="p-3">${payoutDisplay}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('stat-contracts').innerText = myContractsCount;
+            document.getElementById('stat-coins').innerText = `${myTotalCoins.toFixed(1)} سکه`;
+        }
+
+        // ==========================================
+        // ۶. پنل استاد و تسویه هوشمند
+        // ==========================================
+        async function loadTeamsForProfessor() {
+            const { data: teams } = await supabase.from('teams').select('*');
+            const select = document.getElementById('eval-team-select');
+            select.innerHTML = '';
+            teams.forEach(t => {
+                select.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+            });
+        }
+
+        async function submitEvaluation() {
+            const teamId = document.getElementById('eval-team-select').value;
+            const bookletId = document.getElementById('eval-booklet-select').value;
+            const awardedCoins = document.getElementById('eval-coins-input').value;
+
+            if (!awardedCoins) {
+                alert('میزان سکه تاییدشده را وارد کنید.');
+                return;
+            }
+
+            const { error } = await supabase.from('team_booklet_evaluations').upsert([
+                {
+                    team_id: teamId,
+                    booklet_id: parseInt(bookletId),
+                    awarded_coins: parseInt(awardedCoins)
+                }
+            ], { onConflict: 'team_id,booklet_id' });
+
+            if (error) {
+                alert(error.message);
+            } else {
+                alert('ارزیابی ثبت شد و تسویه حساب هوشمند قراردادها انجام گردید.');
+                await loadContracts();
+            }
+        }
+    </script>
+</body>
+</html>
