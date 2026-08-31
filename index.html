@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سامانه بازار کار طراحی هواپیما | روش راسکم</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
@@ -28,37 +28,37 @@
         </div>
         <div id="user-nav" class="hidden flex items-center space-x-4 space-x-reverse">
             <span id="nav-user-info" class="text-sm bg-slate-700 px-3 py-1.5 rounded-full border border-slate-600"></span>
-            <button type="button" onclick="logout()" class="text-sm text-red-400 hover:text-red-300 transition">خروج</button>
+            <button id="logout-btn" type="button" class="text-sm text-red-400 hover:text-red-300 transition">خروج</button>
         </div>
     </nav>
 
     <!-- بخش اصلی محتوا -->
     <main class="max-w-7xl mx-auto p-6">
 
-        <!-- ۱. بخش ورود / ثبت‌نام -->
+        <!-- بخش ورود / ثبت‌نام -->
         <section id="auth-section" class="max-w-md mx-auto mt-12 bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
             <!-- تب‌های تغییر وضعیت -->
-            <div class="flex border-b border-slate-700 mb-6">
-                <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500">ورود</button>
-                <button type="button" id="tab-signup" onclick="switchAuthTab('signup')" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent">ثبت‌نام جدید</button>
+            <div class="flex border-b border-slate-700 mb-6 cursor-pointer">
+                <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500">ورود</button>
+                <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent">ثبت‌نام جدید</button>
             </div>
 
             <!-- فیلدهای ثبت‌نام اضافی -->
             <div id="signup-extra-fields" class="hidden space-y-4 mb-4">
                 <div>
                     <label class="block text-sm text-slate-400 mb-1">نام و نام خانوادگی</label>
-                    <input type="text" id="auth-name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: علی رضایی">
+                    <input type="text" id="auth-name" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: دکتر علیرضا نوری">
                 </div>
                 <div>
-                    <label class="block text-sm text-slate-400 mb-1">شماره دانشجویی</label>
+                    <label class="block text-sm text-slate-400 mb-1">شماره دانشجویی / پرسنلی</label>
                     <input type="text" id="auth-std-id" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="مثال: 9912345">
                 </div>
                 <div>
-                    <label class="block text-sm text-slate-400 mb-1">نقش در درس</label>
+                    <label class="block text-sm text-slate-400 mb-1">نقش در سامانه</label>
                     <select id="auth-role" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500 text-sm">
-                        <option value="member">دانشجو (پیمانکار)</option>
-                        <option value="leader">سرگروه (کارفرما)</option>
                         <option value="professor">استاد درس (رگولاتور)</option>
+                        <option value="leader">سرگروه (کارفرما)</option>
+                        <option value="member">دانشجو (پیمانکار)</option>
                     </select>
                 </div>
             </div>
@@ -70,23 +70,23 @@
                     <input type="email" id="auth-email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500" placeholder="user@kntu.ac.ir">
                 </div>
                 <div>
-                    <label class="block text-sm text-slate-400 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
+                    <label class="block text-sm text-slate-400 mb-1">رمز عبور (حداقل ۶ رقم)</label>
                     <input type="password" id="auth-password" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-indigo-500">
                 </div>
                 
-                <button type="button" id="auth-submit-btn" onclick="handleAuthSubmit()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg transition duration-200 shadow-lg shadow-indigo-600/30">ورود به سامانه</button>
+                <button id="auth-submit-btn" type="button" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg transition duration-200 shadow-lg shadow-indigo-600/30">ورود به سامانه</button>
             </div>
 
             <div id="auth-error" class="text-red-400 text-xs mt-4 text-center hidden bg-red-950/40 p-2.5 rounded-lg border border-red-800"></div>
         </section>
 
-        <!-- ۲. داشبورد اصلی کاربر -->
+        <!-- داشبورد اصلی -->
         <div id="dashboard-section" class="hidden space-y-8">
 
-            <!-- کارت‌های خلاصه وضعیت -->
+            <!-- کارت‌های وضعیت -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
-                    <span class="text-slate-400 text-xs font-medium">نقش در سامانه</span>
+                    <span class="text-slate-400 text-xs font-medium">نقش شما</span>
                     <h3 id="stat-role" class="text-lg font-bold text-white mt-1">-</h3>
                 </div>
                 <div class="bg-slate-800 border border-slate-700 p-5 rounded-xl">
@@ -103,11 +103,9 @@
                 </div>
             </div>
 
-            <!-- بخش استاد (ثبت ارزیابی) -->
+            <!-- پنل استاد -->
             <section id="professor-panel" class="hidden bg-slate-800 border border-indigo-500/30 p-6 rounded-2xl">
-                <h3 class="text-lg font-bold text-indigo-300 mb-4 flex items-center">
-                    <span class="ml-2">🎓</span> پنل نظارت و ارزیابی استاد
-                </h3>
+                <h3 class="text-lg font-bold text-indigo-300 mb-4">🎓 پنل ارزیابی و نظارت استاد</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
                         <label class="block text-xs text-slate-400 mb-1">انتخاب تیم</label>
@@ -122,47 +120,46 @@
                         <input type="number" id="eval-coins-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="سکه">
                     </div>
                     <div class="flex items-end">
-                        <button type="button" onclick="submitEvaluation()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg text-sm transition">ثبت و اجرای تسویه هوشمند</button>
+                        <button id="eval-submit-btn" type="button" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2.5 rounded-lg text-sm transition">ثبت و تسویه هوشمند</button>
                     </div>
                 </div>
             </section>
 
-            <!-- بخش سرگروه (تعریف تسک جدید و ثبت نام تیم) -->
+            <!-- پنل سرگروه -->
             <section id="leader-panel" class="hidden bg-slate-800 border border-slate-700 p-6 rounded-2xl space-y-4">
                 <div id="create-team-box" class="pb-4 border-b border-slate-700 hidden">
-                    <h3 class="text-md font-bold text-amber-400 mb-2">ثبت نام تیم طراحی شما</h3>
+                    <h3 class="text-md font-bold text-amber-400 mb-2">ثبت نام تیم طراحی هواپیما</h3>
                     <div class="flex space-x-2 space-x-reverse">
-                        <input type="text" id="team-name-input" class="bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm w-80" placeholder="نام تیم (مثال: بال پرواز)">
-                        <button type="button" onclick="registerTeam()" class="bg-amber-600 hover:bg-amber-500 text-white px-4 rounded-lg text-sm">ثبت تیم</button>
+                        <input type="text" id="team-name-input" class="bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm w-80" placeholder="نام تیم (مثلاً: تیم شاهین)">
+                        <button id="register-team-btn" type="button" class="bg-amber-600 hover:bg-amber-500 text-white px-4 rounded-lg text-sm">ثبت تیم</button>
                     </div>
                 </div>
 
-                <h3 class="text-lg font-bold text-emerald-400">➕ تعریف ریزبسته کاری جدید (Task)</h3>
+                <h3 class="text-lg font-bold text-emerald-400">➕ تعریف بسته کاری جدید (Task)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                        <label class="block text-xs text-slate-400 mb-1">کتابچه مربوطه</label>
+                        <label class="block text-xs text-slate-400 mb-1">کتابچه</label>
                         <select id="task-booklet-select" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm"></select>
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-xs text-slate-400 mb-1">عنوان بسته کاری و شرح مأموریت</label>
-                        <input type="text" id="task-title-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="مثلاً: جلد ۶ - استخراج قطبی پسا">
+                        <label class="block text-xs text-slate-400 mb-1">عنوان بسته کاری و شرح تسک</label>
+                        <input type="text" id="task-title-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="مثلاً: جلد ۶ - تحلیل قطبی پسا و CLmax">
                     </div>
                     <div>
                         <label class="block text-xs text-slate-400 mb-1">ارزش اسمی تسک (سکه)</label>
                         <div class="flex space-x-2 space-x-reverse">
                             <input type="number" id="task-coins-input" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm" placeholder="سکه">
-                            <button type="button" onclick="createTask()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 rounded-lg text-sm">ایجاد</button>
+                            <button id="create-task-btn" type="button" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 rounded-lg text-sm">ایجاد</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- بخش قراردادها و تسک‌ها -->
+            <!-- جداول تسک‌ها و قراردادها -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                <!-- جدول بازار تسک‌ها -->
+                <!-- بازار تسک‌ها -->
                 <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl">
-                    <h3 class="text-lg font-bold text-white mb-4">📋 تابلو تسک‌های باز و نیازمند پیمانکار</h3>
+                    <h3 class="text-lg font-bold text-white mb-4">📋 بازار تسک‌های باز و نیازمند پیمانکار</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-right text-sm">
                             <thead class="bg-slate-900 text-slate-400 border-b border-slate-700">
@@ -180,7 +177,7 @@
                     </div>
                 </div>
 
-                <!-- جدول قراردادهای فعال و تسویه‌شده -->
+                <!-- قراردادهای هوشمند -->
                 <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl">
                     <h3 class="text-lg font-bold text-white mb-4">📜 قراردادهای هوشمند ثبت‌شده</h3>
                     <div class="overflow-x-auto">
@@ -199,7 +196,6 @@
                         </table>
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -207,30 +203,63 @@
     </main>
 
 <script>
+    // تنظیمات پایگاه داده سوپابیس
     const SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1waWRhamphbGxhcGxjY3l0bmpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxOTQxNjQsImV4cCI6MjEwMzc3MDE2NH0.W6qh3zA-V0QLqLNfPybLpWhjagORAG3_aiBRMoEeUyI";
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let supabase = null;
+    try {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } catch (e) {
+        console.error("Supabase init error:", e);
+    }
 
     let authMode = 'login';
     let currentUser = null;
     let userProfile = null;
     let currentTeam = null;
 
-    function switchAuthTab(mode) {
+    // ثبت کلیه Event Listenerها به صورت ایمن پس از بارگذاری DOM
+    document.addEventListener('DOMContentLoaded', () => {
+        // ۱. سوئیچ بین تب‌های ورود و ثبت‌نام
+        document.getElementById('tab-login').addEventListener('click', () => setAuthTab('login'));
+        document.getElementById('tab-signup').addEventListener('click', () => setAuthTab('signup'));
+
+        // ۲. دکمه سابمیت فرم
+        document.getElementById('auth-submit-btn').addEventListener('click', handleAuthSubmit);
+
+        // ۳. دکمه خروج
+        document.getElementById('logout-btn').addEventListener('click', logout);
+
+        // ۴. سایر دکمه‌ها
+        document.getElementById('eval-submit-btn')?.addEventListener('click', submitEvaluation);
+        document.getElementById('register-team-btn')?.addEventListener('click', registerTeam);
+        document.getElementById('create-task-btn')?.addEventListener('click', createTask);
+
+        // بررسی لاگین قبلی
+        checkSession();
+    });
+
+    function setAuthTab(mode) {
         authMode = mode;
         const errEl = document.getElementById('auth-error');
         errEl.classList.add('hidden');
+
+        const tabLogin = document.getElementById('tab-login');
+        const tabSignup = document.getElementById('tab-signup');
+        const extraFields = document.getElementById('signup-extra-fields');
+        const submitBtn = document.getElementById('auth-submit-btn');
+
         if (mode === 'login') {
-            document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500";
-            document.getElementById('tab-signup').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent";
-            document.getElementById('signup-extra-fields').classList.add('hidden');
-            document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
+            tabLogin.className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500";
+            tabSignup.className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent";
+            extraFields.classList.add('hidden');
+            submitBtn.innerText = "ورود به سامانه";
         } else {
-            document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500";
-            document.getElementById('tab-login').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent";
-            document.getElementById('signup-extra-fields').classList.remove('hidden');
-            document.getElementById('auth-submit-btn').innerText = "ایجاد حساب کاربری";
+            tabSignup.className = "w-1/2 pb-3 font-bold text-indigo-400 border-b-2 border-indigo-500";
+            tabLogin.className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent";
+            extraFields.classList.remove('hidden');
+            submitBtn.innerText = "ایجاد حساب کاربری";
         }
     }
 
@@ -240,7 +269,25 @@
         errEl.classList.remove('hidden');
     }
 
+    async function checkSession() {
+        if (!supabase) return;
+        try {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                currentUser = session.user;
+                await initApp();
+            }
+        } catch (e) {
+            console.log("No active session");
+        }
+    }
+
     async function handleAuthSubmit() {
+        if (!supabase) {
+            showError("اتصال به پایگاه داده برقرار نیست.");
+            return;
+        }
+
         const email = document.getElementById('auth-email').value.trim();
         const password = document.getElementById('auth-password').value;
         const errEl = document.getElementById('auth-error');
@@ -254,7 +301,7 @@
         if (authMode === 'login') {
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) {
-                showError('اطلاعات ورود نامعتبر است: ' + error.message);
+                showError('اطلاعات ورود اشتباه است: ' + error.message);
                 return;
             }
             currentUser = data.user;
@@ -265,24 +312,22 @@
             const role = document.getElementById('auth-role').value;
 
             if (!fullName || !studentId) {
-                showError('لطفاً نام و شماره دانشجویی را وارد کنید.');
+                showError('لطفاً نام و شماره دانشجویی را وارد نمایید.');
                 return;
             }
 
             const { data, error } = await supabase.auth.signUp({ email, password });
             if (error) {
-                showError('خطا در ثبت‌نام: ' + error.message);
+                showError('خطا در ایجاد حساب: ' + error.message);
                 return;
             }
 
             currentUser = data.user;
 
-            // ایجاد پروفایل در پایگاه داده
-            const { error: pErr } = await supabase.from('profiles').insert([
+            // ایجاد پروفایل
+            await supabase.from('profiles').insert([
                 { id: currentUser.id, full_name: fullName, student_id: studentId, role: role }
             ]);
-
-            if (pErr) console.warn("Profile creation:", pErr.message);
 
             alert('ثبت‌نام با موفقیت انجام شد!');
             await initApp();
@@ -290,17 +335,9 @@
     }
 
     async function logout() {
-        await supabase.auth.signOut();
+        if (supabase) await supabase.auth.signOut();
         location.reload();
     }
-
-    window.addEventListener('DOMContentLoaded', async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-            currentUser = session.user;
-            await initApp();
-        }
-    });
 
     async function initApp() {
         try {
@@ -343,7 +380,7 @@
             await loadContracts();
 
         } catch (err) {
-            showError('خطا در بارگذاری سامانه: ' + err.message);
+            showError('خطا در بارگذاری اطلاعات: ' + err.message);
         }
     }
 
@@ -397,7 +434,7 @@
 
     async function createTask() {
         if (!currentTeam) {
-            alert('ابتدا باید نام تیم خود را در کادر بالا ثبت کنید.');
+            alert('ابتدا باید نام تیم خود را ثبت کنید.');
             return;
         }
 
@@ -406,7 +443,7 @@
         const coins = document.getElementById('task-coins-input').value;
 
         if (!title || !coins) {
-            alert('لطفاً تمام فیلدهای تسک را پر کنید.');
+            alert('لطفاً تمام فیلدها را پر کنید.');
             return;
         }
 
@@ -458,7 +495,7 @@
         });
     }
 
-    async function acceptTask(taskId, teamId, coins) {
+    window.acceptTask = async function(taskId, teamId, coins) {
         const { error: contractError } = await supabase.from('contracts').insert([
             {
                 task_id: taskId,
@@ -477,7 +514,7 @@
         await supabase.from('tasks').update({ status: 'assigned' }).eq('id', taskId);
         await loadTasks();
         await loadContracts();
-    }
+    };
 
     async function loadContracts() {
         const { data: contracts } = await supabase
