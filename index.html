@@ -34,13 +34,14 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6">
 
-        <!-- ۱. بخش ورود و ثبت‌نام -->
+        <!-- بخش ورود و ثبت‌نام -->
         <section id="auth-section" class="max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl border border-slate-200 shadow-xl shadow-slate-200/50">
             <div class="flex border-b border-slate-200 mb-6">
                 <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600 cursor-pointer">ورود</button>
                 <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer">ثبت‌نام جدید</button>
             </div>
 
+            <!-- فیلدهای تکمیلی ثبت‌نام -->
             <div id="signup-extra-fields" style="display: none;" class="space-y-4 mb-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">نام و نام خانوادگی</label>
@@ -60,6 +61,7 @@
                 </div>
             </div>
 
+            <!-- فیلدهای مشترک -->
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">ایمیل</label>
@@ -76,10 +78,10 @@
             <div id="auth-error" class="text-red-600 text-xs mt-4 text-center hidden bg-red-50 p-3 rounded-xl border border-red-200"></div>
         </section>
 
-        <!-- ۲. داشبورد اصلی کاربر -->
+        <!-- داشبورد اصلی کاربر -->
         <div id="dashboard-section" class="hidden space-y-6">
 
-            <!-- کارت‌های آماری پویا (KPI) -->
+            <!-- کارت‌های وضعیت (KPI) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm flex items-center justify-between">
                     <div>
@@ -518,7 +520,6 @@
             }
         }
 
-        // با قبول تسک وضعیت به "درحال انجام" تغییر می‌کند
         var res = await sb.from('contracts').insert([{
             task_id: taskId,
             team_id: teamId,
@@ -535,7 +536,6 @@
         }
     };
 
-    // تبدیل کدهای فنی وضعیت به ۴ وضعیت مصوب و رنگ مربوطه
     function renderStatusBadge(status) {
         switch (status) {
             case 'leader_review':
@@ -550,7 +550,6 @@
         }
     }
 
-    // بارگذاری جدول قراردادها و پیاده‌سازی گام‌های تایید و رد
     async function loadContracts() {
         var sb = getSupabaseClient();
         var query = sb.from('contracts').select('*, tasks(*), teams(name), profiles(full_name)');
@@ -585,12 +584,12 @@
 
             var actionCol = '';
 
-            // ۱. پنل پیمانکار: آپلود فایل و زدن دکمه ارسال به سرگروه
+            // ۱. پیمانکار
             if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
                 if (currentTaskStatus === 'in_progress') {
                     actionCol = '<div class="space-y-1.5">' +
-                        '<input type="file" id="file-' + taskObj.id + '" class="text-[10px] text-slate-600 block w-44">' +
-                        '<button onclick="uploadAndSendReport(\'' + taskObj.id + '\', \'' + c.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-sm">📤 آپلود و ارسال به سرگروه</button>' +
+                        '<input type="file" id="file-' + taskObj.id + '" class="text-[10px] text-slate-600 block w-44 border border-slate-200 p-1 rounded bg-slate-50">' +
+                        '<button type="button" onclick="uploadAndSendReport(\'' + taskObj.id + '\', \'' + c.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-sm transition">📤 آپلود و ارسال به سرگروه</button>' +
                         '</div>';
                 } else {
                     actionCol = '<div class="text-[11px] space-y-1">' +
@@ -599,14 +598,14 @@
                         '</div>';
                 }
             }
-            // ۲. پنل سرگروه: دانلود فایل و امکان تایید (ارسال به استاد) یا عدم تایید (بازگشت به پیمانکار)
+            // ۲. سرگروه
             else if (userProfile.role === 'leader') {
                 if (currentTaskStatus === 'leader_review') {
                     actionCol = '<div class="space-y-1.5">' +
                         '<a href="' + taskObj.submission_url + '" target="_blank" class="text-blue-600 underline font-bold block text-xs">📥 دانلود و بررسی فایل</a>' +
                         '<div class="flex space-x-1 space-x-reverse">' +
-                        '<button onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', true)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-2.5 py-1 rounded font-bold shadow-sm">✓ تایید و ارسال به استاد</button>' +
-                        '<button onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', false)" class="bg-red-600 hover:bg-red-700 text-white text-[10px] px-2 py-1 rounded font-bold shadow-sm">✕ عدم تایید</button>' +
+                        '<button type="button" onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', true)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-2.5 py-1 rounded font-bold shadow-sm">✓ تایید و ارسال به استاد</button>' +
+                        '<button type="button" onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', false)" class="bg-red-600 hover:bg-red-700 text-white text-[10px] px-2 py-1 rounded font-bold shadow-sm">✕ عدم تایید</button>' +
                         '</div>' +
                         '</div>';
                 } else if (taskObj.submission_url) {
@@ -615,7 +614,7 @@
                     actionCol = '<span class="text-slate-400 text-xs">در انتظار انجام توسط پیمانکار</span>';
                 }
             }
-            // ۳. پنل استاد: مشاهده فایل گزارش تاییدشده توسط سرگروه
+            // ۳. استاد
             else if (userProfile.role === 'professor') {
                 if (taskObj.submission_url) {
                     actionCol = '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 font-bold underline text-xs">📄 دانلود فایل نهایی</a>';
@@ -637,23 +636,24 @@
         document.getElementById('stat-coins').innerText = myTotalCoins.toFixed(1) + ' سکه';
     }
 
-    // پیمانکار: آپلود فایل تا سقف ۳۰ مگابایت و تغییر وضعیت به "درحال بررسی توسط سرگروه"
+    // تابع آپلود قطعی فایل با پشتیبانی تا ۳۰ مگابایت
     window.uploadAndSendReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            alert('لطفاً فایل گزارش پروژه را انتخاب کنید.');
+            alert('لطفاً ابتدا یک فایل را انتخاب کنید.');
             return;
         }
 
         var file = fileInput.files[0];
         if (file.size > 30 * 1024 * 1024) {
-            alert('خطا: حداکثر حجم مجاز فایل ۳۰ مگابایت است.');
+            alert('خطا: حجم فایل بیشتر از سقف مجاز ۳۰ مگابایت است.');
             return;
         }
 
-        var fileExt = file.name.split('.').pop();
-        var fileName = taskId + '_' + Date.now() + '.' + fileExt;
+        var fileExt = file.name.split('.').pop() || 'dat';
+        var cleanExt = fileExt.replace(/[^a-zA-Z0-9]/g, '');
+        var fileName = 'rep_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6) + '.' + cleanExt;
 
         var uploadRes = await sb.storage.from('reports').upload(fileName, file, {
             cacheControl: '3600',
@@ -661,14 +661,13 @@
         });
 
         if (uploadRes.error) {
-            alert('خطا در ذخیره‌سازی فایل: ' + uploadRes.error.message);
+            alert('خطا در بارگذاری فایل: ' + uploadRes.error.message);
             return;
         }
 
         var publicUrlRes = sb.storage.from('reports').getPublicUrl(fileName);
         var downloadUrl = publicUrlRes.data.publicUrl;
 
-        // تغییر وضعیت تسک و قرارداد به "درحال بررسی توسط سرگروه"
         await sb.from('tasks').update({
             submission_url: downloadUrl,
             status: 'leader_review',
@@ -679,16 +678,14 @@
             status: 'leader_review'
         }).eq('id', contractId);
 
-        alert('تاییدیه: فایل با موفقیت آپلود شد و جهت بررسی برای سرگروه ارسال گردید. وضعیت تسک: درحال بررسی توسط سرگروه.');
+        alert('تاییدیه: فایل با موفقیت آپلود شد و جهت بررسی برای سرگروه ارسال گردید.');
         await loadContracts();
     };
 
-    // سرگروه: تصمیم‌گیری تایید (ارسال به استاد) یا عدم تایید (بازگشت به درحال انجام)
     window.leaderDecision = async function(taskId, contractId, isApproved) {
         var sb = getSupabaseClient();
 
         if (isApproved) {
-            // تایید: وضعیت به "درحال بررسی توسط استاد" تغییر می‌کند
             await sb.from('tasks').update({
                 leader_approved: true,
                 status: 'professor_review'
@@ -698,9 +695,8 @@
                 status: 'professor_review'
             }).eq('id', contractId);
 
-            alert('گزارش با موفقیت تایید شد و جهت بررسی و نمره‌دهی به پنل استاد ارسال گردید.');
+            alert('گزارش تایید شد و برای نمره‌دهی نهایی به استاد ارسال گردید.');
         } else {
-            // عدم تایید: وضعیت به "درحال انجام" بازمی‌گردد و لینک گزارش پاک می‌شود تا پیمانکار نسخه جدید بفرستد
             await sb.from('tasks').update({
                 leader_approved: false,
                 status: 'in_progress',
@@ -711,7 +707,7 @@
                 status: 'in_progress'
             }).eq('id', contractId);
 
-            alert('گزارش رد شد. وضعیت تسک به «درحال انجام» بازگشت تا پیمانکار فایل اصلاح‌شده را مجدداً ارسال کند.');
+            alert('گزارش رد شد و وضعیت تسک به «درحال انجام» بازگشت.');
         }
 
         await loadContracts();
@@ -775,7 +771,6 @@
         }
     }
 
-    // استاد: ثبت ارزیابی نهایی و تبدیل وضعیت تسک‌ها به "خاتمه یافته"
     document.getElementById('eval-submit-btn').onclick = async function() {
         var sb = getSupabaseClient();
         var teamId = document.getElementById('eval-team-select').value;
@@ -791,7 +786,6 @@
         if (res.error) {
             alert(res.error.message);
         } else {
-            // تغییر وضعیت کلیه تسک‌های مربوط به این کتابچه به "خاتمه یافته"
             await sb.from('tasks').update({ status: 'completed' }).eq('team_id', teamId).eq('booklet_id', parseInt(bookletId));
             await sb.from('contracts').update({ status: 'completed' }).eq('team_id', teamId);
 
