@@ -113,7 +113,7 @@
                 </div>
             </div>
 
-            <!-- پنل استاد (ارزیابی، آمار تیم‌ها، اعضا و پیمانکاران آزاد) -->
+            <!-- پنل استاد -->
             <section id="professor-panel" class="hidden bg-white border border-indigo-100 p-6 rounded-3xl shadow-sm space-y-6">
                 <div>
                     <h3 class="text-base font-bold text-indigo-900 mb-4 flex items-center">
@@ -138,7 +138,6 @@
                     </div>
                 </div>
 
-                <!-- اصلاح ۳ و ۴: آمار تیم‌ها، اعضا و خلاصه قراردادهای منعقد شده و آزاد -->
                 <div class="pt-4 border-t border-slate-100">
                     <h4 class="text-sm font-bold text-slate-900 mb-3">📊 وضعیت جامع تیم‌ها و پیمانکاران آزاد</h4>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -154,7 +153,7 @@
                 </div>
             </section>
 
-            <!-- پنل سرگروه (تعریف تیم و تسک) -->
+            <!-- پنل سرگروه -->
             <section id="leader-panel" class="hidden bg-white border border-slate-200 p-6 rounded-3xl shadow-sm space-y-4">
                 <div id="create-team-box" class="pb-4 border-b border-slate-100 hidden">
                     <h3 class="text-sm font-bold text-amber-700 mb-2">ثبت نام تیم طراحی هواپیما</h3>
@@ -440,7 +439,6 @@
     }
     document.getElementById('create-task-btn').onclick = createTask;
 
-    // بارگذاری تسک‌ها + قابلیت حذف و ویرایش برای سرگروه قبل از تایید پیمانکار
     async function loadTasks() {
         var sb = getSupabaseClient();
         var query = sb.from('tasks').select('*, teams(name), booklets(booklet_number)').eq('status', 'open');
@@ -462,7 +460,6 @@
             var teamName = t.teams ? t.teams.name : 'عمومی';
             var bNum = t.booklets ? t.booklets.booklet_number : '-';
             
-            // اصلاح ۲: سرگروه بتواند تسک تاییدنشده تیم خود را ویرایش یا حذف کند
             var actionBtns = '';
             if (userProfile.role === 'member') {
                 actionBtns = '<button type="button" onclick="acceptTask(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-lg text-xs font-semibold shadow-sm transition cursor-pointer">قبول قرارداد</button>';
@@ -485,7 +482,6 @@
         });
     }
 
-    // اصلاح ۲: توابع حذف و ویرایش تسک
     window.deleteTask = async function(taskId) {
         if (!confirm('آیا از حذف این تسک باز اطمینان دارید؟')) return;
         var sb = getSupabaseClient();
@@ -510,11 +506,9 @@
         else await loadTasks();
     };
 
-    // اصلاح ۵: پیاده‌سازی قانون عدم انجام تسک‌های کتابچه مشابه در دو تیم مختلف توسط یک پیمانکار
     window.acceptTask = async function(taskId, teamId, coins, bookletId) {
         var sb = getSupabaseClient();
 
-        // بررسی قراردادهای قبلی پیمانکار برای این کتابچه
         var checkRes = await sb.from('contracts').select('team_id, tasks(booklet_id)').eq('contractor_id', currentUser.id);
         if (checkRes.data) {
             var hasConflict = checkRes.data.some(function(c) {
@@ -542,7 +536,6 @@
         }
     };
 
-    // بارگذاری قراردادها + آپلود مستقیم فایل تا سقف 5MB
     async function loadContracts() {
         var sb = getSupabaseClient();
         var query = sb.from('contracts').select('*, tasks(*), teams(name), profiles(full_name)');
@@ -576,12 +569,12 @@
 
             var reportCol = '';
 
-            // اصلاح ۱: امکان آپلود مستقیم فایل با حداکثر ۵ مگابایت برای پیمانکار
+            // پیمانکار: آپلود گزارش تا سقف ۳۰ مگابایت
             if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
                 if (!taskObj.submission_url) {
                     reportCol = '<div class="space-y-1">' +
                         '<input type="file" id="file-' + taskObj.id + '" class="text-[10px] text-slate-600 block w-40">' +
-                        '<button onclick="uploadReportFile(\'' + taskObj.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2 py-0.5 rounded font-bold">آپلود گزارش (حداکثر 5MB)</button>' +
+                        '<button onclick="uploadReportFile(\'' + taskObj.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2 py-0.5 rounded font-bold">آپلود گزارش (حداکثر 30MB)</button>' +
                         '</div>';
                 } else {
                     reportCol = '<div class="text-[11px]">' +
@@ -632,7 +625,7 @@
         document.getElementById('stat-coins').innerText = myTotalCoins.toFixed(1) + ' سکه';
     }
 
-    // اصلاح ۱: تابع آپلود فایل با بررسی حجم حداکثر 5 مگابایت
+    // تابع آپلود فایل اصلاح‌شده با سقف ۳۰ مگابایت و مسیر بدون خطای نام‌گذاری
     window.uploadReportFile = async function(taskId) {
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
@@ -642,22 +635,28 @@
         }
 
         var file = fileInput.files[0];
-        // بررسی حداکثر حجم ۵ مگابایت (5 * 1024 * 1024 bytes)
-        if (file.size > 5 * 1024 * 1024) {
-            alert('خطا: حداکثر حجم مجاز برای آپلود فایل گزارش ۵ مگابایت است.');
+        
+        // بررسی حداکثر حجم ۳۰ مگابایت (30 * 1024 * 1024 bytes)
+        if (file.size > 30 * 1024 * 1024) {
+            alert('خطا: حداکثر حجم مجاز برای آپلود فایل گزارش ۳۰ مگابایت است.');
             return;
         }
 
+        // ایجاد نام فایل تمیز و بدون کاراکتر غیرمجاز
         var fileExt = file.name.split('.').pop();
-        var filePath = 'reports/' + taskId + '_' + Date.now() + '.' + fileExt;
+        var fileName = taskId + '_' + Date.now() + '.' + fileExt;
 
-        var uploadRes = await sb.storage.from('reports').upload(filePath, file);
+        var uploadRes = await sb.storage.from('reports').upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: true
+        });
+
         if (uploadRes.error) {
             alert('خطا در ذخیره‌سازی فایل: ' + uploadRes.error.message);
             return;
         }
 
-        var publicUrlRes = sb.storage.from('reports').getPublicUrl(filePath);
+        var publicUrlRes = sb.storage.from('reports').getPublicUrl(fileName);
         var downloadUrl = publicUrlRes.data.publicUrl;
 
         var updateRes = await sb.from('tasks').update({
@@ -699,11 +698,9 @@
         }
     }
 
-    // اصلاح ۳ و ۴: محاسبه و نمایش آمار تیم‌ها، قراردادهای منعقدشده/آزاد و پیمانکاران آزاد برای استاد
     async function loadProfessorSummary() {
         var sb = getSupabaseClient();
         
-        // ۱. دریافت تیم‌ها و تسک‌ها
         var teamsRes = await sb.from('teams').select('*, profiles!teams_leader_id_fkey(full_name)');
         var tasksRes = await sb.from('tasks').select('*');
         var contractsRes = await sb.from('contracts').select('*, profiles(full_name)');
@@ -718,7 +715,6 @@
                 var assignedCount = tasksRes.data.filter(function(x) { return x.team_id === t.id && x.status !== 'open'; }).length;
                 var openCount = tasksRes.data.filter(function(x) { return x.team_id === t.id && x.status === 'open'; }).length;
                 
-                // اعضای همکار با این تیم
                 var teamContractors = contractsRes.data 
                     ? contractsRes.data.filter(function(c) { return c.team_id === t.id; }).map(function(c) { return c.profiles ? c.profiles.full_name : ''; })
                     : [];
@@ -734,7 +730,6 @@
             teamsSummaryDiv.innerHTML = html || 'تیمی ثبت نشده است.';
         }
 
-        // ۲. پیمانکاران آزاد
         if (allProfilesRes.data && contractsRes.data) {
             var freeHtml = '';
             allProfilesRes.data.forEach(function(m) {
