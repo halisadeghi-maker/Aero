@@ -809,3 +809,62 @@
 </script>
 </body>
 </html>
+window.uploadAndSendReport = async function(taskId, contractId) {
+    var sb = getSupabaseClient();
+    var fileInput = document.getElementById('file-' + taskId);
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        alert('لطفاً ابتدا یک فایل را انتخاب کنید.');
+        return;
+    }
+
+    var file = fileInput.files[0];
+    if (file.size > 30 * 1024 * 1024) {
+        alert('خطا: حجم فایل بیشتر از سقف مجاز ۳۰ مگابایت است.');
+        return;
+    }
+
+    // تولید نام فایل استاندارد و کاملاً تمیز
+    var fileExt = file.name.split('.').pop() || 'pdf';
+    var cleanExt = fileExt.replace(/[^a-zA-Z0-9]/g, '');
+    var fileName = 'report_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6) + '.' + cleanExt;
+
+    try {
+        // خواندن مستقیم بافر فایل جهت جلوگیری از خطای مرورگر
+        var arrayBuffer = await file.arrayBuffer();
+
+        var uploadRes = await sb.storage.from('reports').upload(fileName, arrayBuffer, {
+            contentType: file.type || 'application/octet-stream',
+            upsert: true
+        });
+
+        if (uploadRes.error) {
+            console.error("Storage Error:", uploadRes.error);
+            alert('خطای ذخیره‌سازی: ' + (uploadRes.error.message || JSON.stringify(uploadRes.error)));
+            return;
+        }
+
+        var publicUrlRes = sb.storage.from('reports').getPublicUrl(fileName);
+        var downloadUrl = publicUrlRes.data.publicUrl;
+
+        var tRes = await sb.from('tasks').update({
+            submission_url: downloadUrl,
+            status: 'leader_review',
+            leader_approved: false
+        }).eq('id', taskId);
+
+        var cRes = await sb.from('contracts').update({
+            status: 'leader_review'
+        }).eq('id', contractId);
+
+        if (tRes.error || cRes.error) {
+            alert('خطا در ثبت وضعیت دیتابیس: ' + (tRes.error?.message || cRes.error?.message));
+            return;
+        }
+
+        alert('تاییدیه: فایل با موفقیت آپلود شد و جهت بررسی برای سرگروه ارسال گردید.');
+        await loadContracts();
+
+    } catch (err) {
+        alert('خطای سیستمی در آپلود: ' + err.message);
+    }
+};
