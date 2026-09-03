@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,7 +22,6 @@
             background-position: center top;
             background-size: cover;
             background-attachment: fixed;
-            -webkit-tap-highlight-color: transparent;
         }
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
@@ -46,8 +45,8 @@
             border-radius: 999px 999px 0 0;
         }
         .kpi-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 16px 25px -6px rgba(15, 23, 42, 0.08);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 25px -6px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
             border-color: #cbd5e1;
         }
         .interactive-card {
@@ -55,114 +54,114 @@
         }
         .interactive-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.14);
+            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.16), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
         }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col justify-between antialiased">
+<body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
     <!-- نوار ناوبری اصلی -->
-    <nav class="bg-white/95 backdrop-blur-md border-b-2 border-slate-200 px-4 md:px-6 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
-        <div class="flex items-center space-x-3 space-x-reverse">
-            <img src="kntu-logo.png" alt="لوگو دانشگاه خواجه نصیرالدین طوسی" class="w-12 h-12 md:w-16 md:h-16 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
+    <nav class="bg-white/95 backdrop-blur-md border-b-2 border-slate-200 px-6 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
+        <div class="flex items-center space-x-3.5 space-x-reverse">
+            <img src="kntu-logo.png" alt="لوگو دانشگاه خواجه نصیرالدین طوسی" class="w-16 h-16 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
             <div>
-                <h1 class="font-black text-sm sm:text-base md:text-lg text-[#0f284e]">بازار کار درس طراحی هواپیمای دکتر علیصادقی</h1>
-                <p class="text-[11px] sm:text-xs text-amber-700 font-bold tracking-tight">دانشگاه صنعتی خواجه نصیرالدین طوسی</p>
+                <h1 class="font-black text-base md:text-lg text-[#0f284e]">بازار کار درس طراحی هواپیمای دکتر علیصادقی</h1>
+                <p class="text-xs text-amber-700 font-bold tracking-tight">دانشگاه صنعتی خواجه نصیرالدین طوسی</p>
             </div>
         </div>
-        <div id="user-nav" class="hidden flex items-center space-x-3 md:space-x-4 space-x-reverse">
-            <span id="nav-user-info" class="text-xs md:text-sm bg-slate-100 text-[#0f284e] px-3 py-1 md:px-3.5 md:py-1.5 rounded-full border border-slate-200 font-bold"></span>
-            <button id="logout-btn" type="button" class="text-xs md:text-sm text-rose-700 hover:text-rose-800 font-bold bg-rose-50 hover:bg-rose-100 px-3 py-1 md:px-3.5 md:py-1.5 rounded-xl border border-rose-200 transition shadow-sm">خروج</button>
+        <div id="user-nav" class="hidden flex items-center space-x-4 space-x-reverse">
+            <span id="nav-user-info" class="text-xs md:text-sm bg-slate-100 text-[#0f284e] px-3.5 py-1.5 rounded-full border border-slate-200 font-bold"></span>
+            <button id="logout-btn" type="button" class="text-xs md:text-sm text-rose-700 hover:text-rose-800 font-bold bg-rose-50 hover:bg-rose-100/80 px-3.5 py-1.5 rounded-xl border border-rose-200 transition shadow-sm">خروج</button>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-3 sm:p-4 md:p-6 space-y-6 flex-grow w-full">
+    <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- صفحه اول: کارت معرفی با لوگوی ۲ برابر بزرگتر + کارت ورود با رنگ شاد، تند و گرم هماهنگ -->
-        <section id="auth-section" class="max-w-5xl mx-auto mt-4 md:mt-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        <!-- صفحه ورود دوکارته با ابعاد بزرگتر و طراحی چشم‌نواز -->
+        <section id="auth-section" class="max-w-5xl mx-auto mt-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 
-                <!-- کارت ۱: کارت برندینگ خردلی با لوگوی دوبرابر بزرگتر -->
-                <div class="rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#d97706] to-[#b45309] border border-amber-300">
-                    <div class="absolute -top-16 -left-16 w-52 h-52 bg-white/20 rounded-full blur-2xl pointer-events-none"></div>
-                    <div class="absolute -bottom-16 -right-16 w-52 h-52 bg-amber-200/20 rounded-full blur-2xl pointer-events-none"></div>
+                <!-- کارت ۱: کارت برندینگ خردلی با لوگوی دو برابر شده (۱۲۸ پیکسل) -->
+                <div class="rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#d97706] to-[#b45309] border-2 border-amber-300">
+                    <div class="absolute -top-16 -left-16 w-56 h-56 bg-white/20 rounded-full blur-2xl"></div>
+                    <div class="absolute -bottom-16 -right-16 w-56 h-56 bg-amber-200/20 rounded-full blur-2xl"></div>
 
                     <div class="relative z-10 space-y-6">
-                        <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-right space-y-4 sm:space-y-0 sm:space-x-4 sm:space-x-reverse">
-                            <!-- لوگو حداقل ۲ برابر بزرگتر شده -->
-                            <div class="p-3 bg-white rounded-3xl shadow-xl flex-shrink-0">
-                                <img src="kntu-logo.png" alt="لوگو دانشگاه" class="w-28 h-28 sm:w-32 sm:h-32 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
+                        <!-- بخش لوگوی بزرگتر (حداقل دو برابر: w-32 h-32) -->
+                        <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse text-center sm:text-right">
+                            <div class="p-3 bg-white rounded-3xl shadow-xl inline-block border-2 border-amber-200/60">
+                                <img src="kntu-logo.png" alt="لوگو دانشگاه" class="w-32 h-32 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
                             </div>
                             <div class="pt-2">
-                                <span class="text-white text-xs sm:text-sm font-black block drop-shadow-sm">دانشگاه صنعتی خواجه نصیرالدین طوسی</span>
-                                <span class="text-amber-100 text-xs font-bold">دانشکده مهندسی هوافضا</span>
-                                <span class="inline-block mt-2 bg-amber-900/30 text-white text-[11px] px-2.5 py-0.5 rounded-full border border-white/20 font-semibold">نیمسال تحصیلی جاری</span>
+                                <span class="text-white text-sm font-black block drop-shadow-sm">دانشگاه صنعتی خواجه نصیرالدین طوسی</span>
+                                <span class="text-amber-100 text-xs font-bold block mt-1">دانشکده مهندسی هوافضا</span>
+                                <span class="inline-block mt-2 bg-amber-900/30 text-white text-[11px] px-2.5 py-0.5 rounded-full font-bold border border-white/20">نیم‌سال تحصیلی</span>
                             </div>
                         </div>
 
-                        <div class="pt-4 border-t border-white/20 space-y-2 text-center sm:text-right">
-                            <h2 class="text-xl sm:text-2xl font-black text-white leading-snug drop-shadow-sm">
+                        <div class="pt-4 border-t border-white/20 space-y-2">
+                            <h2 class="text-xl md:text-2xl font-black text-white leading-snug drop-shadow-md">
                                 کلاس طراحی هواپیمای دکتر حامد علیصادقی
                             </h2>
-                            <p class="text-sm sm:text-base font-black text-amber-100">
+                            <p class="text-base md:text-lg font-black text-amber-100">
                                 بازار کار پروژه درس طراحی هواپیما
                             </p>
                         </div>
 
-                        <p class="text-xs sm:text-sm text-amber-50 leading-relaxed text-justify font-medium">
+                        <p class="text-xs md:text-sm text-amber-50 leading-relaxed text-justify font-medium">
                             پلتفرم تعاملی مبادله بسته‌های کاری بر مبنای متدولوژی راسکم، قراردادهای هوشمند و شفاف میان کارفرما (سرگروه‌ها) و پیمانکاران طراحی (دانشجویان).
                         </p>
                     </div>
 
-                    <div class="relative z-10 pt-6 mt-6 border-t border-white/20 flex flex-wrap gap-2 justify-between items-center text-xs text-white font-bold">
+                    <div class="relative z-10 pt-6 mt-6 border-t border-white/20 flex items-center justify-between text-xs text-white font-black">
                         <span>✈️ ۱۱ کتابچه تخصصی طراحی</span>
                         <span>🪙 تسویه بر مبنای ارزیابی نهایی</span>
                     </div>
                 </div>
 
-                <!-- کارت ۲: فرم ورود با رنگ شاد، تند، روشن و مدرن هماهنگ با خردلی (Coral Sunset) -->
-                <div class="rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border border-rose-300/40 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#ff5722] via-[#f43f5e] to-[#e11d48] text-white">
-                    <div class="absolute -top-20 -right-20 w-60 h-60 bg-amber-300/25 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-yellow-400/20 rounded-full blur-3xl pointer-events-none"></div>
+                <!-- کارت ۲: کارت شاد، تند و روشن فیروزه‌ای-اقیانوسی با کنتراست عالی کنار خردلی -->
+                <div class="rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-cyan-300/80 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#06b6d4] via-[#0284c7] to-[#0369a1] text-white">
+                    <div class="absolute -top-20 -right-20 w-60 h-60 bg-white/25 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-teal-300/25 rounded-full blur-3xl"></div>
 
-                    <div class="relative z-10 flex border-b border-white/30 mb-6">
-                        <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-amber-200 border-b-4 border-amber-300 cursor-pointer text-sm sm:text-base transition">ورود به سامانه</button>
-                        <button id="tab-signup" type="button" class="w-1/2 pb-3 font-bold text-white/70 border-b-4 border-transparent cursor-pointer text-sm sm:text-base transition">ثبت‌نام جدید</button>
+                    <div class="relative z-10 flex border-b-2 border-white/30 mb-6">
+                        <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm">ورود به سامانه</button>
+                        <button id="tab-signup" type="button" class="w-1/2 pb-3 font-bold text-cyan-100/70 border-b-4 border-transparent cursor-pointer text-sm md:text-base">ثبت‌نام جدید</button>
                     </div>
 
                     <div id="signup-extra-fields" style="display: none;" class="relative z-10 space-y-4 mb-4">
                         <div>
-                            <label class="block text-xs font-bold text-amber-100 mb-1">نام و نام خانوادگی</label>
-                            <input type="text" id="auth-name" class="w-full bg-white/20 border border-white/40 rounded-xl px-4 py-2.5 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: علی رضایی">
+                            <label class="block text-xs font-bold text-cyan-50 mb-1">نام و نام خانوادگی</label>
+                            <input type="text" id="auth-name" class="w-full bg-cyan-950/40 border-2 border-cyan-200/50 rounded-xl px-4 py-2.5 text-white placeholder-cyan-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: علی رضایی">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-amber-100 mb-1">شماره دانشجویی / پرسنلی</label>
-                            <input type="text" id="auth-std-id" class="w-full bg-white/20 border border-white/40 rounded-xl px-4 py-2.5 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: 9912345">
+                            <label class="block text-xs font-bold text-cyan-50 mb-1">شماره دانشجویی / پرسنلی</label>
+                            <input type="text" id="auth-std-id" class="w-full bg-cyan-950/40 border-2 border-cyan-200/50 rounded-xl px-4 py-2.5 text-white placeholder-cyan-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: 9912345">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-amber-100 mb-1">نقش در سامانه</label>
-                            <select id="auth-role" class="w-full bg-[#e11d48] border border-white/40 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
-                                <option value="member" class="bg-[#be123c] text-white">دانشجو (پیمانکار)</option>
-                                <option value="leader" class="bg-[#be123c] text-white">سرگروه (کارفرما)</option>
-                                <option value="professor" class="bg-[#be123c] text-white">استاد درس (رگولاتور)</option>
+                            <label class="block text-xs font-bold text-cyan-50 mb-1">نقش در سامانه</label>
+                            <select id="auth-role" class="w-full bg-cyan-950/70 border-2 border-cyan-200/50 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
+                                <option value="member" class="bg-sky-900 text-white">دانشجو (پیمانکار)</option>
+                                <option value="leader" class="bg-sky-900 text-white">سرگروه (کارفرما)</option>
+                                <option value="professor" class="bg-sky-900 text-white">استاد درس (رگولاتور)</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="relative z-10 space-y-4">
                         <div>
-                            <label class="block text-xs font-bold text-amber-100 mb-1">ایمیل دانشگاهی / کاربری</label>
-                            <input type="email" id="auth-email" class="w-full bg-white/20 border border-white/40 rounded-xl px-4 py-2.5 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="user@kntu.ac.ir">
+                            <label class="block text-xs font-bold text-cyan-50 mb-1">ایمیل دانشگاهی / کاربری</label>
+                            <input type="email" id="auth-email" class="w-full bg-cyan-950/40 border-2 border-cyan-200/50 rounded-xl px-4 py-2.5 text-white placeholder-cyan-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="user@kntu.ac.ir">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-amber-100 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
-                            <input type="password" id="auth-password" class="w-full bg-white/20 border border-white/40 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
+                            <label class="block text-xs font-bold text-cyan-50 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
+                            <input type="password" id="auth-password" class="w-full bg-cyan-950/40 border-2 border-cyan-200/50 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
                         </div>
                         
-                        <button id="auth-submit-btn" type="button" class="w-full bg-gradient-to-r from-amber-300 to-amber-400 hover:from-amber-400 hover:to-amber-500 text-[#881337] font-black py-3 rounded-xl transition duration-200 shadow-xl shadow-rose-950/20 cursor-pointer text-sm sm:text-base">ورود به سامانه</button>
+                        <button id="auth-submit-btn" type="button" class="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black py-3 rounded-xl transition duration-200 shadow-xl shadow-cyan-950/30 cursor-pointer text-sm md:text-base">ورود به سامانه</button>
                     </div>
 
-                    <div id="auth-error" class="relative z-10 text-white text-xs mt-4 text-center hidden bg-rose-950/80 p-3 rounded-xl border border-white/30 font-medium"></div>
+                    <div id="auth-error" class="relative z-10 text-rose-100 text-xs mt-4 text-center hidden bg-rose-900/80 p-3 rounded-xl border border-rose-300 font-bold"></div>
                 </div>
 
             </div>
@@ -171,7 +170,7 @@
         <!-- داشبورد اصلی کاربر -->
         <div id="dashboard-section" class="hidden space-y-6">
 
-            <!-- کارت‌های KPI واکنش‌گرا -->
+            <!-- کارت‌های KPI -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-card kpi-card p-5 rounded-3xl shadow-sm flex items-center justify-between border-slate-200">
                     <div>
@@ -319,7 +318,7 @@
                 </div>
             </section>
 
-            <!-- پنل استاد (شامل قابلیت حذف تسک و حذف کاربر) -->
+            <!-- پنل استاد با امکان حذف کاربر (دانشجو / پیمانکار) -->
             <section id="professor-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-6 border-slate-200">
                 <div>
                     <h3 class="text-base font-bold text-[#0f284e] mb-4 flex items-center">
@@ -345,14 +344,14 @@
                 </div>
 
                 <div class="pt-4 border-t border-slate-200">
-                    <h4 class="text-sm font-bold text-slate-900 mb-3">📊 وضعیت جامع تیم‌ها و مدیریت کاربران (حذف توسط استاد)</h4>
+                    <h4 class="text-sm font-bold text-slate-900 mb-3">📊 وضعیت جامع تیم‌ها و مدیریت کاربران</h4>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div class="border border-slate-200 rounded-2xl p-4 bg-white">
                             <h5 class="text-xs font-bold text-[#0f284e] mb-2">تیم‌ها و خلاصه قراردادها</h5>
                             <div id="prof-teams-summary" class="space-y-2 text-xs text-slate-600">در حال بارگذاری...</div>
                         </div>
                         <div class="border border-slate-200 rounded-2xl p-4 bg-white">
-                            <h5 class="text-xs font-bold text-amber-700 mb-2">فهرست پیمانکاران آزاد و مدیریت حساب‌ها</h5>
+                            <h5 class="text-xs font-bold text-amber-700 mb-2">فهرست پیمانکاران و حذف کاربر توسط استاد</h5>
                             <div id="prof-freelancers-list" class="space-y-2 text-xs text-slate-600">در حال بارگذاری...</div>
                         </div>
                     </div>
@@ -363,19 +362,19 @@
             <section id="leader-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-4 border-slate-200">
                 <div id="create-team-box" class="pb-4 border-b border-slate-200 hidden">
                     <h3 class="text-sm font-bold text-amber-800 mb-2">ثبت نام تیم طراحی هواپیما</h3>
-                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 sm:space-x-reverse">
-                        <input type="text" id="team-name-input" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs w-full sm:w-80 text-slate-800" placeholder="نام تیم (مثلاً: تیم ققنوس)">
-                        <button id="register-team-btn" type="button" class="bg-[#0f284e] hover:bg-[#193a6b] text-white px-4 py-2 sm:py-0 rounded-xl text-xs font-bold transition cursor-pointer shadow-sm">ثبت تیم</button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <input type="text" id="team-name-input" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs w-80 text-slate-800" placeholder="نام تیم (مثلاً: تیم ققنوس)">
+                        <button id="register-team-btn" type="button" class="bg-[#0f284e] hover:bg-[#193a6b] text-white px-4 rounded-xl text-xs font-bold transition cursor-pointer shadow-sm">ثبت تیم</button>
                     </div>
                 </div>
 
                 <h3 class="text-sm font-black text-[#0f284e]">➕ تعریف بسته کاری جدید برای تیم</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">کتابچه</label>
                         <select id="task-booklet-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></select>
                     </div>
-                    <div class="sm:col-span-2">
+                    <div class="md:col-span-2">
                         <label class="block text-xs font-bold text-slate-600 mb-1">عنوان بسته کاری و شرح تسک</label>
                         <input type="text" id="task-title-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="مثلاً: استخراج قطبی پسا و CLmax بر اساس روش روزکام">
                     </div>
@@ -389,14 +388,14 @@
                 </div>
             </section>
 
-            <!-- بازار تسک‌های باز با رنگ‌های پررنگ و تفکیک‌شده و عنوان درشت‌تر کتابچه‌ها -->
-            <section class="glass-card p-4 sm:p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b border-slate-200">
+            <!-- بازار تسک‌های باز با رنگ‌های پررنگ‌تر، عنوان کتابچه بزرگتر و امکان حذف توسط استاد -->
+            <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
+                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500 ml-2 animate-pulse"></span>
                         📋 بازار تسک‌های باز و نیازمند پیمانکار
                     </h3>
-                    <span class="text-xs text-slate-500 font-medium">کارت‌ها با رنگ‌های پررنگ اختصاصی هر تیم، عنوان درشت کتابچه و امکان حذف توسط استاد یا کارفرما</span>
+                    <span class="text-xs text-slate-500 font-medium">کارت‌های پررنگ و مجزا برای هر تیم با قابلیت مدیریت و حذف توسط استاد درس</span>
                 </div>
 
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -405,8 +404,8 @@
             </section>
 
             <!-- قراردادهای هوشمند -->
-            <section class="glass-card p-4 sm:p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b border-slate-200">
+            <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
+                <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
                         📜 قراردادهای هوشمند و چرخه بررسی گزارش‌ها
@@ -414,8 +413,8 @@
                     <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">نمایش قراردادها بر اساس سطح دسترسی و نقش شما</span>
                 </div>
 
-                <div class="overflow-x-auto -mx-2 sm:mx-0">
-                    <table class="w-full text-right text-xs min-w-[640px]">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right text-xs">
                         <thead class="bg-slate-100/90 text-slate-700 border-b border-slate-200">
                             <tr>
                                 <th class="p-3 font-bold">کتابچه</th>
@@ -506,8 +505,8 @@
 
     document.getElementById('tab-login').onclick = function() {
         currentMode = 'login';
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-black text-amber-200 border-b-4 border-amber-300 cursor-pointer text-sm sm:text-base transition";
-        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-white/70 border-b-4 border-transparent cursor-pointer text-sm sm:text-base transition";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-cyan-100/70 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
         document.getElementById('signup-extra-fields').style.display = 'none';
         document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
         document.getElementById('auth-error').classList.add('hidden');
@@ -515,8 +514,8 @@
 
     document.getElementById('tab-signup').onclick = function() {
         currentMode = 'signup';
-        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-black text-amber-200 border-b-4 border-amber-300 cursor-pointer text-sm sm:text-base transition";
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-white/70 border-b-4 border-transparent cursor-pointer text-sm sm:text-base transition";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-cyan-100/70 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
         document.getElementById('signup-extra-fields').style.display = 'block';
         document.getElementById('auth-submit-btn').innerText = "ایجاد حساب کاربری";
         document.getElementById('auth-error').classList.add('hidden');
@@ -600,8 +599,8 @@
             if (userProfile.role === 'professor') {
                 document.getElementById('professor-panel').classList.remove('hidden');
                 document.getElementById('stat-team').innerText = "ناظر عالی (استاد)";
-                loadTeamsForProfessor();
-                loadProfessorSummary();
+                await loadTeamsForProfessor();
+                await loadProfessorSummary();
             } else if (userProfile.role === 'leader') {
                 document.getElementById('leader-panel').classList.remove('hidden');
                 document.getElementById('leader-budget-panel').classList.remove('hidden');
@@ -687,56 +686,56 @@
     }
     document.getElementById('create-task-btn').onclick = createTask;
 
-    // ۲. پالت رنگ‌های پررنگ‌تر، بسیار تفکیک‌شده و با کنتراست بالا برای هر تیم
+    // پالت‌های رنگی به مراتب پررنگ‌تر، متمایزتر و اشباع‌شده‌تر برای تفکیک واضح کارت‌های تیم‌ها
     var colorPalettes = [
         {
-            // ۱. سبز زمردی پررنگ و زنده
+            // ۱. سبز پررنگ و باطراوت
             bgStyle: "background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 100%);",
             borderStyle: "border: 2.5px solid #059669;",
             textStyle: "color: #064e3b;",
-            badgeStyle: "background-color: #047857; color: #ffffff; border: 1.5px solid #065f46;"
+            badgeStyle: "background-color: #059669; color: #ffffff; border: 1.5px solid #047857;"
         },
         {
-            // ۲. آبی آسمانی پررنگ و باطراوت
+            // ۲. آبی آسمانی/اقیانوسی پررنگ
             bgStyle: "background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);",
             borderStyle: "border: 2.5px solid #0284c7;",
-            textStyle: "color: #0c4a6e;",
-            badgeStyle: "background-color: #0369a1; color: #ffffff; border: 1.5px solid #075985;"
+            textStyle: "color: #075985;",
+            badgeStyle: "background-color: #0284c7; color: #ffffff; border: 1.5px solid #0369a1;"
         },
         {
-            // ۳. خردلی / کهربایی گرم و پررنگ
+            // ۳. دودی و خاکستری پررنگ مدرن
+            bgStyle: "background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);",
+            borderStyle: "border: 2.5px solid #475569;",
+            textStyle: "color: #0f172a;",
+            badgeStyle: "background-color: #475569; color: #ffffff; border: 1.5px solid #334155;"
+        },
+        {
+            // ۴. خردلی/کهربایی پررنگ و عمیق
             bgStyle: "background: linear-gradient(135deg, #fffbeb 0%, #fde68a 100%);",
             borderStyle: "border: 2.5px solid #d97706;",
             textStyle: "color: #78350f;",
-            badgeStyle: "background-color: #b45309; color: #ffffff; border: 1.5px solid #92400e;"
+            badgeStyle: "background-color: #d97706; color: #ffffff; border: 1.5px solid #b45309;"
         },
         {
-            // ۴. بنفش ارغوانی جذاب و پررنگ
-            bgStyle: "background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 100%);",
+            // ۵. بنفش پررنگ و گیرا
+            bgStyle: "background: linear-gradient(135deg, #faf5ff 0%, #ddd6fe 100%);",
             borderStyle: "border: 2.5px solid #7c3aed;",
             textStyle: "color: #4c1d95;",
-            badgeStyle: "background-color: #6d28d9; color: #ffffff; border: 1.5px solid #5b21b6;"
+            badgeStyle: "background-color: #7c3aed; color: #ffffff; border: 1.5px solid #6d28d9;"
         },
         {
-            // ۵. رز / تمشکی تند و پررنگ
+            // ۶. زرشکی/رز پررنگ و جذاب
             bgStyle: "background: linear-gradient(135deg, #fff1f2 0%, #fecdd3 100%);",
             borderStyle: "border: 2.5px solid #e11d48;",
             textStyle: "color: #881337;",
-            badgeStyle: "background-color: #be123c; color: #ffffff; border: 1.5px solid #9f1239;"
-        },
-        {
-            // ۶. سرمه‌ای / خاکستری تیره متمایز
-            bgStyle: "background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);",
-            borderStyle: "border: 2.5px solid #334155;",
-            textStyle: "color: #0f172a;",
-            badgeStyle: "background-color: #1e293b; color: #ffffff; border: 1.5px solid #0f172a;"
+            badgeStyle: "background-color: #e11d48; color: #ffffff; border: 1.5px solid #be123c;"
         }
     ];
 
     var teamColorMapping = {};
 
     function getTeamColor(teamId) {
-        if (!teamId) return colorPalettes[0];
+        if (!teamId) return colorPalettes[2];
         if (teamColorMapping[teamId]) return teamColorMapping[teamId];
 
         var hash = 0;
@@ -748,6 +747,7 @@
         return teamColorMapping[teamId];
     }
 
+    // بارگذاری بازار تسک‌ها به صورت کارت‌های پررنگ و عنوان درشت کتابچه
     async function loadTasks() {
         var sb = getSupabaseClient();
         
@@ -778,9 +778,9 @@
             var commentsListHtml = '';
             if (comments && comments.length > 0) {
                 comments.forEach(function(c) {
-                    var roleBadge = c.role === 'leader' ? '<span class="text-[#0f284e] font-bold">[سرگروه]</span>' : (c.role === 'professor' ? '<span class="text-rose-700 font-bold">[استاد]</span>' : '<span class="text-slate-600 font-bold">[پیمانکار]</span>');
+                    var roleBadge = c.role === 'leader' ? '<span class="text-[#0f284e] font-bold">[سرگروه]</span>' : '<span class="text-slate-600 font-bold">[پیمانکار]</span>';
                     var propCoin = c.proposed_coins ? '<span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.2 rounded font-bold mr-1">پیشنهاد: ' + c.proposed_coins + ' سکه</span>' : '';
-                    commentsListHtml += '<div class="bg-white/90 rounded-lg p-1.5 text-[11px] mb-1.5 border border-slate-200 shadow-xs">' +
+                    commentsListHtml += '<div class="bg-white/95 rounded-lg p-1.5 text-[11px] mb-1.5 border border-slate-300 shadow-xs">' +
                         '<div class="flex justify-between">' + roleBadge + ' <span class="text-slate-800 font-semibold">' + c.author_name + '</span>' + propCoin + '</div>' +
                         '<p class="text-slate-600 mt-0.5">' + c.message + '</p>' +
                         '</div>';
@@ -793,12 +793,7 @@
             var isProfessor = (userProfile.role === 'professor');
 
             var actionArea = '';
-            // ۳. قابلیت حذف تسک توسط استاد درس و کارفرما
-            if (isProfessor) {
-                actionArea = '<div class="flex space-x-2 space-x-reverse">' +
-                    '<button onclick="deleteTask(\'' + t.id + '\')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-black py-2 rounded-xl transition shadow-md">🗑️ حذف تسک توسط استاد درس</button>' +
-                    '</div>';
-            } else if (userProfile.role === 'member') {
+            if (userProfile.role === 'member') {
                 actionArea = '<button type="button" onclick="acceptTask(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 px-4 rounded-xl text-xs shadow-md transition duration-150 flex items-center justify-center space-x-1.5 space-x-reverse cursor-pointer">' +
                     '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' +
                     '<span>قبول سفارش و شروع همکاری</span>' +
@@ -806,38 +801,43 @@
             } else if (isOwnerLeader) {
                 actionArea = '<div class="flex space-x-2 space-x-reverse">' +
                     '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-300 shadow-xs transition">ویرایش مستقیم</button>' +
-                    '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white border border-rose-600 text-xs font-bold py-2 rounded-xl transition shadow-sm">حذف تسک</button>' +
+                    '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs font-bold py-2 rounded-xl transition">حذف تسک</button>' +
                     '</div>';
+            } else if (isProfessor) {
+                // ۳. امکان حذف تسک توسط استاد درس
+                actionArea = '<button type="button" onclick="deleteTask(\'' + t.id + '\')" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-3 rounded-xl text-xs shadow-md transition flex items-center justify-center space-x-1.5 space-x-reverse cursor-pointer">' +
+                    '<span>🗑️ حذف تسک توسط استاد</span>' +
+                    '</button>';
             } else {
-                actionArea = '<div class="text-center py-2 bg-white/70 rounded-xl text-slate-600 text-xs font-bold border border-slate-200/60">در انتظار انتخاب پیمانکار آزاد</div>';
+                actionArea = '<div class="text-center py-2 bg-white/80 rounded-xl text-slate-600 text-xs font-bold border border-slate-300">در انتظار انتخاب پیمانکار آزاد</div>';
             }
 
             var cardHtml = 
-                '<div class="interactive-card rounded-3xl p-5 sm:p-6 shadow-md flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '" id="card-' + t.id + '">' +
+                '<div class="interactive-card rounded-3xl p-5 shadow-md flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '" id="card-' + t.id + '">' +
                     '<div class="space-y-3">' +
                         '<div class="flex justify-between items-start">' +
                             '<div class="flex items-center space-x-2 space-x-reverse">' +
-                                '<div class="p-2 rounded-xl bg-white border border-slate-200 text-[#0f284e] shadow-xs">' +
-                                    '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+                                '<div class="p-2.5 rounded-xl bg-white border border-slate-300 text-[#0f284e] shadow-sm">' +
+                                    '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
                                         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />' +
                                     '</svg>' +
                                 '</div>' +
                                 '<div>' +
-                                    '<span class="text-[10px] text-slate-500 block font-bold">تیم کارفرما</span>' +
-                                    '<span class="text-sm font-black" style="' + color.textStyle + '">' + teamName + '</span>' +
+                                    '<span class="text-[10px] text-slate-600 block font-bold">تیم کارفرما</span>' +
+                                    '<span class="text-xs font-black" style="' + color.textStyle + '">' + teamName + '</span>' +
                                 '</div>' +
                             '</div>' +
-                            '<span class="text-xs font-black px-3 py-1 rounded-full shadow-sm" style="' + color.badgeStyle + '">کتابچه ' + bNum + '</span>' +
+                            '<span class="text-[11px] font-black px-3 py-1 rounded-full shadow-sm" style="' + color.badgeStyle + '">کتابچه ' + bNum + '</span>' +
                         '</div>' +
 
-                        '<!-- ۲. بزرگتر و خواناتر شدن عنوان کتابچه -->' +
-                        '<div class="text-sm sm:text-base font-black text-slate-900 border-b border-black/10 pb-1.5 leading-snug">' + bTitle + '</div>' +
+                        '<!-- ۲. عنوان کتابچه درشت‌تر و خواناتر -->' +
+                        '<div class="text-xs md:text-sm font-black text-slate-900 line-clamp-1 py-0.5" style="' + color.textStyle + '">' + bTitle + '</div>' +
 
-                        '<div id="view-section-' + t.id + '" class="p-3 bg-white/95 border border-slate-200/90 rounded-2xl text-xs sm:text-sm font-semibold text-slate-800 leading-relaxed min-h-[60px] shadow-xs">' +
+                        '<div id="view-section-' + t.id + '" class="p-3 bg-white/95 border border-slate-300 rounded-2xl text-xs font-medium text-slate-800 leading-relaxed min-h-[55px] shadow-xs">' +
                             t.title +
                         '</div>' +
 
-                        '<div id="edit-section-' + t.id + '" class="hidden space-y-2 p-3 bg-white border border-slate-300 rounded-2xl shadow-md">' +
+                        '<div id="edit-section-' + t.id + '" class="hidden space-y-2 p-3 bg-white border-2 border-slate-400 rounded-2xl shadow-md">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">ویرایش شرح تسک:</label>' +
                             '<input type="text" id="edit-title-' + t.id + '" value="' + t.title + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">ویرایش سکه:</label>' +
@@ -848,9 +848,9 @@
                             '</div>' +
                         '</div>' +
 
-                        '<div class="flex items-center justify-between pt-2 border-t border-black/10">' +
-                            '<span class="text-xs text-slate-700 font-bold">ارزش همکاری:</span>' +
-                            '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-700 text-sm sm:text-base">' +
+                        '<div class="flex items-center justify-between pt-2 border-t border-slate-300/80">' +
+                            '<span class="text-[11px] text-slate-700 font-black">ارزش همکاری:</span>' +
+                            '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-800 text-sm">' +
                                 '<svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor">' +
                                     '<ellipse cx="11" cy="9" rx="6" ry="2.5" stroke-width="1.6"/>' +
                                     '<path d="M5 9v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V9" stroke-width="1.6"/>' +
@@ -862,16 +862,16 @@
                             '</div>' +
                         '</div>' +
 
-                        '<div class="pt-2 border-t border-black/10">' +
+                        '<div class="pt-2 border-t border-slate-300/80">' +
                             '<div class="flex justify-between items-center mb-1.5">' +
-                                '<span class="text-[10px] font-bold text-slate-700">💬 گفت‌وگو و پیشنهاد قیمت:</span>' +
+                                '<span class="text-[10px] font-bold text-slate-800">💬 گفت‌وگو و پیشنهاد قیمت:</span>' +
                                 '<button onclick="toggleCommentBox(\'' + t.id + '\')" class="text-[10px] text-[#0f284e] hover:underline font-black cursor-pointer">ثبت نظر / قیمت</button>' +
                             '</div>' +
                             '<div class="max-h-24 overflow-y-auto pr-1">' + commentsListHtml + '</div>' +
 
-                            '<div id="comment-box-' + t.id + '" class="hidden mt-2 p-2 bg-white/95 border border-slate-200 rounded-xl space-y-1.5 shadow-sm">' +
-                                '<input type="text" id="comment-msg-' + t.id + '" placeholder="پیام شما..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
-                                '<input type="number" id="comment-coin-' + t.id + '" placeholder="پیشنهاد قیمت جدید (اختیاری)" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<div id="comment-box-' + t.id + '" class="hidden mt-2 p-2 bg-white border border-slate-300 rounded-xl space-y-1.5 shadow-sm">' +
+                                '<input type="text" id="comment-msg-' + t.id + '" placeholder="پیام شما..." class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
+                                '<input type="number" id="comment-coin-' + t.id + '" placeholder="پیشنهاد قیمت جدید (اختیاری)" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
                                 '<button onclick="submitTaskComment(\'' + t.id + '\')" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[11px] font-black py-1.5 rounded-lg shadow-sm">ارسال دیدگاه</button>' +
                             '</div>' +
                         '</div>' +
@@ -945,38 +945,41 @@
         }
     };
 
-    // ۳. حذف تسک با اختیارات کامل استاد و کارفرما
+    // ۳. تابع حذف تسک با دسترسی استاد درس و سرگروه صاحب تسک
     window.deleteTask = async function(taskId) {
-        if (!confirm('آیا از حذف این تسک اطمینان دارید؟ در صورت حذف، اطلاعات آن کاملاً پاک می‌شود.')) return;
+        if (!confirm('آیا از حذف این تسک اطمینان دارید؟')) return;
         var sb = getSupabaseClient();
         
         var query = sb.from('tasks').delete().eq('id', taskId);
-        // استاد می‌تواند بدون قید open نیز تسک را در صورت نیاز حذف کند
+        // اگر استاد نباشد، فقط در وضعیت open حذف مجاز است
         if (userProfile.role !== 'professor') {
             query = query.eq('status', 'open');
         }
 
         var res = await query;
-        if (res.error) showAppAlert(res.error.message, false);
-        else {
-            showAppAlert('تسک با موفقیت حذف گردید.', true);
+        if (res.error) {
+            showAppAlert('خطا در حذف تسک: ' + res.error.message, false);
+        } else {
+            showAppAlert('تسک مورد نظر با موفقیت حذف گردید.', true);
             await loadTasks();
             await loadContracts();
         }
     };
 
-    // ۳. تابع اختصاصی حذف کاربر توسط استاد درس
+    // ۳. تابع حذف کاربر (پیمانکار / دانشجو) توسط استاد درس
     window.deleteUserByProfessor = async function(userId, userName) {
-        if (!confirm('آیا از حذف کاربر «' + userName + '» از سامانه اطمینان دارید؟ تمام قراردادها و سوابق ایشان حذف خواهند شد.')) return;
+        if (!confirm('استاد گرامی، آیا از حذف کامل کاربر «' + userName + '» از سامانه اطمینان دارید؟ تمامی قراردادهای وابسته نیز حذف خواهند شد.')) return;
         var sb = getSupabaseClient();
 
+        // حذف پروفایل کاربر
         var res = await sb.from('profiles').delete().eq('id', userId);
         if (res.error) {
             showAppAlert('خطا در حذف کاربر: ' + res.error.message, false);
         } else {
-            showAppAlert('حساب کاربر «' + userName + '» با موفقیت حذف گردید.', true);
+            showAppAlert('کاربر «' + userName + '» با موفقیت توسط استاد درس حذف شد.', true);
             await loadProfessorSummary();
             await loadContracts();
+            await loadTasks();
         }
     };
 
@@ -1317,18 +1320,18 @@
             teamsSummaryDiv.innerHTML = html || 'تیمی ثبت نشده است.';
         }
 
-        // ۳. درج دکمه حذف کاربر برای استاد در لیست پیمانکاران آزاد
+        // ۳. نمایش لیست پیمانکاران به همراه دکمه اختصاصی حذف کاربر توسط استاد درس
         if (allProfilesRes.data && contractsRes.data) {
             var freeHtml = '';
             allProfilesRes.data.forEach(function(m) {
                 var memberContracts = contractsRes.data.filter(function(c) { return c.contractor_id === m.id; });
                 var count = memberContracts.length;
-                freeHtml += '<div class="bg-white p-2.5 rounded-xl border border-slate-200 flex justify-between items-center">' +
+                freeHtml += '<div class="bg-white p-3 rounded-xl border border-slate-200 flex justify-between items-center">' +
                     '<div>' +
-                    '<span class="font-bold text-slate-800">' + m.full_name + ' (' + m.student_id + ')</span>' +
-                    '<span class="text-[11px] mr-2 px-2 py-0.5 rounded ' + (count > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800') + '">' + count + ' قرارداد</span>' +
+                        '<span class="font-bold text-slate-800 block text-xs">' + m.full_name + ' (' + m.student_id + ')</span>' +
+                        '<span class="text-[10px] px-2 py-0.5 rounded mt-1 inline-block ' + (count > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800') + '">' + count + ' قرارداد فعال</span>' +
                     '</div>' +
-                    '<button onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-[10px] font-bold px-2 py-1 rounded-lg transition">حذف کاربر</button>' +
+                    '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition shadow-2xs cursor-pointer">🗑️ حذف کاربر</button>' +
                     '</div>';
             });
             freelancersDiv.innerHTML = freeHtml || 'پیمانکاری ثبت نشده است.';
