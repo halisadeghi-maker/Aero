@@ -24,12 +24,12 @@
             background-attachment: fixed;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.94);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(226, 232, 240, 0.9);
         }
-        /* نوار طلایی بالای کارت‌های KPI و پویایی حرکت با موس */
+        /* نوار طلایی بالای کارت‌های KPI و پویایی حرکت */
         .kpi-card {
             position: relative;
             overflow: hidden;
@@ -41,7 +41,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4.5px;
+            height: 5px;
             background: linear-gradient(90deg, #d97706, #fbbf24, #f59e0b, #b45309);
             border-radius: 999px 999px 0 0;
         }
@@ -56,17 +56,16 @@
         .interactive-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.09), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-            border-color: #cbd5e1;
         }
     </style>
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- نوار ناوبری اصلی با تم سرمه‌ای دانشگاه خواجه نصیر و لوگوی دانشگاه -->
-    <nav class="bg-white/95 backdrop-blur-md border-b-2 border-slate-200 px-6 py-3 flex justify-between items-center sticky top-0 z-50 shadow-sm">
-        <div class="flex items-center space-x-3 space-x-reverse">
-            <!-- لوگوی دانشگاه خواجه نصیر -->
-            <img src="kntu-logo.png" alt="لوگو دانشگاه خواجه نصیرالدین طوسی" class="w-12 h-12 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
+    <!-- نوار ناوبری اصلی با لوگوی بزرگتر دانشگاه -->
+    <nav class="bg-white/95 backdrop-blur-md border-b-2 border-slate-200 px-6 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
+        <div class="flex items-center space-x-3.5 space-x-reverse">
+            <!-- ۴. لوگوی دانشگاه بزرگتر شده -->
+            <img src="kntu-logo.png" alt="لوگو دانشگاه خواجه نصیرالدین طوسی" class="w-16 h-16 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
             <div>
                 <h1 class="font-black text-base md:text-lg text-[#0f284e]">بازار کار درس طراحی هواپیمای دکتر علیصادقی</h1>
                 <p class="text-xs text-amber-700 font-bold tracking-tight">دانشگاه صنعتی خواجه نصیرالدین طوسی</p>
@@ -80,50 +79,51 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- ۱. صفحه ورود و ثبت‌نام دو کارته (کارت برندینگ + کارت فرم ورود) -->
+        <!-- ۱. صفحه ورود دوکارته با تم خردلی جذاب و مدرن -->
         <section id="auth-section" class="max-w-4xl mx-auto mt-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 
-                <!-- کارت ۱: معرفی و پرسونای درس (سبز تیره / خردلی / سرمه‌ای دانشگاه) -->
-                <div class="rounded-3xl p-8 shadow-xl flex flex-col justify-between text-white relative overflow-hidden bg-gradient-to-br from-[#0f284e] via-[#163a6f] to-[#044343] border border-[#1e467d]">
-                    <div class="absolute -top-16 -left-16 w-44 h-44 bg-amber-500/15 rounded-full blur-2xl"></div>
-                    <div class="absolute -bottom-16 -right-16 w-44 h-44 bg-emerald-500/20 rounded-full blur-2xl"></div>
+                <!-- کارت ۱: کارت برندینگ خردلی جذاب و مدرن -->
+                <div class="rounded-3xl p-8 shadow-xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#d97706] to-[#b45309] border border-amber-300">
+                    <div class="absolute -top-16 -left-16 w-48 h-48 bg-white/20 rounded-full blur-2xl"></div>
+                    <div class="absolute -bottom-16 -right-16 w-48 h-48 bg-amber-200/20 rounded-full blur-2xl"></div>
 
                     <div class="relative z-10 space-y-5">
                         <div class="flex items-center space-x-3 space-x-reverse">
                             <div class="p-2.5 bg-white rounded-2xl shadow-md inline-block">
-                                <img src="kntu-logo.png" alt="لوگو دانشگاه" class="w-12 h-12 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
+                                <img src="kntu-logo.png" alt="لوگو دانشگاه" class="w-16 h-16 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
                             </div>
                             <div>
-                                <span class="text-amber-300 text-xs font-bold block">دانشگاه صنعتی خواجه نصیرالدین طوسی</span>
-                                <span class="text-slate-200 text-[11px]">دانشکده مهندسی هوافضا</span>
+                                <span class="text-white text-xs font-black block drop-shadow-sm">دانشگاه صنعتی خواجه نصیرالدین طوسی</span>
+                                <span class="text-amber-100 text-[11px] font-semibold">دانشکده مهندسی هوافضا</span>
                             </div>
                         </div>
 
-                        <div class="pt-4 border-t border-white/10 space-y-2">
-                            <h2 class="text-lg md:text-xl font-black text-amber-400 leading-snug">
+                        <div class="pt-4 border-t border-white/20 space-y-2">
+                            <h2 class="text-lg md:text-xl font-black text-white leading-snug drop-shadow-sm">
                                 کلاس طراحی هواپیمای دکتر حامد علیصادقی
                             </h2>
-                            <p class="text-sm md:text-base font-bold text-slate-100">
+                            <p class="text-sm md:text-base font-black text-amber-100">
                                 بازار کار پروژه درس طراحی هواپیما
                             </p>
                         </div>
 
-                        <p class="text-xs text-slate-300/90 leading-relaxed text-justify">
-                            پلتفرم تعاملی مبادله بسته‌های کاری بر مبنای متدولوژی روزکام، اقتصاد هوشمند کلاسی و قراردادهای شفاف میان سرگروه‌ها و پیمانکاران طراحی.
+                        <!-- متن اصلاح‌شده بند ۱ -->
+                        <p class="text-xs text-amber-50 leading-relaxed text-justify font-medium">
+                            پلتفرم تعاملی مبادله بسته‌های کاری بر مبنای متدولوژی راسکم، قراردادهای هوشمند و شفاف میان کارفرما (سرگروه‌ها) و پیمانکاران طراحی (دانشجویان).
                         </p>
                     </div>
 
-                    <div class="relative z-10 pt-6 mt-6 border-t border-white/10 flex items-center justify-between text-xs text-amber-200/90 font-medium">
-                        <span>✈️ ۱۱ کتابچه استاندارد طراحی</span>
+                    <div class="relative z-10 pt-6 mt-6 border-t border-white/20 flex items-center justify-between text-xs text-white font-bold">
+                        <span>✈️ ۱۱ کتابچه تخصصی طراحی</span>
                         <span>🪙 تسویه بر مبنای ارزیابی نهایی</span>
                     </div>
                 </div>
 
-                <!-- کارت ۲: فرم ورود و ثبت‌نام با تم خردلی / سرمه‌ای ملایم -->
+                <!-- کارت ۲: فرم ورود و ثبت‌نام با رنگ‌بندی روشن مدرن -->
                 <div class="glass-card p-8 rounded-3xl shadow-xl border border-slate-200 flex flex-col justify-center">
                     <div class="flex border-b border-slate-200 mb-6">
-                        <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-[#0f284e] border-b-2 border-amber-500 cursor-pointer text-sm">ورود به سامانه</button>
+                        <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-[#0f284e] border-b-2 border-amber-500 cursor-pointer text-sm">ورود به سامانه</button>
                         <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer text-sm">ثبت‌نام جدید</button>
                     </div>
 
@@ -168,14 +168,14 @@
         <!-- ۲. داشبورد اصلی کاربر -->
         <div id="dashboard-section" class="hidden space-y-6">
 
-            <!-- کارت‌های KPI پویا با نوار طلایی در بالا -->
+            <!-- کارت‌های KPI پویا با نوار طلایی -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-card kpi-card p-5 rounded-3xl shadow-sm flex items-center justify-between border-slate-200">
                     <div>
                         <span class="text-slate-500 text-xs font-bold">نقش شما در سامانه</span>
                         <h3 id="stat-role" class="text-base font-black text-[#0f284e] mt-1">-</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-slate-100 border border-slate-200 text-[#0f284e] flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 text-[#0f284e] flex items-center justify-center">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -187,7 +187,7 @@
                         <span class="text-slate-500 text-xs font-bold">تیم طراحی هواپیما</span>
                         <h3 id="stat-team" class="text-base font-black text-[#0f284e] mt-1">-</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-slate-100 border border-slate-200 text-[#0f284e] flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-50 border border-sky-100 text-[#0f284e] flex items-center justify-center">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -201,14 +201,13 @@
                             <h3 id="stat-contracts" class="text-lg font-black text-[#0f284e]">۰</h3>
                         </div>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-slate-100 border border-slate-200 text-[#0f284e] flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                     </div>
                 </div>
 
-                <!-- آیکون چند سکه روی هم و نوار طلایی -->
                 <div class="glass-card kpi-card p-5 rounded-3xl shadow-sm flex items-center justify-between border-slate-200">
                     <div>
                         <span class="text-slate-500 text-xs font-bold">سکه تسویه‌شده</span>
@@ -229,7 +228,7 @@
                 </div>
             </div>
 
-            <!-- ۲. نمودار دوناتی مدرن مصرف و باقیمانده بودجه کارفرما (۱۴۰۰ سکه) -->
+            <!-- نمودار دوناتی بودجه کارفرما -->
             <section id="leader-budget-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="space-y-2 text-right">
@@ -251,12 +250,9 @@
                         </div>
                     </div>
 
-                    <!-- چارت دوناتی وکتوری SVG -->
                     <div class="relative w-36 h-36 flex items-center justify-center flex-shrink-0">
                         <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                            <!-- دایره پس‌زمینه (باقیمانده) -->
                             <circle cx="50" cy="50" r="38" stroke="#f59e0b" stroke-width="14" fill="transparent" class="transition-all duration-700"/>
-                            <!-- کمان جلو (صرف‌شده) -->
                             <circle id="donut-circle-spent" cx="50" cy="50" r="38" stroke="#0f284e" stroke-width="14" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="238.76" stroke-linecap="round" class="transition-all duration-700"/>
                         </svg>
                         <div class="absolute text-center">
@@ -267,30 +263,59 @@
                 </div>
             </section>
 
-            <!-- مخزن سکه دانشجو (پیمانکار) -->
-            <section id="member-tank-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <!-- ۳. کیف سکه دانشجو (پیمانکار) دوگانه (قرارداد بسته شده و تایید نهایی) -->
+            <section id="member-tank-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h3 class="text-sm font-black text-[#0f284e] flex items-center gap-2">
-                            <span>🪣</span> مخزن ذخیره سکه دانشجو (هدف نمره کامل: ۲۰۰ سکه)
+                        <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
+                            <span>👛</span> کیف سکه دانشجو (هدف نمره کامل: ۲۰۰ سکه | کف قبولی: ۱۵۰ سکه)
                         </h3>
-                        <p class="text-xs text-slate-500 mt-1">حداقل مجاز دوره: ۱۵۰ سکه | نمره کامل: ۲۰۰ سکه | حداکثر سقف ممکن: ۲۵۰ سکه</p>
+                        <p class="text-xs text-slate-500 mt-1">تفکیک وضعیت سکه‌های متعهدشده در قراردادها و سکه‌های نهایی تایید و تسویه‌شده</p>
                     </div>
                     <div id="tank-badge-status" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 border border-slate-200">
                         در حال محاسبه...
                     </div>
                 </div>
 
-                <div class="relative w-full bg-slate-100 rounded-2xl h-8 overflow-hidden border border-slate-200 p-1">
-                    <div class="absolute top-0 bottom-0 left-[60%] w-0.5 border-r border-dashed border-amber-500 z-10" title="حداقل مجاز (۱۵۰)"></div>
-                    <div class="absolute top-0 bottom-0 left-[20%] w-0.5 border-r border-dashed border-emerald-600 z-10" title="هدف نمره کامل (۲۰۰)"></div>
-                    <div id="tank-fill-bar" class="h-full rounded-xl bg-gradient-to-r from-amber-400 via-emerald-500 to-teal-600 transition-all duration-700" style="width: 0%;"></div>
-                </div>
-                <div class="flex justify-between text-[11px] text-slate-500 mt-2 font-bold">
-                    <span>۰ سکه</span>
-                    <span class="text-amber-600">کف مجاز: ۱۵۰ سکه</span>
-                    <span class="text-emerald-700">هدف نمره کامل: ۲۰۰ سکه</span>
-                    <span class="text-teal-700">سقف مجاز: ۲۵۰ سکه</span>
+                <!-- مخزن گرافیکی دوگانه کیف سکه -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <!-- بخش ۱: سکه‌های قرارداد بسته شده -->
+                    <div class="bg-slate-50/90 border border-slate-200 rounded-2xl p-4 space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-700 flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full bg-blue-500"></span> سکه‌های قرارداد بسته شده (تعهد فعلی)
+                            </span>
+                            <span id="wallet-committed-text" class="font-black text-blue-700 text-sm">۰ سکه</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-3.5 overflow-hidden">
+                            <div id="wallet-committed-bar" class="bg-gradient-to-r from-blue-400 to-indigo-600 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400 font-bold">
+                            <span>۰</span>
+                            <span>کف: ۱۵۰</span>
+                            <span>هدف: ۲۰۰</span>
+                            <span>سقف: ۲۵۰</span>
+                        </div>
+                    </div>
+
+                    <!-- بخش ۲: سکه‌های تایید شده و تسویه نهایی -->
+                    <div class="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-amber-900 flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full bg-amber-500"></span> سکه‌های حاصل‌شده و تایید نهایی استاد
+                            </span>
+                            <span id="wallet-final-text" class="font-black text-amber-600 text-sm">۰ سکه</span>
+                        </div>
+                        <div class="w-full bg-amber-100 rounded-full h-3.5 overflow-hidden">
+                            <div id="wallet-final-bar" class="bg-gradient-to-r from-amber-400 via-amber-500 to-emerald-500 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-amber-800/60 font-bold">
+                            <span>۰</span>
+                            <span>کف: ۱۵۰</span>
+                            <span>هدف: ۲۰۰</span>
+                            <span>سقف: ۲۵۰</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -364,14 +389,14 @@
                 </div>
             </section>
 
-            <!-- ۳. بازار تسک‌های باز -->
+            <!-- ۲. بازار تسک‌های باز با رنگ‌بندی اختصاصی هر تیم -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500 ml-2 animate-pulse"></span>
                         📋 بازار تسک‌های باز و نیازمند پیمانکار
                     </h3>
-                    <span class="text-xs text-slate-500 font-medium">پیمانکاران و کارفرمایان می‌توانند روی هر کارت گفتگو و پیشنهاد قیمت ثبت کنند</span>
+                    <span class="text-xs text-slate-500 font-medium">کارت‌های هر تیم دارای رنگ‌بندی اختصاصی، تعاملی و مذاکره قیمت هستند</span>
                 </div>
 
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -379,7 +404,7 @@
                 </div>
             </section>
 
-            <!-- ۴. قراردادهای هوشمند -->
+            <!-- ۴. قراردادهای هوشمند و چرخه بررسی -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
@@ -412,10 +437,26 @@
 
     </main>
 
-    <!-- فوتر با درج عبارت مالکیت دانشگاه صنعتی خواجه نصیرالدین طوسی -->
+    <!-- فوتر دانشگاه خواجه نصیرالدین طوسی -->
     <footer class="bg-white/95 border-t border-slate-200 mt-12 py-4 px-6 text-center text-xs text-slate-600 font-medium">
         کلیه حقوق مادی و معنوی این سایت متعلق به دانشگاه صنعتی خواجه نصیر الدین طوسی می باشد.
     </footer>
+
+    <!-- ۴. مودال پیام و پنجره اخطار اختصاصی جذاب با عنوان «استاد درس» -->
+    <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center transform transition-all scale-100">
+            <div id="modal-icon-container" class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-indigo-50 text-indigo-600">
+                🔔
+            </div>
+            <div>
+                <h4 id="modal-title" class="text-base font-black text-[#0f284e]">استاد درس</h4>
+                <p id="modal-message" class="text-xs text-slate-600 mt-2 leading-relaxed whitespace-pre-line"></p>
+            </div>
+            <div class="pt-2">
+                <button type="button" onclick="closeCustomModal()" class="w-full bg-[#0f284e] hover:bg-[#1a3f74] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition">متوجه شدم</button>
+            </div>
+        </div>
+    </div>
 
 <script>
     var currentMode = 'login';
@@ -436,13 +477,37 @@
         return client;
     }
 
+    // ۴. پنجره اخطار و پیام رنگی جذاب به جای نام کاربر گیت‌هاب با عنوان "استاد درس"
+    window.showAppAlert = function(msg, isSuccess) {
+        var modal = document.getElementById('custom-modal');
+        var modalMsg = document.getElementById('modal-message');
+        var modalTitle = document.getElementById('modal-title');
+        var iconCont = document.getElementById('modal-icon-container');
+
+        modalTitle.innerText = "استاد درس";
+        modalMsg.innerText = msg;
+
+        if (isSuccess) {
+            iconCont.className = "w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-emerald-50 text-emerald-600 border border-emerald-200";
+            iconCont.innerText = "✓";
+        } else {
+            iconCont.className = "w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200";
+            iconCont.innerText = "⚠️";
+        }
+        modal.classList.remove('hidden');
+    };
+
+    window.closeCustomModal = function() {
+        document.getElementById('custom-modal').classList.add('hidden');
+    };
+
     var currentUser = null;
     var userProfile = null;
     var currentTeam = null;
 
     document.getElementById('tab-login').onclick = function() {
         currentMode = 'login';
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-[#0f284e] border-b-2 border-amber-500 cursor-pointer text-sm";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-black text-[#0f284e] border-b-2 border-amber-500 cursor-pointer text-sm";
         document.getElementById('tab-signup').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer text-sm";
         document.getElementById('signup-extra-fields').style.display = 'none';
         document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
@@ -501,7 +566,7 @@
                 ]);
             }
 
-            alert('ثبت‌نام با موفقیت انجام شد!');
+            showAppAlert('ثبت‌نام با موفقیت انجام شد!', true);
             await initDashboard();
         }
     };
@@ -566,15 +631,15 @@
     async function registerTeam() {
         var sb = getSupabaseClient();
         var name = document.getElementById('team-name-input').value.trim();
-        if (!name) return alert('نام تیم را وارد کنید.');
+        if (!name) return showAppAlert('نام تیم را وارد کنید.', false);
 
         var res = await sb.from('teams').insert([{ name: name, leader_id: currentUser.id }]).select().single();
-        if (res.error) alert(res.error.message);
+        if (res.error) showAppAlert(res.error.message, false);
         else {
             currentTeam = res.data;
             document.getElementById('create-team-box').classList.add('hidden');
             document.getElementById('stat-team').innerText = res.data.name;
-            alert('تیم با موفقیت ایجاد شد.');
+            showAppAlert('تیم با موفقیت ایجاد شد.', true);
             await loadTasks();
             await loadContracts();
         }
@@ -598,12 +663,12 @@
 
     async function createTask() {
         var sb = getSupabaseClient();
-        if (!currentTeam) return alert('ابتدا تیم خود را ثبت کنید.');
+        if (!currentTeam) return showAppAlert('ابتدا تیم خود را ثبت کنید.', false);
         var bookletId = document.getElementById('task-booklet-select').value;
         var title = document.getElementById('task-title-input').value.trim();
         var coins = document.getElementById('task-coins-input').value;
 
-        if (!title || !coins) return alert('تمام فیلدها را پر کنید.');
+        if (!title || !coins) return showAppAlert('تمام فیلدها را پر کنید.', false);
 
         var res = await sb.from('tasks').insert([{
             team_id: currentTeam.id,
@@ -613,7 +678,7 @@
             status: 'open'
         }]);
 
-        if (res.error) alert(res.error.message);
+        if (res.error) showAppAlert(res.error.message, false);
         else {
             document.getElementById('task-title-input').value = '';
             document.getElementById('task-coins-input').value = '';
@@ -622,6 +687,24 @@
         }
     }
     document.getElementById('create-task-btn').onclick = createTask;
+
+    // ۲. پالت رنگ‌های مدرن و اختصاصی برای هر تیم (تیم ۱ سبز، تیم ۲ آبی، تیم ۳ خاکستری، تیم ۴ خردلی، ...)
+    function getTeamColorScheme(teamId) {
+        var schemes = [
+            { bg: "bg-emerald-50/70", border: "border-emerald-200", text: "text-emerald-800", badge: "bg-emerald-100 text-emerald-800 border-emerald-300" },
+            { bg: "bg-sky-50/70", border: "border-sky-200", text: "text-sky-800", badge: "bg-sky-100 text-sky-800 border-sky-300" },
+            { bg: "bg-slate-100/70", border: "border-slate-300", text: "text-slate-800", badge: "bg-slate-200 text-slate-800 border-slate-300" },
+            { bg: "bg-amber-50/80", border: "border-amber-200", text: "text-amber-800", badge: "bg-amber-100 text-amber-800 border-amber-300" },
+            { bg: "bg-violet-50/70", border: "border-violet-200", text: "text-violet-800", badge: "bg-violet-100 text-violet-800 border-violet-300" },
+            { bg: "bg-teal-50/70", border: "border-teal-200", text: "text-teal-800", badge: "bg-teal-100 text-teal-800 border-teal-300" }
+        ];
+        var hash = 0;
+        if (teamId) {
+            for (var i = 0; i < teamId.length; i++) hash = teamId.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        var index = Math.abs(hash) % schemes.length;
+        return schemes[index];
+    }
 
     async function loadTasks() {
         var sb = getSupabaseClient();
@@ -645,13 +728,15 @@
             var bNum = t.booklets ? t.booklets.booklet_number : '-';
             var bTitle = t.booklets ? t.booklets.title : 'کتابچه طراحی';
 
+            var color = getTeamColorScheme(t.team_id);
+
             var { data: comments } = await sb.from('task_comments').select('*').eq('task_id', t.id).order('created_at', { ascending: true });
             var commentsListHtml = '';
             if (comments && comments.length > 0) {
                 comments.forEach(function(c) {
                     var roleBadge = c.role === 'leader' ? '<span class="text-[#0f284e] font-bold">[سرگروه]</span>' : '<span class="text-slate-600 font-bold">[پیمانکار]</span>';
                     var propCoin = c.proposed_coins ? '<span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.2 rounded font-bold mr-1">پیشنهاد: ' + c.proposed_coins + ' سکه</span>' : '';
-                    commentsListHtml += '<div class="bg-slate-100 rounded-lg p-1.5 text-[11px] mb-1.5 border border-slate-200">' +
+                    commentsListHtml += '<div class="bg-white/80 rounded-lg p-1.5 text-[11px] mb-1.5 border border-slate-200 shadow-2xs">' +
                         '<div class="flex justify-between">' + roleBadge + ' <span class="text-slate-800 font-semibold">' + c.author_name + '</span>' + propCoin + '</div>' +
                         '<p class="text-slate-600 mt-0.5">' + c.message + '</p>' +
                         '</div>';
@@ -670,51 +755,51 @@
                     '</button>';
             } else if (isOwnerLeader) {
                 actionArea = '<div class="flex space-x-2 space-x-reverse">' +
-                    '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold py-2 rounded-xl transition">ویرایش مستقیم</button>' +
+                    '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-200 shadow-2xs transition">ویرایش مستقیم</button>' +
                     '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold py-2 rounded-xl transition">حذف تسک</button>' +
                     '</div>';
             } else {
-                actionArea = '<div class="text-center py-2 bg-slate-100 rounded-xl text-slate-500 text-xs font-medium">در انتظار انتخاب پیمانکار آزاد</div>';
+                actionArea = '<div class="text-center py-2 bg-white/70 rounded-xl text-slate-500 text-xs font-medium border border-slate-200/60">در انتظار انتخاب پیمانکار آزاد</div>';
             }
 
             var cardHtml = 
-                '<div class="interactive-card bg-white/95 border border-slate-200 rounded-3xl p-5 shadow-sm flex flex-col justify-between" id="card-' + t.id + '">' +
+                '<div class="interactive-card ' + color.bg + ' ' + color.border + ' border rounded-3xl p-5 shadow-sm flex flex-col justify-between" id="card-' + t.id + '">' +
                     '<div class="space-y-3">' +
                         '<div class="flex justify-between items-start">' +
                             '<div class="flex items-center space-x-2 space-x-reverse">' +
-                                '<div class="p-2 rounded-xl bg-slate-100 border border-slate-200 text-[#0f284e]">' +
+                                '<div class="p-2 rounded-xl bg-white border border-slate-200 text-[#0f284e] shadow-2xs">' +
                                     '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
                                         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />' +
                                     '</svg>' +
                                 '</div>' +
                                 '<div>' +
-                                    '<span class="text-[10px] text-slate-400 block font-medium">تیم کارفرما</span>' +
-                                    '<span class="text-xs font-black text-[#0f284e]">' + teamName + '</span>' +
+                                    '<span class="text-[10px] text-slate-500 block font-bold">تیم کارفرما</span>' +
+                                    '<span class="text-xs font-black ' + color.text + '">' + teamName + '</span>' +
                                 '</div>' +
                             '</div>' +
-                            '<span class="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-black px-2.5 py-1 rounded-full">کتابچه ' + bNum + '</span>' +
+                            '<span class="' + color.badge + ' border text-[10px] font-black px-2.5 py-1 rounded-full shadow-2xs">کتابچه ' + bNum + '</span>' +
                         '</div>' +
 
-                        '<div class="text-[11px] font-bold text-slate-500 line-clamp-1">' + bTitle + '</div>' +
+                        '<div class="text-[11px] font-bold text-slate-600 line-clamp-1">' + bTitle + '</div>' +
 
-                        '<div id="view-section-' + t.id + '" class="p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-medium text-slate-800 leading-relaxed min-h-[55px]">' +
+                        '<div id="view-section-' + t.id + '" class="p-3 bg-white/90 border border-slate-200/90 rounded-2xl text-xs font-medium text-slate-800 leading-relaxed min-h-[55px] shadow-2xs">' +
                             t.title +
                         '</div>' +
 
-                        '<div id="edit-section-' + t.id + '" class="hidden space-y-2 p-3 bg-slate-100 border border-slate-300 rounded-2xl">' +
+                        '<div id="edit-section-' + t.id + '" class="hidden space-y-2 p-3 bg-white border border-slate-300 rounded-2xl shadow-md">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">ویرایش شرح تسک:</label>' +
-                            '<input type="text" id="edit-title-' + t.id + '" value="' + t.title + '" class="w-full bg-white border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<input type="text" id="edit-title-' + t.id + '" value="' + t.title + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">ویرایش سکه:</label>' +
-                            '<input type="number" id="edit-coins-' + t.id + '" value="' + t.allocated_nominal_coins + '" class="w-full bg-white border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<input type="number" id="edit-coins-' + t.id + '" value="' + t.allocated_nominal_coins + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
                             '<div class="flex gap-2">' +
                                 '<button onclick="saveCardEdit(\'' + t.id + '\')" class="w-1/2 bg-emerald-600 text-white text-[11px] font-bold py-1.5 rounded-lg">ذخیره</button>' +
-                                '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-slate-300 text-slate-700 text-[11px] font-bold py-1.5 rounded-lg">انصراف</button>' +
+                                '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 rounded-lg">انصراف</button>' +
                             '</div>' +
                         '</div>' +
 
-                        '<div class="flex items-center justify-between pt-2 border-t border-slate-100">' +
-                            '<span class="text-[11px] text-slate-500 font-medium">ارزش همکاری:</span>' +
-                            '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-600 text-sm">' +
+                        '<div class="flex items-center justify-between pt-2 border-t border-slate-200/60">' +
+                            '<span class="text-[11px] text-slate-500 font-bold">ارزش همکاری:</span>' +
+                            '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-700 text-sm">' +
                                 '<svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor">' +
                                     '<ellipse cx="11" cy="9" rx="6" ry="2.5" stroke-width="1.6"/>' +
                                     '<path d="M5 9v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V9" stroke-width="1.6"/>' +
@@ -726,16 +811,16 @@
                             '</div>' +
                         '</div>' +
 
-                        '<div class="pt-2 border-t border-slate-100">' +
+                        '<div class="pt-2 border-t border-slate-200/60">' +
                             '<div class="flex justify-between items-center mb-1.5">' +
                                 '<span class="text-[10px] font-bold text-slate-600">💬 گفت‌وگو و پیشنهاد قیمت:</span>' +
                                 '<button onclick="toggleCommentBox(\'' + t.id + '\')" class="text-[10px] text-[#0f284e] hover:underline font-bold cursor-pointer">ثبت نظر / قیمت</button>' +
                             '</div>' +
                             '<div class="max-h-24 overflow-y-auto pr-1">' + commentsListHtml + '</div>' +
 
-                            '<div id="comment-box-' + t.id + '" class="hidden mt-2 p-2 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">' +
-                                '<input type="text" id="comment-msg-' + t.id + '" placeholder="پیام شما..." class="w-full bg-white border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
-                                '<input type="number" id="comment-coin-' + t.id + '" placeholder="پیشنهاد قیمت جدید (اختیاری)" class="w-full bg-white border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<div id="comment-box-' + t.id + '" class="hidden mt-2 p-2 bg-white/95 border border-slate-200 rounded-xl space-y-1.5 shadow-sm">' +
+                                '<input type="text" id="comment-msg-' + t.id + '" placeholder="پیام شما..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
+                                '<input type="number" id="comment-coin-' + t.id + '" placeholder="پیشنهاد قیمت جدید (اختیاری)" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
                                 '<button onclick="submitTaskComment(\'' + t.id + '\')" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[11px] font-black py-1.5 rounded-lg shadow-sm">ارسال دیدگاه</button>' +
                             '</div>' +
                         '</div>' +
@@ -765,16 +850,16 @@
         var newTitle = document.getElementById('edit-title-' + taskId).value.trim();
         var newCoins = parseInt(document.getElementById('edit-coins-' + taskId).value);
 
-        if (!newTitle || isNaN(newCoins)) return alert('لطفاً عنوان و مبلغ معتبر وارد کنید.');
+        if (!newTitle || isNaN(newCoins)) return showAppAlert('لطفاً عنوان و مبلغ معتبر وارد کنید.', false);
 
         var res = await sb.from('tasks').update({
             title: newTitle,
             allocated_nominal_coins: newCoins
         }).eq('id', taskId).eq('status', 'open');
 
-        if (res.error) alert(res.error.message);
+        if (res.error) showAppAlert(res.error.message, false);
         else {
-            alert('تسک با موفقیت ویرایش گردید.');
+            showAppAlert('تسک با موفقیت ویرایش گردید.', true);
             await loadTasks();
             await loadContracts();
         }
@@ -785,13 +870,12 @@
         box.classList.toggle('hidden');
     };
 
-    // ثبت دیدگاه و پیشنهاد قیمت
     window.submitTaskComment = async function(taskId) {
         var sb = getSupabaseClient();
         var msg = document.getElementById('comment-msg-' + taskId).value.trim();
         var propCoin = document.getElementById('comment-coin-' + taskId).value;
 
-        if (!msg) return alert('لطفاً پیام خود را وارد کنید.');
+        if (!msg) return showAppAlert('لطفاً پیام خود را وارد کنید.', false);
 
         var res = await sb.from('task_comments').insert([{
             task_id: taskId,
@@ -803,9 +887,9 @@
         }]);
 
         if (res.error) {
-            alert('خطا در ثبت دیدگاه: ' + res.error.message);
+            showAppAlert('خطا در ثبت دیدگاه: ' + res.error.message, false);
         } else {
-            alert('دیدگاه با موفقیت ثبت شد.');
+            showAppAlert('دیدگاه با موفقیت ثبت شد.', true);
             await loadTasks();
         }
     };
@@ -814,7 +898,7 @@
         if (!confirm('آیا از حذف این تسک باز اطمینان دارید؟')) return;
         var sb = getSupabaseClient();
         var res = await sb.from('tasks').delete().eq('id', taskId).eq('status', 'open');
-        if (res.error) alert(res.error.message);
+        if (res.error) showAppAlert(res.error.message, false);
         else {
             await loadTasks();
             await loadContracts();
@@ -831,7 +915,7 @@
             });
 
             if (hasAlreadyTakenBooklet) {
-                alert('خطای قانونی: شما قبلاً تسک مربوط به این کتابچه را قبول کرده‌اید. هر دانشجو فقط مجاز است تسک هر شماره کتابچه را منحصراً برای یک تیم انجام دهد.');
+                showAppAlert('خطای قانونی: شما قبلاً تسک مربوط به این کتابچه را قبول کرده‌اید. هر دانشجو فقط مجاز است تسک هر شماره کتابچه را منحصراً برای یک تیم انجام دهد.', false);
                 return;
             }
         }
@@ -844,10 +928,10 @@
             status: 'in_progress'
         }]);
 
-        if (res.error) alert(res.error.message);
+        if (res.error) showAppAlert(res.error.message, false);
         else {
             await sb.from('tasks').update({ status: 'in_progress' }).eq('id', taskId);
-            alert('قرارداد با موفقیت منعقد شد. وضعیت تسک: درحال انجام');
+            showAppAlert('قرارداد با موفقیت منعقد شد. وضعیت تسک: درحال انجام', true);
             await loadTasks();
             await loadContracts();
         }
@@ -891,11 +975,13 @@
         }
 
         var myTotalCoins = 0;
+        var myCommittedCoins = 0;
         var myContractsCount = 0;
 
         res.data.forEach(function(c) {
             if (c.contractor_id === currentUser.id) {
                 myContractsCount++;
+                myCommittedCoins += parseFloat(c.agreed_base_coins || 0);
                 if (c.final_payout) myTotalCoins += parseFloat(c.final_payout);
             }
 
@@ -952,13 +1038,13 @@
                 '</tr>';
         });
 
-        await updateKpisAndCharts(myTotalCoins, myContractsCount);
+        await updateKpisAndCharts(myTotalCoins, myCommittedCoins, myContractsCount);
     }
 
-    // به‌روزرسانی کارت‌های KPI و رسم نمودار دوناتی سرگروه و مخزن دانشجو
-    async function updateKpisAndCharts(totalCoins, myContractsCount) {
+    // ۳. به‌روزرسانی کارت‌ها و کیف سکه دوگانه دانشجو
+    async function updateKpisAndCharts(totalFinalCoins, committedCoins, myContractsCount) {
         var sb = getSupabaseClient();
-        document.getElementById('stat-coins').innerText = totalCoins.toFixed(1) + ' سکه';
+        document.getElementById('stat-coins').innerText = totalFinalCoins.toFixed(1) + ' سکه';
 
         if (userProfile.role === 'leader' && currentTeam) {
             document.getElementById('stat-contracts-title').innerText = "قراردادهای تیم من";
@@ -985,12 +1071,10 @@
             var remainingCoins = Math.max(0, totalBudget - spentCoins);
             var spentPercent = Math.min(100, (spentCoins / totalBudget) * 100);
 
-            // به‌روزرسانی متن‌ها و درصد نمودار دوناتی
             document.getElementById('donut-spent-text').innerText = spentCoins + ' سکه (' + spentPercent.toFixed(1) + '٪)';
             document.getElementById('donut-remain-text').innerText = remainingCoins + ' سکه';
             document.getElementById('donut-center-percent').innerText = Math.round(spentPercent) + '٪';
 
-            // محاسبه چرخش دونات بر مبنای محیط دایره شعاع ۳۸ (2 * PI * 38 = 238.76)
             var circumference = 238.76;
             var offset = circumference - (spentPercent / 100) * circumference;
             var donutCircle = document.getElementById('donut-circle-spent');
@@ -1002,20 +1086,30 @@
             document.getElementById('stat-contracts-title').innerText = "قراردادهای من";
             document.getElementById('stat-contracts-container').innerHTML = '<h3 id="stat-contracts" class="text-lg font-black text-[#0f284e]">' + myContractsCount + '</h3>';
 
-            var maxTank = 250;
-            var fillPercent = Math.min(100, (totalCoins / maxTank) * 100);
-            document.getElementById('tank-fill-bar').style.width = fillPercent + '%';
+            var maxScale = 250;
+            var committedPercent = Math.min(100, (committedCoins / maxScale) * 100);
+            var finalPercent = Math.min(100, (totalFinalCoins / maxScale) * 100);
+
+            // به‌روزرسانی نوارها و متون کیف سکه دوگانه
+            document.getElementById('wallet-committed-text').innerText = committedCoins.toFixed(1) + ' سکه';
+            document.getElementById('wallet-committed-bar').style.width = committedPercent + '%';
+
+            document.getElementById('wallet-final-text').innerText = totalFinalCoins.toFixed(1) + ' سکه';
+            document.getElementById('wallet-final-bar').style.width = finalPercent + '%';
 
             var badge = document.getElementById('tank-badge-status');
-            if (totalCoins >= 200) {
+            if (totalFinalCoins >= 200) {
                 badge.className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200";
-                badge.innerText = "🏆 نمره کامل کسب شد (" + totalCoins.toFixed(1) + " سکه)";
-            } else if (totalCoins >= 150) {
+                badge.innerText = "🏆 نمره کامل تسویه شد (" + totalFinalCoins.toFixed(1) + " سکه)";
+            } else if (committedCoins >= 200) {
+                badge.className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-sky-50 text-sky-700 border border-sky-200";
+                badge.innerText = "📝 قراردادهای هدف ۲۰۰ سکه تکمیل شد - در انتظار تایید نهایی";
+            } else if (committedCoins >= 150) {
                 badge.className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200";
-                badge.innerText = "⚠️ کف مجاز عبور شد - نیازمند " + (200 - totalCoins).toFixed(1) + " سکه تا نمره کامل";
+                badge.innerText = "⚠️ کف مجاز تعهد شد - نیازمند " + (200 - committedCoins).toFixed(1) + " سکه تا سقف نمره کامل";
             } else {
                 badge.className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-rose-50 text-rose-700 border border-rose-200";
-                badge.innerText = "❌ زیر کف مجاز - نیازمند " + (150 - totalCoins).toFixed(1) + " سکه تا حداقل قبولی";
+                badge.innerText = "❌ زیر کف مجاز - نیازمند " + (150 - committedCoins).toFixed(1) + " سکه تا حداقل قبولی";
             }
         } else {
             document.getElementById('stat-contracts-title').innerText = "قراردادهای من";
@@ -1027,13 +1121,13 @@
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            alert('لطفاً ابتدا یک فایل را انتخاب کنید.');
+            showAppAlert('لطفاً ابتدا یک فایل را انتخاب کنید.', false);
             return;
         }
 
         var file = fileInput.files[0];
         if (file.size > 30 * 1024 * 1024) {
-            alert('خطا: حجم فایل بیشتر از سقف مجاز ۳۰ مگابایت است.');
+            showAppAlert('خطا: حجم فایل بیشتر از سقف مجاز ۳۰ مگابایت است.', false);
             return;
         }
 
@@ -1050,7 +1144,7 @@
             });
 
             if (uploadRes.error) {
-                alert('خطای ذخیره‌سازی: ' + uploadRes.error.message);
+                showAppAlert('خطای ذخیره‌سازی: ' + uploadRes.error.message, false);
                 return;
             }
 
@@ -1067,11 +1161,11 @@
                 status: 'leader_review'
             }).eq('id', contractId);
 
-            alert('تاییدیه: فایل با موفقیت آپلود شد و جهت بررسی برای سرگروه ارسال گردید.');
+            showAppAlert('تاییدیه: فایل با موفقیت آپلود شد و جهت بررسی برای سرگروه ارسال گردید.', true);
             await loadContracts();
 
         } catch (err) {
-            alert('خطای سیستمی در آپلود: ' + err.message);
+            showAppAlert('خطای سیستمی در آپلود: ' + err.message, false);
         }
     };
 
@@ -1088,7 +1182,7 @@
                 status: 'professor_review'
             }).eq('id', contractId);
 
-            alert('گزارش تایید شد و برای نمره‌دهی نهایی به استاد ارسال گردید.');
+            showAppAlert('گزارش تایید شد و برای نمره‌دهی نهایی به استاد ارسال گردید.', true);
         } else {
             await sb.from('tasks').update({
                 leader_approved: false,
@@ -1100,7 +1194,7 @@
                 status: 'in_progress'
             }).eq('id', contractId);
 
-            alert('گزارش رد شد و وضعیت تسک به «درحال انجام» بازگشت تا پیمانکار فایل جدید را ارسال کند.');
+            showAppAlert('گزارش رد شد و وضعیت تسک به «درحال انجام» بازگشت تا پیمانکار فایل جدید را ارسال کند.', false);
         }
 
         await loadContracts();
@@ -1170,19 +1264,19 @@
         var bookletId = document.getElementById('eval-booklet-select').value;
         var awardedCoins = document.getElementById('eval-coins-input').value;
 
-        if (!awardedCoins || !teamId) return alert('لطفاً تیم و میزان سکه تاییدشده را وارد کنید.');
+        if (!awardedCoins || !teamId) return showAppAlert('لطفاً تیم و میزان سکه تاییدشده را وارد کنید.', false);
 
         var res = await sb.from('team_booklet_evaluations').upsert([
             { team_id: teamId, booklet_id: parseInt(bookletId), awarded_coins: parseInt(awardedCoins) }
         ], { onConflict: 'team_id,booklet_id' });
 
         if (res.error) {
-            alert(res.error.message);
+            showAppAlert(res.error.message, false);
         } else {
             await sb.from('tasks').update({ status: 'completed' }).eq('team_id', teamId).eq('booklet_id', parseInt(bookletId));
             await sb.from('contracts').update({ status: 'completed' }).eq('team_id', teamId);
 
-            alert('ارزیابی ثبت شد، تسویه هوشمند انجام گردید و وضعیت کتابچه به «خاتمه یافته» تغییر یافت.');
+            showAppAlert('ارزیابی ثبت شد، تسویه هوشمند انجام گردید و وضعیت کتابچه به «خاتمه یافته» تغییر یافت.', true);
             await loadContracts();
             await loadProfessorSummary();
         }
