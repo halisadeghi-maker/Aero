@@ -29,7 +29,6 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(226, 232, 240, 0.9);
         }
-        /* نوار طلایی بالای کارت‌های KPI و پویایی حرکت */
         .kpi-card {
             position: relative;
             overflow: hidden;
@@ -55,16 +54,15 @@
         }
         .interactive-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.09), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.06);
         }
     </style>
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- نوار ناوبری اصلی با لوگوی بزرگتر دانشگاه -->
+    <!-- نوار ناوبری اصلی -->
     <nav class="bg-white/95 backdrop-blur-md border-b-2 border-slate-200 px-6 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
         <div class="flex items-center space-x-3.5 space-x-reverse">
-            <!-- ۴. لوگوی دانشگاه بزرگتر شده -->
             <img src="kntu-logo.png" alt="لوگو دانشگاه خواجه نصیرالدین طوسی" class="w-16 h-16 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
             <div>
                 <h1 class="font-black text-base md:text-lg text-[#0f284e]">بازار کار درس طراحی هواپیمای دکتر علیصادقی</h1>
@@ -79,11 +77,10 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- ۱. صفحه ورود دوکارته با تم خردلی جذاب و مدرن -->
+        <!-- صفحه ورود دوکارته -->
         <section id="auth-section" class="max-w-4xl mx-auto mt-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 
-                <!-- کارت ۱: کارت برندینگ خردلی جذاب و مدرن -->
                 <div class="rounded-3xl p-8 shadow-xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#d97706] to-[#b45309] border border-amber-300">
                     <div class="absolute -top-16 -left-16 w-48 h-48 bg-white/20 rounded-full blur-2xl"></div>
                     <div class="absolute -bottom-16 -right-16 w-48 h-48 bg-amber-200/20 rounded-full blur-2xl"></div>
@@ -108,7 +105,6 @@
                             </p>
                         </div>
 
-                        <!-- متن اصلاح‌شده بند ۱ -->
                         <p class="text-xs text-amber-50 leading-relaxed text-justify font-medium">
                             پلتفرم تعاملی مبادله بسته‌های کاری بر مبنای متدولوژی راسکم، قراردادهای هوشمند و شفاف میان کارفرما (سرگروه‌ها) و پیمانکاران طراحی (دانشجویان).
                         </p>
@@ -120,7 +116,6 @@
                     </div>
                 </div>
 
-                <!-- کارت ۲: فرم ورود و ثبت‌نام با رنگ‌بندی روشن مدرن -->
                 <div class="glass-card p-8 rounded-3xl shadow-xl border border-slate-200 flex flex-col justify-center">
                     <div class="flex border-b border-slate-200 mb-6">
                         <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-[#0f284e] border-b-2 border-amber-500 cursor-pointer text-sm">ورود به سامانه</button>
@@ -165,10 +160,10 @@
             </div>
         </section>
 
-        <!-- ۲. داشبورد اصلی کاربر -->
+        <!-- داشبورد اصلی کاربر -->
         <div id="dashboard-section" class="hidden space-y-6">
 
-            <!-- کارت‌های KPI پویا با نوار طلایی -->
+            <!-- کارت‌های KPI -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-card kpi-card p-5 rounded-3xl shadow-sm flex items-center justify-between border-slate-200">
                     <div>
@@ -263,7 +258,7 @@
                 </div>
             </section>
 
-            <!-- ۳. کیف سکه دانشجو (پیمانکار) دوگانه (قرارداد بسته شده و تایید نهایی) -->
+            <!-- کیف سکه دانشجو (پیمانکار) دوگانه -->
             <section id="member-tank-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
@@ -277,9 +272,7 @@
                     </div>
                 </div>
 
-                <!-- مخزن گرافیکی دوگانه کیف سکه -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    <!-- بخش ۱: سکه‌های قرارداد بسته شده -->
                     <div class="bg-slate-50/90 border border-slate-200 rounded-2xl p-4 space-y-2">
                         <div class="flex justify-between items-center text-xs">
                             <span class="font-bold text-slate-700 flex items-center gap-1.5">
@@ -298,7 +291,6 @@
                         </div>
                     </div>
 
-                    <!-- بخش ۲: سکه‌های تایید شده و تسویه نهایی -->
                     <div class="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-2">
                         <div class="flex justify-between items-center text-xs">
                             <span class="font-bold text-amber-900 flex items-center gap-1.5">
@@ -389,14 +381,14 @@
                 </div>
             </section>
 
-            <!-- ۲. بازار تسک‌های باز با رنگ‌بندی اختصاصی هر تیم -->
+            <!-- بازار تسک‌های باز -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500 ml-2 animate-pulse"></span>
                         📋 بازار تسک‌های باز و نیازمند پیمانکار
                     </h3>
-                    <span class="text-xs text-slate-500 font-medium">کارت‌های هر تیم دارای رنگ‌بندی اختصاصی، تعاملی و مذاکره قیمت هستند</span>
+                    <span class="text-xs text-slate-500 font-medium">کارت‌های هر تیم دارای رنگ‌بندی کاملاً اختصاصی و متمایز هستند</span>
                 </div>
 
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -404,7 +396,7 @@
                 </div>
             </section>
 
-            <!-- ۴. قراردادهای هوشمند و چرخه بررسی -->
+            <!-- قراردادهای هوشمند -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
@@ -442,7 +434,7 @@
         کلیه حقوق مادی و معنوی این سایت متعلق به دانشگاه صنعتی خواجه نصیر الدین طوسی می باشد.
     </footer>
 
-    <!-- ۴. مودال پیام و پنجره اخطار اختصاصی جذاب با عنوان «استاد درس» -->
+    <!-- مودال پیام اختصاصی استاد درس -->
     <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center transform transition-all scale-100">
             <div id="modal-icon-container" class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-indigo-50 text-indigo-600">
@@ -477,7 +469,6 @@
         return client;
     }
 
-    // ۴. پنجره اخطار و پیام رنگی جذاب به جای نام کاربر گیت‌هاب با عنوان "استاد درس"
     window.showAppAlert = function(msg, isSuccess) {
         var modal = document.getElementById('custom-modal');
         var modalMsg = document.getElementById('modal-message');
@@ -688,26 +679,67 @@
     }
     document.getElementById('create-task-btn').onclick = createTask;
 
-    // ۲. پالت رنگ‌های مدرن و اختصاصی برای هر تیم (تیم ۱ سبز، تیم ۲ آبی، تیم ۳ خاکستری، تیم ۴ خردلی، ...)
-    function getTeamColorScheme(teamId) {
-        var schemes = [
-            { bg: "bg-emerald-50/70", border: "border-emerald-200", text: "text-emerald-800", badge: "bg-emerald-100 text-emerald-800 border-emerald-300" },
-            { bg: "bg-sky-50/70", border: "border-sky-200", text: "text-sky-800", badge: "bg-sky-100 text-sky-800 border-sky-300" },
-            { bg: "bg-slate-100/70", border: "border-slate-300", text: "text-slate-800", badge: "bg-slate-200 text-slate-800 border-slate-300" },
-            { bg: "bg-amber-50/80", border: "border-amber-200", text: "text-amber-800", badge: "bg-amber-100 text-amber-800 border-amber-300" },
-            { bg: "bg-violet-50/70", border: "border-violet-200", text: "text-violet-800", badge: "bg-violet-100 text-violet-800 border-violet-300" },
-            { bg: "bg-teal-50/70", border: "border-teal-200", text: "text-teal-800", badge: "bg-teal-100 text-teal-800 border-teal-300" }
-        ];
-        var hash = 0;
-        if (teamId) {
-            for (var i = 0; i < teamId.length; i++) hash = teamId.charCodeAt(i) + ((hash << 5) - hash);
+    // نقشه اختصاصی رنگ‌ها برای هر تیم (استایل‌های مستقیم CSS بدون وابستگی به کامپایل داینامیک Tailwind)
+    var knownTeamColors = {};
+    var colorPalettes = [
+        {
+            bgStyle: "background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(209, 250, 229, 0.85));",
+            borderStyle: "border: 1.5px solid #10b981;",
+            textStyle: "color: #065f46;",
+            badgeStyle: "background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7;"
+        }, // ۱. سبز مدرن
+        {
+            bgStyle: "background: linear-gradient(135deg, rgba(240, 249, 255, 0.95), rgba(224, 242, 254, 0.85));",
+            borderStyle: "border: 1.5px solid #0ea5e9;",
+            textStyle: "color: #0369a1;",
+            badgeStyle: "background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc;"
+        }, // ۲. آبی مدرن
+        {
+            bgStyle: "background: linear-gradient(135deg, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9));",
+            borderStyle: "border: 1.5px solid #64748b;",
+            textStyle: "color: #334155;",
+            badgeStyle: "background-color: #e2e8f0; color: #1e293b; border: 1px solid #94a3b8;"
+        }, // ۳. خاکستری مدرن
+        {
+            bgStyle: "background: linear-gradient(135deg, rgba(254, 243, 199, 0.95), rgba(253, 230, 138, 0.85));",
+            borderStyle: "border: 1.5px solid #f59e0b;",
+            textStyle: "color: #92400e;",
+            badgeStyle: "background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d;"
+        }, // ۴. خردلی مدرن
+        {
+            bgStyle: "background: linear-gradient(135deg, rgba(245, 243, 255, 0.95), rgba(237, 233, 254, 0.85));",
+            borderStyle: "border: 1.5px solid #8b5cf6;",
+            textStyle: "color: #5b21b6;",
+            badgeStyle: "background-color: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd;"
+        }, // ۵. بنفش مدرن
+        {
+            bgStyle: "background: linear-gradient(135deg, rgba(255, 241, 242, 0.95), rgba(255, 228, 230, 0.85));",
+            borderStyle: "border: 1.5px solid #f43f5e;",
+            textStyle: "color: #9f1239;",
+            badgeStyle: "background-color: #ffe4e6; color: #9f1239; border: 1px solid #fecdd3;"
+        }  // ۶. رز/سرخابی مدرن
+    ];
+
+    function getTeamColor(teamId) {
+        if (!teamId) return colorPalettes[2];
+        if (!knownTeamColors[teamId]) {
+            var assignedCount = Object.keys(knownTeamColors).length;
+            knownTeamColors[teamId] = colorPalettes[assignedCount % colorPalettes.length];
         }
-        var index = Math.abs(hash) % schemes.length;
-        return schemes[index];
+        return knownTeamColors[teamId];
     }
 
     async function loadTasks() {
         var sb = getSupabaseClient();
+        
+        // ابتدا کل تیم‌ها را دریافت می‌کنیم تا ترتیب رنگ‌ها کامپکت و اختصاصی اختصاص یابد
+        var teamsFetch = await sb.from('teams').select('id').order('created_at', { ascending: true });
+        if (teamsFetch.data) {
+            teamsFetch.data.forEach(function(tm, idx) {
+                knownTeamColors[tm.id] = colorPalettes[idx % colorPalettes.length];
+            });
+        }
+
         var query = sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
         
         if (userProfile.role === 'leader' && currentTeam) {
@@ -728,7 +760,8 @@
             var bNum = t.booklets ? t.booklets.booklet_number : '-';
             var bTitle = t.booklets ? t.booklets.title : 'کتابچه طراحی';
 
-            var color = getTeamColorScheme(t.team_id);
+            // انتخاب رنگ متمایز و قطعی هر تیم
+            var color = getTeamColor(t.team_id);
 
             var { data: comments } = await sb.from('task_comments').select('*').eq('task_id', t.id).order('created_at', { ascending: true });
             var commentsListHtml = '';
@@ -736,7 +769,7 @@
                 comments.forEach(function(c) {
                     var roleBadge = c.role === 'leader' ? '<span class="text-[#0f284e] font-bold">[سرگروه]</span>' : '<span class="text-slate-600 font-bold">[پیمانکار]</span>';
                     var propCoin = c.proposed_coins ? '<span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.2 rounded font-bold mr-1">پیشنهاد: ' + c.proposed_coins + ' سکه</span>' : '';
-                    commentsListHtml += '<div class="bg-white/80 rounded-lg p-1.5 text-[11px] mb-1.5 border border-slate-200 shadow-2xs">' +
+                    commentsListHtml += '<div class="bg-white/90 rounded-lg p-1.5 text-[11px] mb-1.5 border border-slate-200 shadow-xs">' +
                         '<div class="flex justify-between">' + roleBadge + ' <span class="text-slate-800 font-semibold">' + c.author_name + '</span>' + propCoin + '</div>' +
                         '<p class="text-slate-600 mt-0.5">' + c.message + '</p>' +
                         '</div>';
@@ -755,7 +788,7 @@
                     '</button>';
             } else if (isOwnerLeader) {
                 actionArea = '<div class="flex space-x-2 space-x-reverse">' +
-                    '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-200 shadow-2xs transition">ویرایش مستقیم</button>' +
+                    '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-200 shadow-xs transition">ویرایش مستقیم</button>' +
                     '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold py-2 rounded-xl transition">حذف تسک</button>' +
                     '</div>';
             } else {
@@ -763,26 +796,26 @@
             }
 
             var cardHtml = 
-                '<div class="interactive-card ' + color.bg + ' ' + color.border + ' border rounded-3xl p-5 shadow-sm flex flex-col justify-between" id="card-' + t.id + '">' +
+                '<div class="interactive-card rounded-3xl p-5 shadow-sm flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '" id="card-' + t.id + '">' +
                     '<div class="space-y-3">' +
                         '<div class="flex justify-between items-start">' +
                             '<div class="flex items-center space-x-2 space-x-reverse">' +
-                                '<div class="p-2 rounded-xl bg-white border border-slate-200 text-[#0f284e] shadow-2xs">' +
+                                '<div class="p-2 rounded-xl bg-white border border-slate-200 text-[#0f284e] shadow-xs">' +
                                     '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
                                         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />' +
                                     '</svg>' +
                                 '</div>' +
                                 '<div>' +
                                     '<span class="text-[10px] text-slate-500 block font-bold">تیم کارفرما</span>' +
-                                    '<span class="text-xs font-black ' + color.text + '">' + teamName + '</span>' +
+                                    '<span class="text-xs font-black" style="' + color.textStyle + '">' + teamName + '</span>' +
                                 '</div>' +
                             '</div>' +
-                            '<span class="' + color.badge + ' border text-[10px] font-black px-2.5 py-1 rounded-full shadow-2xs">کتابچه ' + bNum + '</span>' +
+                            '<span class="text-[10px] font-black px-2.5 py-1 rounded-full shadow-xs" style="' + color.badgeStyle + '">کتابچه ' + bNum + '</span>' +
                         '</div>' +
 
-                        '<div class="text-[11px] font-bold text-slate-600 line-clamp-1">' + bTitle + '</div>' +
+                        '<div class="text-[11px] font-bold text-slate-700 line-clamp-1">' + bTitle + '</div>' +
 
-                        '<div id="view-section-' + t.id + '" class="p-3 bg-white/90 border border-slate-200/90 rounded-2xl text-xs font-medium text-slate-800 leading-relaxed min-h-[55px] shadow-2xs">' +
+                        '<div id="view-section-' + t.id + '" class="p-3 bg-white/95 border border-slate-200/90 rounded-2xl text-xs font-medium text-slate-800 leading-relaxed min-h-[55px] shadow-xs">' +
                             t.title +
                         '</div>' +
 
@@ -797,8 +830,8 @@
                             '</div>' +
                         '</div>' +
 
-                        '<div class="flex items-center justify-between pt-2 border-t border-slate-200/60">' +
-                            '<span class="text-[11px] text-slate-500 font-bold">ارزش همکاری:</span>' +
+                        '<div class="flex items-center justify-between pt-2 border-t border-slate-200/80">' +
+                            '<span class="text-[11px] text-slate-600 font-bold">ارزش همکاری:</span>' +
                             '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-700 text-sm">' +
                                 '<svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor">' +
                                     '<ellipse cx="11" cy="9" rx="6" ry="2.5" stroke-width="1.6"/>' +
@@ -811,9 +844,9 @@
                             '</div>' +
                         '</div>' +
 
-                        '<div class="pt-2 border-t border-slate-200/60">' +
+                        '<div class="pt-2 border-t border-slate-200/80">' +
                             '<div class="flex justify-between items-center mb-1.5">' +
-                                '<span class="text-[10px] font-bold text-slate-600">💬 گفت‌وگو و پیشنهاد قیمت:</span>' +
+                                '<span class="text-[10px] font-bold text-slate-700">💬 گفت‌وگو و پیشنهاد قیمت:</span>' +
                                 '<button onclick="toggleCommentBox(\'' + t.id + '\')" class="text-[10px] text-[#0f284e] hover:underline font-bold cursor-pointer">ثبت نظر / قیمت</button>' +
                             '</div>' +
                             '<div class="max-h-24 overflow-y-auto pr-1">' + commentsListHtml + '</div>' +
@@ -1041,7 +1074,6 @@
         await updateKpisAndCharts(myTotalCoins, myCommittedCoins, myContractsCount);
     }
 
-    // ۳. به‌روزرسانی کارت‌ها و کیف سکه دوگانه دانشجو
     async function updateKpisAndCharts(totalFinalCoins, committedCoins, myContractsCount) {
         var sb = getSupabaseClient();
         document.getElementById('stat-coins').innerText = totalFinalCoins.toFixed(1) + ' سکه';
@@ -1090,7 +1122,6 @@
             var committedPercent = Math.min(100, (committedCoins / maxScale) * 100);
             var finalPercent = Math.min(100, (totalFinalCoins / maxScale) * 100);
 
-            // به‌روزرسانی نوارها و متون کیف سکه دوگانه
             document.getElementById('wallet-committed-text').innerText = committedCoins.toFixed(1) + ' سکه';
             document.getElementById('wallet-committed-bar').style.width = committedPercent + '%';
 
