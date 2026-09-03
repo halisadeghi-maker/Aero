@@ -14,27 +14,27 @@
     <style>
         body {
             font-family: 'Vazirmatn', sans-serif;
-            /* پس‌زمینه میز کار مهندسی و نقشه‌های فنی هواپیما به صورت محو و ملایم */
-            background-color: #f8fafc;
+            background-color: #f1f5f9;
+            /* تصویر پس‌زمینه میز کار مهندسی با لایه شیشه‌ای جهت خوانایی المان‌ها */
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.06) 0%, transparent 45%),
-                linear-gradient(rgba(248, 250, 252, 0.94), rgba(248, 250, 252, 0.94)),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Cg fill='none' stroke='%23475569' stroke-width='0.7' stroke-opacity='0.16'%3E%3Cpath d='M100 300h600M400 50v500' stroke-dasharray='5,5'/%3E%3Cellipse cx='400' cy='300' rx='280' ry='45'/%3E%3Cpath d='M250 300l150-180 150 180-150 140z'/%3E%3Cpath d='M120 280h160v40H120zM520 280h160v40H520z'/%3E%3Ccircle cx='400' cy='300' r='120'/%3E%3Ccircle cx='400' cy='300' r='180' stroke-dasharray='8,8'/%3E%3Cpath d='M150 120l50 50M650 120l-50 50M150 480l50-50M650 480l-50-50'/%3E%3Cpath d='M50 50h700v500H50z'/%3E%3Cpath d='M300 180c50-30 150-30 200 0s30 150 0 200-150 30-200 0'/%3E%3C/g%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-size: auto, auto, cover, 650px 480px;
+                linear-gradient(rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0.90)),
+                url('background.jpeg');
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-size: cover;
+            background-attachment: fixed;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.85);
         }
     </style>
 </head>
 <body class="text-slate-800 min-h-screen">
 
-    <!-- نوار ناوبری اصلی با هویت بصری مدرن -->
+    <!-- نوار ناوبری اصلی -->
     <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-6 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
         <div class="flex items-center space-x-3 space-x-reverse">
             <div class="bg-gradient-to-tr from-indigo-600 via-indigo-700 to-sky-500 text-white p-2.5 rounded-2xl font-bold shadow-lg shadow-indigo-500/25 flex items-center justify-center">
@@ -100,9 +100,8 @@
         <!-- ۲. داشبورد اصلی کاربر -->
         <div id="dashboard-section" class="hidden space-y-6">
 
-            <!-- کارت‌های آماری پویا (KPI Cards) با آیکون‌های وکتور دقیق -->
+            <!-- کارت‌های آماری پویا (KPI) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- نقش کاربر -->
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex items-center justify-between border-slate-200/80">
                     <div>
                         <span class="text-slate-500 text-xs font-semibold">نقش شما در سامانه</span>
@@ -115,7 +114,6 @@
                     </div>
                 </div>
 
-                <!-- تیم طراحی با آیکون چند فرد کنار هم -->
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex items-center justify-between border-slate-200/80">
                     <div>
                         <span class="text-slate-500 text-xs font-semibold">تیم طراحی هواپیما</span>
@@ -128,7 +126,6 @@
                     </div>
                 </div>
 
-                <!-- وضعیت قراردادها با آیکون دفترچه / سند -->
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex items-center justify-between border-slate-200/80">
                     <div>
                         <span id="stat-contracts-title" class="text-slate-500 text-xs font-semibold">قراردادهای من</span>
@@ -143,7 +140,6 @@
                     </div>
                 </div>
 
-                <!-- سکه تسویه‌شده با آیکون چند سکه روی هم -->
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex items-center justify-between border-slate-200/80">
                     <div>
                         <span class="text-slate-500 text-xs font-semibold">سکه تسویه‌شده</span>
@@ -227,7 +223,7 @@
                 </div>
             </section>
 
-            <!-- ۳. بازار تسک‌های باز به صورت کارت‌های تعاملی و جذاب -->
+            <!-- ۳. بازار تسک‌های باز به صورت کارت‌های تعاملی -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200/80 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-100">
                     <h3 class="text-sm md:text-base font-black text-slate-900 flex items-center">
@@ -237,7 +233,6 @@
                     <span class="text-xs text-slate-500 font-medium">پیمانکاران آزاد می‌توانند با بررسی جزئیات اقدام به قبول قرارداد نمایند</span>
                 </div>
 
-                <!-- ظرف کارت‌های گرید -->
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     <div class="col-span-full py-8 text-center text-slate-400 text-xs">در حال بارگذاری تسک‌های موجود...</div>
                 </div>
@@ -480,7 +475,6 @@
     }
     document.getElementById('create-task-btn').onclick = createTask;
 
-    // ۳. بارگذاری بازار تسک‌ها به صورت کارت‌های پویا و جذاب با آیکون‌های درخواستی
     async function loadTasks() {
         var sb = getSupabaseClient();
         var query = sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
@@ -521,11 +515,9 @@
             var cardHtml = 
                 '<div class="bg-white/95 border border-slate-200/90 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:border-indigo-200 transition-all duration-300 flex flex-col justify-between group">' +
                     '<div class="space-y-3">' +
-                        '<!-- سربرگ کارت: نام تیم و برچسب کتابچه -->' +
                         '<div class="flex justify-between items-start">' +
                             '<div class="flex items-center space-x-2 space-x-reverse">' +
                                 '<div class="p-2 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600">' +
-                                    '<!-- آیکون سه نفر در کنار هم -->' +
                                     '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
                                         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />' +
                                     '</svg>' +
@@ -538,15 +530,12 @@
                             '<span class="bg-sky-50 text-sky-700 border border-sky-100 text-[10px] font-bold px-2.5 py-1 rounded-full">کتابچه ' + bNum + '</span>' +
                         '</div>' +
 
-                        '<!-- عنوان کتابچه -->' +
                         '<div class="text-[11px] font-semibold text-slate-500 line-clamp-1" title="' + bTitle + '">' + bTitle + '</div>' +
 
-                        '<!-- شرح تسک -->' +
                         '<div class="p-3 bg-slate-50/70 border border-slate-100 rounded-xl text-xs font-medium text-slate-800 leading-relaxed min-h-[58px]">' +
                             t.title +
                         '</div>' +
 
-                        '<!-- تعداد سکه با آیکون سکه‌های روی هم -->' +
                         '<div class="flex items-center justify-between pt-2 border-t border-slate-100">' +
                             '<span class="text-[11px] text-slate-500 font-medium">ارزش همکاری:</span>' +
                             '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-500 text-sm">' +
@@ -558,7 +547,6 @@
                         '</div>' +
                     '</div>' +
 
-                    '<!-- دکمه عملیات -->' +
                     '<div class="mt-4 pt-2">' +
                         actionArea +
                     '</div>' +
@@ -598,11 +586,9 @@
         }
     };
 
-    // ۶. کنترل دقیق عدم امکان قبول یک کتابچه خاص از چند تیم توسط یک دانشجو
     window.acceptTask = async function(taskId, teamId, coins, bookletId) {
         var sb = getSupabaseClient();
 
-        // دریافت کلیه قراردادهای فعال و گذشته این دانشجو
         var checkRes = await sb.from('contracts').select('id, team_id, tasks(booklet_id)').eq('contractor_id', currentUser.id);
         if (checkRes.data) {
             var hasAlreadyTakenBooklet = checkRes.data.some(function(c) {
@@ -646,12 +632,10 @@
         }
     }
 
-    // ۴ و ۵. فیلتر قراردادها (دانشجو فقط قراردادهای خودش) و نمایش شماره کتابچه
     async function loadContracts() {
         var sb = getSupabaseClient();
         var query = sb.from('contracts').select('*, tasks(*, booklets(booklet_number, title)), teams(name), profiles(full_name)');
 
-        // دانشجو یا پیمانکار آزاد فقط قراردادهای خودش را مشاهده کند
         if (userProfile.role === 'member') {
             query = query.eq('contractor_id', currentUser.id);
             document.getElementById('contracts-filter-info').innerText = 'نمایش قراردادهای تحت تعهد شخص شما';
@@ -689,7 +673,6 @@
 
             var actionCol = '';
 
-            // ۱. پیمانکار
             if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
                 if (currentTaskStatus === 'in_progress') {
                     actionCol = '<div class="space-y-1.5">' +
@@ -702,9 +685,7 @@
                         '<span class="text-slate-500 text-[10px]">فایل در مرحله بررسی قرار دارد.</span>' +
                         '</div>';
                 }
-            }
-            // ۲. سرگروه
-            else if (userProfile.role === 'leader') {
+            } else if (userProfile.role === 'leader') {
                 if (currentTaskStatus === 'leader_review') {
                     actionCol = '<div class="space-y-1.5">' +
                         '<a href="' + taskObj.submission_url + '" target="_blank" class="text-sky-600 underline font-bold block text-xs">📥 دانلود فایل پیمانکار</a>' +
@@ -718,9 +699,7 @@
                 } else {
                     actionCol = '<span class="text-slate-400 text-xs">در انتظار تحویل توسط پیمانکار</span>';
                 }
-            }
-            // ۳. استاد
-            else if (userProfile.role === 'professor') {
+            } else if (userProfile.role === 'professor') {
                 if (taskObj.submission_url) {
                     actionCol = '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 font-bold underline text-xs">📄 دانلود فایل تاییدشده</a>';
                 } else {
@@ -738,11 +717,9 @@
                 '</tr>';
         });
 
-        // ۲. به‌روزرسانی KPIهای داینامیک برای سرگروه‌ها و سایر نقش‌ها
         await updateKpis(myTotalCoins, myContractsCount);
     }
 
-    // به‌روزرسانی کارت KPI متناسب با نقش
     async function updateKpis(totalCoins, myContractsCount) {
         var sb = getSupabaseClient();
         document.getElementById('stat-coins').innerText = totalCoins.toFixed(1) + ' سکه';
@@ -750,7 +727,6 @@
         if (userProfile.role === 'leader' && currentTeam) {
             document.getElementById('stat-contracts-title').innerText = "قراردادهای تیم من";
             
-            // دریافت آمار تفکیکی تیم
             var { data: teamTasks } = await sb.from('tasks').select('id, status').eq('team_id', currentTeam.id);
             var totalCreated = teamTasks ? teamTasks.length : 0;
             var assignedCount = teamTasks ? teamTasks.filter(function(x) { return x.status !== 'open'; }).length : 0;
@@ -768,7 +744,6 @@
         }
     }
 
-    // تابع آپلود با پشتیبانی ۳۰ مگابایت
     window.uploadAndSendReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
