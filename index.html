@@ -18,58 +18,63 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.8);
         }
-        .task-card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .gradient-brand {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%);
         }
-        .task-card-hover:hover {
+        .coin-glow {
+            box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.35);
+        }
+        .card-hover {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
             transform: translateY(-4px);
-            box-shadow: 0 14px 30px -8px rgba(79, 70, 229, 0.12);
+            box-shadow: 0 12px 24px -10px rgba(99, 102, 241, 0.15);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-slate-100 to-indigo-50/30 text-slate-800 min-h-screen">
+<body class="bg-gradient-to-br from-slate-50 via-indigo-50/30 to-slate-100 text-slate-800 min-h-screen antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- نوار ناوبری اصلی -->
-    <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-6 py-4 flex justify-between items-center sticky top-0 z-50 shadow-xs">
-        <div class="flex items-center space-x-3.5 space-x-reverse">
-            <div class="bg-gradient-to-tr from-indigo-600 to-violet-500 text-white p-2.5 rounded-2xl shadow-md shadow-indigo-500/20 text-xl flex items-center justify-center">
-                ✈️
+    <!-- نوار ناوبری شیشه‌ای و مدرن -->
+    <nav class="glass-card sticky top-0 z-50 border-b border-slate-200/80 px-6 py-4 shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="gradient-brand text-white p-2.5 rounded-2xl font-black shadow-md shadow-indigo-500/20 text-xl flex items-center justify-center">
+                    ✈️
+                </div>
+                <div>
+                    <h1 class="font-black text-base md:text-lg text-slate-900 tracking-tight">بازار کار درس طراحی هواپیمای دکتر علیصادقی</h1>
+                    <p class="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">دانشگاه صنعتی خواجه نصیرالدین طوسی</p>
+                </div>
             </div>
-            <div>
-                <h1 class="font-black text-sm md:text-lg text-slate-900 tracking-tight">بازار کار درس طراحی هواپیمای دکتر علیصادقی</h1>
-                <p class="text-[11px] md:text-xs text-indigo-600 font-bold flex items-center gap-1">
-                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
-                    دانشگاه صنعتی خواجه نصیرالدین طوسی | روش طراحی راسکم
-                </p>
+            <div id="user-nav" class="hidden flex items-center space-x-4 space-x-reverse">
+                <span id="nav-user-info" class="text-xs md:text-sm bg-white/90 text-slate-700 px-4 py-2 rounded-full border border-slate-200 font-semibold shadow-xs"></span>
+                <button id="logout-btn" type="button" class="text-xs md:text-sm text-red-600 hover:text-red-700 font-bold bg-red-50 hover:bg-red-100/80 px-4 py-2 rounded-xl transition shadow-xs">خروج</button>
             </div>
-        </div>
-        <div id="user-nav" class="hidden flex items-center space-x-3 space-x-reverse">
-            <span id="nav-user-info" class="text-xs bg-slate-100 text-slate-700 px-3.5 py-1.5 rounded-full border border-slate-200/80 font-bold"></span>
-            <button id="logout-btn" type="button" class="text-xs text-red-600 hover:text-red-700 font-bold bg-red-50 hover:bg-red-100 px-3.5 py-1.5 rounded-full transition duration-150">خروج</button>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
+    <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-8">
 
-        <!-- ۱. بخش ورود و ثبت‌نام -->
-        <section id="auth-section" class="max-w-md mx-auto mt-12 bg-white p-8 rounded-3xl border border-slate-200/80 shadow-2xl shadow-indigo-950/5">
+        <!-- بخش احراز هویت -->
+        <section id="auth-section" class="max-w-md mx-auto mt-12 glass-card p-8 rounded-3xl border border-slate-200/90 shadow-2xl shadow-indigo-100/60">
             <div class="flex border-b border-slate-200 mb-6">
-                <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600 cursor-pointer text-sm">ورود</button>
-                <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer text-sm">ثبت‌نام جدید</button>
+                <button id="tab-login" type="button" class="w-1/2 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600 cursor-pointer">ورود</button>
+                <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer">ثبت‌نام جدید</button>
             </div>
 
             <div id="signup-extra-fields" style="display: none;" class="space-y-4 mb-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">نام و نام خانوادگی</label>
-                    <input type="text" id="auth-name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:bg-white text-xs outline-none" placeholder="مثال: علیرضا محمدی">
+                    <input type="text" id="auth-name" class="w-full bg-slate-50/80 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white text-sm transition" placeholder="مثال: علی رضایی">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">شماره پرسنلی / دانشجویی</label>
-                    <input type="text" id="auth-std-id" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:bg-white text-xs outline-none" placeholder="مثال: 9912345">
+                    <input type="text" id="auth-std-id" class="w-full bg-slate-50/80 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white text-sm transition" placeholder="مثال: 9912345">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">نقش سازمانی در درس</label>
-                    <select id="auth-role" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:bg-white text-xs outline-none">
+                    <label class="block text-xs font-bold text-slate-600 mb-1">نقش در سامانه</label>
+                    <select id="auth-role" class="w-full bg-slate-50/80 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white text-sm transition">
                         <option value="member">دانشجو (پیمانکار)</option>
                         <option value="leader">سرگروه (کارفرما)</option>
                         <option value="professor">استاد درس (رگولاتور)</option>
@@ -79,91 +84,91 @@
 
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">ایمیل دانشگاهی یا معتبر</label>
-                    <input type="email" id="auth-email" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:bg-white text-xs outline-none" placeholder="user@kntu.ac.ir">
+                    <label class="block text-xs font-bold text-slate-600 mb-1">ایمیل دانشگاهی</label>
+                    <input type="email" id="auth-email" class="w-full bg-slate-50/80 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white text-sm transition" placeholder="user@kntu.ac.ir">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
-                    <input type="password" id="auth-password" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:ring-2 focus:ring-indigo-500 focus:bg-white text-xs outline-none">
+                    <input type="password" id="auth-password" class="w-full bg-slate-50/80 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white text-sm transition">
                 </div>
                 
-                <button id="auth-submit-btn" type="button" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition duration-200 shadow-lg shadow-indigo-600/20 cursor-pointer text-xs">ورود به سامانه</button>
+                <button id="auth-submit-btn" type="button" class="w-full gradient-brand hover:opacity-95 text-white font-bold py-3 rounded-xl transition duration-200 shadow-lg shadow-indigo-500/25 cursor-pointer text-sm">ورود به سامانه</button>
             </div>
 
-            <div id="auth-error" class="text-red-600 text-xs mt-4 text-center hidden bg-red-50 p-3 rounded-xl border border-red-200"></div>
+            <div id="auth-error" class="text-red-600 text-xs mt-4 text-center hidden bg-red-50 p-3 rounded-xl border border-red-200 font-medium"></div>
         </section>
 
-        <!-- ۲. داشبورد اصلی سامانه -->
-        <div id="dashboard-section" class="hidden space-y-6">
+        <!-- داشبورد اصلی -->
+        <div id="dashboard-section" class="hidden space-y-8">
 
-            <!-- کارت‌های وضعیت پویا (KPI Cards) -->
+            <!-- کارت‌های آماری پویا (KPIs) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex items-center justify-between">
                     <div>
-                        <span class="text-slate-400 text-[11px] font-bold">نقش شما در سامانه</span>
-                        <h3 id="stat-role" class="text-sm md:text-base font-extrabold text-slate-900 mt-1">-</h3>
+                        <span class="text-slate-400 text-xs font-bold">نقش شما در سامانه</span>
+                        <h3 id="stat-role" class="text-base font-extrabold text-slate-900 mt-1">-</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xl shadow-inner">👤</div>
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xl">👤</div>
                 </div>
 
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex items-center justify-between">
                     <div>
-                        <span class="text-slate-400 text-[11px] font-bold">تیم طراحی هواپیما</span>
-                        <h3 id="stat-team" class="text-sm md:text-base font-extrabold text-indigo-600 mt-1">-</h3>
+                        <span class="text-slate-400 text-xs font-bold">تیم طراحی هواپیما</span>
+                        <h3 id="stat-team" class="text-base font-extrabold text-indigo-600 mt-1">-</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl shadow-inner">🛡️</div>
+                    <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl">🛡️</div>
                 </div>
 
-                <!-- KPI هوشمند: نمایش تفکیکی ۳ گانه برای سرگروه و ساده برای دانشجو/استاد -->
+                <!-- KPI قراردادهای من با منطق تفکیکی سرگروه و دانشجو -->
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex items-center justify-between">
                     <div class="w-full">
-                        <span class="text-slate-400 text-[11px] font-bold" id="stat-contracts-label">قراردادهای من</span>
+                        <span class="text-slate-400 text-xs font-bold">قراردادهای تیم / من</span>
                         <div id="stat-contracts-container" class="mt-1">
                             <h3 id="stat-contracts" class="text-lg font-black text-emerald-600">۰</h3>
                         </div>
                     </div>
-                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xl shadow-inner shrink-0 mr-2">📝</div>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xl mr-2">📝</div>
                 </div>
 
                 <div class="glass-card p-5 rounded-3xl shadow-sm flex items-center justify-between">
                     <div>
-                        <span class="text-slate-400 text-[11px] font-bold">سکه تسویه‌شده نهایی</span>
+                        <span class="text-slate-400 text-xs font-bold">سکه تسویه‌شده</span>
                         <h3 id="stat-coins" class="text-lg font-black text-amber-500 mt-1">۰ سکه</h3>
                     </div>
-                    <div class="w-11 h-11 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center font-bold text-xl shadow-inner">🪙</div>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center font-bold text-xl coin-glow">🪙</div>
                 </div>
             </div>
 
-            <!-- پنل استاد (ارزیابی نمره‌ای و پایش جامع) -->
-            <section id="professor-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-6">
+            <!-- پنل نظارت و ارزیابی استاد -->
+            <section id="professor-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-6 border border-indigo-100">
                 <div>
-                    <h3 class="text-sm md:text-base font-black text-indigo-950 mb-4 flex items-center gap-2">
-                        <span>🎓</span> پنل نظارت، ارزیابی نمره‌ای و تایید نهایی استاد
+                    <h3 class="text-base font-extrabold text-indigo-950 mb-4 flex items-center">
+                        <span class="ml-2 text-xl">🎓</span> پنل نظارت عالیه، ارزیابی کتابچه‌ها و تسویه هوشمند
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-600 mb-1">انتخاب تیم</label>
-                            <select id="eval-team-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 outline-none"></select>
+                            <select id="eval-team-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 font-semibold"></select>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-600 mb-1">کتابچه راسکم</label>
-                            <select id="eval-booklet-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 outline-none"></select>
+                            <select id="eval-booklet-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 font-semibold"></select>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-600 mb-1">سکه تایید شده (ارزیابی)</label>
-                            <input type="number" id="eval-coins-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 outline-none" placeholder="سکه">
+                            <input type="number" id="eval-coins-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="سکه">
                         </div>
                         <div class="flex items-end">
-                            <button id="eval-submit-btn" type="button" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-emerald-600/20 transition cursor-pointer">ثبت ارزیابی و خاتمه کتابچه</button>
+                            <button id="eval-submit-btn" type="button" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-emerald-600/20 transition cursor-pointer">ثبت ارزیابی و خاتمه کتابچه</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="pt-4 border-t border-slate-200/80">
-                    <h4 class="text-xs md:text-sm font-bold text-slate-900 mb-3">📊 وضعیت جامع تیم‌ها و پیمانکاران آزاد</h4>
+                <div class="pt-4 border-t border-slate-200/70">
+                    <h4 class="text-sm font-extrabold text-slate-900 mb-3">📊 پایش وضعیت تیم‌ها، اعضا و پیمانکاران آزاد</h4>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div class="border border-slate-200 rounded-2xl p-4 bg-white/70">
-                            <h5 class="text-xs font-bold text-indigo-700 mb-2">تیم‌ها و خلاصه قراردادها</h5>
+                            <h5 class="text-xs font-bold text-indigo-700 mb-2">تیم‌ها و تراز قراردادها</h5>
                             <div id="prof-teams-summary" class="space-y-2 text-xs text-slate-600">در حال بارگذاری...</div>
                         </div>
                         <div class="border border-slate-200 rounded-2xl p-4 bg-white/70">
@@ -174,74 +179,69 @@
                 </div>
             </section>
 
-            <!-- پنل سرگروه (تعریف تیم و تسک) -->
-            <section id="leader-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-4">
-                <div id="create-team-box" class="pb-4 border-b border-slate-200/80 hidden">
-                    <h3 class="text-sm font-bold text-amber-700 mb-2">ثبت نام تیم طراحی هواپیما</h3>
+            <!-- پنل سرگروه -->
+            <section id="leader-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-4 border border-slate-200">
+                <div id="create-team-box" class="pb-4 border-b border-slate-200 hidden">
+                    <h3 class="text-sm font-extrabold text-amber-700 mb-2">ثبت نام تیم طراحی هواپیما</h3>
                     <div class="flex space-x-2 space-x-reverse">
-                        <input type="text" id="team-name-input" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs w-80 text-slate-800 outline-none" placeholder="نام تیم (مثلاً: تیم ققنوس)">
-                        <button id="register-team-btn" type="button" class="bg-amber-600 hover:bg-amber-700 text-white px-5 rounded-xl text-xs font-bold transition cursor-pointer">ثبت تیم</button>
+                        <input type="text" id="team-name-input" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs w-80 text-slate-800" placeholder="نام تیم (مثلاً: تیم ققنوس)">
+                        <button id="register-team-btn" type="button" class="bg-amber-600 hover:bg-amber-700 text-white px-4 rounded-xl text-xs font-bold transition cursor-pointer shadow-xs">ثبت تیم</button>
                     </div>
                 </div>
 
-                <h3 class="text-sm font-black text-slate-900">➕ تعریف بسته کاری جدید برای تیم</h3>
+                <h3 class="text-sm font-extrabold text-slate-900">➕ تعریف ریزبسته کاری جدید (Task)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">کتابچه</label>
-                        <select id="task-booklet-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 outline-none"></select>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">کتابچه مرجع</label>
+                        <select id="task-booklet-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 font-semibold"></select>
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-xs font-bold text-slate-600 mb-1">عنوان بسته کاری و شرح تسک</label>
-                        <input type="text" id="task-title-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 outline-none" placeholder="مثلاً: استخراج قطبی پسا و نمودار سرعت بر حسب ارتفاع">
+                        <label class="block text-xs font-bold text-slate-600 mb-1">عنوان و شرح مأموریت تسک</label>
+                        <input type="text" id="task-title-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="مثلاً: جلد ۴ - ترسیم و استخراج نمودار تطبیق و نقطه طراحی">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">ارزش اسمی تسک (سکه)</label>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">بودجه تخصیصی اسمی (سکه)</label>
                         <div class="flex space-x-2 space-x-reverse">
-                            <input type="number" id="task-coins-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 outline-none" placeholder="سکه">
-                            <button id="create-task-btn" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 rounded-xl text-xs font-bold shadow-md shadow-indigo-600/20 transition cursor-pointer">ایجاد</button>
+                            <input type="number" id="task-coins-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 font-bold" placeholder="سکه">
+                            <button id="create-task-btn" type="button" class="gradient-brand text-white px-5 rounded-xl text-xs font-bold shadow-md shadow-indigo-500/20 transition cursor-pointer">ایجاد</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ۳. بازار تسک‌های باز و نیازمند پیمانکار به صورت کارت‌های مدرن -->
-            <section class="glass-card p-6 rounded-3xl shadow-sm space-y-4">
-                <div class="flex justify-between items-center mb-2">
-                    <div>
-                        <h3 class="text-sm md:text-base font-black text-slate-900 flex items-center gap-2">
-                            <span>📋</span> بازار تسک‌های باز و نیازمند پیمانکار
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-0.5">فرصت‌های فعال جهت انعقاد قرارداد هوشمند و همکاری تخصصی در کتابچه‌های راسکم</p>
-                    </div>
-                    <span id="tasks-count-badge" class="bg-indigo-50 text-indigo-700 text-xs font-extrabold px-3 py-1 rounded-full border border-indigo-100">۰ تسک باز</span>
+            <!-- بخش کارت‌های بازار تسک‌ها -->
+            <section class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-base font-black text-slate-900 flex items-center">
+                        <span class="ml-2 text-xl">📋</span> بازار تسک‌های باز و نیازمند پیمانکار
+                    </h3>
+                    <span class="text-xs font-semibold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-2xs">سیستم قرارداد هوشمند</span>
                 </div>
-
-                <div id="tasks-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <div class="col-span-full py-8 text-center text-slate-400 text-xs">در حال بارگذاری تسک‌های بازار...</div>
+                
+                <div id="tasks-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="col-span-full p-8 text-center text-slate-400 glass-card rounded-3xl">در حال بارگذاری تسک‌های بازار...</div>
                 </div>
             </section>
 
-            <!-- ۴. قراردادهای هوشمند و چرخه بررسی گزارش‌ها -->
-            <section class="glass-card p-6 rounded-3xl shadow-sm space-y-4">
+            <!-- بخش جدول قراردادهای هوشمند -->
+            <section class="glass-card p-6 rounded-3xl shadow-sm border border-slate-200/90 space-y-4">
                 <div class="flex justify-between items-center mb-2">
-                    <div>
-                        <h3 class="text-sm md:text-base font-black text-slate-900 flex items-center gap-2">
-                            <span>📜</span> قراردادهای هوشمند و چرخه بررسی گزارش‌ها
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-0.5" id="contracts-section-subtitle">جریان ۴ مرحله‌ای تایید فایل، بازبینی سرگروه و ارزیابی نهایی استاد</p>
-                    </div>
+                    <h3 class="text-base font-black text-slate-900 flex items-center">
+                        <span class="ml-2 text-xl">📜</span> قراردادهای هوشمند و چرخه بررسی گزارش‌ها
+                    </h3>
+                    <span id="contracts-filter-info" class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100"></span>
                 </div>
 
-                <div class="overflow-x-auto rounded-2xl border border-slate-200/80 bg-white">
+                <div class="overflow-x-auto">
                     <table class="w-full text-right text-xs">
-                        <thead class="bg-slate-50/80 text-slate-500 border-b border-slate-200 font-bold">
+                        <thead class="bg-slate-100/80 text-slate-600 border-b border-slate-200 font-bold">
                             <tr>
-                                <th class="p-3.5">تیم</th>
+                                <th class="p-3.5 rounded-r-xl">تیم</th>
                                 <th class="p-3.5">کتابچه</th>
-                                <th class="p-3.5">عنوان تسک</th>
+                                <th class="p-3.5">تسک</th>
                                 <th class="p-3.5">پیمانکار</th>
                                 <th class="p-3.5">وضعیت ۴ مرحله‌ای</th>
-                                <th class="p-3.5">گزارش و عملیات</th>
+                                <th class="p-3.5 rounded-l-xl">عملیات گزارش</th>
                             </tr>
                         </thead>
                         <tbody id="contracts-table-body" class="divide-y divide-slate-100">
@@ -280,8 +280,8 @@
 
     document.getElementById('tab-login').onclick = function() {
         currentMode = 'login';
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600 cursor-pointer text-sm";
-        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer text-sm";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600 cursor-pointer";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer";
         document.getElementById('signup-extra-fields').style.display = 'none';
         document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
         document.getElementById('auth-error').classList.add('hidden');
@@ -289,8 +289,8 @@
 
     document.getElementById('tab-signup').onclick = function() {
         currentMode = 'signup';
-        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600 cursor-pointer text-sm";
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer text-sm";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-indigo-600 border-b-2 border-indigo-600 cursor-pointer";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer";
         document.getElementById('signup-extra-fields').style.display = 'block';
         document.getElementById('auth-submit-btn').innerText = "ایجاد حساب کاربری";
         document.getElementById('auth-error').classList.add('hidden');
@@ -304,7 +304,7 @@
 
     document.getElementById('auth-submit-btn').onclick = async function() {
         var sb = getSupabaseClient();
-        if (!sb) return showError("در حال اتصال به پایگاه داده... لطفاً مجدداً امتحان کنید.");
+        if (!sb) return showError("در حال برقراری ارتباط با پایگاه داده... لطفاً مجدداً امتحان کنید.");
 
         var email = document.getElementById('auth-email').value.trim();
         var password = document.getElementById('auth-password').value;
@@ -374,6 +374,7 @@
             if (userProfile.role === 'professor') {
                 document.getElementById('professor-panel').classList.remove('hidden');
                 document.getElementById('stat-team').innerText = "ناظر عالی (استاد)";
+                document.getElementById('contracts-filter-info').innerText = "نمایش کلیه قراردادهای فعال دانشگاه";
                 loadTeamsForProfessor();
                 loadProfessorSummary();
             } else if (userProfile.role === 'leader') {
@@ -382,13 +383,14 @@
                 currentTeam = tRes.data;
                 if (!currentTeam) {
                     document.getElementById('create-team-box').classList.remove('hidden');
-                    document.getElementById('stat-team').innerText = "بدون تیم";
+                    document.getElementById('stat-team').innerText = "تیمی ثبت نشده";
                 } else {
                     document.getElementById('stat-team').innerText = currentTeam.name;
                 }
+                document.getElementById('contracts-filter-info').innerText = "قراردادهای تیم شما";
             } else {
                 document.getElementById('stat-team').innerText = "پیمانکار آزاد";
-                document.getElementById('contracts-section-subtitle').innerText = "فهرست قراردادهای اختصاصی شما و ارسال گزارش";
+                document.getElementById('contracts-filter-info').innerText = "فقط قراردادهای شخصی شما";
             }
 
             await loadBooklets();
@@ -460,7 +462,7 @@
     }
     document.getElementById('create-task-btn').onclick = createTask;
 
-    // بارگذاری تسک‌های باز به صورت کارت‌های تعاملی و زیبا
+    // بارگذاری تسک‌ها به صورت کارت‌های مدرن تعاملی
     async function loadTasks() {
         var sb = getSupabaseClient();
         var query = sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
@@ -470,64 +472,53 @@
         }
 
         var res = await query;
-        var container = document.getElementById('tasks-grid-container');
-        container.innerHTML = '';
-
-        var countBadge = document.getElementById('tasks-count-badge');
-        countBadge.innerText = (res.data ? res.data.length : 0) + ' تسک باز';
+        var grid = document.getElementById('tasks-cards-grid');
+        grid.innerHTML = '';
 
         if (!res.data || res.data.length === 0) {
-            container.innerHTML = '<div class="col-span-full py-12 text-center text-slate-400 bg-white/40 border border-dashed border-slate-300 rounded-3xl text-xs">در حال حاضر هیچ تسک بازی در بازار موجود نیست.</div>';
+            grid.innerHTML = '<div class="col-span-full p-8 text-center text-slate-400 glass-card rounded-3xl font-medium">تسکی در بازار نیازمند پیمانکار نیست.</div>';
             return;
         }
 
         res.data.forEach(function(t) {
-            var teamName = t.teams ? t.teams.name : 'تیم دانشگاه';
+            var teamName = t.teams ? t.teams.name : 'عمومی';
             var bNum = t.booklets ? t.booklets.booklet_number : '-';
-            var bTitle = t.booklets ? t.booklets.title : 'طراحی عمومی';
-            
+            var bTitle = t.booklets ? t.booklets.title : '';
+
             var actionSection = '';
             if (userProfile.role === 'member') {
-                actionSection = '<button type="button" onclick="acceptTask(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md shadow-indigo-600/20 transition flex items-center justify-center gap-1.5 cursor-pointer">' +
-                    '<span>🤝</span> قبول سفارش و همکاری' +
+                actionSection = '<button type="button" onclick="acceptTask(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full gradient-brand hover:opacity-95 text-white font-bold py-2.5 px-4 rounded-xl text-xs shadow-md shadow-indigo-500/20 transition cursor-pointer flex items-center justify-center space-x-1 space-x-reverse">' +
+                    '<span>قبول سفارش / همکاری</span>' +
+                    '<span>🤝</span>' +
                     '</button>';
             } else if (userProfile.role === 'leader' && currentTeam && t.team_id === currentTeam.id) {
                 actionSection = '<div class="flex space-x-2 space-x-reverse w-full">' +
-                    '<button onclick="editTaskPrompt(\'' + t.id + '\', \'' + t.title + '\', ' + t.allocated_nominal_coins + ')" class="flex-1 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 py-1.5 rounded-xl text-xs font-bold transition">ویرایش</button>' +
-                    '<button onclick="deleteTask(\'' + t.id + '\')" class="flex-1 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 py-1.5 rounded-xl text-xs font-bold transition">حذف</button>' +
+                    '<button onclick="editTaskPrompt(\'' + t.id + '\', \'' + t.title + '\', ' + t.allocated_nominal_coins + ')" class="w-1/2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-xl text-xs transition">ویرایش</button>' +
+                    '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-xl text-xs transition">حذف تسک</button>' +
                     '</div>';
             } else {
-                actionSection = '<span class="text-slate-400 text-xs text-center block bg-slate-50 py-2 rounded-xl">در انتظار پذیرش پیمانکار</span>';
+                actionSection = '<div class="w-full bg-slate-100 text-slate-400 text-center py-2 rounded-xl text-xs font-bold">در انتظار انتخاب توسط پیمانکاران</div>';
             }
 
-            var cardHtml = '<div class="task-card-hover bg-white border border-slate-200/90 rounded-3xl p-5 flex flex-col justify-between shadow-xs relative overflow-hidden">' +
-                '<div class="absolute top-0 right-0 w-24 h-24 bg-indigo-50/50 rounded-full blur-2xl -z-0"></div>' +
-                '<div class="relative z-10 space-y-3.5">' +
-                    '<div class="flex justify-between items-start gap-2">' +
-                        '<span class="bg-indigo-50 text-indigo-700 font-extrabold text-[11px] px-2.5 py-1 rounded-full border border-indigo-100">🛡️ ' + teamName + '</span>' +
-                        '<span class="bg-slate-100 text-slate-600 font-bold text-[10px] px-2.5 py-1 rounded-full">کتابچه ' + bNum + '</span>' +
-                    '</div>' +
-                    '<div>' +
-                        '<h4 class="font-extrabold text-slate-900 text-sm leading-snug line-clamp-2">' + t.title + '</h4>' +
-                        '<p class="text-[11px] text-slate-500 mt-1 line-clamp-1">مربوط به: ' + bTitle + '</p>' +
-                    '</div>' +
-                    '<div class="bg-gradient-to-r from-amber-50 to-orange-50/40 p-3 rounded-2xl border border-amber-100/80 flex items-center justify-between">' +
-                        '<div class="flex items-center gap-2">' +
-                            '<div class="w-8 h-8 rounded-full bg-amber-400 text-white flex items-center justify-center font-black text-sm shadow-sm shadow-amber-300">🪙</div>' +
-                            '<div>' +
-                                '<span class="text-[10px] text-amber-800/80 block font-bold">دستمزد توافقی تسک</span>' +
-                                '<span class="text-xs font-black text-amber-900">' + t.allocated_nominal_coins + ' سکه راسکم</span>' +
-                            '</div>' +
+            grid.innerHTML += '<div class="glass-card p-5 rounded-3xl border border-slate-200/80 card-hover flex flex-col justify-between space-y-4">' +
+                '<div>' +
+                    '<div class="flex justify-between items-start mb-2">' +
+                        '<span class="bg-indigo-50 text-indigo-700 text-[11px] font-extrabold px-3 py-1 rounded-full border border-indigo-100/80 flex items-center">' +
+                            '<span class="w-1.5 h-1.5 rounded-full bg-indigo-600 ml-1.5 animate-pulse"></span>' +
+                            'تیم: ' + teamName +
+                        '</span>' +
+                        '<div class="flex items-center space-x-1 space-x-reverse bg-amber-50 text-amber-800 px-3 py-1 rounded-xl border border-amber-200/70 font-black text-xs coin-glow">' +
+                            '<span>🪙</span>' +
+                            '<span>' + t.allocated_nominal_coins + ' سکه</span>' +
                         '</div>' +
-                        '<span class="text-[10px] font-bold text-amber-600 bg-white/80 px-2 py-0.5 rounded-md border border-amber-200/60">بودجه باز</span>' +
                     '</div>' +
+                    '<div class="text-[11px] font-bold text-slate-500 mt-2">کتابچه ' + bNum + ': ' + bTitle + '</div>' +
+                    '<h4 class="text-sm font-extrabold text-slate-800 mt-1 line-clamp-2 leading-snug">' + t.title + '</h4>' +
                 '</div>' +
-                '<div class="pt-4 mt-2 border-t border-slate-100 relative z-10">' +
+                '<div class="pt-3 border-t border-slate-100">' +
                     actionSection +
                 '</div>' +
-            '</div>';
-
-            container.innerHTML += cardHtml;
+                '</div>';
         });
     }
 
@@ -561,18 +552,18 @@
         }
     };
 
-    // قانون عدم انجام یک کتابچه خاص برای بیش از یک تیم توسط دانشجو
+    // منع قطعی دانشجو از پذیرش یک کتابچه خاص در بیش از یک تیم
     window.acceptTask = async function(taskId, teamId, coins, bookletId) {
         var sb = getSupabaseClient();
 
-        // واکشی تمام قراردادهای دانشجو به همراه شماره کتابچه
         var checkRes = await sb.from('contracts').select('team_id, tasks(booklet_id)').eq('contractor_id', currentUser.id);
         if (checkRes.data) {
             var alreadyAccepted = checkRes.data.some(function(c) {
-                return c.tasks && parseInt(c.tasks.booklet_id) === parseInt(bookletId);
+                return c.tasks && c.tasks.booklet_id === bookletId;
             });
+
             if (alreadyAccepted) {
-                alert('خطای انحصار کتابچه: شما قبلاً تسکی مربوط به این کتابچه را برای یک تیم دیگر یا همین تیم قبول کرده‌اید. بر اساس مقررات بازار کار درس، هر دانشجو نمی‌تواند یک کتابچه را برای بیش از یک تیم قبول کند.');
+                alert('قانون آموزشی بازار: شما قبلاً تسکی از کتابچه ' + bookletId + ' را برای یکی از تیم‌ها قبول کرده‌اید. هر دانشجو مجاز است کتابچه خاص را فقط برای یک تیم در طول ترم انجام دهد.');
                 return;
             }
         }
@@ -588,7 +579,6 @@
         if (res.error) alert(res.error.message);
         else {
             await sb.from('tasks').update({ status: 'in_progress' }).eq('id', taskId);
-            alert('قرارداد همکاری با موفقیت منعقد شد. تسک به فهرست قراردادهای شما اضافه گردید.');
             await loadTasks();
             await loadContracts();
         }
@@ -597,28 +587,26 @@
     function renderStatusBadge(status) {
         switch (status) {
             case 'leader_review':
-                return '<span class="bg-amber-100 text-amber-800 font-extrabold px-2.5 py-1 rounded-full text-[10px] inline-flex items-center gap-1"><span>⏳</span> درحال بررسی توسط سرگروه</span>';
+                return '<span class="bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full text-[11px] inline-block">⏳ درحال بررسی توسط سرگروه</span>';
             case 'professor_review':
-                return '<span class="bg-blue-100 text-blue-800 font-extrabold px-2.5 py-1 rounded-full text-[10px] inline-flex items-center gap-1"><span>🔍</span> درحال بررسی توسط استاد</span>';
+                return '<span class="bg-blue-100 text-blue-800 font-bold px-2.5 py-1 rounded-full text-[11px] inline-block">🔍 درحال بررسی توسط استاد</span>';
             case 'completed':
-                return '<span class="bg-emerald-100 text-emerald-800 font-extrabold px-2.5 py-1 rounded-full text-[10px] inline-flex items-center gap-1"><span>✓</span> خاتمه یافته</span>';
+                return '<span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-[11px] inline-block">✓ خاتمه یافته</span>';
             case 'in_progress':
             default:
-                return '<span class="bg-slate-100 text-slate-700 font-extrabold px-2.5 py-1 rounded-full text-[10px] inline-flex items-center gap-1"><span>⚙️</span> درحال انجام</span>';
+                return '<span class="bg-slate-100 text-slate-700 font-bold px-2.5 py-1 rounded-full text-[11px] inline-block">⚙️ درحال انجام</span>';
         }
     }
 
-    // بارگذاری جدول قراردادها با فیلتر محرمانه دانشجو، نمایش شماره کتابچه و KPI سه‌گانه سرگروه
+    // بارگذاری جدول قراردادها + فیلتر اختصاصی دانشجو + KPI سرگروه
     async function loadContracts() {
         var sb = getSupabaseClient();
         var query = sb.from('contracts').select('*, tasks(*, booklets(booklet_number, title)), teams(name), profiles(full_name)');
 
-        // فیلتر ۴: دانشجو فقط قراردادهای خودش را ببیند
+        // فیلتر: دانشجو فقط قراردادهای خودش را ببیند
         if (userProfile.role === 'member') {
             query = query.eq('contractor_id', currentUser.id);
-        } 
-        // سرگروه فقط قراردادهای تیم خودش را ببیند
-        else if (userProfile.role === 'leader' && currentTeam) {
+        } else if (userProfile.role === 'leader' && currentTeam) {
             query = query.eq('team_id', currentTeam.id);
         }
 
@@ -626,107 +614,100 @@
         var tbody = document.getElementById('contracts-table-body');
         tbody.innerHTML = '';
 
-        var totalCoinsAwarded = 0;
+        if (!res.data || res.data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>';
+        }
 
-        // KPI سه‌گانه سرگروه و آمار دانشجو
+        var myTotalCoins = 0;
+        var myContractsCount = 0;
+
+        if (res.data) {
+            res.data.forEach(function(c) {
+                if (c.contractor_id === currentUser.id) {
+                    myContractsCount++;
+                    if (c.final_payout) myTotalCoins += parseFloat(c.final_payout);
+                }
+
+                var teamName = c.teams ? c.teams.name : '-';
+                var tTitle = c.tasks ? c.tasks.title : '-';
+                var pName = c.profiles ? c.profiles.full_name : 'پیمانکار';
+                var taskObj = c.tasks || {};
+                var bookletNum = (taskObj.booklets && taskObj.booklets.booklet_number) ? taskObj.booklets.booklet_number : '-';
+                var currentTaskStatus = taskObj.status || c.status || 'in_progress';
+
+                var actionCol = '';
+
+                if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
+                    if (currentTaskStatus === 'in_progress') {
+                        actionCol = '<div class="space-y-1.5">' +
+                            '<input type="file" id="file-' + taskObj.id + '" class="text-[10px] text-slate-600 block w-44 border border-slate-200 p-1 rounded-lg bg-white">' +
+                            '<button type="button" onclick="uploadAndSendReport(\'' + taskObj.id + '\', \'' + c.id + '\')" class="gradient-brand text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-xs transition">📤 آپلود و ارسال به سرگروه</button>' +
+                            '</div>';
+                    } else {
+                        actionCol = '<div class="text-[11px] space-y-1">' +
+                            '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 underline font-semibold block">📥 دانلود فایل من</a>' +
+                            '<span class="text-slate-500 text-[10px]">در صف بررسی ارزیاب</span>' +
+                            '</div>';
+                    }
+                } else if (userProfile.role === 'leader') {
+                    if (currentTaskStatus === 'leader_review') {
+                        actionCol = '<div class="space-y-1.5">' +
+                            '<a href="' + taskObj.submission_url + '" target="_blank" class="text-blue-600 underline font-bold block text-xs">📥 دانلود و بررسی</a>' +
+                            '<div class="flex space-x-1 space-x-reverse">' +
+                            '<button type="button" onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', true)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-xs">✓ تایید (ارسال به استاد)</button>' +
+                            '<button type="button" onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', false)" class="bg-red-600 hover:bg-red-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-xs">✕ عدم تایید</button>' +
+                            '</div>' +
+                            '</div>';
+                    } else if (taskObj.submission_url) {
+                        actionCol = '<a href="' + taskObj.submission_url + '" target="_blank" class="text-blue-600 underline text-xs font-semibold">📥 مشاهده فایل</a>';
+                    } else {
+                        actionCol = '<span class="text-slate-400 text-xs">در دست اقدام پیمانکار</span>';
+                    }
+                } else if (userProfile.role === 'professor') {
+                    if (taskObj.submission_url) {
+                        actionCol = '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 font-bold underline text-xs">📄 دانلود گزارش نهایی</a>';
+                    } else {
+                        actionCol = '<span class="text-slate-400 text-xs">فایلی ثبت نشده</span>';
+                    }
+                }
+
+                tbody.innerHTML += '<tr class="hover:bg-slate-50/80 transition">' +
+                    '<td class="p-3.5 font-bold text-indigo-700">' + teamName + '</td>' +
+                    '<td class="p-3.5 font-bold text-slate-600"><span class="bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">جلد ' + bookletNum + '</span></td>' +
+                    '<td class="p-3.5 text-slate-800 font-medium">' + tTitle + '</td>' +
+                    '<td class="p-3.5 text-slate-600">' + pName + '</td>' +
+                    '<td class="p-3.5">' + renderStatusBadge(currentTaskStatus) + '</td>' +
+                    '<td class="p-3.5">' + actionCol + '</td>' +
+                    '</tr>';
+            });
+        }
+
+        // KPI سرگروه: تعداد ایجاد شده، منعقد شده، اتمام یافته
+        var kpiContainer = document.getElementById('stat-contracts-container');
         if (userProfile.role === 'leader' && currentTeam) {
-            document.getElementById('stat-contracts-label').innerText = "وضعیت قراردادهای تیم من";
-            var allTeamTasks = await sb.from('tasks').select('status').eq('team_id', currentTeam.id);
-            var createdCount = allTeamTasks.data ? allTeamTasks.data.length : 0;
-            var assignedContracts = res.data ? res.data : [];
-            var signedCount = assignedContracts.length;
-            var completedCount = assignedContracts.filter(function(c) { return (c.tasks ? c.tasks.status : c.status) === 'completed'; }).length;
+            var teamTasksRes = await sb.from('tasks').select('status').eq('team_id', currentTeam.id);
+            var allCreated = teamTasksRes.data ? teamTasksRes.data.length : 0;
+            var assigned = teamTasksRes.data ? teamTasksRes.data.filter(function(x){ return x.status !== 'open'; }).length : 0;
+            var completed = teamTasksRes.data ? teamTasksRes.data.filter(function(x){ return x.status === 'completed'; }).length : 0;
 
-            document.getElementById('stat-contracts-container').innerHTML = 
-                '<div class="flex items-center gap-2 mt-1">' +
-                    '<span class="text-[11px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-lg">' + createdCount + ' ایجادشده</span>' +
-                    '<span class="text-[11px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-lg">' + signedCount + ' منعقدشده</span>' +
-                    '<span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-lg">' + completedCount + ' خاتمه‌یافته</span>' +
+            kpiContainer.innerHTML = '<div class="space-y-0.5 text-xs font-bold">' +
+                '<div class="text-slate-700">کل ایجادشده: <span class="text-indigo-600">' + allCreated + '</span></div>' +
+                '<div class="text-slate-700">منعقدشده: <span class="text-emerald-600">' + assigned + '</span></div>' +
+                '<div class="text-slate-700">اتمام‌یافته: <span class="text-blue-600">' + completed + '</span></div>' +
                 '</div>';
         } else {
-            var count = res.data ? res.data.length : 0;
-            document.getElementById('stat-contracts-container').innerHTML = '<h3 id="stat-contracts" class="text-lg font-black text-emerald-600">' + count + '</h3>';
+            kpiContainer.innerHTML = '<h3 id="stat-contracts" class="text-lg font-black text-emerald-600">' + myContractsCount + '</h3>';
         }
 
-        if (!res.data || res.data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400 text-xs">هیچ قراردادی در این بخش یافت نشد.</td></tr>';
-            document.getElementById('stat-coins').innerText = "۰ سکه";
-            return;
-        }
-
-        res.data.forEach(function(c) {
-            if (c.contractor_id === currentUser.id && c.final_payout) {
-                totalCoinsAwarded += parseFloat(c.final_payout);
-            }
-
-            var teamName = c.teams ? c.teams.name : '-';
-            var tTitle = c.tasks ? c.tasks.title : '-';
-            var bNum = (c.tasks && c.tasks.booklets) ? c.tasks.booklets.booklet_number : '-';
-            var bTitle = (c.tasks && c.tasks.booklets) ? c.tasks.booklets.title : '';
-            var pName = c.profiles ? c.profiles.full_name : 'پیمانکار';
-            var taskObj = c.tasks || {};
-            var currentTaskStatus = taskObj.status || c.status || 'in_progress';
-
-            var actionCol = '';
-
-            // ۱. پنل پیمانکار
-            if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
-                if (currentTaskStatus === 'in_progress') {
-                    actionCol = '<div class="space-y-1.5">' +
-                        '<input type="file" id="file-' + taskObj.id + '" class="text-[10px] text-slate-600 block w-44 border border-slate-200 p-1 rounded-lg bg-slate-50">' +
-                        '<button type="button" onclick="uploadAndSendReport(\'' + taskObj.id + '\', \'' + c.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-sm transition">📤 آپلود و ارسال به سرگروه</button>' +
-                        '</div>';
-                } else {
-                    actionCol = '<div class="text-[11px] space-y-1">' +
-                        '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 font-bold underline block">📥 دانلود فایل من</a>' +
-                        '<span class="text-slate-400 text-[10px]">فایل تحویل شد و در انتظار بازبینی است.</span>' +
-                        '</div>';
-                }
-            }
-            // ۲. پنل سرگروه
-            else if (userProfile.role === 'leader') {
-                if (currentTaskStatus === 'leader_review') {
-                    actionCol = '<div class="space-y-1.5">' +
-                        '<a href="' + taskObj.submission_url + '" target="_blank" class="text-blue-600 underline font-bold block text-xs">📥 دانلود و بررسی فایل</a>' +
-                        '<div class="flex space-x-1.5 space-x-reverse">' +
-                        '<button type="button" onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', true)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-sm">✓ تایید</button>' +
-                        '<button type="button" onclick="leaderDecision(\'' + taskObj.id + '\', \'' + c.id + '\', false)" class="bg-red-600 hover:bg-red-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold shadow-sm">✕ عدم تایید</button>' +
-                        '</div>' +
-                        '</div>';
-                } else if (taskObj.submission_url) {
-                    actionCol = '<a href="' + taskObj.submission_url + '" target="_blank" class="text-blue-600 underline text-xs font-semibold">📥 مشاهده فایل</a>';
-                } else {
-                    actionCol = '<span class="text-slate-400 text-xs">در انتظار انجام پیمانکار</span>';
-                }
-            }
-            // ۳. پنل استاد
-            else if (userProfile.role === 'professor') {
-                if (taskObj.submission_url) {
-                    actionCol = '<a href="' + taskObj.submission_url + '" target="_blank" class="text-indigo-600 font-bold underline text-xs">📄 دانلود فایل نهایی</a>';
-                } else {
-                    actionCol = '<span class="text-slate-400 text-xs">هنوز فایلی ارسال نشده</span>';
-                }
-            }
-
-            tbody.innerHTML += '<tr class="hover:bg-slate-50 transition">' +
-                '<td class="p-3.5 font-bold text-indigo-700">' + teamName + '</td>' +
-                '<td class="p-3.5"><span class="bg-slate-100 text-slate-700 font-black px-2 py-0.5 rounded-md text-[11px]" title="' + bTitle + '">کتابچه ' + bNum + '</span></td>' +
-                '<td class="p-3.5 text-slate-800 font-medium">' + tTitle + '</td>' +
-                '<td class="p-3.5 text-slate-600">' + pName + '</td>' +
-                '<td class="p-3.5">' + renderStatusBadge(currentTaskStatus) + '</td>' +
-                '<td class="p-3.5">' + actionCol + '</td>' +
-                '</tr>';
-        });
-
-        document.getElementById('stat-coins').innerText = totalCoinsAwarded.toFixed(1) + ' سکه';
+        document.getElementById('stat-coins').innerText = myTotalCoins.toFixed(1) + ' سکه';
     }
 
-    // تابع آپلود مستقیم بافر فایل جهت جلوگیری از خطای مرورگر
+    // آپلود بافر مستقیم تا سقف ۳۰ مگابایت
     window.uploadAndSendReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            alert('لطفاً ابتدا یک فایل را انتخاب کنید.');
+            alert('لطفاً ابتدا فایل گزارش را انتخاب نمایید.');
             return;
         }
 
@@ -749,7 +730,6 @@
             });
 
             if (uploadRes.error) {
-                console.error("Storage Error:", uploadRes.error);
                 alert('خطای ذخیره‌سازی: ' + (uploadRes.error.message || JSON.stringify(uploadRes.error)));
                 return;
             }
@@ -757,20 +737,15 @@
             var publicUrlRes = sb.storage.from('reports').getPublicUrl(fileName);
             var downloadUrl = publicUrlRes.data.publicUrl;
 
-            var tRes = await sb.from('tasks').update({
+            await sb.from('tasks').update({
                 submission_url: downloadUrl,
                 status: 'leader_review',
                 leader_approved: false
             }).eq('id', taskId);
 
-            var cRes = await sb.from('contracts').update({
+            await sb.from('contracts').update({
                 status: 'leader_review'
             }).eq('id', contractId);
-
-            if (tRes.error || cRes.error) {
-                alert('خطا در ثبت وضعیت دیتابیس: ' + (tRes.error?.message || cRes.error?.message));
-                return;
-            }
 
             alert('تاییدیه: فایل با موفقیت آپلود شد و جهت بررسی برای سرگروه ارسال گردید.');
             await loadContracts();
@@ -805,7 +780,7 @@
                 status: 'in_progress'
             }).eq('id', contractId);
 
-            alert('گزارش رد شد و وضعیت تسک به «درحال انجام» بازگشت.');
+            alert('گزارش رد شد و وضعیت تسک به «درحال انجام» بازگشت تا نسخه اصلاح‌شده مجدداً ارسال گردد.');
         }
 
         await loadContracts();
@@ -847,7 +822,7 @@
 
                 var leaderName = t.profiles ? t.profiles.full_name : 'نامشخص';
 
-                html += '<div class="bg-white p-3 rounded-2xl border border-slate-200">' +
+                html += '<div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-2xs">' +
                     '<div class="flex justify-between font-bold text-slate-800"><span>' + t.name + ' (سرگروه: ' + leaderName + ')</span><span class="text-indigo-600">' + assignedCount + ' منعقد / ' + openCount + ' آزاد</span></div>' +
                     '<div class="text-[11px] text-slate-500 mt-1">اعضا و پیمانکاران همکار: ' + (uniqueMembers.length > 0 ? uniqueMembers.join('، ') : 'بدون عضو') + '</div>' +
                     '</div>';
@@ -860,9 +835,9 @@
             allProfilesRes.data.forEach(function(m) {
                 var memberContracts = contractsRes.data.filter(function(c) { return c.contractor_id === m.id; });
                 var count = memberContracts.length;
-                freeHtml += '<div class="bg-white p-2.5 rounded-2xl border border-slate-200 flex justify-between items-center">' +
+                freeHtml += '<div class="bg-white p-2.5 rounded-2xl border border-slate-200/80 flex justify-between items-center shadow-2xs">' +
                     '<span class="font-medium text-slate-800">' + m.full_name + ' (' + m.student_id + ')</span>' +
-                    '<span class="text-[11px] px-2 py-0.5 rounded-lg ' + (count > 0 ? 'bg-emerald-50 text-emerald-700 font-bold' : 'bg-amber-50 text-amber-700') + '">' + count + ' قرارداد فعال</span>' +
+                    '<span class="text-[11px] px-2.5 py-0.5 rounded-full font-bold ' + (count > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700') + '">' + count + ' قرارداد فعال</span>' +
                     '</div>';
             });
             freelancersDiv.innerHTML = freeHtml || 'پیمانکاری ثبت نشده است.';
@@ -887,7 +862,7 @@
             await sb.from('tasks').update({ status: 'completed' }).eq('team_id', teamId).eq('booklet_id', parseInt(bookletId));
             await sb.from('contracts').update({ status: 'completed' }).eq('team_id', teamId);
 
-            alert('ارزیابی ثبت شد، تسویه هوشمند انجام گردید و وضعیت کتابچه به «خاتمه یافته» تغییر یافت.');
+            alert('ارزیابی ثبت شد، تسویه هوشمند انجام گردید و وضعیت به «خاتمه یافته» تغییر یافت.');
             await loadContracts();
             await loadProfessorSummary();
         }
