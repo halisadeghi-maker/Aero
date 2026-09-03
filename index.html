@@ -77,10 +77,11 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- صفحه ورود دوکارته -->
+        <!-- صفحه ورود دوکارته: کارت خردلی برندینگ + کارت سبز مدرن فرم ورود -->
         <section id="auth-section" class="max-w-4xl mx-auto mt-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                 
+                <!-- کارت ۱: کارت برندینگ خردلی -->
                 <div class="rounded-3xl p-8 shadow-xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#d97706] to-[#b45309] border border-amber-300">
                     <div class="absolute -top-16 -left-16 w-48 h-48 bg-white/20 rounded-full blur-2xl"></div>
                     <div class="absolute -bottom-16 -right-16 w-48 h-48 bg-amber-200/20 rounded-full blur-2xl"></div>
@@ -116,45 +117,49 @@
                     </div>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl shadow-xl border border-slate-200 flex flex-col justify-center">
-                    <div class="flex border-b border-slate-200 mb-6">
-                        <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-[#0f284e] border-b-2 border-amber-500 cursor-pointer text-sm">ورود به سامانه</button>
-                        <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer text-sm">ثبت‌نام جدید</button>
+                <!-- کارت ۲: کارت سبز مدرن ورود و ثبت‌نام با اجزای داخلی هماهنگ -->
+                <div class="rounded-3xl p-8 shadow-xl border border-emerald-500/30 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#064e3b] via-[#047857] to-[#0f766e] text-white">
+                    <div class="absolute -top-20 -right-20 w-56 h-56 bg-emerald-400/15 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-20 -left-20 w-56 h-56 bg-teal-300/10 rounded-full blur-3xl"></div>
+
+                    <div class="relative z-10 flex border-b border-emerald-400/30 mb-6">
+                        <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-emerald-200 border-b-2 border-emerald-400 cursor-pointer text-sm">ورود به سامانه</button>
+                        <button id="tab-signup" type="button" class="w-1/2 pb-3 font-medium text-emerald-300/60 border-b-2 border-transparent cursor-pointer text-sm">ثبت‌نام جدید</button>
                     </div>
 
-                    <div id="signup-extra-fields" style="display: none;" class="space-y-4 mb-4">
+                    <div id="signup-extra-fields" style="display: none;" class="relative z-10 space-y-4 mb-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">نام و نام خانوادگی</label>
-                            <input type="text" id="auth-name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white text-sm" placeholder="مثال: علی رضایی">
+                            <label class="block text-xs font-bold text-emerald-100 mb-1">نام و نام خانوادگی</label>
+                            <input type="text" id="auth-name" class="w-full bg-emerald-950/50 border border-emerald-400/40 rounded-xl px-4 py-2.5 text-white placeholder-emerald-200/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-sm" placeholder="مثال: علی رضایی">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">شماره دانشجویی / پرسنلی</label>
-                            <input type="text" id="auth-std-id" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white text-sm" placeholder="مثال: 9912345">
+                            <label class="block text-xs font-bold text-emerald-100 mb-1">شماره دانشجویی / پرسنلی</label>
+                            <input type="text" id="auth-std-id" class="w-full bg-emerald-950/50 border border-emerald-400/40 rounded-xl px-4 py-2.5 text-white placeholder-emerald-200/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-sm" placeholder="مثال: 9912345">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">نقش در سامانه</label>
-                            <select id="auth-role" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white text-sm">
-                                <option value="member">دانشجو (پیمانکار)</option>
-                                <option value="leader">سرگروه (کارفرما)</option>
-                                <option value="professor">استاد درس (رگولاتور)</option>
+                            <label class="block text-xs font-bold text-emerald-100 mb-1">نقش در سامانه</label>
+                            <select id="auth-role" class="w-full bg-emerald-950/70 border border-emerald-400/40 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400 text-sm">
+                                <option value="member" class="bg-emerald-900 text-white">دانشجو (پیمانکار)</option>
+                                <option value="leader" class="bg-emerald-900 text-white">سرگروه (کارفرما)</option>
+                                <option value="professor" class="bg-emerald-900 text-white">استاد درس (رگولاتور)</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="space-y-4">
+                    <div class="relative z-10 space-y-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">ایمیل دانشگاهی / کاربری</label>
-                            <input type="email" id="auth-email" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white text-sm" placeholder="user@kntu.ac.ir">
+                            <label class="block text-xs font-bold text-emerald-100 mb-1">ایمیل دانشگاهی / کاربری</label>
+                            <input type="email" id="auth-email" class="w-full bg-emerald-950/50 border border-emerald-400/40 rounded-xl px-4 py-2.5 text-white placeholder-emerald-200/50 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-sm" placeholder="user@kntu.ac.ir">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
-                            <input type="password" id="auth-password" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white text-sm">
+                            <label class="block text-xs font-bold text-emerald-100 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
+                            <input type="password" id="auth-password" class="w-full bg-emerald-950/50 border border-emerald-400/40 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400 text-sm">
                         </div>
                         
-                        <button id="auth-submit-btn" type="button" class="w-full bg-gradient-to-r from-[#0f284e] to-[#1c3f73] hover:from-[#0a1e3a] hover:to-[#122e56] text-amber-300 font-black py-3 rounded-xl transition duration-200 shadow-lg shadow-slate-900/15 cursor-pointer text-sm">ورود به سامانه</button>
+                        <button id="auth-submit-btn" type="button" class="w-full bg-gradient-to-r from-emerald-400 to-teal-300 hover:from-emerald-300 hover:to-teal-200 text-slate-950 font-black py-3 rounded-xl transition duration-200 shadow-lg shadow-emerald-950/30 cursor-pointer text-sm">ورود به سامانه</button>
                     </div>
 
-                    <div id="auth-error" class="text-rose-600 text-xs mt-4 text-center hidden bg-rose-50 p-3 rounded-xl border border-rose-200 font-medium"></div>
+                    <div id="auth-error" class="relative z-10 text-rose-200 text-xs mt-4 text-center hidden bg-rose-950/60 p-3 rounded-xl border border-rose-400/40 font-medium"></div>
                 </div>
 
             </div>
@@ -381,7 +386,7 @@
                 </div>
             </section>
 
-            <!-- بازار تسک‌های باز -->
+            <!-- بازار تسک‌های باز: نمایش تمام تسک‌های همه تیم‌ها با رنگ اختصاصی -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
@@ -498,8 +503,8 @@
 
     document.getElementById('tab-login').onclick = function() {
         currentMode = 'login';
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-black text-[#0f284e] border-b-2 border-amber-500 cursor-pointer text-sm";
-        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer text-sm";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-black text-emerald-200 border-b-2 border-emerald-400 cursor-pointer text-sm";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-medium text-emerald-300/60 border-b-2 border-transparent cursor-pointer text-sm";
         document.getElementById('signup-extra-fields').style.display = 'none';
         document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
         document.getElementById('auth-error').classList.add('hidden');
@@ -507,8 +512,8 @@
 
     document.getElementById('tab-signup').onclick = function() {
         currentMode = 'signup';
-        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-[#0f284e] border-b-2 border-amber-500 cursor-pointer text-sm";
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-medium text-slate-400 border-b-2 border-transparent cursor-pointer text-sm";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-emerald-200 border-b-2 border-emerald-400 cursor-pointer text-sm";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-medium text-emerald-300/60 border-b-2 border-transparent cursor-pointer text-sm";
         document.getElementById('signup-extra-fields').style.display = 'block';
         document.getElementById('auth-submit-btn').innerText = "ایجاد حساب کاربری";
         document.getElementById('auth-error').classList.add('hidden');
@@ -679,74 +684,82 @@
     }
     document.getElementById('create-task-btn').onclick = createTask;
 
-    // نقشه اختصاصی رنگ‌ها برای هر تیم (استایل‌های مستقیم CSS بدون وابستگی به کامپایل داینامیک Tailwind)
-    var knownTeamColors = {};
+    // ۶ تم رنگی کاملاً متمایز و شیک با استایل‌های اینلاین مطمئن
     var colorPalettes = [
         {
-            bgStyle: "background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(209, 250, 229, 0.85));",
-            borderStyle: "border: 1.5px solid #10b981;",
+            // ۱. تیم اول: سبز مدرن
+            bgStyle: "background: linear-gradient(135deg, rgba(236, 253, 245, 0.96), rgba(209, 250, 229, 0.88));",
+            borderStyle: "border: 2px solid #059669;",
             textStyle: "color: #065f46;",
-            badgeStyle: "background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7;"
-        }, // ۱. سبز مدرن
+            badgeStyle: "background-color: #d1fae5; color: #065f46; border: 1.5px solid #34d399;"
+        },
         {
-            bgStyle: "background: linear-gradient(135deg, rgba(240, 249, 255, 0.95), rgba(224, 242, 254, 0.85));",
-            borderStyle: "border: 1.5px solid #0ea5e9;",
+            // ۲. تیم دوم: آبی مدرن
+            bgStyle: "background: linear-gradient(135deg, rgba(240, 249, 255, 0.96), rgba(224, 242, 254, 0.88));",
+            borderStyle: "border: 2px solid #0284c7;",
             textStyle: "color: #0369a1;",
-            badgeStyle: "background-color: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc;"
-        }, // ۲. آبی مدرن
+            badgeStyle: "background-color: #e0f2fe; color: #0369a1; border: 1.5px solid #38bdf8;"
+        },
         {
-            bgStyle: "background: linear-gradient(135deg, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9));",
-            borderStyle: "border: 1.5px solid #64748b;",
-            textStyle: "color: #334155;",
-            badgeStyle: "background-color: #e2e8f0; color: #1e293b; border: 1px solid #94a3b8;"
-        }, // ۳. خاکستری مدرن
+            // ۳. تیم سوم: خاکستری مدرن
+            bgStyle: "background: linear-gradient(135deg, rgba(248, 250, 252, 0.96), rgba(226, 232, 240, 0.88));",
+            borderStyle: "border: 2px solid #475569;",
+            textStyle: "color: #1e293b;",
+            badgeStyle: "background-color: #e2e8f0; color: #1e293b; border: 1.5px solid #94a3b8;"
+        },
         {
-            bgStyle: "background: linear-gradient(135deg, rgba(254, 243, 199, 0.95), rgba(253, 230, 138, 0.85));",
-            borderStyle: "border: 1.5px solid #f59e0b;",
+            // ۴. تیم چهارم: خردلی مدرن
+            bgStyle: "background: linear-gradient(135deg, rgba(254, 243, 199, 0.96), rgba(253, 230, 138, 0.88));",
+            borderStyle: "border: 2px solid #d97706;",
             textStyle: "color: #92400e;",
-            badgeStyle: "background-color: #fef3c7; color: #92400e; border: 1px solid #fcd34d;"
-        }, // ۴. خردلی مدرن
+            badgeStyle: "background-color: #fef3c7; color: #92400e; border: 1.5px solid #f59e0b;"
+        },
         {
-            bgStyle: "background: linear-gradient(135deg, rgba(245, 243, 255, 0.95), rgba(237, 233, 254, 0.85));",
-            borderStyle: "border: 1.5px solid #8b5cf6;",
+            // ۵. تیم پنجم: بنفش مدرن
+            bgStyle: "background: linear-gradient(135deg, rgba(245, 243, 255, 0.96), rgba(237, 233, 254, 0.88));",
+            borderStyle: "border: 2px solid #7c3aed;",
             textStyle: "color: #5b21b6;",
-            badgeStyle: "background-color: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd;"
-        }, // ۵. بنفش مدرن
+            badgeStyle: "background-color: #ede9fe; color: #5b21b6; border: 1.5px solid #a78bfa;"
+        },
         {
-            bgStyle: "background: linear-gradient(135deg, rgba(255, 241, 242, 0.95), rgba(255, 228, 230, 0.85));",
-            borderStyle: "border: 1.5px solid #f43f5e;",
+            // ۶. تیم ششم: رز / سرخابی مدرن
+            bgStyle: "background: linear-gradient(135deg, rgba(255, 241, 242, 0.96), rgba(255, 228, 230, 0.88));",
+            borderStyle: "border: 2px solid #e11d48;",
             textStyle: "color: #9f1239;",
-            badgeStyle: "background-color: #ffe4e6; color: #9f1239; border: 1px solid #fecdd3;"
-        }  // ۶. رز/سرخابی مدرن
+            badgeStyle: "background-color: #ffe4e6; color: #9f1239; border: 1.5px solid #fb7185;"
+        }
     ];
+
+    var teamColorMapping = {};
 
     function getTeamColor(teamId) {
         if (!teamId) return colorPalettes[2];
-        if (!knownTeamColors[teamId]) {
-            var assignedCount = Object.keys(knownTeamColors).length;
-            knownTeamColors[teamId] = colorPalettes[assignedCount % colorPalettes.length];
+        if (teamColorMapping[teamId]) return teamColorMapping[teamId];
+
+        // محاسبه هش بر اساس رشته teamId
+        var hash = 0;
+        for (var i = 0; i < teamId.length; i++) {
+            hash = teamId.charCodeAt(i) + ((hash << 5) - hash);
         }
-        return knownTeamColors[teamId];
+        var paletteIndex = Math.abs(hash) % colorPalettes.length;
+        teamColorMapping[teamId] = colorPalettes[paletteIndex];
+        return teamColorMapping[teamId];
     }
 
+    // بارگذاری بازار تسک‌ها بدون فیلتر team_id تا کارت‌های همه تیم‌ها همزمان با رنگ متمایز دیده شوند
     async function loadTasks() {
         var sb = getSupabaseClient();
         
-        // ابتدا کل تیم‌ها را دریافت می‌کنیم تا ترتیب رنگ‌ها کامپکت و اختصاصی اختصاص یابد
-        var teamsFetch = await sb.from('teams').select('id').order('created_at', { ascending: true });
+        // استعلام کل تیم‌ها برای ترتیب پایدار پالت‌ها
+        var teamsFetch = await sb.from('teams').select('id, name').order('name', { ascending: true });
         if (teamsFetch.data) {
             teamsFetch.data.forEach(function(tm, idx) {
-                knownTeamColors[tm.id] = colorPalettes[idx % colorPalettes.length];
+                teamColorMapping[tm.id] = colorPalettes[idx % colorPalettes.length];
             });
         }
 
-        var query = sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
-        
-        if (userProfile.role === 'leader' && currentTeam) {
-            query = query.eq('team_id', currentTeam.id);
-        }
-
-        var res = await query;
+        // همه کاربران، از جمله سرگروه‌ها، تمام تسک‌های باز بازار را مشاهده می‌کنند
+        var res = await sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
         var container = document.getElementById('tasks-cards-container');
         container.innerHTML = '';
 
@@ -760,7 +773,6 @@
             var bNum = t.booklets ? t.booklets.booklet_number : '-';
             var bTitle = t.booklets ? t.booklets.title : 'کتابچه طراحی';
 
-            // انتخاب رنگ متمایز و قطعی هر تیم
             var color = getTeamColor(t.team_id);
 
             var { data: comments } = await sb.from('task_comments').select('*').eq('task_id', t.id).order('created_at', { ascending: true });
