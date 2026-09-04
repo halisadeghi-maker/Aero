@@ -225,20 +225,109 @@
                 </div>
             </div>
 
-            <!-- بخش کارت‌های ویژه طلایی: مناقصات پروژه‌های اصلی استاد -->
+            <!-- ۳. بخش کارت‌های ویژه طلایی: مناقصات پروژه‌های اصلی استاد با تفکیک رنگی قراردادهای بسته شده -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-2 border-amber-300/80 bg-gradient-to-r from-amber-50/50 via-white to-amber-50/30 space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-2 border-b border-amber-200">
                     <div>
                         <h3 class="text-base font-black text-amber-900 flex items-center gap-2">
                             <span>🏆</span> مناقصات پروژه‌های اصلی استاد (کارفرمای عالی) و سرگروه‌ها
                         </h3>
-                        <p class="text-xs text-amber-700 font-medium">سرگروه‌ها می‌توانند در مهلت قانونی مناقصه، قیمت پیشنهادی خود را ثبت کنند.</p>
+                        <p class="text-xs text-amber-700 font-medium">قراردادهای امضا شده برای همه به صورت کم‌رنگ و برای سرگروه برنده به شکل پررنگ نمایش می‌یابند.</p>
                     </div>
                     <span class="text-xs bg-amber-100 text-amber-900 px-3 py-1 rounded-full font-bold border border-amber-300">مناقصه هوشمند کلاسی</span>
                 </div>
 
                 <div id="master-projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     <div class="col-span-full text-center py-6 text-xs text-slate-400">در حال بارگذاری پروژه‌های اصلی استاد...</div>
+                </div>
+            </section>
+
+            <!-- ۲. نمودار دوناتی پایش بودجه سرگروه -->
+            <section id="leader-budget-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 text-right">
+                        <h3 class="text-sm font-black text-[#0f284e] flex items-center gap-2">
+                            <span>📊</span> نمودار مصرف بودجه مصوب سرگروه (تخصیص‌یافته از قرارداد اصلی)
+                        </h3>
+                        <p class="text-xs text-slate-500 max-w-xl">
+                            سقف بودجه شما توسط قرارداد امضاشده با استاد تعیین می‌شود و تسک‌ها تنها در محدوده این بودجه قابل تعریف و واگذاری هستند.
+                        </p>
+                        <div class="flex flex-wrap gap-4 pt-3 text-xs font-bold">
+                            <span class="flex items-center gap-2">
+                                <span class="w-3.5 h-3.5 rounded-full bg-[#0f284e]"></span>
+                                بودجه مصوب کل: <span id="donut-total-text" class="text-[#0f284e]">۰</span> سکه
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <span class="w-3.5 h-3.5 rounded-full bg-rose-500"></span>
+                                سکه‌های مصرف‌شده/متعهد: <span id="donut-spent-text" class="text-rose-600">۰</span> سکه
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <span class="w-3.5 h-3.5 rounded-full bg-amber-500"></span>
+                                موجودی آزاد باقیمانده: <span id="donut-remain-text" class="text-amber-600">۰</span> سکه
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="relative w-36 h-36 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="38" stroke="#f1f5f9" stroke-width="14" fill="transparent"/>
+                            <circle cx="50" cy="50" r="38" stroke="#f59e0b" stroke-width="14" fill="transparent" class="transition-all duration-700"/>
+                            <circle id="donut-circle-spent" cx="50" cy="50" r="38" stroke="#0f284e" stroke-width="14" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="238.76" stroke-linecap="round" class="transition-all duration-700"/>
+                        </svg>
+                        <div class="absolute text-center">
+                            <span id="donut-center-percent" class="text-sm font-black text-[#0f284e] block">۰٪</span>
+                            <span class="text-[9px] text-slate-400 font-bold">مصرف بودجه</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ۵. کیف سکه دانشجو (پیمانکار) با سقف ۲۵۰ و کف ۱۵۰ سکه -->
+            <section id="member-tank-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
+                            <span>👛</span> کیف سکه دانشجو (هدف نمره کامل: ۲۰۰ سکه | کف قبولی: ۱۵۰ سکه | سقف مجاز مطلق: ۲۵۰ سکه)
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">هیچ دانشجویی امکان عقد بیش از ۲۵۰ سکه قرارداد را ندارد و سامانه از پذیرش قرارداد مازاد جلوگیری می‌کند.</p>
+                    </div>
+                    <div id="tank-badge-status" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 border border-slate-200">
+                        در حال محاسبه...
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="bg-slate-50/90 border border-slate-200 rounded-2xl p-4 space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-700">سکه‌های قراردادهای متعهدشده (تعهد جاری):</span>
+                            <span id="wallet-committed-text" class="font-black text-blue-700 text-sm">۰ سکه</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-3.5 overflow-hidden">
+                            <div id="wallet-committed-bar" class="bg-gradient-to-r from-blue-400 to-indigo-600 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-400 font-bold">
+                            <span>۰</span>
+                            <span>کف: ۱۵۰</span>
+                            <span>هدف: ۲۰۰</span>
+                            <span>سقف: ۲۵۰</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-amber-900">سکه‌های تسویه‌شده و تایید نهایی:</span>
+                            <span id="wallet-final-text" class="font-black text-amber-600 text-sm">۰ سکه</span>
+                        </div>
+                        <div class="w-full bg-amber-100 rounded-full h-3.5 overflow-hidden">
+                            <div id="wallet-final-bar" class="bg-gradient-to-r from-amber-400 to-emerald-500 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-amber-800/60 font-bold">
+                            <span>۰</span>
+                            <span>کف: ۱۵۰</span>
+                            <span>هدف: ۲۰۰</span>
+                            <span>سقف: ۲۵۰</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -271,13 +360,10 @@
                             <label class="block text-[11px] font-bold text-slate-600 mb-1">ویژگی‌های کلی و نیازمندی‌های ماموریت</label>
                             <input type="text" id="rfp-specs" placeholder="مشخصات سرعت، سقف پرواز، مداومت و بار مفید..." class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs">
                         </div>
-                        
-                        <!-- انتخاب مهلت بر اساس تقویم شمسی -->
                         <div>
                             <label class="block text-[11px] font-bold text-slate-600 mb-1">📅 مهلت مناقصه (تقویم شمسی و ساعت)</label>
                             <input type="text" id="rfp-deadline-shamsi" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۰۶/۱۵ ۱۴:۰۰" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800 cursor-pointer" readonly>
                         </div>
-
                         <div>
                             <label class="block text-[11px] font-bold text-slate-600 mb-1">آپلود سند RFP (حداکثر ۵۰ مگابایت)</label>
                             <input type="file" id="rfp-file" class="w-full bg-white border border-slate-300 rounded-xl p-1.5 text-xs">
@@ -307,7 +393,7 @@
                 </div>
             </section>
 
-            <!-- پنل سرگروه -->
+            <!-- ۱. پنل سرگروه با سقف بودجه مصوب قرارداد اصلی -->
             <section id="leader-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-4 border-slate-200">
                 <div id="create-team-box" class="pb-4 border-b border-slate-200 hidden">
                     <h3 class="text-sm font-bold text-amber-800 mb-2">ثبت نام تیم طراحی هواپیما</h3>
@@ -318,8 +404,8 @@
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <h3 class="text-sm font-black text-[#0f284e]">➕ تعریف بسته کاری جدید برای تیم</h3>
-                    <span id="team-budget-badge" class="text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full border">بودجه مصوب: در حال محاسبه</span>
+                    <h3 class="text-sm font-black text-[#0f284e]">➕ تعریف بسته کاری جدید در سقف بودجه مصوب قرارداد اصلی</h3>
+                    <span id="team-budget-badge" class="text-xs font-black text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">بودجه مصوب: در حال محاسبه</span>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
@@ -340,58 +426,21 @@
                 </div>
             </section>
 
-            <!-- کیف سکه دانشجو (پیمانکار) -->
-            <section id="member-tank-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
-                            <span>👛</span> کیف سکه دانشجو (هدف نمره کامل: ۲۰۰ سکه | سقف مجاز مطلق: ۲۵۰ سکه)
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-1">هیچ دانشجویی امکان عقد بیش از ۲۵۰ سکه قرارداد را ندارد و سامانه از پذیرش قرارداد مازاد جلوگیری می‌کند.</p>
-                    </div>
-                    <div id="tank-badge-status" class="text-xs font-bold px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 border border-slate-200">
-                        در حال محاسبه...
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    <div class="bg-slate-50/90 border border-slate-200 rounded-2xl p-4 space-y-2">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-slate-700">سکه‌های قراردادهای متعهدشده:</span>
-                            <span id="wallet-committed-text" class="font-black text-blue-700 text-sm">۰ سکه</span>
-                        </div>
-                        <div class="w-full bg-slate-200 rounded-full h-3.5 overflow-hidden">
-                            <div id="wallet-committed-bar" class="bg-gradient-to-r from-blue-400 to-indigo-600 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
-                        </div>
-                    </div>
-
-                    <div class="bg-amber-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-2">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-amber-900">سکه‌های تسویه‌شده نهایی:</span>
-                            <span id="wallet-final-text" class="font-black text-amber-600 text-sm">۰ سکه</span>
-                        </div>
-                        <div class="w-full bg-amber-100 rounded-full h-3.5 overflow-hidden">
-                            <div id="wallet-final-bar" class="bg-gradient-to-r from-amber-400 to-emerald-500 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- بازار تسک‌های باز بر مبنای نسخه ۱.۱۲ -->
+            <!-- ۴. بازار تسک‌های باز (کامنت‌ها حذف شده و مذاکره مستقیم قیمت/شرایط در امضا قرار گرفته است) -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500 ml-2 animate-pulse"></span>
                         📋 بازار تسک‌های باز و نیازمند پیمانکار
                     </h3>
-                    <span class="text-xs text-slate-500 font-medium">پیمانکاران و کارفرمایان می‌توانند روی هر کارت مذاکره، پیشنهاد قیمت و شرایط خاص ثبت کنند</span>
+                    <span class="text-xs text-slate-500 font-medium">پیمانکار می‌تواند هنگام قبول تسک شرایط خاص (حداکثر ۲۰۰ کلمه) و قیمت پیشنهادی خود را ثبت کند</span>
                 </div>
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="col-span-full py-8 text-center text-slate-400 text-xs font-medium">در حال بارگذاری تسک‌ها...</div>
                 </div>
             </section>
 
-            <!-- قراردادهای هوشمند -->
+            <!-- ۴. قراردادهای هوشمند با امکان پذیرش قیمت پیشنهادی و کسر از بودجه یا رد کامل -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
@@ -409,13 +458,14 @@
                                 <th class="p-3 font-bold">تیم</th>
                                 <th class="p-3 font-bold">تسک</th>
                                 <th class="p-3 font-bold">پیمانکار</th>
+                                <th class="p-3 font-bold">ارزش توافقی / پیشنهادی</th>
                                 <th class="p-3 font-bold">شرایط خاص پیمانکار</th>
                                 <th class="p-3 font-bold">وضعیت</th>
-                                <th class="p-3 font-bold">عملیات و فسخ</th>
+                                <th class="p-3 font-bold">عملیات و داوری</th>
                             </tr>
                         </thead>
                         <tbody id="contracts-table-body" class="divide-y divide-slate-100">
-                            <tr><td colspan="7" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>
+                            <tr><td colspan="8" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -445,12 +495,10 @@
         </div>
     </div>
 
-    <!-- مدال اختصاصی تایید قطعی پیشنهاد مناقصه توسط سرگروه -->
+    <!-- مدال تایید قطعی پیشنهاد مناقصه توسط سرگروه -->
     <div id="bid-confirm-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
-            <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">
-                👨‍🏫
-            </div>
+            <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">👨‍🏫</div>
             <div>
                 <h4 class="text-base font-black text-[#0f284e]">استاد درس</h4>
                 <p id="bid-confirm-text" class="text-xs text-slate-700 font-bold mt-2 leading-relaxed whitespace-pre-line"></p>
@@ -484,27 +532,37 @@
                             <th class="p-3 font-bold text-center">تاریخ پیشنهاد</th>
                         </tr>
                     </thead>
-                    <tbody id="prof-bids-table-body" class="divide-y divide-slate-200">
-                    </tbody>
+                    <tbody id="prof-bids-table-body" class="divide-y divide-slate-200"></tbody>
                 </table>
             </div>
 
             <div class="flex gap-2 pt-2">
-                <button id="prof-award-bid-btn" type="button" class="w-2/3 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">تایید تیک انتخابی و امضای قرارداد با این تیم</button>
+                <button id="prof-award-bid-btn" type="button" class="w-2/3 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">تایید تیک انتخابی و تخصیص بودجه به این تیم</button>
                 <button onclick="closeProfessorBidsModal()" type="button" class="w-1/3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
-    <!-- مدال قبول تسک و شرایط خاص -->
+    <!-- ۴ و ۵. مدال قبول تسک توسط دانشجو با پیشنهاد قیمت، شرایط خاص (حداکثر ۲۰۰ کلمه) و بررسی سقف ۲۵۰ سکه -->
     <div id="accept-task-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
-            <h4 class="text-sm font-black text-[#0f284e]">📝 قبول قرارداد و ارسال شرایط خاص به کارفرما</h4>
-            <p class="text-xs text-slate-500">می‌توانید شرایط خاص کاری خود (حداکثر ۲۰۰ کلمه) را برای سرگروه ارسال کنید. پس از امضای کارفرما، قرارداد قطعی خواهد شد.</p>
-            <textarea id="contractor-terms-input" rows="4" maxlength="1200" placeholder="شرایط خاص شما (اختیاری - حداکثر ۲۰۰ کلمه)..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs"></textarea>
+            <h4 class="text-sm font-black text-[#0f284e]">📝 امضا و ارسال پیشنهاد همکاری به کارفرما</h4>
+            <p class="text-xs text-slate-500">قیمت پیشنهادی و شرایط خاص خود را ثبت کنید. در صورت پذیرش سرگروه، مبلغ تسک به قیمت پیشنهادی شما تغییر کرده و از بودجه وی کسر می‌شود.</p>
+            
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">قیمت پیشنهادی شما (سکه)</label>
+                <input type="number" id="contractor-bid-coins-input" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-black text-amber-800 focus:ring-2 focus:ring-amber-500" placeholder="مبلغ پیشنهادی به سکه">
+                <span class="text-[10px] text-slate-400 block mt-0.5">سقف کل قراردادهای دانشجو حداکثر ۲۵۰ سکه می‌باشد.</span>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">شرایط خاص دانشجو (حداکثر ۲۰۰ کلمه)</label>
+                <textarea id="contractor-terms-input" rows="4" maxlength="1200" placeholder="شرایط زمانی، نحوه تحویل، خروجی‌ها یا توضیحات تخصصی شما..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs"></textarea>
+            </div>
+
             <div class="flex gap-2">
-                <button id="confirm-accept-btn" type="button" class="w-1/2 bg-emerald-600 text-white font-bold py-2 rounded-xl text-xs">امضا و ارسال به کارفرما</button>
-                <button onclick="closeAcceptModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
+                <button id="confirm-accept-btn" type="button" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs transition cursor-pointer">امضا و ارسال به کارفرما</button>
+                <button onclick="closeAcceptModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
@@ -791,6 +849,7 @@
                 await loadProfessorSummary();
             } else if (userProfile.role === 'leader') {
                 document.getElementById('leader-panel').classList.remove('hidden');
+                document.getElementById('leader-budget-panel').classList.remove('hidden');
                 var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
                 currentTeam = tRes.data;
                 if (!currentTeam) {
@@ -930,6 +989,7 @@
         }
     };
 
+    // ۳. بارگذاری هوشمند کارت‌های قرارداد اصلی (کمرنگ شدن برای عموم و پررنگ ماندن فقط برای تیم سرگروه امضاکننده)
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -966,28 +1026,38 @@
             var bidArea = '';
             var hasSubmittedBid = myTeamBids[p.id] ? true : false;
             var isAwardedToMyTeam = (currentTeam && p.awarded_team_id === currentTeam.id);
+            var isAwardedToOtherTeam = (p.status === 'awarded' && !isAwardedToMyTeam);
 
+            // ۳. اعمال دقیق قانون نمایش کارت‌ها
             var cardBgClass = "border-2 border-amber-400 bg-gradient-to-br from-[#fffbeb] via-[#fef3c7] to-[#fde68a] text-slate-900";
-            if (userProfile.role === 'leader' && hasSubmittedBid && !isAwardedToMyTeam) {
+            var cardOpacity = "opacity-100";
+
+            if (isAwardedToMyTeam) {
+                // قرارداد امضاشده سرگروه جاری به صورت پررنگ و زرین
+                cardBgClass = "border-2 border-amber-500 bg-gradient-to-br from-amber-200 via-amber-300 to-amber-400 text-slate-950 shadow-xl";
+                cardOpacity = "opacity-100";
+            } else if (isAwardedToOtherTeam) {
+                // قراردادهای امضا شده برای بقیه فقط قابل دیدن و کمرنگ
+                cardBgClass = "border border-slate-300 bg-slate-100/70 text-slate-600";
+                cardOpacity = "opacity-60 hover:opacity-85";
+            } else if (userProfile.role === 'leader' && hasSubmittedBid) {
                 cardBgClass = "border-2 border-slate-400 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300 text-slate-700";
-            } else if (isAwardedToMyTeam) {
-                cardBgClass = "border-2 border-emerald-500 bg-gradient-to-br from-emerald-50 via-teal-100 to-emerald-200 text-emerald-950 shadow-xl";
             }
 
             if (userProfile.role === 'leader') {
                 if (isAwardedToMyTeam) {
-                    bidArea = '<div class="mt-3 pt-2 border-t border-emerald-300 text-center py-2 bg-emerald-600 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی نهایی شده تیم شما</div>';
+                    bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/40 text-center py-2 bg-emerald-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال تیم شما (سقف بودجه: ' + p.allocated_coins + ' سکه)</div>';
+                } else if (p.status === 'awarded') {
+                    bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">منعقد شده با تیم ' + (p.teams ? p.teams.name : '') + '</div>';
                 } else if (hasSubmittedBid) {
                     bidArea = '<div class="mt-3 pt-3 border-t border-slate-300 text-center text-xs font-bold text-slate-700 bg-white/80 py-2.5 px-3 rounded-2xl border border-slate-300">' +
-                        '🔒 پیشنهاد قطعی شما با مبلغ <span class="font-black text-slate-900">' + myTeamBids[p.id].proposed_coins + ' سکه</span> ثبت نهایی شد و در انتظار بررسی استاد است.' +
+                        '🔒 پیشنهاد قطعی شما با مبلغ <span class="font-black text-slate-900">' + myTeamBids[p.id].proposed_coins + ' سکه</span> ثبت شد و در انتظار بررسی استاد است.' +
                         '</div>';
                 } else if (!isExpired && p.status === 'open') {
                     bidArea = '<div class="mt-3 pt-3 border-t border-amber-200 flex gap-2 items-center">' +
                         '<input type="number" id="bid-coins-' + p.id + '" placeholder="قیمت پیشنهادی شما (سکه)" class="w-full bg-white border border-amber-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-amber-500">' +
                         '<button type="button" onclick="promptBidConfirmation(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">ثبت پیشنهاد مناقصه</button>' +
                         '</div>';
-                } else if (p.status !== 'open') {
-                    bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">مناقصه این پروژه نهایی شده است.</div>';
                 } else {
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-rose-600">مهلت ارسال پیشنهاد به پایان رسیده است.</div>';
                 }
@@ -1003,9 +1073,10 @@
 
             var rfpDownloadLink = p.rfp_file_url ? '<a href="' + p.rfp_file_url + '" target="_blank" class="text-xs text-blue-700 font-bold underline block mt-1">📥 دانلود سند RFP پروژه</a>' : '<span class="text-[11px] text-slate-400 block mt-1">سند فایلی ضمیمه نشده است</span>';
             
+            // نمایش برچسب تخصیص قرارداد به گروه مربوطه
             var awardedTeamInfo = '';
             if (p.awarded_team_id && p.teams) {
-                awardedTeamInfo = '<span class="bg-emerald-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-sm">✓ منعقد شده با تیم ' + p.teams.name + '</span>';
+                awardedTeamInfo = '<span class="bg-emerald-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-sm">تخصیص‌یافته به: ' + p.teams.name + '</span>';
             } else if (userProfile.role === 'leader' && hasSubmittedBid) {
                 awardedTeamInfo = '<span class="bg-slate-600 text-white text-[11px] px-2.5 py-0.5 rounded-full font-bold">پیشنهاد شما ارسال شد</span>';
             } else {
@@ -1013,20 +1084,20 @@
             }
 
             cont.innerHTML += 
-                '<div class="interactive-card rounded-3xl p-5 shadow-lg flex flex-col justify-between ' + cardBgClass + '" id="mp-card-' + p.id + '">' +
+                '<div class="interactive-card rounded-3xl p-5 shadow-lg flex flex-col justify-between ' + cardBgClass + ' ' + cardOpacity + '" id="mp-card-' + p.id + '">' +
                     '<div class="space-y-2">' +
                         '<div class="flex justify-between items-start">' +
-                            '<span class="text-[11px] font-black ' + (hasSubmittedBid && !isAwardedToMyTeam ? 'text-slate-800 bg-slate-300/80' : 'text-amber-900 bg-amber-200/80') + ' px-2.5 py-0.5 rounded-full">پروژه اصلی استاد</span>' +
+                            '<span class="text-[11px] font-black text-amber-900 bg-amber-200/80 px-2.5 py-0.5 rounded-full">پروژه اصلی استاد</span>' +
                             awardedTeamInfo +
                         '</div>' +
 
                         '<div id="mp-view-' + p.id + '" class="space-y-2">' +
-                            '<h4 class="text-sm font-black ' + (isAwardedToMyTeam ? 'text-emerald-950' : 'text-[#0f284e]') + '">' + p.title + '</h4>' +
+                            '<h4 class="text-sm font-black text-[#0f284e]">' + p.title + '</h4>' +
                             '<div class="text-xs font-bold text-slate-700">رده: ' + p.aircraft_type + '</div>' +
                             '<p class="text-xs text-slate-600 leading-relaxed bg-white/70 p-2 rounded-xl border border-slate-200/80">' + p.specifications + '</p>' +
                             rfpDownloadLink +
                             '<div class="pt-2 flex justify-between items-center text-xs font-bold">' +
-                                '<span>بودجه اسمی: <span class="text-amber-800 font-black">' + p.allocated_coins + ' سکه</span></span>' +
+                                '<span>بودجه مصوب / اسمی: <span class="text-amber-800 font-black">' + p.allocated_coins + ' سکه</span></span>' +
                                 timeRemainingText +
                             '</div>' +
                         '</div>' +
@@ -1166,6 +1237,7 @@
         currentReviewProjectId = null;
     };
 
+    // ۱. با امضای قرارداد توسط استاد، قیمت تایید شده دقیقاً به عنوان بودجه مصوب سرگروه ثبت می‌شود
     document.getElementById('prof-award-bid-btn').onclick = async function() {
         var selectedRadio = document.querySelector('input[name="selected_team_bid"]:checked');
         if (!selectedRadio || !currentReviewProjectId) {
@@ -1174,11 +1246,14 @@
 
         var teamId = selectedRadio.value;
         var teamName = selectedRadio.getAttribute('data-team-name');
-        var coins = selectedRadio.getAttribute('data-coins');
+        var agreedCoins = parseFloat(selectedRadio.getAttribute('data-coins'));
 
         var sb = getSupabaseClient();
+        
+        // به‌روزرسانی پروژه اصلی با تیم برنده و ذخیره قیمت نهایی شده
         var res = await sb.from('master_projects').update({
             awarded_team_id: teamId,
+            allocated_coins: agreedCoins,
             status: 'awarded'
         }).eq('id', currentReviewProjectId);
 
@@ -1186,8 +1261,9 @@
             showAppAlert('خطا در امضای قرارداد: ' + res.error.message, false);
         } else {
             closeProfessorBidsModal();
-            showAppAlert('قرارداد اصلی پروژه با موفقیت به نام تیم «' + teamName + '» با سقف بودجه مصوب ' + coins + ' سکه منعقد شد.', true, 'سامانه');
+            showAppAlert('قرارداد اصلی با موفقیت با تیم «' + teamName + '» امضا شد و سقف بودجه ' + agreedCoins + ' سکه به این تیم تخصیص یافت.', true, 'سامانه');
             await loadMasterProjects();
+            await loadContracts();
         }
     };
 
@@ -1227,7 +1303,6 @@
         } else {
             if (!confirm('آیا از رد ثبت‌نام و حذف درخواست کاربر «' + userName + '» اطمینان دارید؟')) return;
             await sb.from('contracts').delete().eq('contractor_id', userId);
-            await sb.from('task_comments').delete().eq('user_id', userId);
             var delRes = await sb.from('profiles').delete().eq('id', userId);
             if (delRes.error) {
                 showAppAlert('خطا در رد و حذف کاربر: ' + delRes.error.message, false);
@@ -1252,12 +1327,36 @@
 
     var currentAcceptTaskId = null;
     var currentAcceptTeamId = null;
-    var currentAcceptCoins = 0;
+    var currentAcceptNominalCoins = 0;
     var currentAcceptBookletId = null;
 
+    // ۴ و ۵. باز کردن مدال امضا همراه با ثبت قیمت پیشنهادی و شرایط خاص (حداکثر ۲۰۰ کلمه) و بررسی سقف ۲۵۰ سکه
     window.openAcceptTaskModal = async function(taskId, teamId, coins, bookletId) {
+        currentAcceptTaskId = taskId;
+        currentAcceptTeamId = teamId;
+        currentAcceptNominalCoins = coins;
+        currentAcceptBookletId = bookletId;
+
+        document.getElementById('contractor-bid-coins-input').value = coins;
+        document.getElementById('contractor-terms-input').value = '';
+        document.getElementById('accept-task-modal').classList.remove('hidden');
+    };
+    window.closeAcceptModal = function() { document.getElementById('accept-task-modal').classList.add('hidden'); };
+
+    document.getElementById('confirm-accept-btn').onclick = async function() {
+        var proposedCoinsVal = document.getElementById('contractor-bid-coins-input').value;
+        var proposedCoins = parseFloat(proposedCoinsVal);
+        if (isNaN(proposedCoins) || proposedCoins <= 0) {
+            return showAppAlert('لطفاً مبلغ پیشنهادی معتبر برای تسک وارد نمایید.', false);
+        }
+
+        var terms = document.getElementById('contractor-terms-input').value.trim();
+        var words = terms ? terms.split(/\s+/).length : 0;
+        if (words > 200) return showAppAlert('شرایط خاص ارسالی نمی‌تواند بیش از ۲۰۰ کلمه باشد.', false);
+
         var sb = getSupabaseClient();
-        
+
+        // ۵. بررسی سقف مجاز ۲۵۰ سکه برای هر دانشجو بر مبنای مبلغ پیشنهادی
         var cRes = await sb.from('contracts').select('agreed_base_coins, status').eq('contractor_id', currentUser.id);
         var currentTotalCoins = 0;
         if (cRes.data) {
@@ -1266,26 +1365,9 @@
             });
         }
 
-        if (currentTotalCoins + coins > 250) {
-            return showAppAlert('اخطار سقف سکه: مجموع قراردادهای شما با احتساب این تسک (' + (currentTotalCoins + coins) + ' سکه) از سقف مجاز ۲۵۰ سکه بیشتر خواهد شد. سامانه از انعقاد این قرارداد امتناع می‌کند.', false);
+        if (currentTotalCoins + proposedCoins > 250) {
+            return showAppAlert('اخطار سقف سکه: مجموع قراردادهای شما با احتساب مبلغ پیشنهادی این تسک (' + (currentTotalCoins + proposedCoins) + ' سکه) از سقف مجاز ۲۵۰ سکه بیشتر خواهد شد. سامانه از ارسال این درخواست امتناع می‌کند.', false);
         }
-
-        currentAcceptTaskId = taskId;
-        currentAcceptTeamId = teamId;
-        currentAcceptCoins = coins;
-        currentAcceptBookletId = bookletId;
-
-        document.getElementById('contractor-terms-input').value = '';
-        document.getElementById('accept-task-modal').classList.remove('hidden');
-    };
-    window.closeAcceptModal = function() { document.getElementById('accept-task-modal').classList.add('hidden'); };
-
-    document.getElementById('confirm-accept-btn').onclick = async function() {
-        var terms = document.getElementById('contractor-terms-input').value.trim();
-        var words = terms ? terms.split(/\s+/).length : 0;
-        if (words > 200) return showAppAlert('شرایط خاص ارسالی نمی‌تواند بیش از ۲۰۰ کلمه باشد.', false);
-
-        var sb = getSupabaseClient();
 
         var checkRes = await sb.from('contracts').select('id, team_id, tasks(booklet_id)').eq('contractor_id', currentUser.id);
         if (checkRes.data) {
@@ -1293,12 +1375,12 @@
             if (hasTaken) return showAppAlert('خطای قانونی: شما قبلاً تسک این شماره کتابچه را انجام داده‌اید.', false);
         }
 
-        // امضا توسط دانشجو و ثبت در وضعیت انتظار تایید کارفرما
+        // امضا توسط دانشجو همراه با ثبت قیمت پیشنهادی و شرایط خاص
         var res = await sb.from('contracts').insert([{
             task_id: currentAcceptTaskId,
             team_id: currentAcceptTeamId,
             contractor_id: currentUser.id,
-            agreed_base_coins: currentAcceptCoins,
+            agreed_base_coins: proposedCoins,
             contractor_terms: terms,
             leader_signed: false,
             status: 'pending_leader_signature'
@@ -1308,23 +1390,45 @@
             showAppAlert(res.error.message, false);
         } else {
             await sb.from('tasks').update({ status: 'pending_leader_signature' }).eq('id', currentAcceptTaskId);
-            showAppAlert('قرارداد توسط شما امضا شد و جهت بررسی شرایط خاص و امضای کارفرما به سرگروه ارسال گردید.', true);
+            showAppAlert('پیشنهاد همکاری با قیمت ' + proposedCoins + ' سکه و شرایط خاص شما ثبت و جهت تایید به کارفرما ارسال شد.', true);
             closeAcceptModal();
             await loadTasks();
             await loadContracts();
         }
     };
 
-    window.signContractByLeader = async function(contractId, taskId) {
+    // ۴. تایید شرایط و قیمت پیشنهادی دانشجو توسط سرگروه (تغییر قیمت تسک و کسر از بودجه)
+    window.signContractByLeader = async function(contractId, taskId, agreedCoins) {
         var sb = getSupabaseClient();
+        
+        // به‌روزرسانی قیمت تسک به قیمت پیشنهادی دانشجو
+        await sb.from('tasks').update({ 
+            allocated_nominal_coins: parseFloat(agreedCoins),
+            status: 'in_progress' 
+        }).eq('id', taskId);
+
+        // تایید قرارداد
         await sb.from('contracts').update({
             leader_signed: true,
             status: 'in_progress'
         }).eq('id', contractId);
 
-        await sb.from('tasks').update({ status: 'in_progress' }).eq('id', taskId);
-        showAppAlert('قرارداد توسط کارفرما نیز تایید و امضا شد. تسک به طور رسمی وارد مرحله «درحال انجام» کارتابل دانشجو گردید.', true);
+        showAppAlert('قرارداد توسط کارفرما تایید شد. مبلغ تسک به ' + agreedCoins + ' سکه تغییر یافت و از بودجه تیم شما کسر گردید.', true);
         await loadContracts();
+        await loadTasks();
+    };
+
+    // ۴. رد درخواست قرارداد توسط کارفرما (حذف از قراردادها و بازگشت تسک به بازار)
+    window.rejectContractByLeader = async function(contractId, taskId) {
+        if (!confirm('آیا از رد شرایط و پیشنهاد قیمت این دانشجو اطمینان دارید؟ تسک مجدداً در بازار برای سایرین باز خواهد شد.')) return;
+        var sb = getSupabaseClient();
+
+        await sb.from('contracts').delete().eq('id', contractId);
+        await sb.from('tasks').update({ status: 'open' }).eq('id', taskId);
+
+        showAppAlert('درخواست همکاری رد شد و از لیست قراردادها حذف گردید. تسک مجدداً در بازار قرار گرفت.', true);
+        await loadContracts();
+        await loadTasks();
     };
 
     window.terminateContractMutually = async function(contractId, taskId) {
@@ -1443,35 +1547,7 @@
         }
     };
 
-    window.toggleCommentBox = function(taskId) {
-        var box = document.getElementById('comment-box-' + taskId);
-        if (box) box.classList.toggle('hidden');
-    };
-
-    window.submitTaskComment = async function(taskId) {
-        var sb = getSupabaseClient();
-        var msg = document.getElementById('comment-msg-' + taskId).value.trim();
-        var propCoin = document.getElementById('comment-coin-' + taskId).value;
-
-        if (!msg) return showAppAlert('لطفاً پیام خود را وارد کنید.', false);
-
-        var res = await sb.from('task_comments').insert([{
-            task_id: taskId,
-            user_id: currentUser.id,
-            author_name: userProfile.full_name,
-            role: userProfile.role,
-            message: msg,
-            proposed_coins: propCoin ? parseInt(propCoin) : null
-        }]);
-
-        if (res.error) {
-            showAppAlert('خطا در ثبت دیدگاه: ' + res.error.message, false);
-        } else {
-            showAppAlert('دیدگاه با موفقیت ثبت شد.', true);
-            await loadTasks();
-        }
-    };
-
+    // ۴. بارگذاری کارت‌های بازار تسک (بخش کامنت‌ها حذف شد و مذاکره در امضا گنجانده شد)
     async function loadTasks() {
         var sb = getSupabaseClient();
         var res = await sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
@@ -1489,27 +1565,12 @@
             var bTitle = t.booklets ? t.booklets.title : 'کتابچه طراحی';
             var color = getTeamColor(t.team_id);
 
-            var { data: comments } = await sb.from('task_comments').select('*').eq('task_id', t.id).order('created_at', { ascending: true });
-            var commentsListHtml = '';
-            if (comments && comments.length > 0) {
-                comments.forEach(function(c) {
-                    var roleBadge = c.role === 'leader' ? '<span class="text-[#0f284e] font-bold">[سرگروه]</span>' : '<span class="text-slate-600 font-bold">[پیمانکار]</span>';
-                    var propCoin = c.proposed_coins ? '<span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.2 rounded font-bold mr-1">پیشنهاد: ' + c.proposed_coins + ' سکه</span>' : '';
-                    commentsListHtml += '<div class="bg-white/90 rounded-lg p-1.5 text-[11px] mb-1.5 border border-slate-200 shadow-xs">' +
-                        '<div class="flex justify-between">' + roleBadge + ' <span class="text-slate-800 font-semibold">' + c.author_name + '</span>' + propCoin + '</div>' +
-                        '<p class="text-slate-600 mt-0.5">' + c.message + '</p>' +
-                        '</div>';
-                });
-            } else {
-                commentsListHtml = '<p class="text-slate-500 text-[11px] text-center py-1">مذاکره‌ای ثبت نشده است.</p>';
-            }
-
             var isOwnerLeader = (userProfile.role === 'leader' && currentTeam && t.team_id === currentTeam.id);
             var isProfessor = (userProfile.role === 'professor');
 
             var actionArea = '';
             if (userProfile.role === 'member') {
-                actionArea = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-[#0f284e] hover:bg-[#1a3f74] text-amber-300 font-bold py-2 rounded-xl text-xs shadow-md cursor-pointer transition">امضا و ارسال به کارفرما</button>';
+                actionArea = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-[#0f284e] hover:bg-[#1a3f74] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md cursor-pointer transition">امضا، پیشنهاد قیمت و شرایط</button>';
             } else if (isOwnerLeader) {
                 actionArea = '<div class="flex space-x-2 space-x-reverse">' +
                     '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-200 shadow-xs transition cursor-pointer">ویرایش مستقیم</button>' +
@@ -1560,7 +1621,7 @@
                         '</div>' +
 
                         '<div class="flex items-center justify-between pt-2 border-t border-slate-200/80">' +
-                            '<span class="text-[11px] text-slate-600 font-bold">ارزش همکاری:</span>' +
+                            '<span class="text-[11px] text-slate-600 font-bold">ارزش اسمی تسک:</span>' +
                             '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-700 text-sm">' +
                                 '<svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor">' +
                                     '<ellipse cx="11" cy="9" rx="6" ry="2.5" stroke-width="1.6"/>' +
@@ -1572,20 +1633,6 @@
                                 '<span>' + t.allocated_nominal_coins + ' سکه</span>' +
                             '</div>' +
                         '</div>' +
-
-                        '<div class="pt-2 border-t border-slate-200/80">' +
-                            '<div class="flex justify-between items-center mb-1.5">' +
-                                '<span class="text-[10px] font-bold text-slate-700">💬 گفت‌وگو و پیشنهاد قیمت:</span>' +
-                                '<button onclick="toggleCommentBox(\'' + t.id + '\')" class="text-[10px] text-[#0f284e] hover:underline font-bold cursor-pointer">ثبت نظر / قیمت</button>' +
-                            '</div>' +
-                            '<div class="max-h-24 overflow-y-auto pr-1">' + commentsListHtml + '</div>' +
-
-                            '<div id="comment-box-' + t.id + '" class="hidden mt-2 p-2 bg-white/95 border border-slate-200 rounded-xl space-y-1.5 shadow-sm">' +
-                                '<input type="text" id="comment-msg-' + t.id + '" placeholder="پیام شما..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
-                                '<input type="number" id="comment-coin-' + t.id + '" placeholder="پیشنهاد قیمت جدید (اختیاری)" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
-                                '<button onclick="submitTaskComment(\'' + t.id + '\')" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[11px] font-black py-1.5 rounded-lg shadow-sm cursor-pointer">ارسال دیدگاه</button>' +
-                            '</div>' +
-                        '</div>' +
                     '</div>' +
 
                     '<div class="mt-4 pt-2">' + actionArea + '</div>' +
@@ -1593,6 +1640,7 @@
         }
     }
 
+    // ۴ و ۵. بارگذاری قراردادها با قابلیت تایید قیمت پیشنهادی و شرایط خاص یا رد آن، و به‌روزرسانی نمودار دوناتی
     async function loadContracts() {
         var sb = getSupabaseClient();
         var query = sb.from('contracts').select('*, tasks(*, booklets(booklet_number)), teams(name), profiles(full_name)');
@@ -1605,58 +1653,113 @@
         tbody.innerHTML = '';
 
         if (!res.data || res.data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>';
-            return;
+            tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>';
         }
 
         var totalFinal = 0;
         var totalCommitted = 0;
         var termCount = 0;
 
-        res.data.forEach(function(c) {
-            if (c.status === 'terminated') termCount++;
-            if (c.contractor_id === currentUser.id && c.status !== 'terminated') {
-                totalCommitted += parseFloat(c.agreed_base_coins || 0);
-                if (c.final_payout) totalFinal += parseFloat(c.final_payout);
-            }
-
-            var statusBadge = '';
-            var actionCol = '';
-
-            if (c.status === 'pending_leader_signature') {
-                statusBadge = '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[11px] font-bold">⏳ در انتظار امضای کارفرما</span>';
-                if (userProfile.role === 'leader') {
-                    actionCol = '<button onclick="signContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-emerald-600 text-white px-2.5 py-1 rounded text-xs font-bold shadow-sm cursor-pointer">امضا و شروع کار</button>';
+        if (res.data) {
+            res.data.forEach(function(c) {
+                if (c.status === 'terminated') termCount++;
+                if (c.contractor_id === currentUser.id && c.status !== 'terminated') {
+                    totalCommitted += parseFloat(c.agreed_base_coins || 0);
+                    if (c.final_payout) totalFinal += parseFloat(c.final_payout);
                 }
-            } else if (c.status === 'terminated') {
-                statusBadge = '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded text-[11px] font-bold">❌ فسخ شده</span>';
-            } else {
-                statusBadge = '<span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[11px] font-bold">' + c.status + '</span>';
-                actionCol = '<div class="flex gap-1">' +
-                    '<button onclick="terminateContractMutually(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ توافقی</button>' +
-                    '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>' +
-                    '</div>';
-            }
 
-            tbody.innerHTML += '<tr class="hover:bg-slate-50">' +
-                '<td class="p-3 font-bold">کتابچه ' + (c.tasks?.booklets?.booklet_number || '-') + '</td>' +
-                '<td class="p-3 font-bold">' + (c.teams ? c.teams.name : '') + '</td>' +
-                '<td class="p-3">' + (c.tasks ? c.tasks.title : '') + '</td>' +
-                '<td class="p-3">' + (c.profiles ? c.profiles.full_name : '') + '</td>' +
-                '<td class="p-3 text-slate-600 max-w-xs">' + (c.contractor_terms || 'شرایط عادی') + '</td>' +
-                '<td class="p-3">' + statusBadge + '</td>' +
-                '<td class="p-3">' + actionCol + '</td>' +
-                '</tr>';
-        });
+                var statusBadge = '';
+                var actionCol = '';
 
+                if (c.status === 'pending_leader_signature') {
+                    statusBadge = '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[11px] font-bold">⏳ در انتظار تایید سرگروه</span>';
+                    if (userProfile.role === 'leader') {
+                        // دکمه تایید شرایط/قیمت پیشنهادی یا رد کامل
+                        actionCol = '<div class="flex gap-1">' +
+                            '<button onclick="signContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\', ' + c.agreed_base_coins + ')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-[11px] font-bold shadow-sm cursor-pointer">پذیرش و امضا</button>' +
+                            '<button onclick="rejectContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2 py-1 rounded text-[11px] font-bold shadow-sm cursor-pointer">رد درخواست</button>' +
+                            '</div>';
+                    }
+                } else if (c.status === 'terminated') {
+                    statusBadge = '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded text-[11px] font-bold">❌ فسخ شده</span>';
+                } else {
+                    statusBadge = '<span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[11px] font-bold">' + c.status + '</span>';
+                    actionCol = '<div class="flex gap-1">' +
+                        '<button onclick="terminateContractMutually(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ توافقی</button>' +
+                        '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>' +
+                        '</div>';
+                }
+
+                tbody.innerHTML += '<tr class="hover:bg-slate-50">' +
+                    '<td class="p-3 font-bold">کتابچه ' + (c.tasks?.booklets?.booklet_number || '-') + '</td>' +
+                    '<td class="p-3 font-bold">' + (c.teams ? c.teams.name : '') + '</td>' +
+                    '<td class="p-3">' + (c.tasks ? c.tasks.title : '') + '</td>' +
+                    '<td class="p-3">' + (c.profiles ? c.profiles.full_name : '') + '</td>' +
+                    '<td class="p-3 font-black text-amber-700 text-sm">' + (c.agreed_base_coins || 0) + ' سکه</td>' +
+                    '<td class="p-3 text-slate-600 max-w-xs">' + (c.contractor_terms || 'شرایط عادی') + '</td>' +
+                    '<td class="p-3">' + statusBadge + '</td>' +
+                    '<td class="p-3">' + actionCol + '</td>' +
+                    '</tr>';
+            });
+        }
+
+        // ۵. به‌روزرسانی کیف سکه پیمانکار بر مبنای کف ۱۵۰ و سقف ۲۵۰ سکه
         document.getElementById('wallet-committed-text').innerText = totalCommitted.toFixed(1) + ' سکه';
         document.getElementById('wallet-committed-bar').style.width = Math.min(100, (totalCommitted / 250) * 100) + '%';
         document.getElementById('wallet-final-text').innerText = totalFinal.toFixed(1) + ' سکه';
         document.getElementById('wallet-final-bar').style.width = Math.min(100, (totalFinal / 250) * 100) + '%';
         
+        var badge = document.getElementById('tank-badge-status');
+        if (badge) {
+            if (totalFinal >= 200) {
+                badge.className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200";
+                badge.innerText = "🏆 نمره کامل تسویه شد (" + totalFinal.toFixed(1) + " سکه)";
+            } else if (totalCommitted >= 200) {
+                badge.className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-sky-50 text-sky-700 border border-sky-200";
+                badge.innerText = "📝 قراردادهای هدف ۲۰۰ سکه تکمیل شد - در انتظار تایید نهایی";
+            } else if (totalCommitted >= 150) {
+                badge.className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200";
+                badge.innerText = "⚠️ کف مجاز تعهد شد - نیازمند " + (200 - totalCommitted).toFixed(1) + " سکه تا هدف نمره کامل";
+            } else {
+                badge.className = "text-xs font-bold px-3 py-1.5 rounded-xl bg-rose-50 text-rose-700 border border-rose-200";
+                badge.innerText = "❌ زیر کف مجاز - نیازمند " + (150 - totalCommitted).toFixed(1) + " سکه تا حداقل قبولی";
+            }
+        }
+
+        document.getElementById('stat-coins').innerText = totalFinal.toFixed(1) + ' سکه';
+
+        // ۱ و ۲. محاسبه بودجه مصوب قرارداد اصلی و نمودار دوناتی برای سرگروه
+        if (userProfile.role === 'leader' && currentTeam) {
+            var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
+            var totalApprovedBudget = mpRes.data ? parseFloat(mpRes.data.allocated_coins) : 0;
+
+            // سکه‌های مصرف‌شده در تسک‌های تیم
+            var teamTasksRes = await sb.from('tasks').select('allocated_nominal_coins, status').eq('team_id', currentTeam.id).neq('status', 'terminated');
+            var spentCoins = 0;
+            if (teamTasksRes.data) {
+                teamTasksRes.data.forEach(function(t) {
+                    spentCoins += parseFloat(t.allocated_nominal_coins || 0);
+                });
+            }
+
+            var remainingBudget = Math.max(0, totalApprovedBudget - spentCoins);
+            var spentPercent = totalApprovedBudget > 0 ? Math.min(100, (spentCoins / totalApprovedBudget) * 100) : 0;
+
+            document.getElementById('team-budget-badge').innerText = 'بودجه مصوب: ' + totalApprovedBudget + ' سکه | باقیمانده: ' + remainingBudget + ' سکه';
+            document.getElementById('donut-total-text').innerText = totalApprovedBudget;
+            document.getElementById('donut-spent-text').innerText = spentCoins;
+            document.getElementById('donut-remain-text').innerText = remainingBudget;
+            document.getElementById('donut-center-percent').innerText = Math.round(spentPercent) + '٪';
+
+            var circumference = 238.76;
+            var offset = circumference - (spentPercent / 100) * circumference;
+            var donutCircle = document.getElementById('donut-circle-spent');
+            if (donutCircle) donutCircle.style.strokeDashoffset = offset;
+        }
+
         document.getElementById('stat-contracts-container').innerHTML = 
             '<div class="text-xs space-y-0.5 font-bold">' +
-            '<div>فعال: ' + (res.data.length - termCount) + '</div>' +
+            '<div>فعال: ' + ((res.data ? res.data.length : 0) - termCount) + '</div>' +
             '<div class="text-rose-600">فسخ‌شده: ' + termCount + '</div>' +
             '</div>';
     }
@@ -1701,7 +1804,6 @@
         var sb = getSupabaseClient();
         
         await sb.from('contracts').delete().eq('contractor_id', userId);
-        await sb.from('task_comments').delete().eq('user_id', userId);
         var res = await sb.from('profiles').delete().eq('id', userId);
         
         if (res.error) {
@@ -1737,23 +1839,47 @@
         }
     };
 
+    // ۱. بررسی سقف بودجه مصوب قرارداد اصلی هنگام تعریف تسک توسط سرگروه
     document.getElementById('create-task-btn').onclick = async function() {
         var bId = document.getElementById('task-booklet-select').value;
         var title = document.getElementById('task-title-input').value.trim();
-        var coins = document.getElementById('task-coins-input').value;
-        if (!title || !coins || !currentTeam) return showAppAlert('اطلاعات تسک را کامل وارد نمایید.', false);
+        var coins = parseFloat(document.getElementById('task-coins-input').value);
+        if (!title || isNaN(coins) || coins <= 0 || !currentTeam) return showAppAlert('اطلاعات تسک را کامل وارد نمایید.', false);
+        
         var sb = getSupabaseClient();
+
+        // بررسی اینکه آیا سرگروه قرارداد اصلی بسته است یا خیر
+        var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
+        if (!mpRes.data) {
+            return showAppAlert('خطا: تیم شما هنوز قرارداد اصلی با استاد درس امضا نکرده است. تعریف تسک منوط به بستن قرارداد اصلی و دریافت سقف بودجه مصوب است.', false);
+        }
+
+        var totalBudget = parseFloat(mpRes.data.allocated_coins);
+        var teamTasks = await sb.from('tasks').select('allocated_nominal_coins').eq('team_id', currentTeam.id).neq('status', 'terminated');
+        var currentSpent = 0;
+        if (teamTasks.data) {
+            teamTasks.data.forEach(function(t) { currentSpent += parseFloat(t.allocated_nominal_coins || 0); });
+        }
+
+        if (currentSpent + coins > totalBudget) {
+            return showAppAlert('خطای سقف بودجه: با تعریف این تسک، مجموع هزینه‌های تیم (' + (currentSpent + coins) + ' سکه) از سقف بودجه مصوب قرارداد اصلی شما (' + totalBudget + ' سکه) فراتر می‌رود.', false);
+        }
+
         var res = await sb.from('tasks').insert([{
             team_id: currentTeam.id,
             booklet_id: parseInt(bId),
             title: title,
-            allocated_nominal_coins: parseFloat(coins),
+            allocated_nominal_coins: coins,
             status: 'open'
         }]);
+
         if (res.error) showAppAlert(res.error.message, false);
         else {
-            showAppAlert('تسک با موفقیت در بازار ایجاد گردید.', true);
+            showAppAlert('تسک با موفقیت در سقف بودجه مصوب در بازار ایجاد گردید.', true);
+            document.getElementById('task-title-input').value = '';
+            document.getElementById('task-coins-input').value = '';
             await loadTasks();
+            await loadContracts();
         }
     };
 
