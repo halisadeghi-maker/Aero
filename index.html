@@ -377,14 +377,14 @@
                 </div>
             </section>
 
-            <!-- بازار تسک‌های باز -->
+            <!-- بازار تسک‌های باز بر مبنای نسخه ۱.۱۲ -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500 ml-2 animate-pulse"></span>
                         📋 بازار تسک‌های باز و نیازمند پیمانکار
                     </h3>
-                    <span class="text-xs text-slate-500 font-medium">پیمانکار می‌تواند هنگام قبول تسک شرایط خاص خود را ضمیمه کند.</span>
+                    <span class="text-xs text-slate-500 font-medium">پیمانکاران و کارفرمایان می‌توانند روی هر کارت مذاکره، پیشنهاد قیمت و شرایط خاص ثبت کنند</span>
                 </div>
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="col-span-full py-8 text-center text-slate-400 text-xs font-medium">در حال بارگذاری تسک‌ها...</div>
@@ -445,7 +445,7 @@
         </div>
     </div>
 
-    <!-- ۱. مدال اختصاصی و جذاب تایید قطعی پیشنهاد مناقصه توسط سرگروه با پیام استاد -->
+    <!-- مدال اختصاصی تایید قطعی پیشنهاد مناقصه توسط سرگروه -->
     <div id="bid-confirm-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">
@@ -462,7 +462,7 @@
         </div>
     </div>
 
-    <!-- ۲. مدال جذاب بررسی پیشنهادهای مناقصه توسط استاد با جدول و تیک انتخاب -->
+    <!-- مدال بررسی پیشنهادهای مناقصه توسط استاد -->
     <div id="professor-bids-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-indigo-200 max-w-2xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
@@ -485,7 +485,6 @@
                         </tr>
                     </thead>
                     <tbody id="prof-bids-table-body" class="divide-y divide-slate-200">
-                        <!-- ردیف‌های پیشنهادها با تیک انتخاب -->
                     </tbody>
                 </table>
             </div>
@@ -540,7 +539,7 @@
         </div>
     </div>
 
-    <!-- مدال اعلان سفارشی (۳. تفکیک هوشمند عنوان برای استاد به عنوان «سامانه») -->
+    <!-- مدال اعلان سفارشی -->
     <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div id="modal-icon-container" class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-indigo-50 text-indigo-600">🔔</div>
@@ -568,7 +567,6 @@
         return client;
     }
 
-    // تبدیل تاریخ شمسی به شیء Date میلادی
     function shamsiToGregorian(jYear, jMonth, jDay) {
         var g_days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         var j_days_in_month = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
@@ -635,7 +633,6 @@
         }
     }
 
-    // ۳. تابع ارسال هشدار: برای استاد عنوان «سامانه» و برای دانشجویان و سرگروه‌ها «استاد درس» یا عنوان اختصاصی
     window.showAppAlert = function(msg, isSuccess, customTitle) {
         var modal = document.getElementById('custom-modal');
         var defaultTitle = (userProfile && userProfile.role === 'professor') ? "سامانه" : "استاد درس";
@@ -933,7 +930,6 @@
         }
     };
 
-    // ۱ و ۲. بارگذاری کارت‌های طلایی با بررسی پیشنهاد قطعی سرگروه و خاکستری شدن کارت
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -945,7 +941,6 @@
             return;
         }
 
-        // بررسی پیشنهادهای ثبت‌شده توسط تیم جاری در صورت سرگروه بودن
         var myTeamBids = {};
         if (userProfile.role === 'leader' && currentTeam) {
             var myBidsRes = await sb.from('project_bids').select('*').eq('team_id', currentTeam.id);
@@ -972,7 +967,6 @@
             var hasSubmittedBid = myTeamBids[p.id] ? true : false;
             var isAwardedToMyTeam = (currentTeam && p.awarded_team_id === currentTeam.id);
 
-            // استایل پایه کارت: اگر سرگروه پیشنهاد قطعی داده باشد کارت خاکستری می‌شود
             var cardBgClass = "border-2 border-amber-400 bg-gradient-to-br from-[#fffbeb] via-[#fef3c7] to-[#fde68a] text-slate-900";
             if (userProfile.role === 'leader' && hasSubmittedBid && !isAwardedToMyTeam) {
                 cardBgClass = "border-2 border-slate-400 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300 text-slate-700";
@@ -984,12 +978,10 @@
                 if (isAwardedToMyTeam) {
                     bidArea = '<div class="mt-3 pt-2 border-t border-emerald-300 text-center py-2 bg-emerald-600 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی نهایی شده تیم شما</div>';
                 } else if (hasSubmittedBid) {
-                    // ۱. بعد از تایید امکان تغییر وجود ندارد و وضعیت پیشنهاد نمایش داده می‌شود
                     bidArea = '<div class="mt-3 pt-3 border-t border-slate-300 text-center text-xs font-bold text-slate-700 bg-white/80 py-2.5 px-3 rounded-2xl border border-slate-300">' +
                         '🔒 پیشنهاد قطعی شما با مبلغ <span class="font-black text-slate-900">' + myTeamBids[p.id].proposed_coins + ' سکه</span> ثبت نهایی شد و در انتظار بررسی استاد است.' +
                         '</div>';
                 } else if (!isExpired && p.status === 'open') {
-                    // ۱. فرم ثبت پیشنهاد همراه با باز شدن مدال تاییدیه استاد
                     bidArea = '<div class="mt-3 pt-3 border-t border-amber-200 flex gap-2 items-center">' +
                         '<input type="number" id="bid-coins-' + p.id + '" placeholder="قیمت پیشنهادی شما (سکه)" class="w-full bg-white border border-amber-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-amber-500">' +
                         '<button type="button" onclick="promptBidConfirmation(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">ثبت پیشنهاد مناقصه</button>' +
@@ -1011,7 +1003,6 @@
 
             var rfpDownloadLink = p.rfp_file_url ? '<a href="' + p.rfp_file_url + '" target="_blank" class="text-xs text-blue-700 font-bold underline block mt-1">📥 دانلود سند RFP پروژه</a>' : '<span class="text-[11px] text-slate-400 block mt-1">سند فایلی ضمیمه نشده است</span>';
             
-            // برچسب وضعیت در پنل استاد و سرگروه
             var awardedTeamInfo = '';
             if (p.awarded_team_id && p.teams) {
                 awardedTeamInfo = '<span class="bg-emerald-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-sm">✓ منعقد شده با تیم ' + p.teams.name + '</span>';
@@ -1060,7 +1051,6 @@
         }
     }
 
-    // ۱. نمایش پنجره جذاب تایید قیمت پیشنهادی با پیام استاد
     var pendingBidProjectId = null;
     var pendingBidCoins = null;
 
@@ -1099,7 +1089,6 @@
         pendingBidCoins = null;
     };
 
-    // ۱. ثبت قطعی و غیرقابل تغییر پیشنهاد مناقصه توسط سرگروه
     document.getElementById('bid-confirm-yes-btn').onclick = async function() {
         if (!pendingBidProjectId || !pendingBidCoins) return;
         var sb = getSupabaseClient();
@@ -1132,11 +1121,9 @@
         }
     };
 
-    // ۲. متغیرهای مدال بررسی پیشنهادهای استاد
     var currentReviewProjectId = null;
     var currentReviewProjectCoins = null;
 
-    // ۲. باز کردن پنجره جذاب بررسی پیشنهادها در پنل استاد با جدول و رادیو دکمه انتخاب
     window.openProfessorBidsModal = async function(projectId, projectTitle, baseCoins) {
         var sb = getSupabaseClient();
         currentReviewProjectId = projectId;
@@ -1179,7 +1166,6 @@
         currentReviewProjectId = null;
     };
 
-    // ۲. تایید تیک انتخابی توسط استاد و انعقاد رسمی قرارداد اصلی با تیم منتخب
     document.getElementById('prof-award-bid-btn').onclick = async function() {
         var selectedRadio = document.querySelector('input[name="selected_team_bid"]:checked');
         if (!selectedRadio || !currentReviewProjectId) {
@@ -1426,6 +1412,69 @@
         return colorPalettes[Math.abs(hash) % colorPalettes.length];
     }
 
+    // باز و بسته کردن کادر ویرایش درون‌کارت تسک
+    window.toggleCardEdit = function(taskId) {
+        var viewSec = document.getElementById('view-section-' + taskId);
+        var editSec = document.getElementById('edit-section-' + taskId);
+        if (viewSec && editSec) {
+            viewSec.classList.toggle('hidden');
+            editSec.classList.toggle('hidden');
+        }
+    };
+
+    // ذخیره ویرایش درون‌کارت تسک توسط کارفرما
+    window.saveCardEdit = async function(taskId) {
+        var sb = getSupabaseClient();
+        var newTitle = document.getElementById('edit-title-' + taskId).value.trim();
+        var newCoins = parseInt(document.getElementById('edit-coins-' + taskId).value);
+
+        if (!newTitle || isNaN(newCoins)) return showAppAlert('لطفاً عنوان و مبلغ معتبر وارد کنید.', false);
+
+        var res = await sb.from('tasks').update({
+            title: newTitle,
+            allocated_nominal_coins: newCoins
+        }).eq('id', taskId).eq('status', 'open');
+
+        if (res.error) showAppAlert(res.error.message, false);
+        else {
+            showAppAlert('تسک با موفقیت ویرایش گردید.', true);
+            await loadTasks();
+            await loadContracts();
+        }
+    };
+
+    // باز و بسته کردن کادر ارسال کامنت و مذاکره قیمت
+    window.toggleCommentBox = function(taskId) {
+        var box = document.getElementById('comment-box-' + taskId);
+        if (box) box.classList.toggle('hidden');
+    };
+
+    // ارسال دیدگاه و پیشنهاد قیمت توسط کاربر
+    window.submitTaskComment = async function(taskId) {
+        var sb = getSupabaseClient();
+        var msg = document.getElementById('comment-msg-' + taskId).value.trim();
+        var propCoin = document.getElementById('comment-coin-' + taskId).value;
+
+        if (!msg) return showAppAlert('لطفاً پیام خود را وارد کنید.', false);
+
+        var res = await sb.from('task_comments').insert([{
+            task_id: taskId,
+            user_id: currentUser.id,
+            author_name: userProfile.full_name,
+            role: userProfile.role,
+            message: msg,
+            proposed_coins: propCoin ? parseInt(propCoin) : null
+        }]);
+
+        if (res.error) {
+            showAppAlert('خطا در ثبت دیدگاه: ' + res.error.message, false);
+        } else {
+            showAppAlert('دیدگاه با موفقیت ثبت شد.', true);
+            await loadTasks();
+        }
+    };
+
+    // بارگذاری کارت‌های بازار تسک بر مبنای ساختار نسخه ۱.۱۲
     async function loadTasks() {
         var sb = getSupabaseClient();
         var res = await sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
@@ -1433,32 +1482,121 @@
         container.innerHTML = '';
 
         if (!res.data || res.data.length === 0) {
-            container.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-xs font-medium">تسکی در بازار موجود نیست.</div>';
+            container.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-xs font-medium">در حال حاضر تسک باز در بازار موجود نیست.</div>';
             return;
         }
 
         for (const t of res.data) {
+            var teamName = t.teams ? t.teams.name : 'تیم نامشخص';
+            var bNum = t.booklets ? t.booklets.booklet_number : '-';
+            var bTitle = t.booklets ? t.booklets.title : 'کتابچه طراحی';
             var color = getTeamColor(t.team_id);
-            var actionBtn = '';
+
+            // دریافت کامنت‌ها و پیشنهادات مذاکره قیمت
+            var { data: comments } = await sb.from('task_comments').select('*').eq('task_id', t.id).order('created_at', { ascending: true });
+            var commentsListHtml = '';
+            if (comments && comments.length > 0) {
+                comments.forEach(function(c) {
+                    var roleBadge = c.role === 'leader' ? '<span class="text-[#0f284e] font-bold">[سرگروه]</span>' : '<span class="text-slate-600 font-bold">[پیمانکار]</span>';
+                    var propCoin = c.proposed_coins ? '<span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.2 rounded font-bold mr-1">پیشنهاد: ' + c.proposed_coins + ' سکه</span>' : '';
+                    commentsListHtml += '<div class="bg-white/90 rounded-lg p-1.5 text-[11px] mb-1.5 border border-slate-200 shadow-xs">' +
+                        '<div class="flex justify-between">' + roleBadge + ' <span class="text-slate-800 font-semibold">' + c.author_name + '</span>' + propCoin + '</div>' +
+                        '<p class="text-slate-600 mt-0.5">' + c.message + '</p>' +
+                        '</div>';
+                });
+            } else {
+                commentsListHtml = '<p class="text-slate-500 text-[11px] text-center py-1">مذاکره‌ای ثبت نشده است.</p>';
+            }
+
+            var isOwnerLeader = (userProfile.role === 'leader' && currentTeam && t.team_id === currentTeam.id);
+            var isProfessor = (userProfile.role === 'professor');
+
+            var actionArea = '';
             if (userProfile.role === 'member') {
-                actionBtn = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-[#0f284e] hover:bg-[#1a3f74] text-amber-300 font-bold py-2 rounded-xl text-xs shadow-md cursor-pointer transition">امضا و ارسال به کارفرما</button>';
-            } else if (userProfile.role === 'professor') {
-                actionBtn = '<div class="flex gap-2">' +
+                actionArea = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-[#0f284e] hover:bg-[#1a3f74] text-amber-300 font-bold py-2 rounded-xl text-xs shadow-md cursor-pointer transition">امضا و ارسال به کارفرما</button>';
+            } else if (isOwnerLeader) {
+                actionArea = '<div class="flex space-x-2 space-x-reverse">' +
+                    '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-200 shadow-xs transition cursor-pointer">ویرایش مستقیم</button>' +
+                    '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold py-2 rounded-xl transition cursor-pointer">حذف تسک</button>' +
+                    '</div>';
+            } else if (isProfessor) {
+                actionArea = '<div class="flex gap-2">' +
                     '<button onclick="changeTaskStatusByProfessor(\'' + t.id + '\')" class="w-1/2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-1.5 rounded-lg cursor-pointer transition">تغییر وضعیت</button>' +
                     '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-1.5 rounded-lg cursor-pointer transition">حذف تسک</button>' +
                     '</div>';
+            } else {
+                actionArea = '<div class="text-center py-2 bg-white/70 rounded-xl text-slate-500 text-xs font-medium border border-slate-200/60">در انتظار انتخاب پیمانکار آزاد</div>';
             }
 
             container.innerHTML += 
-                '<div class="interactive-card rounded-3xl p-5 shadow-md flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '">' +
-                    '<div class="space-y-2">' +
-                        '<div class="flex justify-between"><span class="text-xs font-black" style="' + color.textStyle + '">' + (t.teams ? t.teams.name : '') + '</span>' +
-                        '<span class="text-[11px] font-black px-2.5 py-0.5 rounded-full" style="' + color.badgeStyle + '">کتابچه ' + (t.booklets ? t.booklets.booklet_number : '') + '</span></div>' +
-                        '<h4 class="text-xs md:text-sm font-black text-slate-900">' + (t.booklets ? t.booklets.title : '') + '</h4>' +
-                        '<div class="p-2.5 bg-white/95 rounded-xl border border-slate-300 text-xs">' + t.title + '</div>' +
-                        '<div class="font-black text-amber-800 text-xs pt-1">ارزش تسک: ' + t.allocated_nominal_coins + ' سکه</div>' +
+                '<div class="interactive-card rounded-3xl p-5 shadow-md flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '" id="card-' + t.id + '">' +
+                    '<div class="space-y-3">' +
+                        '<div class="flex justify-between items-start">' +
+                            '<div class="flex items-center space-x-2 space-x-reverse">' +
+                                '<div class="p-2 rounded-xl bg-white border border-slate-200 text-[#0f284e] shadow-xs">' +
+                                    '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
+                                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />' +
+                                    '</svg>' +
+                                '</div>' +
+                                '<div>' +
+                                    '<span class="text-[10px] text-slate-500 block font-bold">تیم کارفرما</span>' +
+                                    '<span class="text-xs font-black" style="' + color.textStyle + '">' + teamName + '</span>' +
+                                '</div>' +
+                            '</div>' +
+                            '<span class="text-[10px] font-black px-2.5 py-1 rounded-full shadow-xs" style="' + color.badgeStyle + '">کتابچه ' + bNum + '</span>' +
+                        '</div>' +
+
+                        '<!-- عنوان کتابچه -->' +
+                        '<div class="text-[11px] font-bold text-slate-700 line-clamp-1">' + bTitle + '</div>' +
+
+                        '<!-- شرح تسک با پشتیبانی از ویرایش روی کارت -->' +
+                        '<div id="view-section-' + t.id + '" class="p-3 bg-white/95 border border-slate-200/90 rounded-2xl text-xs font-medium text-slate-800 leading-relaxed min-h-[55px] shadow-xs">' +
+                            t.title +
+                        '</div>' +
+
+                        '<div id="edit-section-' + t.id + '" class="hidden space-y-2 p-3 bg-white border border-slate-300 rounded-2xl shadow-md">' +
+                            '<label class="text-[10px] font-bold text-slate-600 block">ویرایش شرح تسک:</label>' +
+                            '<input type="text" id="edit-title-' + t.id + '" value="' + t.title + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<label class="text-[10px] font-bold text-slate-600 block">ویرایش سکه:</label>' +
+                            '<input type="number" id="edit-coins-' + t.id + '" value="' + t.allocated_nominal_coins + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<div class="flex gap-2">' +
+                                '<button onclick="saveCardEdit(\'' + t.id + '\')" class="w-1/2 bg-emerald-600 text-white text-[11px] font-bold py-1.5 rounded-lg">ذخیره</button>' +
+                                '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 rounded-lg">انصراف</button>' +
+                            '</div>' +
+                        '</div>' +
+
+                        '<!-- نمایش ارزش همکاری همراه با آیکون سکه چندتایی متناظر با نسخه ۱.۱۲ -->' +
+                        '<div class="flex items-center justify-between pt-2 border-t border-slate-200/80">' +
+                            '<span class="text-[11px] text-slate-600 font-bold">ارزش همکاری:</span>' +
+                            '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-700 text-sm">' +
+                                '<svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor">' +
+                                    '<ellipse cx="11" cy="9" rx="6" ry="2.5" stroke-width="1.6"/>' +
+                                    '<path d="M5 9v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V9" stroke-width="1.6"/>' +
+                                    '<ellipse cx="21" cy="14" rx="6" ry="2.5" stroke-width="1.6" fill="white"/>' +
+                                    '<path d="M15 14v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5v-4" stroke-width="1.6"/>' +
+                                    '<path d="M15 18v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5v-4" stroke-width="1.6"/>' +
+                                '</svg>' +
+                                '<span>' + t.allocated_nominal_coins + ' سکه</span>' +
+                            '</div>' +
+                        '</div>' +
+
+                        '<!-- بخش گفت‌وگو، کامنت‌ها و پیشنهاد قیمت بر مبنای نسخه ۱.۱۲ -->' +
+                        '<div class="pt-2 border-t border-slate-200/80">' +
+                            '<div class="flex justify-between items-center mb-1.5">' +
+                                '<span class="text-[10px] font-bold text-slate-700">💬 گفت‌وگو و پیشنهاد قیمت:</span>' +
+                                '<button onclick="toggleCommentBox(\'' + t.id + '\')" class="text-[10px] text-[#0f284e] hover:underline font-bold cursor-pointer">ثبت نظر / قیمت</button>' +
+                            '</div>' +
+                            '<div class="max-h-24 overflow-y-auto pr-1">' + commentsListHtml + '</div>' +
+
+                            '<div id="comment-box-' + t.id + '" class="hidden mt-2 p-2 bg-white/95 border border-slate-200 rounded-xl space-y-1.5 shadow-sm">' +
+                                '<input type="text" id="comment-msg-' + t.id + '" placeholder="پیام شما..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
+                                '<input type="number" id="comment-coin-' + t.id + '" placeholder="پیشنهاد قیمت جدید (اختیاری)" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-1.5 text-xs text-slate-800">' +
+                                '<button onclick="submitTaskComment(\'' + t.id + '\')" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[11px] font-black py-1.5 rounded-lg shadow-sm cursor-pointer">ارسال دیدگاه</button>' +
+                            '</div>' +
+                        '</div>' +
                     '</div>' +
-                    '<div class="mt-3">' + actionBtn + '</div>' +
+
+                    '<div class="mt-4 pt-2">' + actionArea + '</div>' +
                 '</div>';
         }
     }
@@ -1531,6 +1669,7 @@
             '</div>';
     }
 
+    // بارگذاری عناوین دقیق کتابچه‌ها متناظر با نسخه ۱.۱۲
     async function loadBooklets() {
         var sb = getSupabaseClient();
         var res = await sb.from('booklets').select('*').order('booklet_number');
@@ -1538,7 +1677,7 @@
         if (res.data) {
             sel.innerHTML = '';
             res.data.forEach(function(b) {
-                var opt = '<option value="' + b.id + '">کتابچه ' + b.booklet_number + ': ' + b.title + '</option>';
+                var opt = '<option value="' + b.id + '">کتابچه ' + b.booklet_number + ': ' + b.title + ' (' + b.nominal_coins + ' سکه)</option>';
                 sel.innerHTML += opt;
             });
         }
