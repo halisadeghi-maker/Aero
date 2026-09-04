@@ -60,7 +60,6 @@
             transform: translateY(-6px);
             box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.16);
         }
-        /* استایل اختصاصی تقویم جلالی */
         jdp-container {
             font-family: 'Vazirmatn', sans-serif !important;
             direction: rtl !important;
@@ -90,7 +89,7 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- صفحه ورود بدون هدر -->
+        <!-- صفحه ورود بدون هدر با دو کارت پویا و شاد -->
         <section id="auth-section" class="max-w-5xl mx-auto my-auto py-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 
@@ -226,7 +225,7 @@
                 </div>
             </div>
 
-            <!-- ۱. بخش کارت‌های ویژه طلایی: مناقصات پروژه‌های اصلی استاد -->
+            <!-- بخش کارت‌های ویژه طلایی: مناقصات پروژه‌های اصلی استاد -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-2 border-amber-300/80 bg-gradient-to-r from-amber-50/50 via-white to-amber-50/30 space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-2 border-b border-amber-200">
                     <div>
@@ -273,7 +272,7 @@
                             <input type="text" id="rfp-specs" placeholder="مشخصات سرعت، سقف پرواز، مداومت و بار مفید..." class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs">
                         </div>
                         
-                        <!-- ۲. انتخاب مهلت بر اساس تقویم شمسی / ایرانی همراه با ساعت -->
+                        <!-- انتخاب مهلت بر اساس تقویم شمسی -->
                         <div>
                             <label class="block text-[11px] font-bold text-slate-600 mb-1">📅 مهلت مناقصه (تقویم شمسی و ساعت)</label>
                             <input type="text" id="rfp-deadline-shamsi" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۰۶/۱۵ ۱۴:۰۰" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800 cursor-pointer" readonly>
@@ -559,11 +558,9 @@
         return new Date(gy, m, g_day_no + 1);
     }
 
-    // تجزیه رشته ورودی تقویم جلالی به تاریخ میلادی
     function parseJalaliDateTimeString(str) {
         if (!str) return null;
         try {
-            // ساختار ممکن: YYYY/MM/DD یا YYYY/MM/DD HH:mm
             var parts = str.trim().split(' ');
             var dateParts = parts[0].split(/[\/\-]/);
             var jy = parseInt(dateParts[0]);
@@ -756,7 +753,6 @@
                 document.getElementById('member-tank-panel').classList.remove('hidden');
             }
 
-            // راه‌اندازی تقویم جلالی پس از لود شدن دام
             if (window.jalaliDatepicker) {
                 jalaliDatepicker.startWatch({
                     time: true,
@@ -774,7 +770,7 @@
         }
     }
 
-    // ۲. ایجاد قرارداد اصلی با دریافت مهلت از تقویم شمسی
+    // ایجاد قرارداد اصلی
     window.createMasterProject = async function() {
         var sb = getSupabaseClient();
         var title = document.getElementById('rfp-title').value.trim();
@@ -837,27 +833,39 @@
         }
     };
 
-    window.editMasterProject = async function(projectId, oldTitle, oldType, oldCoins, oldSpecs) {
-        var newTitle = prompt('عنوان جدید پروژه:', oldTitle);
-        if (!newTitle) return;
-        var newType = prompt('نوع/رده هواپیما:', oldType);
-        if (!newType) return;
-        var newCoins = prompt('بودجه اسمی (سکه):', oldCoins);
-        if (!newCoins) return;
-        var newSpecs = prompt('ویژگی‌ها و نیازمندی‌ها:', oldSpecs);
-        if (!newSpecs) return;
+    // باز/بسته کردن فرم ویرایش مستقیم روی کارت قرارداد اصلی
+    window.toggleMasterProjectCardEdit = function(projectId) {
+        var viewSec = document.getElementById('mp-view-' + projectId);
+        var editSec = document.getElementById('mp-edit-' + projectId);
+        if (viewSec && editSec) {
+            viewSec.classList.toggle('hidden');
+            editSec.classList.toggle('hidden');
+        }
+    };
 
+    // ذخیره مستقیم تغییرات کارت قرارداد اصلی توسط استاد
+    window.saveMasterProjectCardEdit = async function(projectId) {
         var sb = getSupabaseClient();
+        var title = document.getElementById('mp-edit-title-' + projectId).value.trim();
+        var type = document.getElementById('mp-edit-type-' + projectId).value.trim();
+        var coins = document.getElementById('mp-edit-coins-' + projectId).value;
+        var specs = document.getElementById('mp-edit-specs-' + projectId).value.trim();
+
+        if (!title || !type || !coins) {
+            return showAppAlert('لطفاً عنوان، رده و میزان بودجه را تکمیل نمایید.', false);
+        }
+
         var res = await sb.from('master_projects').update({
-            title: newTitle,
-            aircraft_type: newType,
-            allocated_coins: parseFloat(newCoins),
-            specifications: newSpecs
+            title: title,
+            aircraft_type: type,
+            allocated_coins: parseFloat(coins),
+            specifications: specs
         }).eq('id', projectId);
 
-        if (res.error) showAppAlert('خطا در ویرایش پروژه: ' + res.error.message, false);
-        else {
-            showAppAlert('مشخصات قرارداد اصلی با موفقیت ویرایش شد.', true);
+        if (res.error) {
+            showAppAlert('خطا در ویرایش قرارداد اصلی: ' + res.error.message, false);
+        } else {
+            showAppAlert('مشخصات قرارداد اصلی با موفقیت به‌روزرسانی شد.', true);
             await loadMasterProjects();
         }
     };
@@ -874,7 +882,7 @@
         }
     };
 
-    // ۱. بارگذاری کارت‌های طلایی و فعال‌سازی مناقصه برای سرگروه‌ها
+    // بارگذاری کارت‌های طلایی با امکان ویرایش مستقیم روی کارت برای استاد
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -892,14 +900,12 @@
             var dDate = new Date(p.deadline);
             var isExpired = now.getTime() > dDate.getTime();
             
-            // نمایش تاریخ مهلت به صورت فارسی/شمسی
             var options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' };
             var shamsiDateStr = dDate.toLocaleDateString('fa-IR', options);
             var timeRemainingText = isExpired 
                 ? '<span class="text-rose-600 font-black">مهلت مناقصه به پایان رسیده است</span>' 
                 : '<span class="text-emerald-700 font-bold">مهلت تا: ' + shamsiDateStr + '</span>';
 
-            // ۱. بخش شرکت در مناقصه برای سرگروه (کارفرما)
             var bidArea = '';
             if (userProfile.role === 'leader') {
                 if (!isExpired && p.status === 'open') {
@@ -913,13 +919,10 @@
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-rose-600">مهلت ارسال پیشنهاد به پایان رسیده است.</div>';
                 }
             } else if (userProfile.role === 'professor') {
-                var escapedSpecs = (p.specifications || '').replace(/'/g, "\\'");
-                var escapedTitle = (p.title || '').replace(/'/g, "\\'");
-                var escapedType = (p.aircraft_type || '').replace(/'/g, "\\'");
                 bidArea = '<div class="mt-3 pt-2 border-t border-amber-200 space-y-1.5">' +
                     '<button onclick="viewBidsForMasterProject(\'' + p.id + '\', ' + p.allocated_coins + ')" class="w-full bg-[#0f284e] text-amber-300 font-bold py-1.5 rounded-lg text-xs">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
                     '<div class="flex gap-2">' +
-                    '<button onclick="editMasterProject(\'' + p.id + '\', \'' + escapedTitle + '\', \'' + escapedType + '\', ' + p.allocated_coins + ', \'' + escapedSpecs + '\')" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-1 rounded-lg text-xs">✏️ ویرایش</button>' +
+                    '<button onclick="toggleMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-1 rounded-lg text-xs">✏️ ویرایش روی کارت</button>' +
                     '<button onclick="deleteMasterProject(\'' + p.id + '\')" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-1 rounded-lg text-xs">🗑️ حذف</button>' +
                     '</div>' +
                     '</div>';
@@ -929,19 +932,39 @@
             var awardedTeamInfo = p.awarded_team_id && p.teams ? '<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-black border border-emerald-300">منعقد شده با تیم ' + p.teams.name + '</span>' : '<span class="bg-amber-100 text-amber-900 text-[11px] px-2.5 py-1 rounded-full font-black border border-amber-300">در حال مناقصه</span>';
 
             cont.innerHTML += 
-                '<div class="interactive-card rounded-3xl p-5 shadow-lg border-2 border-amber-400 bg-gradient-to-br from-[#fffbeb] via-[#fef3c7] to-[#fde68a] text-slate-900 flex flex-col justify-between">' +
+                '<div class="interactive-card rounded-3xl p-5 shadow-lg border-2 border-amber-400 bg-gradient-to-br from-[#fffbeb] via-[#fef3c7] to-[#fde68a] text-slate-900 flex flex-col justify-between" id="mp-card-' + p.id + '">' +
                     '<div class="space-y-2">' +
                         '<div class="flex justify-between items-start">' +
                             '<span class="text-[11px] font-black text-amber-900 bg-amber-200/80 px-2.5 py-0.5 rounded-full">پروژه اصلی استاد</span>' +
                             awardedTeamInfo +
                         '</div>' +
-                        '<h4 class="text-sm font-black text-[#0f284e]">' + p.title + '</h4>' +
-                        '<div class="text-xs font-bold text-slate-700">رده: ' + p.aircraft_type + '</div>' +
-                        '<p class="text-xs text-slate-600 leading-relaxed bg-white/60 p-2 rounded-xl border border-amber-200/70">' + p.specifications + '</p>' +
-                        rfpDownloadLink +
-                        '<div class="pt-2 flex justify-between items-center text-xs font-bold">' +
-                            '<span>بودجه اسمی: <span class="text-amber-800 font-black">' + p.allocated_coins + ' سکه</span></span>' +
-                            timeRemainingText +
+
+                        '<!-- حالت نمایش مشخصات پروژه -->' +
+                        '<div id="mp-view-' + p.id + '" class="space-y-2">' +
+                            '<h4 class="text-sm font-black text-[#0f284e]">' + p.title + '</h4>' +
+                            '<div class="text-xs font-bold text-slate-700">رده: ' + p.aircraft_type + '</div>' +
+                            '<p class="text-xs text-slate-600 leading-relaxed bg-white/60 p-2 rounded-xl border border-amber-200/70">' + p.specifications + '</p>' +
+                            rfpDownloadLink +
+                            '<div class="pt-2 flex justify-between items-center text-xs font-bold">' +
+                                '<span>بودجه اسمی: <span class="text-amber-800 font-black">' + p.allocated_coins + ' سکه</span></span>' +
+                                timeRemainingText +
+                            '</div>' +
+                        '</div>' +
+
+                        '<!-- حالت ویرایش مستقیم روی کارت -->' +
+                        '<div id="mp-edit-' + p.id + '" class="hidden space-y-2 p-3 bg-white/95 rounded-2xl border border-amber-400 shadow-md">' +
+                            '<label class="text-[10px] font-bold text-slate-600 block">عنوان پروژه:</label>' +
+                            '<input type="text" id="mp-edit-title-' + p.id + '" value="' + p.title + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 font-bold">' +
+                            '<label class="text-[10px] font-bold text-slate-600 block">نوع و رده هواپیما:</label>' +
+                            '<input type="text" id="mp-edit-type-' + p.id + '" value="' + p.aircraft_type + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<label class="text-[10px] font-bold text-slate-600 block">بودجه اسمی (سکه):</label>' +
+                            '<input type="number" id="mp-edit-coins-' + p.id + '" value="' + p.allocated_coins + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 font-bold">' +
+                            '<label class="text-[10px] font-bold text-slate-600 block">شرح و ویژگی‌ها:</label>' +
+                            '<textarea id="mp-edit-specs-' + p.id + '" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' + (p.specifications || '') + '</textarea>' +
+                            '<div class="flex gap-2 pt-1">' +
+                                '<button onclick="saveMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded-lg text-xs shadow-sm">ذخیره تغییرات</button>' +
+                                '<button onclick="toggleMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-1.5 rounded-lg text-xs">انصراف</button>' +
+                            '</div>' +
                         '</div>' +
                     '</div>' +
                     bidArea +
@@ -949,11 +972,10 @@
         }
     }
 
-    // ۱. ارسال قطعی پیشنهاد مناقصه توسط سرگروه
+    // ارسال قطعی پیشنهاد مناقصه توسط سرگروه با بررسی پیشنهاد قبلی (حل خطای ON CONFLICT)
     window.submitProjectBid = async function(projectId) {
         var sb = getSupabaseClient();
         
-        // اطمینان از وجود تیم برای سرگروه
         if (!currentTeam) {
             var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
             currentTeam = tRes.data;
@@ -970,17 +992,30 @@
             return showAppAlert('لطفاً مبلغ معتبر پیشنهادی (سکه) را وارد کنید.', false);
         }
 
-        // ثبت یا به‌روزرسانی پیشنهاد قیمت در جدول مناقصات
-        var res = await sb.from('project_bids').upsert([{
-            project_id: projectId,
-            team_id: currentTeam.id,
-            proposed_coins: parseFloat(coins)
-        }], { onConflict: 'project_id,team_id' });
+        // بررسی اینکه آیا قبلاً این تیم پیشنهادی ثبت کرده است یا خیر
+        var existingBid = await sb.from('project_bids')
+            .select('id')
+            .eq('project_id', projectId)
+            .eq('team_id', currentTeam.id)
+            .maybeSingle();
+
+        var res;
+        if (existingBid.data) {
+            res = await sb.from('project_bids').update({
+                proposed_coins: parseFloat(coins)
+            }).eq('id', existingBid.data.id);
+        } else {
+            res = await sb.from('project_bids').insert([{
+                project_id: projectId,
+                team_id: currentTeam.id,
+                proposed_coins: parseFloat(coins)
+            }]);
+        }
 
         if (res.error) {
             showAppAlert('خطا در ثبت پیشنهاد: ' + res.error.message, false);
         } else {
-            showAppAlert('پیشنهاد قیمت تیم «' + currentTeam.name + '» با مبلغ ' + coins + ' سکه با موفقیت در مناقصه ثبت گردید.', true);
+            showAppAlert('پیشنهاد قیمت تیم «' + currentTeam.name + '» با مبلغ ' + coins + ' سکه با موفقیت ثبت/ویرایش گردید.', true);
             coinInput.value = '';
             await loadMasterProjects();
         }
