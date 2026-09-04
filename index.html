@@ -71,7 +71,7 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- نوار ناوبری اصلی -->
+    <!-- نوار ناوبری اصلی (فقط داخل سامانه) -->
     <nav id="main-header" class="hidden bg-white/95 backdrop-blur-md border-b-2 border-slate-200 px-6 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
         <div class="flex items-center space-x-3.5 space-x-reverse">
             <img src="kntu-logo.png" alt="لوگو دانشگاه خواجه نصیرالدین طوسی" class="w-14 h-14 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
@@ -89,7 +89,7 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- صفحه ورود بدون هدر با دو کارت پویا و شاد -->
+        <!-- صفحه ورود بدون هدر با دو کارت پویا و ترکیب رنگی مدرن بادمجانی-خردلی -->
         <section id="auth-section" class="max-w-5xl mx-auto my-auto py-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 
@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-                <!-- کارت ۲: کارت ورود و ثبت نام بادمجانی-یاقوتی مدرن -->
+                <!-- کارت ۲: کارت ورود/ثبت‌نام بادمجانی-یاقوتی مدرن -->
                 <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-pink-400/40 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#4c0519] via-[#831843] to-[#500724] text-white">
                     <div class="absolute -top-20 -right-20 w-60 h-60 bg-pink-500/20 rounded-full blur-3xl"></div>
                     <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-amber-400/15 rounded-full blur-3xl"></div>
@@ -445,6 +445,58 @@
         </div>
     </div>
 
+    <!-- ۱. مدال اختصاصی و جذاب تایید قطعی پیشنهاد مناقصه توسط سرگروه با پیام استاد -->
+    <div id="bid-confirm-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+            <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">
+                👨‍🏫
+            </div>
+            <div>
+                <h4 class="text-base font-black text-[#0f284e]">استاد درس</h4>
+                <p id="bid-confirm-text" class="text-xs text-slate-700 font-bold mt-2 leading-relaxed whitespace-pre-line"></p>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="bid-confirm-yes-btn" type="button" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">بله، تایید و ثبت نهایی</button>
+                <button onclick="closeBidConfirmModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف و بازبینی</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ۲. مدال جذاب بررسی پیشنهادهای مناقصه توسط استاد با جدول و تیک انتخاب -->
+    <div id="professor-bids-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border-2 border-indigo-200 max-w-2xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <div>
+                    <h4 class="text-sm font-black text-[#0f284e]">📋 بررسی پیشنهادهای مناقصه و عقد قرارداد با سرگروه منتخب</h4>
+                    <p id="prof-bids-modal-subtitle" class="text-[11px] text-slate-500 mt-0.5"></p>
+                </div>
+                <button onclick="closeProfessorBidsModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-right text-xs border border-slate-200 rounded-xl overflow-hidden">
+                    <thead class="bg-slate-100 text-slate-700">
+                        <tr>
+                            <th class="p-3 font-bold text-center">انتخاب</th>
+                            <th class="p-3 font-bold">نام تیم</th>
+                            <th class="p-3 font-bold">سرگروه</th>
+                            <th class="p-3 font-bold text-center">قیمت پیشنهادی (سکه)</th>
+                            <th class="p-3 font-bold text-center">تاریخ پیشنهاد</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prof-bids-table-body" class="divide-y divide-slate-200">
+                        <!-- ردیف‌های پیشنهادها با تیک انتخاب -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button id="prof-award-bid-btn" type="button" class="w-2/3 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">تایید تیک انتخابی و امضای قرارداد با این تیم</button>
+                <button onclick="closeProfessorBidsModal()" type="button" class="w-1/3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+            </div>
+        </div>
+    </div>
+
     <!-- مدال قبول تسک و شرایط خاص -->
     <div id="accept-task-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
@@ -488,15 +540,15 @@
         </div>
     </div>
 
-    <!-- مدال اعلان سفارشی استاد درس -->
+    <!-- مدال اعلان سفارشی (۳. تفکیک هوشمند عنوان برای استاد به عنوان «سامانه») -->
     <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div id="modal-icon-container" class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-indigo-50 text-indigo-600">🔔</div>
             <div>
-                <h4 id="modal-title" class="text-base font-black text-[#0f284e]">استاد درس</h4>
+                <h4 id="modal-title" class="text-base font-black text-[#0f284e]">سامانه</h4>
                 <p id="modal-message" class="text-xs text-slate-600 mt-2 leading-relaxed whitespace-pre-line"></p>
             </div>
-            <button onclick="closeCustomModal()" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs transition">متوجه شدم</button>
+            <button onclick="closeCustomModal()" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">متوجه شدم</button>
         </div>
     </div>
 
@@ -583,9 +635,11 @@
         }
     }
 
-    window.showAppAlert = function(msg, isSuccess) {
+    // ۳. تابع ارسال هشدار: برای استاد عنوان «سامانه» و برای دانشجویان و سرگروه‌ها «استاد درس» یا عنوان اختصاصی
+    window.showAppAlert = function(msg, isSuccess, customTitle) {
         var modal = document.getElementById('custom-modal');
-        document.getElementById('modal-title').innerText = "استاد درس";
+        var defaultTitle = (userProfile && userProfile.role === 'professor') ? "سامانه" : "استاد درس";
+        document.getElementById('modal-title').innerText = customTitle || defaultTitle;
         document.getElementById('modal-message').innerText = msg;
         var iconCont = document.getElementById('modal-icon-container');
         if (isSuccess) {
@@ -770,7 +824,6 @@
         }
     }
 
-    // ایجاد قرارداد اصلی
     window.createMasterProject = async function() {
         var sb = getSupabaseClient();
         var title = document.getElementById('rfp-title').value.trim();
@@ -833,7 +886,6 @@
         }
     };
 
-    // باز/بسته کردن فرم ویرایش مستقیم روی کارت قرارداد اصلی
     window.toggleMasterProjectCardEdit = function(projectId) {
         var viewSec = document.getElementById('mp-view-' + projectId);
         var editSec = document.getElementById('mp-edit-' + projectId);
@@ -843,7 +895,6 @@
         }
     };
 
-    // ذخیره مستقیم تغییرات کارت قرارداد اصلی توسط استاد
     window.saveMasterProjectCardEdit = async function(projectId) {
         var sb = getSupabaseClient();
         var title = document.getElementById('mp-edit-title-' + projectId).value.trim();
@@ -882,7 +933,7 @@
         }
     };
 
-    // بارگذاری کارت‌های طلایی با امکان ویرایش مستقیم روی کارت برای استاد
+    // ۱ و ۲. بارگذاری کارت‌های طلایی با بررسی پیشنهاد قطعی سرگروه و خاکستری شدن کارت
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -892,6 +943,17 @@
         if (!res.data || res.data.length === 0) {
             cont.innerHTML = '<div class="col-span-full py-6 text-center text-xs text-slate-400 font-bold">هیچ قرارداد اصلی یا مناقصه بازی تعریف نشده است.</div>';
             return;
+        }
+
+        // بررسی پیشنهادهای ثبت‌شده توسط تیم جاری در صورت سرگروه بودن
+        var myTeamBids = {};
+        if (userProfile.role === 'leader' && currentTeam) {
+            var myBidsRes = await sb.from('project_bids').select('*').eq('team_id', currentTeam.id);
+            if (myBidsRes.data) {
+                myBidsRes.data.forEach(function(b) {
+                    myTeamBids[b.project_id] = b;
+                });
+            }
         }
 
         var now = new Date();
@@ -907,11 +969,30 @@
                 : '<span class="text-emerald-700 font-bold">مهلت تا: ' + shamsiDateStr + '</span>';
 
             var bidArea = '';
+            var hasSubmittedBid = myTeamBids[p.id] ? true : false;
+            var isAwardedToMyTeam = (currentTeam && p.awarded_team_id === currentTeam.id);
+
+            // استایل پایه کارت: اگر سرگروه پیشنهاد قطعی داده باشد کارت خاکستری می‌شود
+            var cardBgClass = "border-2 border-amber-400 bg-gradient-to-br from-[#fffbeb] via-[#fef3c7] to-[#fde68a] text-slate-900";
+            if (userProfile.role === 'leader' && hasSubmittedBid && !isAwardedToMyTeam) {
+                cardBgClass = "border-2 border-slate-400 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300 text-slate-700";
+            } else if (isAwardedToMyTeam) {
+                cardBgClass = "border-2 border-emerald-500 bg-gradient-to-br from-emerald-50 via-teal-100 to-emerald-200 text-emerald-950 shadow-xl";
+            }
+
             if (userProfile.role === 'leader') {
-                if (!isExpired && p.status === 'open') {
+                if (isAwardedToMyTeam) {
+                    bidArea = '<div class="mt-3 pt-2 border-t border-emerald-300 text-center py-2 bg-emerald-600 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی نهایی شده تیم شما</div>';
+                } else if (hasSubmittedBid) {
+                    // ۱. بعد از تایید امکان تغییر وجود ندارد و وضعیت پیشنهاد نمایش داده می‌شود
+                    bidArea = '<div class="mt-3 pt-3 border-t border-slate-300 text-center text-xs font-bold text-slate-700 bg-white/80 py-2.5 px-3 rounded-2xl border border-slate-300">' +
+                        '🔒 پیشنهاد قطعی شما با مبلغ <span class="font-black text-slate-900">' + myTeamBids[p.id].proposed_coins + ' سکه</span> ثبت نهایی شد و در انتظار بررسی استاد است.' +
+                        '</div>';
+                } else if (!isExpired && p.status === 'open') {
+                    // ۱. فرم ثبت پیشنهاد همراه با باز شدن مدال تاییدیه استاد
                     bidArea = '<div class="mt-3 pt-3 border-t border-amber-200 flex gap-2 items-center">' +
                         '<input type="number" id="bid-coins-' + p.id + '" placeholder="قیمت پیشنهادی شما (سکه)" class="w-full bg-white border border-amber-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-amber-500">' +
-                        '<button type="button" onclick="submitProjectBid(\'' + p.id + '\')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">ثبت پیشنهاد مناقصه</button>' +
+                        '<button type="button" onclick="promptBidConfirmation(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">ثبت پیشنهاد مناقصه</button>' +
                         '</div>';
                 } else if (p.status !== 'open') {
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">مناقصه این پروژه نهایی شده است.</div>';
@@ -920,30 +1001,38 @@
                 }
             } else if (userProfile.role === 'professor') {
                 bidArea = '<div class="mt-3 pt-2 border-t border-amber-200 space-y-1.5">' +
-                    '<button onclick="viewBidsForMasterProject(\'' + p.id + '\', ' + p.allocated_coins + ')" class="w-full bg-[#0f284e] text-amber-300 font-bold py-1.5 rounded-lg text-xs">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
+                    '<button onclick="openProfessorBidsModal(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\', ' + p.allocated_coins + ')" class="w-full bg-[#0f284e] hover:bg-[#1a3f74] text-amber-300 font-bold py-1.5 rounded-lg text-xs transition cursor-pointer shadow-sm">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
                     '<div class="flex gap-2">' +
-                    '<button onclick="toggleMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-1 rounded-lg text-xs">✏️ ویرایش روی کارت</button>' +
-                    '<button onclick="deleteMasterProject(\'' + p.id + '\')" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-1 rounded-lg text-xs">🗑️ حذف</button>' +
+                    '<button onclick="toggleMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-1 rounded-lg text-xs transition cursor-pointer">✏️ ویرایش روی کارت</button>' +
+                    '<button onclick="deleteMasterProject(\'' + p.id + '\')" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-1 rounded-lg text-xs transition cursor-pointer">🗑️ حذف</button>' +
                     '</div>' +
                     '</div>';
             }
 
             var rfpDownloadLink = p.rfp_file_url ? '<a href="' + p.rfp_file_url + '" target="_blank" class="text-xs text-blue-700 font-bold underline block mt-1">📥 دانلود سند RFP پروژه</a>' : '<span class="text-[11px] text-slate-400 block mt-1">سند فایلی ضمیمه نشده است</span>';
-            var awardedTeamInfo = p.awarded_team_id && p.teams ? '<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-black border border-emerald-300">منعقد شده با تیم ' + p.teams.name + '</span>' : '<span class="bg-amber-100 text-amber-900 text-[11px] px-2.5 py-1 rounded-full font-black border border-amber-300">در حال مناقصه</span>';
+            
+            // برچسب وضعیت در پنل استاد و سرگروه
+            var awardedTeamInfo = '';
+            if (p.awarded_team_id && p.teams) {
+                awardedTeamInfo = '<span class="bg-emerald-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-sm">✓ منعقد شده با تیم ' + p.teams.name + '</span>';
+            } else if (userProfile.role === 'leader' && hasSubmittedBid) {
+                awardedTeamInfo = '<span class="bg-slate-600 text-white text-[11px] px-2.5 py-0.5 rounded-full font-bold">پیشنهاد شما ارسال شد</span>';
+            } else {
+                awardedTeamInfo = '<span class="bg-amber-100 text-amber-900 text-[11px] px-2.5 py-1 rounded-full font-black border border-amber-300">در حال مناقصه</span>';
+            }
 
             cont.innerHTML += 
-                '<div class="interactive-card rounded-3xl p-5 shadow-lg border-2 border-amber-400 bg-gradient-to-br from-[#fffbeb] via-[#fef3c7] to-[#fde68a] text-slate-900 flex flex-col justify-between" id="mp-card-' + p.id + '">' +
+                '<div class="interactive-card rounded-3xl p-5 shadow-lg flex flex-col justify-between ' + cardBgClass + '" id="mp-card-' + p.id + '">' +
                     '<div class="space-y-2">' +
                         '<div class="flex justify-between items-start">' +
-                            '<span class="text-[11px] font-black text-amber-900 bg-amber-200/80 px-2.5 py-0.5 rounded-full">پروژه اصلی استاد</span>' +
+                            '<span class="text-[11px] font-black ' + (hasSubmittedBid && !isAwardedToMyTeam ? 'text-slate-800 bg-slate-300/80' : 'text-amber-900 bg-amber-200/80') + ' px-2.5 py-0.5 rounded-full">پروژه اصلی استاد</span>' +
                             awardedTeamInfo +
                         '</div>' +
 
-                        '<!-- حالت نمایش مشخصات پروژه -->' +
                         '<div id="mp-view-' + p.id + '" class="space-y-2">' +
-                            '<h4 class="text-sm font-black text-[#0f284e]">' + p.title + '</h4>' +
+                            '<h4 class="text-sm font-black ' + (isAwardedToMyTeam ? 'text-emerald-950' : 'text-[#0f284e]') + '">' + p.title + '</h4>' +
                             '<div class="text-xs font-bold text-slate-700">رده: ' + p.aircraft_type + '</div>' +
-                            '<p class="text-xs text-slate-600 leading-relaxed bg-white/60 p-2 rounded-xl border border-amber-200/70">' + p.specifications + '</p>' +
+                            '<p class="text-xs text-slate-600 leading-relaxed bg-white/70 p-2 rounded-xl border border-slate-200/80">' + p.specifications + '</p>' +
                             rfpDownloadLink +
                             '<div class="pt-2 flex justify-between items-center text-xs font-bold">' +
                                 '<span>بودجه اسمی: <span class="text-amber-800 font-black">' + p.allocated_coins + ' سکه</span></span>' +
@@ -951,7 +1040,6 @@
                             '</div>' +
                         '</div>' +
 
-                        '<!-- حالت ویرایش مستقیم روی کارت -->' +
                         '<div id="mp-edit-' + p.id + '" class="hidden space-y-2 p-3 bg-white/95 rounded-2xl border border-amber-400 shadow-md">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">عنوان پروژه:</label>' +
                             '<input type="text" id="mp-edit-title-' + p.id + '" value="' + p.title + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 font-bold">' +
@@ -972,10 +1060,12 @@
         }
     }
 
-    // ارسال قطعی پیشنهاد مناقصه توسط سرگروه با بررسی پیشنهاد قبلی (حل خطای ON CONFLICT)
-    window.submitProjectBid = async function(projectId) {
+    // ۱. نمایش پنجره جذاب تایید قیمت پیشنهادی با پیام استاد
+    var pendingBidProjectId = null;
+    var pendingBidCoins = null;
+
+    window.promptBidConfirmation = async function(projectId, projectTitle) {
         var sb = getSupabaseClient();
-        
         if (!currentTeam) {
             var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
             currentTeam = tRes.data;
@@ -992,57 +1082,127 @@
             return showAppAlert('لطفاً مبلغ معتبر پیشنهادی (سکه) را وارد کنید.', false);
         }
 
-        // بررسی اینکه آیا قبلاً این تیم پیشنهادی ثبت کرده است یا خیر
+        pendingBidProjectId = projectId;
+        pendingBidCoins = parseFloat(coins);
+
+        var msgText = 'سرگروه محترم تیم ' + currentTeam.name + '؛\n' +
+            'آیا از قیمت پیشنهادی خود به میزان «' + coins + ' سکه» برای پروژه «' + projectTitle + '» اطمینان دارید؟\n' +
+            '⚠️ توجه فرمایید: بعد از تایید امکان تغییر پیشنهاد وجود ندارد.';
+        
+        document.getElementById('bid-confirm-text').innerText = msgText;
+        document.getElementById('bid-confirm-modal').classList.remove('hidden');
+    };
+
+    window.closeBidConfirmModal = function() {
+        document.getElementById('bid-confirm-modal').classList.add('hidden');
+        pendingBidProjectId = null;
+        pendingBidCoins = null;
+    };
+
+    // ۱. ثبت قطعی و غیرقابل تغییر پیشنهاد مناقصه توسط سرگروه
+    document.getElementById('bid-confirm-yes-btn').onclick = async function() {
+        if (!pendingBidProjectId || !pendingBidCoins) return;
+        var sb = getSupabaseClient();
+
         var existingBid = await sb.from('project_bids')
             .select('id')
-            .eq('project_id', projectId)
+            .eq('project_id', pendingBidProjectId)
             .eq('team_id', currentTeam.id)
             .maybeSingle();
 
         var res;
         if (existingBid.data) {
             res = await sb.from('project_bids').update({
-                proposed_coins: parseFloat(coins)
+                proposed_coins: pendingBidCoins
             }).eq('id', existingBid.data.id);
         } else {
             res = await sb.from('project_bids').insert([{
-                project_id: projectId,
+                project_id: pendingBidProjectId,
                 team_id: currentTeam.id,
-                proposed_coins: parseFloat(coins)
+                proposed_coins: pendingBidCoins
             }]);
         }
 
         if (res.error) {
             showAppAlert('خطا در ثبت پیشنهاد: ' + res.error.message, false);
         } else {
-            showAppAlert('پیشنهاد قیمت تیم «' + currentTeam.name + '» با مبلغ ' + coins + ' سکه با موفقیت ثبت/ویرایش گردید.', true);
-            coinInput.value = '';
+            closeBidConfirmModal();
+            showAppAlert('پیشنهاد قیمت شما با موفقیت و به صورت قطعی ثبت گردید.', true, 'استاد درس');
             await loadMasterProjects();
         }
     };
 
-    window.viewBidsForMasterProject = async function(projectId, baseCoins) {
+    // ۲. متغیرهای مدال بررسی پیشنهادهای استاد
+    var currentReviewProjectId = null;
+    var currentReviewProjectCoins = null;
+
+    // ۲. باز کردن پنجره جذاب بررسی پیشنهادها در پنل استاد با جدول و رادیو دکمه انتخاب
+    window.openProfessorBidsModal = async function(projectId, projectTitle, baseCoins) {
         var sb = getSupabaseClient();
-        var bidsRes = await sb.from('project_bids').select('*, teams(name, leader_id)').eq('project_id', projectId);
-        if (!bidsRes.data || bidsRes.data.length === 0) return showAppAlert('هنوز پیشنهادی از سوی سرگروه‌ها برای این پروژه ارسال نشده است.', false);
+        currentReviewProjectId = projectId;
+        currentReviewProjectCoins = baseCoins;
 
-        var list = bidsRes.data.map(function(b) {
-            return 'تیم: ' + (b.teams ? b.teams.name : '') + ' | قیمت پیشنهادی: ' + b.proposed_coins + ' سکه';
-        }).join('\n');
+        var bidsRes = await sb.from('project_bids').select('*, teams(id, name, leader_id, profiles:teams_leader_id_fkey(full_name))').eq('project_id', projectId).order('proposed_coins', { ascending: true });
+        
+        var tbody = document.getElementById('prof-bids-table-body');
+        tbody.innerHTML = '';
+        document.getElementById('prof-bids-modal-subtitle').innerText = 'پروژه: ' + projectTitle + ' | بودجه اسمی پایه: ' + baseCoins + ' سکه';
 
-        var chosenTeamName = prompt('پیشنهادهای دریافت شده:\n' + list + '\n\nلطفاً نام تیمی که قرارداد نهایی با آن امضا می‌شود را عیناً وارد کنید:');
-        if (!chosenTeamName) return;
+        if (!bidsRes.data || bidsRes.data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-slate-400 font-bold">هنوز پیشنهادی از سوی سرگروه‌ها برای این پروژه ارسال نشده است.</td></tr>';
+            document.getElementById('prof-award-bid-btn').disabled = true;
+        } else {
+            document.getElementById('prof-award-bid-btn').disabled = false;
+            bidsRes.data.forEach(function(b, index) {
+                var teamName = b.teams ? b.teams.name : 'تیم نامشخص';
+                var leaderName = (b.teams && b.teams.profiles) ? b.teams.profiles.full_name : 'نامشخص';
+                var bDate = new Date(b.created_at).toLocaleDateString('fa-IR');
+                var isChecked = index === 0 ? 'checked' : '';
 
-        var selectedBid = bidsRes.data.find(function(b) { return b.teams && b.teams.name.trim() === chosenTeamName.trim(); });
-        if (!selectedBid) return showAppAlert('تیم مورد نظر یافت نشد.', false);
+                tbody.innerHTML += '<tr class="hover:bg-slate-50 transition cursor-pointer">' +
+                    '<td class="p-3 text-center">' +
+                        '<input type="radio" name="selected_team_bid" value="' + b.team_id + '" data-team-name="' + teamName + '" data-coins="' + b.proposed_coins + '" ' + isChecked + ' class="w-4 h-4 text-[#0f284e] focus:ring-indigo-500 cursor-pointer">' +
+                    '</td>' +
+                    '<td class="p-3 font-black text-slate-800">' + teamName + '</td>' +
+                    '<td class="p-3 text-slate-600">' + leaderName + '</td>' +
+                    '<td class="p-3 font-black text-amber-700 text-center text-sm">' + b.proposed_coins + ' سکه</td>' +
+                    '<td class="p-3 text-slate-500 text-center">' + bDate + '</td>' +
+                    '</tr>';
+            });
+        }
 
-        await sb.from('master_projects').update({
-            awarded_team_id: selectedBid.team_id,
+        document.getElementById('professor-bids-modal').classList.remove('hidden');
+    };
+
+    window.closeProfessorBidsModal = function() {
+        document.getElementById('professor-bids-modal').classList.add('hidden');
+        currentReviewProjectId = null;
+    };
+
+    // ۲. تایید تیک انتخابی توسط استاد و انعقاد رسمی قرارداد اصلی با تیم منتخب
+    document.getElementById('prof-award-bid-btn').onclick = async function() {
+        var selectedRadio = document.querySelector('input[name="selected_team_bid"]:checked');
+        if (!selectedRadio || !currentReviewProjectId) {
+            return showAppAlert('لطفاً ابتدا تیک تیم مورد نظر خود را برای عقد قرارداد انتخاب کنید.', false);
+        }
+
+        var teamId = selectedRadio.value;
+        var teamName = selectedRadio.getAttribute('data-team-name');
+        var coins = selectedRadio.getAttribute('data-coins');
+
+        var sb = getSupabaseClient();
+        var res = await sb.from('master_projects').update({
+            awarded_team_id: teamId,
             status: 'awarded'
-        }).eq('id', projectId);
+        }).eq('id', currentReviewProjectId);
 
-        showAppAlert('قرارداد اصلی پروژه با تیم ' + chosenTeamName + ' با سقف بودجه نهایی ' + selectedBid.proposed_coins + ' سکه منعقد گردید. سرگروه اکنون موظف است تسک‌های خود را بر این مبنا تعریف کند.', true);
-        await loadMasterProjects();
+        if (res.error) {
+            showAppAlert('خطا در امضای قرارداد: ' + res.error.message, false);
+        } else {
+            closeProfessorBidsModal();
+            showAppAlert('قرارداد اصلی پروژه با موفقیت به نام تیم «' + teamName + '» با سقف بودجه مصوب ' + coins + ' سکه منعقد شد.', true, 'سامانه');
+            await loadMasterProjects();
+        }
     };
 
     async function loadPendingUsers() {
@@ -1063,8 +1223,8 @@
                     '<span class="text-[10px] text-slate-500">شماره: ' + u.student_id + '</span>' +
                 '</div>' +
                 '<div class="flex gap-1.5">' +
-                    '<button type="button" onclick="approveUser(\'' + u.id + '\', true, \'' + u.full_name + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition">✓ تایید</button>' +
-                    '<button type="button" onclick="approveUser(\'' + u.id + '\', false, \'' + u.full_name + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition">✕ رد و حذف</button>' +
+                    '<button type="button" onclick="approveUser(\'' + u.id + '\', true, \'' + u.full_name + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer">✓ تایید</button>' +
+                    '<button type="button" onclick="approveUser(\'' + u.id + '\', false, \'' + u.full_name + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer">✕ رد و حذف</button>' +
                 '</div></div>';
         });
     }
@@ -1230,8 +1390,8 @@
                 '<span class="text-rose-700">پیمانکار: ' + (d.profiles ? d.profiles.full_name : '') + '</span></div>' +
                 '<p class="text-slate-700 text-xs">ادله فسخ: ' + d.termination_reason + '</p>' +
                 '<div class="flex gap-2 pt-1">' +
-                '<button onclick="resolveDisputeByProfessor(\'' + d.id + '\', \'' + d.task_id + '\', true)" class="bg-rose-600 text-white px-3 py-1 rounded text-xs font-bold">تایید فسخ یک‌طرفه</button>' +
-                '<button onclick="resolveDisputeByProfessor(\'' + d.id + '\', \'' + d.task_id + '\', false)" class="bg-slate-200 text-slate-800 px-3 py-1 rounded text-xs font-bold">رد فسخ و الزام به ادامه</button>' +
+                '<button onclick="resolveDisputeByProfessor(\'' + d.id + '\', \'' + d.task_id + '\', true)" class="bg-rose-600 text-white px-3 py-1 rounded text-xs font-bold cursor-pointer">تایید فسخ یک‌طرفه</button>' +
+                '<button onclick="resolveDisputeByProfessor(\'' + d.id + '\', \'' + d.task_id + '\', false)" class="bg-slate-200 text-slate-800 px-3 py-1 rounded text-xs font-bold cursor-pointer">رد فسخ و الزام به ادامه</button>' +
                 '</div></div>';
         });
     }
@@ -1281,11 +1441,11 @@
             var color = getTeamColor(t.team_id);
             var actionBtn = '';
             if (userProfile.role === 'member') {
-                actionBtn = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-[#0f284e] hover:bg-[#1a3f74] text-amber-300 font-bold py-2 rounded-xl text-xs shadow-md">امضا و ارسال به کارفرما</button>';
+                actionBtn = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-[#0f284e] hover:bg-[#1a3f74] text-amber-300 font-bold py-2 rounded-xl text-xs shadow-md cursor-pointer transition">امضا و ارسال به کارفرما</button>';
             } else if (userProfile.role === 'professor') {
                 actionBtn = '<div class="flex gap-2">' +
-                    '<button onclick="changeTaskStatusByProfessor(\'' + t.id + '\')" class="w-1/2 bg-indigo-600 text-white text-xs font-bold py-1.5 rounded-lg">تغییر وضعیت</button>' +
-                    '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-600 text-white text-xs font-bold py-1.5 rounded-lg">حذف تسک</button>' +
+                    '<button onclick="changeTaskStatusByProfessor(\'' + t.id + '\')" class="w-1/2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-1.5 rounded-lg cursor-pointer transition">تغییر وضعیت</button>' +
+                    '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-1.5 rounded-lg cursor-pointer transition">حذف تسک</button>' +
                     '</div>';
             }
 
@@ -1336,15 +1496,15 @@
             if (c.status === 'pending_leader_signature') {
                 statusBadge = '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[11px] font-bold">⏳ در انتظار امضای کارفرما</span>';
                 if (userProfile.role === 'leader') {
-                    actionCol = '<button onclick="signContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-emerald-600 text-white px-2.5 py-1 rounded text-xs font-bold shadow-sm">امضا و شروع کار</button>';
+                    actionCol = '<button onclick="signContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-emerald-600 text-white px-2.5 py-1 rounded text-xs font-bold shadow-sm cursor-pointer">امضا و شروع کار</button>';
                 }
             } else if (c.status === 'terminated') {
                 statusBadge = '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded text-[11px] font-bold">❌ فسخ شده</span>';
             } else {
                 statusBadge = '<span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[11px] font-bold">' + c.status + '</span>';
                 actionCol = '<div class="flex gap-1">' +
-                    '<button onclick="terminateContractMutually(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold">فسخ توافقی</button>' +
-                    '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-bold">فسخ یک‌طرفه</button>' +
+                    '<button onclick="terminateContractMutually(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ توافقی</button>' +
+                    '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 text-rose-700 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>' +
                     '</div>';
             }
 
@@ -1375,14 +1535,11 @@
         var sb = getSupabaseClient();
         var res = await sb.from('booklets').select('*').order('booklet_number');
         var sel = document.getElementById('task-booklet-select');
-        var evalSel = document.getElementById('eval-booklet-select');
         if (res.data) {
             sel.innerHTML = '';
-            evalSel.innerHTML = '';
             res.data.forEach(function(b) {
                 var opt = '<option value="' + b.id + '">کتابچه ' + b.booklet_number + ': ' + b.title + '</option>';
                 sel.innerHTML += opt;
-                evalSel.innerHTML += opt;
             });
         }
     }
@@ -1404,7 +1561,7 @@
                     '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
                     '<span class="text-[10px] text-slate-500">شماره: ' + m.student_id + '</span>' +
                 '</div>' +
-                '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs">🗑️ حذف کاربر</button>' +
+                '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs cursor-pointer">🗑️ حذف کاربر</button>' +
                 '</div>';
         });
     }
@@ -1420,7 +1577,7 @@
         if (res.error) {
             showAppAlert('خطا در حذف کاربر: ' + res.error.message, false);
         } else {
-            showAppAlert('کاربر «' + name + '» با موفقیت توسط استاد درس از سامانه حذف گردید.', true);
+            showAppAlert('کاربر «' + name + '» با موفقیت توسط استاد درس از سامانه حذف گردید.', true, 'سامانه');
             await loadProfessorSummary();
             await loadContracts();
             await loadTasks();
