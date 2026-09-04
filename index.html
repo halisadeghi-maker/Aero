@@ -60,7 +60,7 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- نوار ناوبری اصلی -->
+    <!-- نوار ناوبری اصلی (فقط داخل سامانه) -->
     <nav id="main-header" class="hidden bg-white/95 backdrop-blur-md border-b-2 border-slate-200 px-6 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
         <div class="flex items-center space-x-3.5 space-x-reverse">
             <img src="kntu-logo.png" alt="لوگو دانشگاه خواجه نصیرالدین طوسی" class="w-14 h-14 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
@@ -78,7 +78,7 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- صفحه ورود بدون هدر با دو کارت پویا و شاد -->
+        <!-- صفحه ورود بدون هدر با دو کارت پویا و ترکیب رنگی مدرن بادمجانی-خردلی -->
         <section id="auth-section" class="max-w-5xl mx-auto my-auto py-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 
@@ -119,62 +119,62 @@
                     </div>
                 </div>
 
-                <!-- کارت ۲: کارت ورود پویا قرمز-مرجانی -->
-                <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-rose-300 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#e11d48] via-[#be123c] to-[#881337] text-white">
-                    <div class="absolute -top-20 -right-20 w-60 h-60 bg-white/20 rounded-full blur-3xl"></div>
-                    <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-orange-400/20 rounded-full blur-3xl"></div>
+                <!-- کارت ۲: کارت ورود/ثبت‌نام با تم شیک و مدرن بادمجانی-یاقوتی هماهنگ با خردلی -->
+                <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-pink-400/40 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#4c0519] via-[#831843] to-[#500724] text-white">
+                    <div class="absolute -top-20 -right-20 w-60 h-60 bg-pink-500/20 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-amber-400/15 rounded-full blur-3xl"></div>
 
-                    <div class="relative z-10 flex border-b-2 border-white/30 mb-6">
+                    <div class="relative z-10 flex border-b-2 border-pink-300/30 mb-6">
                         <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm">ورود به سامانه</button>
-                        <button id="tab-signup" type="button" class="w-1/2 pb-3 font-bold text-rose-200 border-b-4 border-transparent cursor-pointer text-sm md:text-base">ثبت‌نام جدید</button>
+                        <button id="tab-signup" type="button" class="w-1/2 pb-3 font-bold text-pink-200 border-b-4 border-transparent cursor-pointer text-sm md:text-base">ثبت‌نام جدید</button>
                     </div>
 
                     <div id="signup-extra-fields" style="display: none;" class="relative z-10 space-y-3.5 mb-4">
                         <div>
-                            <label class="block text-xs font-bold text-rose-50 mb-1">نام و نام خانوادگی</label>
-                            <input type="text" id="auth-name" class="w-full bg-rose-950/50 border-2 border-rose-300/50 rounded-xl px-4 py-2 text-white placeholder-rose-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: علی رضایی">
+                            <label class="block text-xs font-bold text-pink-100 mb-1">نام و نام خانوادگی</label>
+                            <input type="text" id="auth-name" class="w-full bg-pink-950/60 border-2 border-pink-300/40 rounded-xl px-4 py-2 text-white placeholder-pink-200/50 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: علی رضایی">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-rose-50 mb-1">شماره دانشجویی / پرسنلی</label>
-                            <input type="text" id="auth-std-id" class="w-full bg-rose-950/50 border-2 border-rose-300/50 rounded-xl px-4 py-2 text-white placeholder-rose-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: 9912345">
+                            <label class="block text-xs font-bold text-pink-100 mb-1">شماره دانشجویی / پرسنلی</label>
+                            <input type="text" id="auth-std-id" class="w-full bg-pink-950/60 border-2 border-pink-300/40 rounded-xl px-4 py-2 text-white placeholder-pink-200/50 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: 9912345">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-rose-50 mb-1">نقش در سامانه</label>
-                            <select id="auth-role" class="w-full bg-rose-950/80 border-2 border-rose-300/50 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
-                                <option value="member" class="bg-rose-900 text-white">دانشجو (پیمانکار)</option>
-                                <option value="leader" class="bg-rose-900 text-white">سرگروه (کارفرما)</option>
-                                <option value="professor" class="bg-rose-900 text-white">استاد درس (نیازمند تایید استاد اول)</option>
+                            <label class="block text-xs font-bold text-pink-100 mb-1">نقش در سامانه</label>
+                            <select id="auth-role" class="w-full bg-pink-950/90 border-2 border-pink-300/40 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
+                                <option value="member" class="bg-pink-950 text-white">دانشجو (پیمانکار)</option>
+                                <option value="leader" class="bg-pink-950 text-white">سرگروه (کارفرما)</option>
+                                <option value="professor" class="bg-pink-950 text-white">استاد درس (نیازمند تایید استاد اول)</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="relative z-10 space-y-3.5">
                         <div>
-                            <label class="block text-xs font-bold text-rose-50 mb-1">ایمیل دانشگاهی / کاربری</label>
-                            <input type="email" id="auth-email" class="w-full bg-rose-950/50 border-2 border-rose-300/50 rounded-xl px-4 py-2 text-white placeholder-rose-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="user@kntu.ac.ir">
+                            <label class="block text-xs font-bold text-pink-100 mb-1">ایمیل دانشگاهی / کاربری</label>
+                            <input type="email" id="auth-email" class="w-full bg-pink-950/60 border-2 border-pink-300/40 rounded-xl px-4 py-2 text-white placeholder-pink-200/50 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="user@kntu.ac.ir">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-rose-50 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
-                            <input type="password" id="auth-password" class="w-full bg-rose-950/50 border-2 border-rose-300/50 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
+                            <label class="block text-xs font-bold text-pink-100 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
+                            <input type="password" id="auth-password" class="w-full bg-pink-950/60 border-2 border-pink-300/40 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
                         </div>
 
                         <div id="terms-container" style="display: none;" class="flex items-center space-x-2 space-x-reverse pt-1 text-xs">
-                            <input type="checkbox" id="terms-checkbox" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-rose-950 border-rose-300 cursor-pointer">
-                            <label for="terms-checkbox" class="text-rose-100 cursor-pointer">
+                            <input type="checkbox" id="terms-checkbox" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-pink-950 border-pink-300 cursor-pointer">
+                            <label for="terms-checkbox" class="text-pink-100 cursor-pointer">
                                 <a href="javascript:void(0)" onclick="openTermsModal()" class="text-amber-300 underline font-bold hover:text-amber-200">قوانین و مقررات</a> سامانه را مطالعه کرده و آن را می‌پذیرم.
                             </label>
                         </div>
                         
-                        <button id="auth-submit-btn" type="button" class="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black py-3 rounded-xl transition duration-200 shadow-xl shadow-rose-950/40 cursor-pointer text-sm md:text-base mt-2">ورود به سامانه</button>
+                        <button id="auth-submit-btn" type="button" class="w-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl transition duration-200 shadow-xl shadow-pink-950/40 cursor-pointer text-sm md:text-base mt-2">ورود به سامانه</button>
                     </div>
 
-                    <div id="auth-error" class="relative z-10 text-rose-100 text-xs mt-3 text-center hidden bg-rose-950/80 p-2.5 rounded-xl border border-rose-300 font-bold"></div>
+                    <div id="auth-error" class="relative z-10 text-rose-100 text-xs mt-3 text-center hidden bg-rose-950/90 p-2.5 rounded-xl border border-rose-300 font-bold"></div>
                 </div>
 
             </div>
         </section>
 
-        <!-- داشبورد اصلی پس از احراز هویت و تایید استاد -->
+        <!-- داشبورد اصلی پس از احراز هویت -->
         <div id="dashboard-section" class="hidden space-y-6">
 
             <!-- کارت‌های KPI -->
@@ -373,7 +373,7 @@
                     <span class="text-xs text-slate-500 font-medium">پیمانکار می‌تواند هنگام قبول تسک شرایط خاص خود را ضمیمه کند.</span>
                 </div>
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="col-span-full py-8 text-center text-slate-400 text-xs">در حال بارگذاری تسک‌ها...</div>
+                    <div class="col-span-full py-8 text-center text-slate-400 text-xs font-medium">در حال بارگذاری تسک‌ها...</div>
                 </div>
             </section>
 
@@ -542,7 +542,7 @@
     document.getElementById('tab-login').onclick = function() {
         currentMode = 'login';
         document.getElementById('tab-login').className = "w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm";
-        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-rose-200 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-pink-200 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
         document.getElementById('signup-extra-fields').style.display = 'none';
         document.getElementById('terms-container').style.display = 'none';
         document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
@@ -552,7 +552,7 @@
     document.getElementById('tab-signup').onclick = function() {
         currentMode = 'signup';
         document.getElementById('tab-signup').className = "w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm";
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-rose-200 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-pink-200 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
         document.getElementById('signup-extra-fields').style.display = 'block';
         document.getElementById('terms-container').style.display = 'flex';
         document.getElementById('auth-submit-btn').innerText = "ایجاد حساب کاربری";
@@ -580,10 +580,15 @@
             if (res.error) return showError('خطا در ورود: ' + res.error.message);
             currentUser = res.data.user;
 
+            // بررسی وجود پروفایل فعال و جلوگیری از ورود کاربران حذف‌شده
             var pCheck = await sb.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
-            if (pCheck.data && !pCheck.data.is_approved) {
+            if (!pCheck.data) {
                 await sb.auth.signOut();
-                return showAppAlert('حساب کاربری شما ثبت شده است اما هنوز توسط استاد درس تایید نگردیده است. پس از تایید استاد دسترسی شما فعال خواهد شد.', false);
+                return showAppAlert('حساب کاربری شما از سامانه حذف شده است و اجازه دسترسی ندارید.', false);
+            }
+            if (!pCheck.data.is_approved) {
+                await sb.auth.signOut();
+                return showAppAlert('حساب کاربری شما هنوز توسط استاد درس تایید نگردیده است.', false);
             }
 
             await initDashboard();
@@ -678,7 +683,7 @@
         }
     }
 
-    // ایجاد پروژه اصلی بدون خطای RLS و همراه با آپلود باینری مطمئن
+    // ایجاد قرارداد اصلی
     window.createMasterProject = async function() {
         var sb = getSupabaseClient();
         var title = document.getElementById('rfp-title').value.trim();
@@ -736,6 +741,46 @@
         }
     };
 
+    // ویرایش قرارداد اصلی توسط استاد
+    window.editMasterProject = async function(projectId, oldTitle, oldType, oldCoins, oldSpecs) {
+        var newTitle = prompt('عنوان جدید پروژه:', oldTitle);
+        if (!newTitle) return;
+        var newType = prompt('نوع/رده هواپیما:', oldType);
+        if (!newType) return;
+        var newCoins = prompt('بودجه اسمی (سکه):', oldCoins);
+        if (!newCoins) return;
+        var newSpecs = prompt('ویژگی‌ها و نیازمندی‌ها:', oldSpecs);
+        if (!newSpecs) return;
+
+        var sb = getSupabaseClient();
+        var res = await sb.from('master_projects').update({
+            title: newTitle,
+            aircraft_type: newType,
+            allocated_coins: parseFloat(newCoins),
+            specifications: newSpecs
+        }).eq('id', projectId);
+
+        if (res.error) showAppAlert('خطا در ویرایش پروژه: ' + res.error.message, false);
+        else {
+            showAppAlert('مشخصات قرارداد اصلی با موفقیت ویرایش شد.', true);
+            await loadMasterProjects();
+        }
+    };
+
+    // حذف قرارداد اصلی توسط استاد
+    window.deleteMasterProject = async function(projectId) {
+        if (!confirm('استاد گرامی، آیا از حذف این قرارداد اصلی و لغو مناقصه آن اطمینان دارید؟')) return;
+        var sb = getSupabaseClient();
+        await sb.from('project_bids').delete().eq('project_id', projectId);
+        var res = await sb.from('master_projects').delete().eq('id', projectId);
+        if (res.error) showAppAlert('خطا در حذف پروژه: ' + res.error.message, false);
+        else {
+            showAppAlert('قرارداد اصلی با موفقیت از سامانه حذف شد.', true);
+            await loadMasterProjects();
+        }
+    };
+
+    // بارگذاری کارت‌های طلایی پروژه‌های اصلی با دکمه‌های ویرایش/حذف استاد
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -763,13 +808,19 @@
                         '</div>';
                 }
             } else if (userProfile.role === 'professor') {
-                bidArea = '<div class="mt-3 pt-2 border-t border-amber-200">' +
+                var escapedSpecs = (p.specifications || '').replace(/'/g, "\\'");
+                var escapedTitle = (p.title || '').replace(/'/g, "\\'");
+                var escapedType = (p.aircraft_type || '').replace(/'/g, "\\'");
+                bidArea = '<div class="mt-3 pt-2 border-t border-amber-200 space-y-1.5">' +
                     '<button onclick="viewBidsForMasterProject(\'' + p.id + '\', ' + p.allocated_coins + ')" class="w-full bg-[#0f284e] text-amber-300 font-bold py-1.5 rounded-lg text-xs">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
+                    '<div class="flex gap-2">' +
+                    '<button onclick="editMasterProject(\'' + p.id + '\', \'' + escapedTitle + '\', \'' + escapedType + '\', ' + p.allocated_coins + ', \'' + escapedSpecs + '\')" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-1 rounded-lg text-xs">✏️ ویرایش</button>' +
+                    '<button onclick="deleteMasterProject(\'' + p.id + '\')" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-1 rounded-lg text-xs">🗑️ حذف</button>' +
+                    '</div>' +
                     '</div>';
             }
 
             var rfpDownloadLink = p.rfp_file_url ? '<a href="' + p.rfp_file_url + '" target="_blank" class="text-xs text-blue-700 font-bold underline block mt-1">📥 دانلود سند RFP پروژه</a>' : '<span class="text-[11px] text-slate-400 block mt-1">سند فایلی ضمیمه نشده است</span>';
-
             var awardedTeamInfo = p.awarded_team_id && p.teams ? '<span class="bg-emerald-100 text-emerald-800 text-[11px] px-2.5 py-1 rounded-full font-black border border-emerald-300">منعقد شده با تیم ' + p.teams.name + '</span>' : '<span class="bg-amber-100 text-amber-900 text-[11px] px-2.5 py-1 rounded-full font-black border border-amber-300">در حال مناقصه</span>';
 
             cont.innerHTML += 
@@ -1179,18 +1230,21 @@
         var res = await sb.from('profiles').select('*').eq('is_approved', true).neq('role', 'professor');
         var div = document.getElementById('prof-freelancers-list');
         div.innerHTML = '';
-        if (res.data) {
-            res.data.forEach(function(m) {
-                var roleTitle = m.role === 'leader' ? 'سرگروه' : 'دانشجو';
-                div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
-                    '<div class="flex flex-col">' +
-                        '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
-                        '<span class="text-[10px] text-slate-500">شماره: ' + m.student_id + '</span>' +
-                    '</div>' +
-                    '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs">🗑️ حذف کاربر</button>' +
-                    '</div>';
-        });
+        if (!res.data || res.data.length === 0) {
+            div.innerHTML = '<span class="text-slate-400">کاربر فعالی در سامانه ثبت نشده است.</span>';
+            return;
         }
+
+        res.data.forEach(function(m) {
+            var roleTitle = m.role === 'leader' ? 'سرگروه' : 'دانشجو';
+            div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
+                '<div class="flex flex-col">' +
+                    '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
+                    '<span class="text-[10px] text-slate-500">شماره: ' + m.student_id + '</span>' +
+                '</div>' +
+                '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs">🗑️ حذف کاربر</button>' +
+                '</div>';
+        });
     }
 
     window.deleteUserByProfessor = async function(userId, name) {
@@ -1253,12 +1307,20 @@
         }
     };
 
+    // بررسی صحت نشست کاربری در ابتدای لود و خروج خودکار کاربران حذف‌شده
     window.addEventListener('load', function() {
         var sb = getSupabaseClient();
         if (sb) {
-            sb.auth.getSession().then(function(res) {
+            sb.auth.getSession().then(async function(res) {
                 if (res.data && res.data.session) {
                     currentUser = res.data.session.user;
+                    var chk = await sb.from('profiles').select('id, is_approved').eq('id', currentUser.id).maybeSingle();
+                    if (!chk.data || !chk.data.is_approved) {
+                        await sb.auth.signOut();
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        return;
+                    }
                     initDashboard();
                 }
             });
