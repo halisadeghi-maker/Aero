@@ -678,6 +678,7 @@
         }
     }
 
+    // ایجاد پروژه اصلی بدون خطای RLS و همراه با آپلود باینری مطمئن
     window.createMasterProject = async function() {
         var sb = getSupabaseClient();
         var title = document.getElementById('rfp-title').value.trim();
@@ -687,15 +688,27 @@
         var deadline = document.getElementById('rfp-deadline').value;
         var fileInput = document.getElementById('rfp-file');
 
-        if (!title || !type || !coins || !deadline) return showAppAlert('لطفاً تمامی فیلدهای قرارداد اصلی را تکمیل نمایید.', false);
+        if (!title || !type || !coins || !deadline) {
+            return showAppAlert('لطفاً تمامی فیلدهای قرارداد اصلی را تکمیل نمایید.', false);
+        }
 
         var fileUrl = null;
         if (fileInput.files && fileInput.files.length > 0) {
             var file = fileInput.files[0];
-            var fName = 'rfp_' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '');
-            var upRes = await sb.storage.from('rfp_files').upload(fName, file);
-            if (!upRes.error) {
-                fileUrl = sb.storage.from('rfp_files').getPublicUrl(fName).data.publicUrl;
+            var cleanExt = file.name.split('.').pop() || 'pdf';
+            var fName = 'rfp_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6) + '.' + cleanExt;
+            
+            try {
+                var arrayBuffer = await file.arrayBuffer();
+                var upRes = await sb.storage.from('rfp_files').upload(fName, arrayBuffer, {
+                    contentType: file.type || 'application/octet-stream',
+                    upsert: true
+                });
+                if (!upRes.error) {
+                    fileUrl = sb.storage.from('rfp_files').getPublicUrl(fName).data.publicUrl;
+                }
+            } catch (e) {
+                console.error("RFP Upload Error:", e);
             }
         }
 
@@ -709,9 +722,16 @@
             status: 'open'
         }]);
 
-        if (res.error) showAppAlert(res.error.message, false);
-        else {
+        if (res.error) {
+            showAppAlert('خطا در ثبت پروژه اصلی: ' + res.error.message, false);
+        } else {
             showAppAlert('مناقصه پروژه اصلی با کارت طلایی با موفقیت در سامانه منتشر شد.', true);
+            document.getElementById('rfp-title').value = '';
+            document.getElementById('rfp-type').value = '';
+            document.getElementById('rfp-specs').value = '';
+            document.getElementById('rfp-coins').value = '';
+            document.getElementById('rfp-deadline').value = '';
+            document.getElementById('rfp-file').value = '';
             await loadMasterProjects();
         }
     };
@@ -812,7 +832,6 @@
         await loadMasterProjects();
     };
 
-    // ۱. بررسی و تایید یا رد افراد ثبت‌نام کرده در پنل استاد
     async function loadPendingUsers() {
         var sb = getSupabaseClient();
         var res = await sb.from('profiles').select('*').eq('is_approved', false);
@@ -837,7 +856,6 @@
         });
     }
 
-    // ۱. تابع قطعی تایید یا رد ثبت‌نام در پنل استاد
     window.approveUser = async function(userId, isApproved, userName) {
         var sb = getSupabaseClient();
         if (isApproved) {
@@ -849,7 +867,6 @@
             }
         } else {
             if (!confirm('آیا از رد ثبت‌نام و حذف درخواست کاربر «' + userName + '» اطمینان دارید؟')) return;
-            // پاکسازی وابستگی‌ها و حذف پروفایل
             await sb.from('contracts').delete().eq('contractor_id', userId);
             await sb.from('task_comments').delete().eq('user_id', userId);
             var delRes = await sb.from('profiles').delete().eq('id', userId);
@@ -1157,35 +1174,29 @@
         }
     }
 
-    // ۲. بارگذاری اعضای فعال در پنل استاد به همراه امکان حذف کاربر
     async function loadProfessorSummary() {
         var sb = getSupabaseClient();
         var res = await sb.from('profiles').select('*').eq('is_approved', true).neq('role', 'professor');
         var div = document.getElementById('prof-freelancers-list');
         div.innerHTML = '';
-        if (!res.data || res.data.length === 0) {
-            div.innerHTML = '<span class="text-slate-400">کاربر فعالی در سامانه ثبت نشده است.</span>';
-            return;
-        }
-
-        res.data.forEach(function(m) {
-            var roleTitle = m.role === 'leader' ? 'سرگروه' : 'دانشجو';
-            div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
-                '<div class="flex flex-col">' +
-                    '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
-                    '<span class="text-[10px] text-slate-500">شماره: ' + m.student_id + '</span>' +
-                '</div>' +
-                '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs">🗑️ حذف کاربر</button>' +
-                '</div>';
+        if (res.data) {
+            res.data.forEach(function(m) {
+                var roleTitle = m.role === 'leader' ? 'سرگروه' : 'دانشجو';
+                div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
+                    '<div class="flex flex-col">' +
+                        '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
+                        '<span class="text-[10px] text-slate-500">شماره: ' + m.student_id + '</span>' +
+                    '</div>' +
+                    '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs">🗑️ حذف کاربر</button>' +
+                    '</div>';
         });
+        }
     }
 
-    // ۲. تابع قطعی حذف کاربر توسط استاد درس
     window.deleteUserByProfessor = async function(userId, name) {
         if (!confirm('استاد گرامی، آیا از حذف قطعی کاربر «' + name + '» از سامانه اطمینان دارید؟ کلیه قراردادها و تعهدات وابسته به این کاربر نیز پاکسازی خواهد شد.')) return;
         var sb = getSupabaseClient();
         
-        // پاکسازی رکوردهای وابسته
         await sb.from('contracts').delete().eq('contractor_id', userId);
         await sb.from('task_comments').delete().eq('user_id', userId);
         var res = await sb.from('profiles').delete().eq('id', userId);
