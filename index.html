@@ -1293,6 +1293,7 @@
             if (hasTaken) return showAppAlert('خطای قانونی: شما قبلاً تسک این شماره کتابچه را انجام داده‌اید.', false);
         }
 
+        // امضا توسط دانشجو و ثبت در وضعیت انتظار تایید کارفرما
         var res = await sb.from('contracts').insert([{
             task_id: currentAcceptTaskId,
             team_id: currentAcceptTeamId,
@@ -1303,8 +1304,9 @@
             status: 'pending_leader_signature'
         }]);
 
-        if (res.error) showAppAlert(res.error.message, false);
-        else {
+        if (res.error) {
+            showAppAlert(res.error.message, false);
+        } else {
             await sb.from('tasks').update({ status: 'pending_leader_signature' }).eq('id', currentAcceptTaskId);
             showAppAlert('قرارداد توسط شما امضا شد و جهت بررسی شرایط خاص و امضای کارفرما به سرگروه ارسال گردید.', true);
             closeAcceptModal();
@@ -1412,7 +1414,6 @@
         return colorPalettes[Math.abs(hash) % colorPalettes.length];
     }
 
-    // باز و بسته کردن کادر ویرایش درون‌کارت تسک
     window.toggleCardEdit = function(taskId) {
         var viewSec = document.getElementById('view-section-' + taskId);
         var editSec = document.getElementById('edit-section-' + taskId);
@@ -1422,7 +1423,6 @@
         }
     };
 
-    // ذخیره ویرایش درون‌کارت تسک توسط کارفرما
     window.saveCardEdit = async function(taskId) {
         var sb = getSupabaseClient();
         var newTitle = document.getElementById('edit-title-' + taskId).value.trim();
@@ -1443,13 +1443,11 @@
         }
     };
 
-    // باز و بسته کردن کادر ارسال کامنت و مذاکره قیمت
     window.toggleCommentBox = function(taskId) {
         var box = document.getElementById('comment-box-' + taskId);
         if (box) box.classList.toggle('hidden');
     };
 
-    // ارسال دیدگاه و پیشنهاد قیمت توسط کاربر
     window.submitTaskComment = async function(taskId) {
         var sb = getSupabaseClient();
         var msg = document.getElementById('comment-msg-' + taskId).value.trim();
@@ -1474,7 +1472,6 @@
         }
     };
 
-    // بارگذاری کارت‌های بازار تسک بر مبنای ساختار نسخه ۱.۱۲
     async function loadTasks() {
         var sb = getSupabaseClient();
         var res = await sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
@@ -1492,7 +1489,6 @@
             var bTitle = t.booklets ? t.booklets.title : 'کتابچه طراحی';
             var color = getTeamColor(t.team_id);
 
-            // دریافت کامنت‌ها و پیشنهادات مذاکره قیمت
             var { data: comments } = await sb.from('task_comments').select('*').eq('task_id', t.id).order('created_at', { ascending: true });
             var commentsListHtml = '';
             if (comments && comments.length > 0) {
@@ -1546,10 +1542,8 @@
                             '<span class="text-[10px] font-black px-2.5 py-1 rounded-full shadow-xs" style="' + color.badgeStyle + '">کتابچه ' + bNum + '</span>' +
                         '</div>' +
 
-                        '<!-- عنوان کتابچه -->' +
                         '<div class="text-[11px] font-bold text-slate-700 line-clamp-1">' + bTitle + '</div>' +
 
-                        '<!-- شرح تسک با پشتیبانی از ویرایش روی کارت -->' +
                         '<div id="view-section-' + t.id + '" class="p-3 bg-white/95 border border-slate-200/90 rounded-2xl text-xs font-medium text-slate-800 leading-relaxed min-h-[55px] shadow-xs">' +
                             t.title +
                         '</div>' +
@@ -1565,7 +1559,6 @@
                             '</div>' +
                         '</div>' +
 
-                        '<!-- نمایش ارزش همکاری همراه با آیکون سکه چندتایی متناظر با نسخه ۱.۱۲ -->' +
                         '<div class="flex items-center justify-between pt-2 border-t border-slate-200/80">' +
                             '<span class="text-[11px] text-slate-600 font-bold">ارزش همکاری:</span>' +
                             '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-700 text-sm">' +
@@ -1580,7 +1573,6 @@
                             '</div>' +
                         '</div>' +
 
-                        '<!-- بخش گفت‌وگو، کامنت‌ها و پیشنهاد قیمت بر مبنای نسخه ۱.۱۲ -->' +
                         '<div class="pt-2 border-t border-slate-200/80">' +
                             '<div class="flex justify-between items-center mb-1.5">' +
                                 '<span class="text-[10px] font-bold text-slate-700">💬 گفت‌وگو و پیشنهاد قیمت:</span>' +
@@ -1669,7 +1661,6 @@
             '</div>';
     }
 
-    // بارگذاری عناوین دقیق کتابچه‌ها متناظر با نسخه ۱.۱۲
     async function loadBooklets() {
         var sb = getSupabaseClient();
         var res = await sb.from('booklets').select('*').order('booklet_number');
