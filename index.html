@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۱)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -18,12 +18,12 @@
     <style>
         body {
             font-family: 'Vazirmatn', sans-serif;
-            background-color: #0f172a;
+            background-color: #f1f5f9;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
                 radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
                 radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.12) 0px, transparent 50%),
-                linear-gradient(rgba(248, 250, 252, 0.92), rgba(241, 245, 249, 0.94)),
+                linear-gradient(rgba(248, 250, 252, 0.94), rgba(241, 245, 249, 0.96)),
                 url('background.jpeg');
             background-repeat: no-repeat;
             background-position: center top;
@@ -31,12 +31,13 @@
             background-attachment: fixed;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.90);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.07);
         }
+        /* ۷. نوارهای بالای KPI به رنگ طلایی */
         .kpi-card {
             position: relative;
             overflow: hidden;
@@ -48,14 +49,14 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6);
+            height: 5px;
+            background: linear-gradient(90deg, #d97706, #fbbf24, #f59e0b, #b45309);
             border-radius: 999px 999px 0 0;
         }
         .kpi-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.15);
-            border-color: rgba(147, 197, 253, 0.8);
+            box-shadow: 0 20px 30px -10px rgba(217, 119, 6, 0.2);
+            border-color: rgba(252, 211, 77, 0.8);
         }
         .interactive-card {
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -70,137 +71,141 @@
             z-index: 99999 !important;
             border-radius: 1.25rem !important;
             box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.25) !important;
-            border: 1px solid rgba(226, 232, 240, 0.8) !important;
         }
     </style>
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <!-- نوار ناوبری اصلی (فقط داخل سامانه) -->
-    <nav id="main-header" class="hidden bg-white/80 backdrop-blur-xl border-b border-slate-200/80 px-6 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
+    <!-- نوار ناوبری اصلی -->
+    <nav id="main-header" class="hidden bg-white/85 backdrop-blur-xl border-b border-slate-200 px-6 py-2.5 flex justify-between items-center sticky top-0 z-40 shadow-sm">
         <div class="flex items-center space-x-3.5 space-x-reverse">
             <img src="kntu-logo.png" alt="لوگو دانشگاه خواجه نصیرالدین طوسی" class="w-14 h-14 object-contain drop-shadow-sm" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
             <div>
-                <h1 class="font-black text-base md:text-lg bg-gradient-to-r from-[#0f284e] via-[#1e3a8a] to-[#3b82f6] bg-clip-text text-transparent">بازار کار درس طراحی هواپیمای دکتر علیصادقی</h1>
-                <p class="text-xs text-amber-600 font-bold tracking-tight">دانشگاه صنعتی خواجه نصیرالدین طوسی</p>
+                <h1 class="font-black text-base md:text-lg bg-gradient-to-r from-[#0f284e] via-[#059669] to-[#0d9488] bg-clip-text text-transparent">بازار کار درس طراحی هواپیمای دکتر علیصادقی</h1>
+                <p class="text-xs text-amber-700 font-bold tracking-tight">دانشگاه صنعتی خواجه نصیرالدین طوسی</p>
             </div>
         </div>
         <div id="user-nav" class="flex items-center space-x-3 space-x-reverse">
             <button onclick="openChangePasswordModal()" type="button" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-xl border border-slate-300 font-bold transition shadow-2xs">🔑 تغییر رمز</button>
-            <span id="nav-user-info" class="text-xs md:text-sm bg-gradient-to-r from-indigo-50 to-sky-50 text-[#0f284e] px-4 py-1.5 rounded-full border border-indigo-200/60 font-bold shadow-2xs"></span>
-            <button id="logout-btn" type="button" class="text-xs md:text-sm text-rose-700 hover:text-white font-bold bg-rose-50 hover:bg-rose-600 px-3.5 py-1.5 rounded-xl border border-rose-200 hover:border-rose-600 transition shadow-2xs">خروج</button>
+            <span id="nav-user-info" class="text-xs md:text-sm bg-emerald-50 text-emerald-900 px-4 py-1.5 rounded-full border border-emerald-200 font-bold shadow-2xs"></span>
+            <button id="logout-btn" type="button" class="text-xs md:text-sm text-rose-700 hover:text-white font-bold bg-rose-50 hover:bg-rose-600 px-3.5 py-1.5 rounded-xl border border-rose-200 transition shadow-2xs">خروج</button>
         </div>
     </nav>
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- صفحه ورود بدون هدر با نورپردازی و کارت‌های گرادیانی مدرن -->
-        <section id="auth-section" class="max-w-5xl mx-auto my-auto py-8">
+        <!-- صفحه ورود با رنگ‌های شاداب و روشن (۹. سبزآبی، خردلی و طوسی) و ۸. درج نسخه سامانه در پایین صفحه -->
+        <section id="auth-section" class="max-w-5xl mx-auto my-auto py-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 
-                <!-- کارت ۱: کارت برندینگ خردلی و طلایی با نور پس‌زمینه عمیق -->
-                <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#ea580c] to-[#9a3412] border border-amber-300/80">
-                    <div class="absolute -top-24 -left-24 w-72 h-72 bg-white/30 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="absolute -bottom-24 -right-24 w-72 h-72 bg-yellow-300/30 rounded-full blur-3xl pointer-events-none"></div>
+                <!-- کارت ۱: کارت برندینگ خردلی-طلایی شاداب -->
+                <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#fbbf24] to-[#d97706] border-2 border-amber-200">
+                    <div class="absolute -top-20 -left-20 w-64 h-64 bg-white/30 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-yellow-200/30 rounded-full blur-3xl pointer-events-none"></div>
 
                     <div class="relative z-10 space-y-6">
                         <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse text-center sm:text-right">
-                            <div class="p-3 bg-white/95 rounded-3xl shadow-xl inline-block border-2 border-amber-200/80">
+                            <div class="p-3 bg-white/95 rounded-3xl shadow-xl inline-block border-2 border-amber-300">
                                 <img src="kntu-logo.png" alt="لوگو دانشگاه" class="w-32 h-32 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
                             </div>
                             <div class="pt-2">
-                                <span class="text-white text-sm font-black block drop-shadow-sm">دانشگاه صنعتی خواجه نصیرالدین طوسی</span>
-                                <span class="text-amber-100 text-xs font-bold block mt-1">دانشکده مهندسی هوافضا</span>
-                                <span class="inline-block mt-2 bg-black/25 text-amber-100 text-[11px] px-3 py-0.5 rounded-full font-bold border border-white/20 backdrop-blur-sm">سیستم مناقصات و بازار کار</span>
+                                <span class="text-slate-900 text-sm font-black block">دانشگاه صنعتی خواجه نصیرالدین طوسی</span>
+                                <span class="text-amber-950 text-xs font-bold block mt-1">دانشکده مهندسی هوافضا</span>
+                                <span class="inline-block mt-2 bg-white/40 text-amber-950 text-[11px] px-3.5 py-1 rounded-full font-black border border-amber-300 backdrop-blur-sm">سیستم مناقصات و بازار کار</span>
                             </div>
                         </div>
 
-                        <div class="pt-4 border-t border-white/20 space-y-2">
-                            <h2 class="text-xl md:text-2xl font-black text-white leading-snug drop-shadow-md">
+                        <div class="pt-4 border-t border-amber-300/60 space-y-2">
+                            <h2 class="text-xl md:text-2xl font-black text-slate-900 leading-snug">
                                 کلاس طراحی هواپیمای دکتر حامد علیصادقی
                             </h2>
-                            <p class="text-base md:text-lg font-black text-amber-100">
+                            <p class="text-base md:text-lg font-black text-amber-950">
                                 بازار کار پروژه درس طراحی هواپیما
                             </p>
                         </div>
 
-                        <p class="text-xs md:text-sm text-amber-50 leading-relaxed text-justify font-medium">
+                        <p class="text-xs md:text-sm text-slate-900 leading-relaxed text-justify font-medium bg-white/30 p-3 rounded-2xl border border-amber-300/40">
                             پلتفرم تعاملی مبادله بسته‌های کاری بر مبنای متدولوژی راسکم، قراردادهای هوشمند و شفاف میان کارفرما (سرگروه‌ها) و پیمانکاران طراحی (دانشجویان).
                         </p>
                     </div>
 
-                    <div class="relative z-10 pt-6 mt-6 border-t border-white/20 flex items-center justify-between text-xs text-white font-black">
+                    <div class="relative z-10 pt-6 mt-6 border-t border-amber-300/60 flex items-center justify-between text-xs text-slate-900 font-black">
                         <span>✈️ ۱۱ کتابچه تخصصی طراحی</span>
                         <span>🪙 تسویه بر مبنای ارزیابی نهایی</span>
                     </div>
                 </div>
 
-                <!-- کارت ۲: کارت ورود و ثبت نام یاقوتی-بادمجانی مدرن با هاله نور صورتی -->
-                <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl border border-pink-400/30 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#4c0519] via-[#831843] to-[#4a044e] text-white">
-                    <div class="absolute -top-24 -right-24 w-72 h-72 bg-pink-500/25 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
+                <!-- کارت ۲: کارت ثبت‌نام و ورود با تم سبزآبی و طوسی شاداب و روشن -->
+                <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-teal-300 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#0d9488] via-[#14b8a6] to-[#0f766e] text-white">
+                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-300/20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-200/20 rounded-full blur-3xl pointer-events-none"></div>
 
-                    <div class="relative z-10 flex border-b-2 border-pink-300/30 mb-6">
-                        <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm">ورود به سامانه</button>
-                        <button id="tab-signup" type="button" class="w-1/2 pb-3 font-bold text-pink-200/80 border-b-4 border-transparent cursor-pointer text-sm md:text-base">ثبت‌نام جدید</button>
+                    <div class="relative z-10 flex border-b-2 border-white/30 mb-6">
+                        <button id="tab-login" type="button" class="w-1/2 pb-3 font-black text-amber-200 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm">ورود به سامانه</button>
+                        <button id="tab-signup" type="button" class="w-1/2 pb-3 font-bold text-teal-100 border-b-4 border-transparent cursor-pointer text-sm md:text-base">ثبت‌نام جدید</button>
                     </div>
 
                     <div id="signup-extra-fields" style="display: none;" class="relative z-10 space-y-3.5 mb-4">
                         <div>
-                            <label class="block text-xs font-bold text-pink-100 mb-1">نام و نام خانوادگی</label>
-                            <input type="text" id="auth-name" class="w-full bg-pink-950/60 border border-pink-300/40 rounded-xl px-4 py-2 text-white placeholder-pink-200/40 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: علی رضایی">
+                            <label class="block text-xs font-bold text-teal-50 mb-1">نام و نام خانوادگی</label>
+                            <input type="text" id="auth-name" class="w-full bg-teal-950/40 border-2 border-teal-300/50 rounded-xl px-4 py-2 text-white placeholder-teal-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: علی رضایی">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-pink-100 mb-1">شماره دانشجویی / پرسنلی</label>
-                            <input type="text" id="auth-std-id" class="w-full bg-pink-950/60 border border-pink-300/40 rounded-xl px-4 py-2 text-white placeholder-pink-200/40 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: 9912345">
+                            <label class="block text-xs font-bold text-teal-50 mb-1">شماره دانشجویی / پرسنلی</label>
+                            <input type="text" id="auth-std-id" class="w-full bg-teal-950/40 border-2 border-teal-300/50 rounded-xl px-4 py-2 text-white placeholder-teal-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="مثال: 9912345">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-pink-100 mb-1">نقش در سامانه</label>
-                            <select id="auth-role" class="w-full bg-pink-950/90 border border-pink-300/40 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
-                                <option value="member" class="bg-pink-950 text-white">دانشجو (پیمانکار)</option>
-                                <option value="leader" class="bg-pink-950 text-white">سرگروه (کارفرما)</option>
-                                <option value="professor" class="bg-pink-950 text-white">استاد درس (نیازمند تایید استاد اول)</option>
+                            <label class="block text-xs font-bold text-teal-50 mb-1">نقش در سامانه</label>
+                            <select id="auth-role" class="w-full bg-teal-950/80 border-2 border-teal-300/50 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
+                                <option value="member" class="bg-teal-900 text-white">دانشجو (پیمانکار)</option>
+                                <option value="leader" class="bg-teal-900 text-white">سرگروه (کارفرما)</option>
+                                <option value="professor" class="bg-teal-900 text-white">استاد درس (نیازمند تایید استاد اول)</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="relative z-10 space-y-3.5">
                         <div>
-                            <label class="block text-xs font-bold text-pink-100 mb-1">ایمیل دانشگاهی / کاربری</label>
-                            <input type="email" id="auth-email" class="w-full bg-pink-950/60 border border-pink-300/40 rounded-xl px-4 py-2 text-white placeholder-pink-200/40 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="user@kntu.ac.ir">
+                            <label class="block text-xs font-bold text-teal-50 mb-1">ایمیل دانشگاهی / کاربری</label>
+                            <input type="email" id="auth-email" class="w-full bg-teal-950/40 border-2 border-teal-300/50 rounded-xl px-4 py-2 text-white placeholder-teal-200/60 focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm" placeholder="user@kntu.ac.ir">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-pink-100 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
-                            <input type="password" id="auth-password" class="w-full bg-pink-950/60 border border-pink-300/40 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
+                            <label class="block text-xs font-bold text-teal-50 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
+                            <input type="password" id="auth-password" class="w-full bg-teal-950/40 border-2 border-teal-300/50 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
                         </div>
 
                         <div id="terms-container" style="display: none;" class="flex items-center space-x-2 space-x-reverse pt-1 text-xs">
-                            <input type="checkbox" id="terms-checkbox" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-pink-950 border-pink-300 cursor-pointer">
-                            <label for="terms-checkbox" class="text-pink-100 cursor-pointer">
-                                <a href="javascript:void(0)" onclick="openTermsModal()" class="text-amber-300 underline font-bold hover:text-amber-200">قوانین و مقررات</a> سامانه را مطالعه کرده و آن را می‌پذیرم.
+                            <input type="checkbox" id="terms-checkbox" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-teal-950 border-teal-300 cursor-pointer">
+                            <label for="terms-checkbox" class="text-teal-50 cursor-pointer">
+                                <a href="javascript:void(0)" onclick="openTermsModal()" class="text-amber-200 underline font-bold hover:text-amber-100">قوانین و مقررات</a> سامانه را مطالعه کرده و آن را می‌پذیرم.
                             </label>
                         </div>
                         
-                        <button id="auth-submit-btn" type="button" class="w-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black py-3 rounded-xl transition duration-200 shadow-xl shadow-pink-950/50 cursor-pointer text-sm md:text-base mt-2">ورود به سامانه</button>
+                        <button id="auth-submit-btn" type="button" class="w-full bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-slate-950 font-black py-3 rounded-xl transition duration-200 shadow-xl shadow-teal-950/40 cursor-pointer text-sm md:text-base mt-2">ورود به سامانه</button>
                     </div>
 
                     <div id="auth-error" class="relative z-10 text-rose-100 text-xs mt-3 text-center hidden bg-rose-950/90 p-2.5 rounded-xl border border-rose-300 font-bold"></div>
                 </div>
 
             </div>
+
+            <!-- ۸. درج نسخه سامانه در پایین صفحه ورودی -->
+            <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
+                نسخه سامانه: <span class="text-teal-700 font-black">2.1</span>
+            </div>
         </section>
 
         <!-- داشبورد اصلی پس از احراز هویت -->
         <div id="dashboard-section" class="hidden space-y-6">
 
-            <!-- کارت‌های KPI پویا -->
+            <!-- کارت‌های KPI با نوارهای طلایی -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
                     <div>
                         <span class="text-slate-500 text-xs font-bold">نقش شما در سامانه</span>
                         <h3 id="stat-role" class="text-base font-black text-[#0f284e] mt-1">-</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-indigo-500/20 text-indigo-600 border border-indigo-200/60 flex items-center justify-center font-black text-xl shadow-inner">👤</div>
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center font-black text-xl shadow-inner">👤</div>
                 </div>
 
                 <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
@@ -208,7 +213,7 @@
                         <span class="text-slate-500 text-xs font-bold">تیم طراحی هواپیما</span>
                         <h3 id="stat-team" class="text-base font-black text-[#0f284e] mt-1">-</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-500/10 to-sky-500/20 text-sky-600 border border-sky-200/60 flex items-center justify-center font-black text-xl shadow-inner">🛡️</div>
+                    <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 border border-sky-200 flex items-center justify-center font-black text-xl shadow-inner">🛡️</div>
                 </div>
 
                 <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
@@ -218,7 +223,7 @@
                             <h3 id="stat-contracts" class="text-lg font-black text-[#0f284e]">۰</h3>
                         </div>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/20 text-emerald-600 border border-emerald-200/60 flex items-center justify-center font-black text-xl shadow-inner">📝</div>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center font-black text-xl shadow-inner">📝</div>
                 </div>
 
                 <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
@@ -226,18 +231,18 @@
                         <span class="text-slate-500 text-xs font-bold">سکه تسویه‌شده</span>
                         <h3 id="stat-coins" class="text-lg font-black text-amber-600 mt-1">۰ سکه</h3>
                     </div>
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/20 text-amber-600 border border-amber-200/60 flex items-center justify-center font-black text-xl shadow-inner">🪙</div>
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center font-black text-xl shadow-inner">🪙</div>
                 </div>
             </div>
 
-            <!-- بخش کارت‌های ویژه طلایی: مناقصات پروژه‌های اصلی استاد -->
+            <!-- مناقصات پروژه‌های اصلی استاد -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border border-amber-300/70 bg-gradient-to-r from-amber-50/60 via-white/80 to-amber-50/40 space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-2 border-b border-amber-200/70">
                     <div>
                         <h3 class="text-base font-black text-amber-900 flex items-center gap-2">
                             <span>🏆</span> مناقصات پروژه‌های اصلی استاد (کارفرمای عالی) و سرگروه‌ها
                         </h3>
-                        <p class="text-xs text-amber-700 font-medium">قراردادهای امضا شده برای عموم کمرنگ، و فقط برای سرگروه برنده به شکل پررنگ با برچسب گروه نمایش داده می‌شوند.</p>
+                        <p class="text-xs text-amber-700 font-medium">قراردادهای امضا شده برای عموم کمرنگ و برای سرگروه برنده به شکل پررنگ با برچسب گروه نمایش داده می‌شوند.</p>
                     </div>
                     <span class="text-xs bg-gradient-to-r from-amber-500 to-amber-600 text-white px-3.5 py-1 rounded-full font-bold shadow-xs">مناقصه هوشمند کلاسی</span>
                 </div>
@@ -247,7 +252,7 @@
                 </div>
             </section>
 
-            <!-- ۲. نمودار دوناتی پایش بودجه سرگروه -->
+            <!-- نمودار دوناتی پایش بودجه سرگروه -->
             <section id="leader-budget-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="space-y-2 text-right">
@@ -260,7 +265,7 @@
                         <div class="flex flex-wrap gap-4 pt-3 text-xs font-bold">
                             <span class="flex items-center gap-2 bg-indigo-50/80 px-3 py-1.5 rounded-xl border border-indigo-100">
                                 <span class="w-3.5 h-3.5 rounded-full bg-[#0f284e]"></span>
-                                بودجه تخصیص‌یافته کل: <span id="donut-total-text" class="text-[#0f284e] font-black">۰</span> سکه
+                                بودجه کل: <span id="donut-total-text" class="text-[#0f284e] font-black">۰</span> سکه
                             </span>
                             <span class="flex items-center gap-2 bg-rose-50/80 px-3 py-1.5 rounded-xl border border-rose-100">
                                 <span class="w-3.5 h-3.5 rounded-full bg-rose-500"></span>
@@ -268,7 +273,7 @@
                             </span>
                             <span class="flex items-center gap-2 bg-emerald-50/80 px-3 py-1.5 rounded-xl border border-emerald-100">
                                 <span class="w-3.5 h-3.5 rounded-full bg-emerald-500"></span>
-                                ظرفیت باقیمانده آزاد: <span id="donut-remain-text" class="text-emerald-700 font-black">۰</span> سکه
+                                ظرفیت آزاد: <span id="donut-remain-text" class="text-emerald-700 font-black">۰</span> سکه
                             </span>
                         </div>
                     </div>
@@ -286,7 +291,7 @@
                 </div>
             </section>
 
-            <!-- ۵. کیف سکه دانشجو (پیمانکار) با سقف ۲۵۰ و کف ۱۵۰ سکه -->
+            <!-- کیف سکه دانشجو (پیمانکار) -->
             <section id="member-tank-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
@@ -303,39 +308,27 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                     <div class="bg-gradient-to-br from-blue-50/60 to-indigo-50/60 border border-blue-200/80 rounded-2xl p-4 space-y-2">
                         <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-slate-700">سکه‌های قراردادهای متعهدشده (تعهد جاری):</span>
+                            <span class="font-bold text-slate-700">سکه‌های قراردادهای متعهدشده:</span>
                             <span id="wallet-committed-text" class="font-black text-blue-700 text-sm">۰ سکه</span>
                         </div>
                         <div class="w-full bg-slate-200 rounded-full h-3.5 overflow-hidden shadow-inner">
                             <div id="wallet-committed-bar" class="bg-gradient-to-r from-blue-500 to-indigo-600 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
                         </div>
-                        <div class="flex justify-between text-[10px] text-slate-400 font-bold">
-                            <span>۰</span>
-                            <span>کف: ۱۵۰</span>
-                            <span>هدف: ۲۰۰</span>
-                            <span>سقف: ۲۵۰</span>
-                        </div>
                     </div>
 
                     <div class="bg-gradient-to-br from-amber-50/60 to-emerald-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-2">
                         <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-amber-900">سکه‌های تسویه‌شده و تایید نهایی استاد:</span>
+                            <span class="font-bold text-amber-900">سکه‌های تسویه‌شده و تایید نهایی:</span>
                             <span id="wallet-final-text" class="font-black text-amber-600 text-sm">۰ سکه</span>
                         </div>
                         <div class="w-full bg-amber-100 rounded-full h-3.5 overflow-hidden shadow-inner">
                             <div id="wallet-final-bar" class="bg-gradient-to-r from-amber-400 via-amber-500 to-emerald-500 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
                         </div>
-                        <div class="flex justify-between text-[10px] text-amber-800/60 font-bold">
-                            <span>۰</span>
-                            <span>کف: ۱۵۰</span>
-                            <span>هدف: ۲۰۰</span>
-                            <span>سقف: ۲۵۰</span>
-                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- پنل ویژه مدیریت استاد -->
+            <!-- پنل ویژه مدیریت استاد (نمایش KPI تعداد فسخ‌های یک‌طرفه و توافقی به عنوان اثر منفی) -->
             <section id="professor-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-6 border border-indigo-200">
                 <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
                     <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
@@ -378,6 +371,14 @@
                     </div>
                 </div>
 
+                <!-- ۶. گزارش KPI اثر منفی فسخ‌های یک‌طرفه و توافقی برای افراد و سرگروه‌ها -->
+                <div class="border border-rose-200 rounded-2xl p-4 bg-gradient-to-br from-rose-50/50 to-amber-50/40 shadow-sm space-y-3">
+                    <h5 class="text-xs font-black text-rose-900 flex items-center gap-2">
+                        <span>⚠️</span> گزارش KPI اثر منفی (تعداد فسخ‌های یک‌طرفه و توافقی کاربران و تیم‌ها)
+                    </h5>
+                    <div id="professor-kpi-terminations" class="text-xs space-y-1 text-slate-700">در حال بارگذاری آمار تخلفات و فسخ‌ها...</div>
+                </div>
+
                 <!-- تایید یا رد کاربران جدید و مدیریت حذف اعضا -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div class="border border-slate-200 rounded-2xl p-4 bg-white shadow-sm">
@@ -391,7 +392,7 @@
                 </div>
             </section>
 
-            <!-- ۱ و ۲. پنل سرگروه با سقف بودجه مصوب قرارداد اصلی -->
+            <!-- پنل سرگروه -->
             <section id="leader-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-4 border-slate-200">
                 <div id="create-team-box" class="pb-4 border-b border-slate-200 hidden">
                     <h3 class="text-sm font-bold text-amber-800 mb-2">ثبت نام تیم طراحی هواپیما</h3>
@@ -424,26 +425,26 @@
                 </div>
             </section>
 
-            <!-- ۶ و ۷. بازار تسک‌های باز با پالت‌های گرادیانی متمایز و مدرن برای هر سرگروه -->
+            <!-- بازار تسک‌های باز با پالت‌های گرادیانی منسجم برای هر گروه -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500 ml-2 animate-pulse"></span>
                         📋 بازار تسک‌های باز و نیازمند پیمانکار
                     </h3>
-                    <span class="text-xs text-slate-500 font-medium">کارت‌های هر سرگروه دارای رنگ‌بندی گرادیانی مدرن و متمایز است</span>
+                    <span class="text-xs text-slate-500 font-medium">تسک‌های هر گروه دارای رنگ‌بندی گرادیانی کاملاً یکتا و متمایز هستند</span>
                 </div>
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="col-span-full py-8 text-center text-slate-400 text-xs font-medium">در حال بارگذاری تسک‌ها...</div>
                 </div>
             </section>
 
-            <!-- ۳ و ۴ و ۵. قراردادهای هوشمند، وضعیت‌های فارسی و فرآیند دقیق فسخ توافقی و یک‌طرفه -->
+            <!-- قراردادهای هوشمند -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
-                        📜 قراردادهای هوشمند، وضعیت فارسی و چرخه فسخ توافقی / یک‌طرفه
+                        📜 قراردادهای هوشمند و چرخه هوشمند فسخ
                     </h3>
                     <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">مشاهده وضعیت قراردادها</span>
                 </div>
@@ -489,6 +490,21 @@
             <div class="flex gap-2">
                 <button onclick="submitChangePassword()" type="button" class="w-1/2 bg-[#0f284e] text-amber-300 font-bold py-2 rounded-xl text-xs">ثبت تغییر</button>
                 <button onclick="closePasswordModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ۵. مدال جذاب اخطار و هشدار تکراری بودن کتابچه هنگام تعریف تسک -->
+    <div id="duplicate-booklet-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+            <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">⚠️</div>
+            <div>
+                <h4 class="text-base font-black text-[#0f284e]">اخطار تکرار کتابچه</h4>
+                <p id="duplicate-modal-text" class="text-xs text-slate-700 font-bold mt-2 leading-relaxed whitespace-pre-line"></p>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="duplicate-yes-btn" type="button" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">بله، اطمینان دارم</button>
+                <button onclick="closeDuplicateModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
@@ -565,7 +581,7 @@
         </div>
     </div>
 
-    <!-- ۴. مدال ثبت ادله فسخ یک‌طرفه (فقط برای سرگروه و دانشجو فعال است) -->
+    <!-- مدال ثبت ادله فسخ یک‌طرفه -->
     <div id="dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
             <h4 class="text-sm font-black text-rose-800">⚖️ ثبت ادله فسخ یک‌طرفه جهت ارجاع به استاد درس</h4>
@@ -730,7 +746,7 @@
     document.getElementById('tab-login').onclick = function() {
         currentMode = 'login';
         document.getElementById('tab-login').className = "w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm";
-        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-pink-200/80 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
+        document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-teal-100 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
         document.getElementById('signup-extra-fields').style.display = 'none';
         document.getElementById('terms-container').style.display = 'none';
         document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
@@ -740,7 +756,7 @@
     document.getElementById('tab-signup').onclick = function() {
         currentMode = 'signup';
         document.getElementById('tab-signup').className = "w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm";
-        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-pink-200/80 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
+        document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-teal-100 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
         document.getElementById('signup-extra-fields').style.display = 'block';
         document.getElementById('terms-container').style.display = 'flex';
         document.getElementById('auth-submit-btn').innerText = "ایجاد حساب کاربری";
@@ -842,6 +858,7 @@
             if (userProfile.role === 'professor') {
                 document.getElementById('professor-panel').classList.remove('hidden');
                 document.getElementById('stat-team').innerText = "ناظر عالی (استاد)";
+                await loadProfessorTerminationsKPI();
                 await loadPendingUsers();
                 await loadProfessorSummary();
             } else if (userProfile.role === 'leader') {
@@ -986,7 +1003,7 @@
         }
     };
 
-    // ۱ و ۳. بارگذاری هوشمند کارت‌های قرارداد اصلی (تخصیص بودجه و نمایش پررنگ برای برنده و کمرنگ برای سایرین)
+    // بارگذاری هوشمند کارت‌های قرارداد اصلی (۳. نمایش کمرنگ برای عموم و پررنگ برای تیم سرگروه برنده)
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -1025,16 +1042,13 @@
             var isAwardedToMyTeam = (currentTeam && p.awarded_team_id === currentTeam.id);
             var isAwardedToOtherTeam = (p.status === 'awarded' && !isAwardedToMyTeam);
 
-            // ۳ و ۷. گرادیان‌های مدرن، عمق بصری و نمایش پررنگ/کمرنگ
             var cardBgClass = "border border-amber-300/80 bg-gradient-to-br from-amber-50/90 via-amber-100/50 to-orange-50/80 text-slate-900 shadow-sm";
             var cardOpacity = "opacity-100";
 
             if (isAwardedToMyTeam) {
-                // ۳. کارت قرارداد اختصاصی سرگروه به شکل پررنگ با حاشیه طلایی-یاقوتی درخشان
                 cardBgClass = "border-2 border-amber-500 bg-gradient-to-br from-amber-100 via-amber-200 to-yellow-300 text-slate-950 shadow-xl";
                 cardOpacity = "opacity-100";
             } else if (isAwardedToOtherTeam) {
-                // ۳. قراردادهای امضاشده توسط سایر تیم‌ها به صورت کمرنگ فقط برای دیدن
                 cardBgClass = "border border-slate-200 bg-slate-100/60 text-slate-500";
                 cardOpacity = "opacity-50 hover:opacity-80 transition-opacity";
             } else if (userProfile.role === 'leader' && hasSubmittedBid) {
@@ -1043,7 +1057,7 @@
 
             if (userProfile.role === 'leader') {
                 if (isAwardedToMyTeam) {
-                    bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/30 text-center py-2 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال تیم شما (بودجه تخصیصی: ' + p.allocated_coins + ' سکه)</div>';
+                    bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/30 text-center py-2 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال تیم شما (بودجه: ' + p.allocated_coins + ' سکه)</div>';
                 } else if (p.status === 'awarded') {
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">منعقد شده با تیم ' + (p.teams ? p.teams.name : '') + '</div>';
                 } else if (hasSubmittedBid) {
@@ -1070,10 +1084,9 @@
 
             var rfpDownloadLink = p.rfp_file_url ? '<a href="' + p.rfp_file_url + '" target="_blank" class="text-xs text-blue-700 font-bold underline block mt-1">📥 دانلود سند RFP پروژه</a>' : '<span class="text-[11px] text-slate-400 block mt-1">سند فایلی ضمیمه نشده است</span>';
             
-            // ۱ و ۳. برچسب تخصیص قرارداد به همراه مبلغ تایید شده
             var awardedTeamInfo = '';
             if (p.awarded_team_id && p.teams) {
-                awardedTeamInfo = '<span class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-xs">✓ تخصیص‌یافته به: ' + p.teams.name + '</span>';
+                awardedTeamInfo = '<span class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-xs">تخصیص‌یافته به: ' + p.teams.name + '</span>';
             } else if (userProfile.role === 'leader' && hasSubmittedBid) {
                 awardedTeamInfo = '<span class="bg-slate-600 text-white text-[11px] px-2.5 py-0.5 rounded-full font-bold">پیشنهاد شما ارسال شد</span>';
             } else {
@@ -1094,7 +1107,7 @@
                             '<p class="text-xs text-slate-600 leading-relaxed bg-white/70 p-2.5 rounded-xl border border-slate-200/80">' + p.specifications + '</p>' +
                             rfpDownloadLink +
                             '<div class="pt-2 flex justify-between items-center text-xs font-bold">' +
-                                '<span>مبلغ قرارداد تاییدشده / اولیه: <span class="text-amber-800 font-black text-sm">' + p.allocated_coins + ' سکه</span></span>' +
+                                '<span>مبلغ قرارداد: <span class="text-amber-800 font-black text-sm">' + p.allocated_coins + ' سکه</span></span>' +
                                 timeRemainingText +
                             '</div>' +
                         '</div>' +
@@ -1234,7 +1247,6 @@
         currentReviewProjectId = null;
     };
 
-    // ۱. با تایید مناقصه توسط استاد، مبلغ مناقصه تایید شده به عنوان بودجه سرگروه تخصیص می‌یابد و مبلغ کارت اصلاح می‌گردد
     document.getElementById('prof-award-bid-btn').onclick = async function() {
         var selectedRadio = document.querySelector('input[name="selected_team_bid"]:checked');
         if (!selectedRadio || !currentReviewProjectId) {
@@ -1247,14 +1259,12 @@
 
         var sb = getSupabaseClient();
         
-        // ۱. ذخیره مبلغ قرارداد به مقدار تایید شده در پروژه اصلی
         var res = await sb.from('master_projects').update({
             awarded_team_id: teamId,
             allocated_coins: agreedCoins,
             status: 'awarded'
         }).eq('id', currentReviewProjectId);
 
-        // ۱. تخصیص مستقیم به بودجه تیم
         await sb.from('teams').update({
             budget: agreedCoins
         }).eq('id', teamId);
@@ -1346,7 +1356,6 @@
 
         var sb = getSupabaseClient();
 
-        // ۵. بررسی سقف مجاز ۲۵۰ سکه برای هر دانشجو
         var cRes = await sb.from('contracts').select('agreed_base_coins, status').eq('contractor_id', currentUser.id);
         var currentTotalCoins = 0;
         if (cRes.data) {
@@ -1417,15 +1426,12 @@
         await loadTasks();
     };
 
-    // ۳. فرآیند فسخ توافقی: هر دو طرف باید تایید کنند، سپس دکمه تایید برای استاد فعال می‌شود
+    // ۳. رای فسخ توافقی: هر دو طرف باید بزنند تا به درخواست فسخ توافقی تبدیل شود
     window.voteMutualTermination = async function(contractId, role) {
         var sb = getSupabaseClient();
         var updatePayload = {};
-        if (role === 'leader') {
-            updatePayload.leader_termination_agreed = true;
-        } else if (role === 'member') {
-            updatePayload.contractor_termination_agreed = true;
-        }
+        if (role === 'leader') updatePayload.leader_termination_agreed = true;
+        else if (role === 'member') updatePayload.contractor_termination_agreed = true;
 
         var { data: cData } = await sb.from('contracts').select('*').eq('id', contractId).single();
         if (!cData) return;
@@ -1435,30 +1441,31 @@
 
         if (leaderAgreed && memberAgreed) {
             updatePayload.termination_status = 'mutual_requested';
+            updatePayload.termination_type = 'mutual';
         }
 
         await sb.from('contracts').update(updatePayload).eq('id', contractId);
 
         if (leaderAgreed && memberAgreed) {
-            showAppAlert('هر دو طرف با فسخ توافقی موافقت کردند. درخواست به کارتابل استاد جهت تایید نهایی ارسال گردید.', true);
+            showAppAlert('هر دو طرف با فسخ توافقی موافقت کردند. وضعیت به «درخواست فسخ توافقی» تغییر یافت و جهت تایید نهایی به استاد ارسال شد.', true);
         } else {
-            showAppAlert('موافقت شما با فسخ توافقی ثبت شد. در انتظار تایید طرف مقابل برای ارسال به استاد است.', true);
+            showAppAlert('موافقت شما با فسخ توافقی ثبت شد. در انتظار تایید طرف مقابل است.', true);
         }
         await loadContracts();
     };
 
     // ۳. تایید نهایی فسخ توافقی توسط استاد
     window.confirmMutualTerminationByProfessor = async function(contractId, taskId) {
-        if (!confirm('استاد گرامی، آیا با فسخ توافقی این قرارداد (مورد تایید طرفین) موافقت می‌فرمایید؟')) return;
+        if (!confirm('استاد گرامی، آیا با تایید نهایی فسخ توافقی این قرارداد موافقت می‌فرمایید؟')) return;
         var sb = getSupabaseClient();
         await sb.from('contracts').update({ status: 'terminated', termination_status: 'mutual_terminated' }).eq('id', contractId);
         await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
-        showAppAlert('فسخ توافقی توسط استاد تایید گردید و قرارداد فسخ شد.', true, 'سامانه');
+        showAppAlert('فسخ توافقی توسط استاد تایید گردید و قرارداد به طور کامل فسخ شد.', true, 'سامانه');
         await loadContracts();
         await loadTasks();
     };
 
-    // ۴. ثبت ادله فسخ یک‌طرفه (فقط برای سرگروه و دانشجو فعال است)
+    // ۱ و ۲ و ۴. ثبت درخواست فسخ یک‌طرفه با ارسال ادله و بازگشت به جاری در صورت رد استاد
     var currentDisputeContractId = null;
     var currentDisputeTaskId = null;
     window.openDisputeModal = function(contractId, taskId) {
@@ -1475,70 +1482,87 @@
         var sb = getSupabaseClient();
         await sb.from('contracts').update({
             termination_status: 'dispute_requested',
+            termination_type: 'one_sided',
             termination_reason: reason,
             termination_requester_id: currentUser.id
         }).eq('id', currentDisputeContractId);
 
-        showAppAlert('درخواست فسخ یک‌طرفه و ادله شما جهت بررسی به کارتابل استاد ارسال گردید.', true);
+        showAppAlert('درخواست فسخ یک‌طرفه و ادله شما برای بررسی و داوری به کارتابل استاد ارسال گردید.', true);
         closeDisputeModal();
         await loadContracts();
     };
 
-    // ۴. تایید فسخ یک‌طرفه در پنجره قراردادهای استاد
-    window.confirmDisputeTerminationByProfessor = async function(contractId, taskId) {
-        if (!confirm('استاد گرامی، آیا پس از بررسی ادله، با فسخ یک‌طرفه این قرارداد موافقت می‌فرمایید؟')) return;
+    // ۲. تایید فسخ یک‌طرفه یا رد آن توسط استاد (با امکان ارسال پیام به درخواست‌کننده و بازگشت به وضعیت جاری)
+    window.confirmDisputeTerminationByProfessor = async function(contractId, taskId, requesterId) {
+        var actionType = prompt('استاد گرامی، چه تصمیمی درباره این درخواست فسخ یک‌طرفه دارید؟\nوارد کنید: تایید یا رد');
+        if (!actionType) return;
         var sb = getSupabaseClient();
-        await sb.from('contracts').update({ status: 'terminated', termination_status: 'dispute_terminated' }).eq('id', contractId);
-        await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
-        showAppAlert('فسخ یک‌طرفه توسط استاد تایید شد و قرارداد به عنوان فسخ‌شده ثبت گردید.', true, 'سامانه');
+
+        if (actionType.trim() === 'تایید') {
+            await sb.from('contracts').update({ status: 'terminated', termination_status: 'dispute_terminated' }).eq('id', contractId);
+            await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
+            showAppAlert('فسخ یک‌طرفه توسط استاد تایید شد و قرارداد فسخ گردید.', true, 'سامانه');
+        } else if (actionType.trim() === 'رد') {
+            var msg = prompt('پیام دلیل رد درخواست را برای کاربر درخواست‌کننده بنویسید:');
+            await sb.from('contracts').update({
+                termination_status: 'none',
+                termination_type: null,
+                termination_reason: null,
+                professor_rejection_message: msg || 'درخواست فسخ یک‌طرفه شما توسط استاد رد شد.'
+            }).eq('id', contractId);
+            showAppAlert('درخواست فسخ رد شد و وضعیت قرارداد به حالت جاری بازگشت.', true, 'سامانه');
+        }
         await loadContracts();
         await loadTasks();
     };
 
-    // ۶ و ۷. رنگ‌های تسک‌ها با گرادیان‌ها و نورپردازی‌های جذاب و تفکیک اختصاصی هر سرگروه
-    var teamColorSchemes = [
-        {
-            // زمردی لوکس و پرانرژی
-            bgStyle: "background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);",
-            borderStyle: "border: 2px solid #059669;",
-            textStyle: "color: #064e3b;",
-            badgeStyle: "background: linear-gradient(90deg, #059669, #10b981); color: #ffffff;"
-        },
-        {
-            // آبی اقیانوسی و لاجوردی مدرن
-            bgStyle: "background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);",
-            borderStyle: "border: 2px solid #0284c7;",
-            textStyle: "color: #0369a1;",
-            badgeStyle: "background: linear-gradient(90deg, #0284c7, #38bdf8); color: #ffffff;"
-        },
-        {
-            // بنفش آمتیست و کریستالی
-            bgStyle: "background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #e9d5ff 100%);",
-            borderStyle: "border: 2px solid #9333ea;",
-            textStyle: "color: #581c87;",
-            badgeStyle: "background: linear-gradient(90deg, #9333ea, #c084fc); color: #ffffff;"
-        },
-        {
-            // خردلی و کهربایی تند با نور گرم
-            bgStyle: "background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);",
-            borderStyle: "border: 2px solid #d97706;",
-            textStyle: "color: #78350f;",
-            badgeStyle: "background: linear-gradient(90deg, #d97706, #f59e0b); color: #ffffff;"
-        },
-        {
-            // یاقوتی و رز نئونی
-            bgStyle: "background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 50%, #fecdd3 100%);",
-            borderStyle: "border: 2px solid #e11d48;",
-            textStyle: "color: #881337;",
-            badgeStyle: "background: linear-gradient(90deg, #e11d48, #fb7185); color: #ffffff;"
-        },
-        {
-            // فیروزه‌ای متالیک
-            bgStyle: "background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 50%, #99f6e4 100%);",
-            borderStyle: "border: 2px solid #0d9488;",
-            textStyle: "color: #115e59;",
-            badgeStyle: "background: linear-gradient(90deg, #0d9488, #2dd4bf); color: #ffffff;"
+    // ۶. محاسبه و نمایش تعداد قراردادهای فسخ‌شده به عنوان اثر منفی KPI برای افراد و سرگروه‌ها در پنل استاد
+    async function loadProfessorTerminationsKPI() {
+        var sb = getSupabaseClient();
+        var res = await sb.from('contracts').select('*, teams(name), profiles(full_name)').eq('status', 'terminated');
+        var div = document.getElementById('professor-kpi-terminations');
+        div.innerHTML = '';
+        if (!res.data || res.data.length === 0) {
+            div.innerHTML = '<span class="text-slate-500 font-medium">هیچ قرارداد فسخ‌شده‌ای در سامانه ثبت نشده است (شاخص مثبت).</span>';
+            return;
         }
+
+        var teamTermCounts = {};
+        var userTermCounts = {};
+
+        res.data.forEach(function(c) {
+            var tName = c.teams ? c.teams.name : 'تیم نامشخص';
+            var uName = c.profiles ? c.profiles.full_name : 'دانشجو';
+            teamTermCounts[tName] = (teamTermCounts[tName] || 0) + 1;
+            userTermCounts[uName] = (userTermCounts[uName] || 0) + 1;
+        });
+
+        var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">';
+        
+        html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">تخلفات و فسخ‌ها به تفکیک تیم‌ها (اثر منفی):</strong>';
+        for (var t in teamTermCounts) {
+            html += '<div class="flex justify-between text-slate-700 py-0.5"><span>تیم ' + t + ':</span><span class="font-black text-rose-600">' + teamTermCounts[t] + ' فسخ</span></div>';
+        }
+        html += '</div>';
+
+        html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">تخلفات و فسخ‌ها به تفکیک دانشجویان (اثر منفی):</strong>';
+        for (var u in userTermCounts) {
+            html += '<div class="flex justify-between text-slate-700 py-0.5"><span>پیمانکار ' + u + ':</span><span class="font-black text-rose-600">' + userTermCounts[u] + ' فسخ</span></div>';
+        }
+        html += '</div>';
+
+        html += '</div>';
+        div.innerHTML = html;
+    }
+
+    // ۷. پالت‌های رنگی مدرن و جذاب با گرادیان برای تفکیک تسک‌های سرگروه‌های مختلف
+    var teamColorSchemes = [
+        { bgStyle: "background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 100%);", borderStyle: "border: 2px solid #059669;", textStyle: "color: #064e3b;", badgeStyle: "background: #059669; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);", borderStyle: "border: 2px solid #0284c7;", textStyle: "color: #0369a1;", badgeStyle: "background: #0284c7; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 100%);", borderStyle: "border: 2px solid #9333ea;", textStyle: "color: #581c87;", badgeStyle: "background: #9333ea; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #fffbeb 0%, #fde68a 100%);", borderStyle: "border: 2.5px solid #d97706;", textStyle: "color: #78350f;", badgeStyle: "background: #d97706; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #fff1f2 0%, #fecdd3 100%);", borderStyle: "border: 2px solid #e11d48;", textStyle: "color: #881337;", badgeStyle: "background: #e11d48; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #f0fdfa 0%, #99f6e4 100%);", borderStyle: "border: 2px solid #0d9488;", textStyle: "color: #115e59;", badgeStyle: "background: #0d9488; color: #fff;" }
     ];
 
     function getTeamColor(teamId) {
@@ -1577,7 +1601,7 @@
         }
     };
 
-    // ۶ و ۷. بارگذاری کارت‌های بازار تسک با تم‌های اختصاصی و گرادیان جذاب برای هر سرگروه
+    // بارگذاری تسک‌های بازار با رنگ‌های متفاوت برای هر گروه (۷)
     async function loadTasks() {
         var sb = getSupabaseClient();
         var res = await sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
@@ -1600,22 +1624,20 @@
 
             var actionArea = '';
             if (userProfile.role === 'member') {
-                actionArea = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-gradient-to-r from-[#0f284e] to-[#1e3a8a] hover:from-[#0a1b35] hover:to-[#172554] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md cursor-pointer transition">امضا، پیشنهاد قیمت و شرایط</button>';
+                actionArea = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-gradient-to-r from-[#0f284e] to-[#1e3a8a] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md cursor-pointer transition">امضا، پیشنهاد قیمت و شرایط</button>';
             } else if (isOwnerLeader) {
                 actionArea = '<div class="flex space-x-2 space-x-reverse">' +
                     '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-200 shadow-xs transition cursor-pointer">ویرایش مستقیم</button>' +
                     '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold py-2 rounded-xl transition cursor-pointer">حذف تسک</button>' +
                     '</div>';
             } else if (isProfessor) {
-                actionArea = '<div class="flex gap-2">' +
-                    '<button onclick="deleteTask(\'' + t.id + '\')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-2 rounded-lg cursor-pointer transition shadow-sm">حذف تسک توسط استاد</button>' +
-                    '</div>';
+                actionArea = '<button onclick="deleteTask(\'' + t.id + '\')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-2 rounded-lg cursor-pointer transition shadow-sm">حذف تسک توسط استاد</button>';
             } else {
                 actionArea = '<div class="text-center py-2 bg-white/70 rounded-xl text-slate-500 text-xs font-medium border border-slate-200/60">در انتظار انتخاب پیمانکار آزاد</div>';
             }
 
             container.innerHTML += 
-                '<div class="interactive-card rounded-3xl p-5 shadow-lg flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '" id="card-' + t.id + '">' +
+                '<div class="interactive-card rounded-3xl p-5 shadow-md flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '" id="card-' + t.id + '">' +
                     '<div class="space-y-3">' +
                         '<div class="flex justify-between items-start">' +
                             '<div class="flex items-center space-x-2 space-x-reverse">' +
@@ -1669,18 +1691,19 @@
         }
     }
 
-    // ۳ و ۴ و ۵. ترجمه وضعیت قراردادها به فارسی و کنترل هوشمند دکمه‌ها
+    // ۱ و ۳ و ۴. ترجمه هوشمند وضعیت‌ها به فارسی همراه با منطق دقیق دکمه‌های فسخ
     function getPersianStatusBadge(c, userRole) {
         if (c.status === 'terminated') {
-            return '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-rose-300">❌ فسخ شده</span>';
+            return '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-rose-300">❌ قرارداد فسخ‌شده</span>';
         }
         if (c.termination_status === 'mutual_requested') {
-            // ۳. عبارت درخواست فسخ توافقی
+            // ۱. درخواست فسخ توافقی
             return '<span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-300 animate-pulse">⚠️ درخواست فسخ توافقی</span>';
         }
         if (c.termination_status === 'dispute_requested') {
-            // ۴. عبارت درخواست فسخ یک طرفه
-            return '<span class="bg-red-100 text-red-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-red-300 animate-pulse">⚖️ درخواست فسخ یک‌طرفه</span>';
+            // ۱ و ۲. درخواست فسخ یک‌طرفه از سمت کارفرما یا پیمانکار
+            var reqRoleText = (c.termination_requester_id === c.contractor_id) ? 'پیمانکار' : 'کارفرما';
+            return '<span class="bg-red-100 text-red-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-red-300 animate-pulse">⚖️ درخواست فسخ یک‌طرفه (' + reqRoleText + ')</span>';
         }
         if (c.status === 'pending_leader_signature') {
             return '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-200">⏳ در انتظار تایید سرگروه</span>';
@@ -1700,7 +1723,6 @@
         return '<span class="bg-slate-100 text-slate-800 px-2 py-0.5 rounded text-[11px] font-bold">درحال بررسی</span>';
     }
 
-    // ۳ و ۴ و ۵. بارگذاری قراردادها، تفکیک دکمه‌های فسخ برای استاد، سرگروه و دانشجو
     async function loadContracts() {
         var sb = getSupabaseClient();
         var query = sb.from('contracts').select('*, tasks(*, booklets(booklet_number)), teams(name), profiles(full_name)');
@@ -1713,7 +1735,7 @@
         tbody.innerHTML = '';
 
         if (!res.data || res.data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-400 font-bold">قراردادی ثبت نشده است.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>';
         }
 
         var totalFinal = 0;
@@ -1731,6 +1753,12 @@
                 var statusBadge = getPersianStatusBadge(c, userProfile.role);
                 var actionCol = '';
 
+                // نمایش پیام رد استاد در صورت وجود
+                var rejectionNotice = '';
+                if (c.professor_rejection_message && c.contractor_id === currentUser.id) {
+                    rejectionNotice = '<div class="text-[10px] text-rose-600 font-bold bg-rose-50 p-1.5 rounded mt-1 border border-rose-200">پیام استاد: ' + c.professor_rejection_message + '</div>';
+                }
+
                 if (c.status === 'pending_leader_signature') {
                     if (userProfile.role === 'leader') {
                         actionCol = '<div class="flex gap-1.5">' +
@@ -1743,30 +1771,34 @@
                 } else if (c.status === 'terminated') {
                     actionCol = '<span class="text-rose-600 font-bold text-xs">قرارداد باطل گردید</span>';
                 } else {
-                    // فرآیند فسخ فعال است
                     if (userProfile.role === 'professor') {
-                        // در پنل استاد
                         var profButtons = '';
+                        // ۱. تایید فسخ توافقی توسط استاد
                         if (c.termination_status === 'mutual_requested') {
-                            // ۳. دکمه فسخ توافقی برای استاد فعال می‌شود
                             profButtons += '<button onclick="confirmMutualTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">تایید فسخ توافقی</button> ';
                         }
+                        // ۱ و ۲. در بخش قراردادهای استاد دکمه تایید فسخ یک طرفه نمایش داده شود
                         if (c.termination_status === 'dispute_requested') {
-                            // ۴. در پنجره قراردادهای استاد دکمه تایید فسخ یک طرفه نمایش داده شود
-                            profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">تایید فسخ یک‌طرفه</button>';
+                            profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\', \'' + c.termination_requester_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">تایید فسخ یک‌طرفه</button>';
                         }
                         actionCol = profButtons || '<span class="text-slate-400 text-xs">در حال اجرا</span>';
                     } else {
-                        // برای سرگروه و دانشجو
-                        // ۳. دکمه فسخ توافقی
+                        // ۳ و ۴. قوانین مربوط به دکمه‌های فسخ توافقی و یک‌طرفه
                         var mutualBtnText = 'فسخ توافقی';
                         if (userProfile.role === 'leader' && c.leader_termination_agreed) mutualBtnText = '✓ تایید توافق شما';
                         if (userProfile.role === 'member' && c.contractor_termination_agreed) mutualBtnText = '✓ تایید توافق شما';
 
-                        actionCol = '<div class="flex gap-1.5">' +
-                            '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button>' +
-                            '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>' +
-                            '</div>';
+                        var actionButtonsHtml = '';
+                        // ۳. در صورتی که فسخ یک طرفه زده شود همچنان امکان استفاده از فسخ توافقی وجود دارد
+                        if (c.termination_status !== 'dispute_requested') {
+                            actionButtonsHtml += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
+                        }
+                        // ۴. در فسخ یک طرفه فقط دکمه فسخ یک طرفه برای سرگروه و دانشجو فعال باشد (اگر قبلاً فسخ توافقی درخواست نشده باشد)
+                        if (c.termination_status !== 'mutual_requested') {
+                            actionButtonsHtml += '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>';
+                        }
+
+                        actionCol = actionButtonsHtml;
                     }
                 }
 
@@ -1776,14 +1808,13 @@
                     '<td class="p-3">' + (c.tasks ? c.tasks.title : '') + '</td>' +
                     '<td class="p-3">' + (c.profiles ? c.profiles.full_name : '') + '</td>' +
                     '<td class="p-3 font-black text-amber-700 text-sm">' + (c.agreed_base_coins || 0) + ' سکه</td>' +
-                    '<td class="p-3 text-slate-600 max-w-xs">' + (c.contractor_terms || 'شرایط عادی') + '</td>' +
+                    '<td class="p-3 text-slate-600 max-w-xs">' + (c.contractor_terms || 'شرایط عادی') + rejectionNotice + '</td>' +
                     '<td class="p-3">' + statusBadge + '</td>' +
                     '<td class="p-3">' + actionCol + '</td>' +
                     '</tr>';
             });
         }
 
-        // ۵. به‌روزرسانی کیف سکه پیمانکار
         document.getElementById('wallet-committed-text').innerText = totalCommitted.toFixed(1) + ' سکه';
         document.getElementById('wallet-committed-bar').style.width = Math.min(100, (totalCommitted / 250) * 100) + '%';
         document.getElementById('wallet-final-text').innerText = totalFinal.toFixed(1) + ' سکه';
@@ -1808,7 +1839,6 @@
 
         document.getElementById('stat-coins').innerText = totalFinal.toFixed(1) + ' سکه';
 
-        // ۱ و ۲. پایش بودجه و نمودار دوناتی برای سرگروه
         if (userProfile.role === 'leader' && currentTeam) {
             var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
             var totalApprovedBudget = mpRes.data ? parseFloat(mpRes.data.allocated_coins) : (currentTeam.budget ? parseFloat(currentTeam.budget) : 0);
@@ -1854,6 +1884,45 @@
                 sel.innerHTML += opt;
             });
         }
+    }
+
+    // ۶. نمایش آمار KPI اثر منفی فسخ‌های یک‌طرفه و توافقی در پنل استاد
+    async function loadProfessorTerminationsKPI() {
+        var sb = getSupabaseClient();
+        var res = await sb.from('contracts').select('*, teams(name), profiles(full_name)').eq('status', 'terminated');
+        var div = document.getElementById('professor-kpi-terminations');
+        div.innerHTML = '';
+        if (!res.data || res.data.length === 0) {
+            div.innerHTML = '<span class="text-slate-500 font-medium">هیچ قرارداد فسخ‌شده‌ای در سامانه ثبت نشده است (شاخص مثبت).</span>';
+            return;
+        }
+
+        var teamTermCounts = {};
+        var userTermCounts = {};
+
+        res.data.forEach(function(c) {
+            var tName = c.teams ? c.teams.name : 'تیم نامشخص';
+            var uName = c.profiles ? c.profiles.full_name : 'دانشجو';
+            teamTermCounts[tName] = (teamTermCounts[tName] || 0) + 1;
+            userTermCounts[uName] = (userTermCounts[uName] || 0) + 1;
+        });
+
+        var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">';
+        
+        html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">تخلفات و فسخ‌ها به تفکیک تیم‌ها (اثر منفی):</strong>';
+        for (var t in teamTermCounts) {
+            html += '<div class="flex justify-between text-slate-700 py-0.5"><span>تیم ' + t + ':</span><span class="font-black text-rose-600">' + teamTermCounts[t] + ' فسخ</span></div>';
+        }
+        html += '</div>';
+
+        html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">تخلفات و فسخ‌ها به تفکیک دانشجویان (اثر منفی):</strong>';
+        for (var u in userTermCounts) {
+            html += '<div class="flex justify-between text-slate-700 py-0.5"><span>پیمانکار ' + u + ':</span><span class="font-black text-rose-600">' + userTermCounts[u] + ' فسخ</span></div>';
+        }
+        html += '</div>';
+
+        html += '</div>';
+        div.innerHTML = html;
     }
 
     async function loadProfessorSummary() {
@@ -1918,15 +1987,43 @@
         }
     };
 
-    // ۲. سرگروه تنها در سقف بودجه تخصیص‌یافته می‌تواند تسک تعریف کند
+    // ۵. هشدار جذاب در صورت تعریف بیش از یک تسک از یک کتابچه توسط سرگروه
+    var pendingTaskInsertData = null;
+
     document.getElementById('create-task-btn').onclick = async function() {
         var bId = document.getElementById('task-booklet-select').value;
         var title = document.getElementById('task-title-input').value.trim();
         var coins = parseFloat(document.getElementById('task-coins-input').value);
         if (!title || isNaN(coins) || coins <= 0 || !currentTeam) return showAppAlert('اطلاعات تسک را کامل وارد نمایید.', false);
-        
+
         var sb = getSupabaseClient();
 
+        // بررسی اینکه آیا قبلاً از این کتابچه تسکی تعریف شده است یا خیر
+        var existingBookletTasks = await sb.from('tasks').select('id, title').eq('team_id', currentTeam.id).eq('booklet_id', parseInt(bId)).neq('status', 'terminated');
+        if (existingBookletTasks.data && existingBookletTasks.data.length > 0) {
+            pendingTaskInsertData = { bookletId: parseInt(bId), title: title, coins: coins };
+            document.getElementById('duplicate-modal-text').innerText = 'شما قبلاً از این شماره کتابچه تسک دیگری تعریف کرده‌اید.\nآیا اطمینان دارید که می‌خواهید تسک اضافه تری از این کتابچه تعریف کنید؟';
+            document.getElementById('duplicate-booklet-modal').classList.remove('hidden');
+            return;
+        }
+
+        executeTaskCreation(parseInt(bId), title, coins);
+    };
+
+    window.closeDuplicateModal = function() {
+        document.getElementById('duplicate-booklet-modal').classList.add('hidden');
+        pendingTaskInsertData = null;
+    };
+
+    document.getElementById('duplicate-yes-btn').onclick = async function() {
+        if (!pendingTaskInsertData) return;
+        var data = pendingTaskInsertData;
+        closeDuplicateModal();
+        await executeTaskCreation(data.bookletId, data.title, data.coins);
+    };
+
+    async function executeTaskCreation(bookletId, title, coins) {
+        var sb = getSupabaseClient();
         var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
         if (!mpRes.data) {
             return showAppAlert('خطا: تیم شما هنوز قرارداد اصلی با استاد درس امضا نکرده است. تعریف تسک منوط به بستن قرارداد اصلی و دریافت بودجه تخصیص‌یافته است.', false);
@@ -1945,7 +2042,7 @@
 
         var res = await sb.from('tasks').insert([{
             team_id: currentTeam.id,
-            booklet_id: parseInt(bId),
+            booklet_id: bookletId,
             title: title,
             allocated_nominal_coins: coins,
             status: 'open'
@@ -1959,7 +2056,7 @@
             await loadTasks();
             await loadContracts();
         }
-    };
+    }
 
     window.addEventListener('load', function() {
         var sb = getSupabaseClient();
