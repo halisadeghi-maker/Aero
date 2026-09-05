@@ -188,7 +188,7 @@
 
             </div>
 
-            <!-- ۸. درج نسخه 2.3.1 در پایین صفحه ورودی -->
+            <!-- نسخه سامانه ۲.۳.۱ -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
                 نسخه سامانه: <span class="text-teal-700 font-black">2.3.1</span>
             </div>
@@ -327,13 +327,19 @@
                 </div>
             </section>
 
-            <!-- پنل ویژه مدیریت استاد -->
+            <!-- پنل ویژه مدیریت استاد (مجهز به دکمه ریست سامانه) -->
             <section id="professor-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-6 border border-indigo-200">
-                <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
-                    <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
-                        <span>🎓</span> میز کارفرمایی و نظارت عالیه استاد درس
-                    </h3>
-                    <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold border border-indigo-200">دسترسی رگولاتور ارشد</span>
+                <div class="border-b border-slate-200 pb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
+                            <span>🎓</span> میز کارفرمایی و نظارت عالیه استاد درس
+                        </h3>
+                        <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold border border-indigo-200 mt-1 inline-block">دسترسی رگولاتور ارشد</span>
+                    </div>
+                    <!-- دکمه ریست سامانه در پنل استاد -->
+                    <button onclick="resetSystemDatabase()" type="button" class="bg-rose-600 hover:bg-rose-700 text-white font-black px-4 py-2 rounded-xl text-xs shadow-md transition cursor-pointer flex items-center gap-1.5">
+                        <span>🗑️</span> ریست کامل پایگاه داده سامانه
+                    </button>
                 </div>
 
                 <!-- تعریف قرارداد اصلی جدید با تقویم شمسی -->
@@ -443,7 +449,7 @@
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
-                        📜 قراردادهای هوشمند
+                        📜 قراردادهای هوشمند (با قابلیت کلیک جهت مشاهده سوابق کامل)
                     </h3>
                     <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">مشاهده وضعیت قراردادها</span>
                 </div>
@@ -478,19 +484,17 @@
         کلیه حقوق مادی و معنوی این سایت متعلق به دانشگاه صنعتی خواجه نصیر الدین طوسی می باشد.
     </footer>
 
-    <!-- ۲. مدال جذای تاریخچه کامل تغییر وضعیت‌ها، فایل‌ها و فایل‌های آپلودشده برای استاد -->
+    <!-- مدال تاریخچه کامل تغییر وضعیت‌ها و مستندات برای استاد -->
     <div id="contract-history-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-indigo-200 max-w-2xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                 <div>
-                    <h4 class="text-sm font-black text-[#0f284e]">📜 تاریخچه و مستندات کامل قرارداد هوشمند</h4>
+                    <h4 class="text-sm font-black text-[#0f284e]">📜 تاریخچه کامل و مستندات قرارداد هوشمند</h4>
                     <p id="history-modal-subtitle" class="text-[11px] text-slate-500 mt-0.5">مشاهده سیر تغییر وضعیت‌ها و دانلود فایل‌های گزارش</p>
                 </div>
                 <button onclick="closeContractHistoryModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
-            <div id="contract-history-content" class="space-y-3 text-xs">
-                <!-- محتوای داینامیک تاریخچه -->
-            </div>
+            <div id="contract-history-content" class="space-y-3 text-xs"></div>
             <button onclick="closeContractHistoryModal()" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs cursor-pointer">بستن پنجره</button>
         </div>
     </div>
@@ -525,7 +529,7 @@
         </div>
     </div>
 
-    <!-- ۴. مدال جذاب هشدار جریمه ۲۰ درصدی فسخ یک‌طرفه -->
+    <!-- مدال جذاب اخطار جریمه ۲۰ درصدی فسخ یک‌طرفه -->
     <div id="dispute-warning-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-rose-500 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-rose-50 text-rose-600 border border-rose-200 animate-bounce">⚖️</div>
@@ -950,6 +954,26 @@
         }
     }
 
+    // دکمه ریست کامل سامانه توسط استاد
+    window.resetSystemDatabase = async function() {
+        if (!confirm('استاد گرامی، آیا از ریست کامل پایگاه داده سامانه اطمینان دارید؟ تمامی داده‌ها، کاربران (به جز استاد)، تسک‌ها و قراردادها پاکسازی خواهند شد.')) return;
+        var sb = getSupabaseClient();
+        try {
+            await sb.from('report_history').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+            await sb.from('contracts').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+            await sb.from('tasks').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+            await sb.from('project_bids').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+            await sb.from('master_projects').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+            await sb.from('teams').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+            await sb.from('profiles').delete().neq('role', 'professor');
+            
+            showAppAlert('سامانه با موفقیت ریست شد. لطفاً صفحه را رفرش کنید.', true, 'سامانه');
+            setTimeout(function() { location.reload(); }, 2000);
+        } catch (e) {
+            showAppAlert('خطا در ریست سامانه: ' + e.message, false);
+        }
+    };
+
     window.createMasterProject = async function() {
         var sb = getSupabaseClient();
         var title = document.getElementById('rfp-title').value.trim();
@@ -1059,7 +1083,6 @@
         }
     };
 
-    // ۱. بررسی اینکه آیا سرگروه در مناقصه دیگری برنده شده است یا خیر
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -1566,152 +1589,7 @@
         await loadContracts();
     };
 
-    // ۲. باز کردن صفحه تاریخچه کامل تغییر وضعیت‌ها، فایل‌ها و ادله با زدن استاد روی قرارداد
-    window.openContractHistoryModal = async function(contractId) {
-        var sb = getSupabaseClient();
-        var { data: cData } = await sb.from('contracts').select('*, tasks(*), teams(name), profiles:contractor_id(full_name)').eq('id', contractId).single();
-        var { data: historyData } = await sb.from('report_history').select('*').eq('contract_id', contractId).order('created_at', { ascending: true });
-
-        var contentDiv = document.getElementById('contract-history-content');
-        var subTitle = document.getElementById('history-modal-subtitle');
-        subTitle.innerText = cData ? ('تیم: ' + cData.teams.name + ' | تسک: ' + cData.tasks.title + ' | پیمانکار: ' + cData.profiles.full_name) : '';
-
-        var html = '<div class="space-y-3">';
-        
-        // نمایش ادله فسخ در صورت وجود
-        if (cData && cData.termination_reason) {
-            html += '<div class="p-3 bg-rose-50 border border-rose-200 rounded-2xl text-xs space-y-1">' +
-                '<strong class="text-rose-900 block">⚖️ ادله فسخ ثبت‌شده:</strong>' +
-                '<p class="text-slate-700">' + cData.termination_reason + '</p>' +
-                '</div>';
-        }
-
-        html += '<h5 class="font-black text-slate-800 pt-2 border-t">سیر تغییر وضعیت‌ها و فایل‌ها:</h5>';
-
-        if (historyData && historyData.length > 0) {
-            historyData.forEach(function(h) {
-                var dStr = new Date(h.created_at).toLocaleString('fa-IR');
-                var fileBtn = h.submission_url ? '<a href="' + h.submission_url + '" target="_blank" class="inline-block mt-1 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-lg text-[11px] font-bold underline">📥 دانلود فایل گزارش</a>' : '';
-                html += '<div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1">' +
-                    '<div class="flex justify-between text-[11px] text-slate-500 font-bold"><span>وضعیت: ' + h.status + '</span><span>' + dStr + '</span></div>' +
-                    '<p class="text-slate-700 text-xs">' + h.feedback + '</p>' +
-                    fileBtn +
-                    '</div>';
-            });
-        } else {
-            html += '<p class="text-slate-400 text-xs py-2">تاریخچه‌ای برای این قرارداد ثبت نشده است.</p>';
-        }
-
-        html += '</div>';
-        contentDiv.innerHTML = html;
-        document.getElementById('contract-history-modal').classList.remove('hidden');
-    };
-
-    window.closeContractHistoryModal = function() {
-        document.getElementById('contract-history-modal').classList.add('hidden');
-    };
-
-    window.professorAwardFinalPayout = async function(contractId, taskId, bookletId, agreedCoins) {
-        var sb = getSupabaseClient();
-
-        var bRes = await sb.from('booklets').select('nominal_coins').eq('id', bookletId).single();
-        var nominalCoins = bRes.data ? parseFloat(bRes.data.nominal_coins) : 100;
-
-        var professorScoreStr = prompt('استاد گرامی، امتیاز/سکه تخصیصی خود را برای این گزارش وارد کنید (فرمول: سکه استاد / اسمی کتابچه * سکه توافقی):');
-        if (!professorScoreStr) return;
-        var professorScore = parseFloat(professorScoreStr);
-        if (isNaN(professorScore)) return showAppAlert('مقدار نامعتبر.', false);
-
-        var finalPayout = (professorScore / nominalCoins) * parseFloat(agreedCoins);
-        finalPayout = Math.round(finalPayout * 10) / 10;
-
-        await sb.from('report_history').insert([{
-            contract_id: contractId,
-            task_id: taskId,
-            submitter_id: currentUser.id,
-            submission_url: '',
-            status: 'professor_completed',
-            feedback: 'ارزیابی نهایی استاد با امتیاز ' + professorScore + ' و سکه نهایی ' + finalPayout
-        }]);
-
-        await sb.from('contracts').update({
-            status: 'completed',
-            final_payout: finalPayout
-        }).eq('id', contractId);
-
-        await sb.from('tasks').update({ status: 'completed' }).eq('id', taskId);
-
-        showAppAlert('ارزیابی و امتیازدهی با موفقیت ثبت شد.\nمبلغ ' + finalPayout + ' سکه نهایی به کیف پول دانشجو واریز گردید.', true, 'سامانه');
-        await loadContracts();
-    };
-
-    // ۳. فسخ توافقی بدون نیاز به تایید استاد (با تایید دو طرف قرارداد مستقیم باطل می‌شود)
-    window.voteMutualTermination = async function(contractId, role) {
-        var sb = getSupabaseClient();
-        var updatePayload = {};
-        if (role === 'leader') updatePayload.leader_termination_agreed = true;
-        else if (role === 'member') updatePayload.contractor_termination_agreed = true;
-
-        var { data: cData } = await sb.from('contracts').select('*').eq('id', contractId).single();
-        if (!cData) return;
-
-        var leaderAgreed = (role === 'leader') ? true : cData.leader_termination_agreed;
-        var memberAgreed = (role === 'member') ? true : cData.contractor_termination_agreed;
-
-        if (leaderAgreed && memberAgreed) {
-            updatePayload.status = 'terminated';
-            updatePayload.termination_status = 'mutual_terminated';
-            updatePayload.termination_type = 'mutual';
-
-            await sb.from('tasks').update({ status: 'open' }).eq('id', cData.task_id);
-        } else {
-            updatePayload.termination_status = 'mutual_requested';
-        }
-
-        await sb.from('contracts').update(updatePayload).eq('id', contractId);
-
-        if (leaderAgreed && memberAgreed) {
-            showAppAlert('هر دو طرف با فسخ توافقی موافقت کردند. قرارداد با موفقیت به صورت توافقی باطل شد.', true);
-        } else {
-            showAppAlert('موافقت شما با فسخ توافقی ثبت شد. در انتظار تایید طرف مقابل است.', true);
-        }
-        await loadContracts();
-        await loadTasks();
-    };
-
-    // ۴. باز کردن مدال اخطار جریمه ۲۰ درصدی فسخ یک‌طرفه
-    var currentDisputeContractId = null;
-    var currentDisputeTaskId = null;
-    window.openDisputeModal = function(contractId, taskId) {
-        currentDisputeContractId = contractId;
-        currentDisputeTaskId = taskId;
-        document.getElementById('dispute-reason-input').value = '';
-        document.getElementById('dispute-warning-modal').classList.remove('hidden');
-    };
-    window.closeDisputeWarningModal = function() {
-        document.getElementById('dispute-warning-modal').classList.add('hidden');
-        currentDisputeContractId = null;
-        currentDisputeTaskId = null;
-    };
-
-    document.getElementById('confirm-dispute-yes-btn').onclick = async function() {
-        var reason = document.getElementById('dispute-reason-input').value.trim();
-        if (!reason) return showAppAlert('لطفاً ادله و مستندات خود را وارد کنید.', false);
-        var sb = getSupabaseClient();
-
-        await sb.from('contracts').update({
-            termination_status: 'dispute_requested',
-            termination_type: 'one_sided',
-            termination_reason: reason,
-            termination_requester_id: currentUser.id
-        }).eq('id', currentDisputeContractId);
-
-        closeDisputeWarningModal();
-        showAppAlert('درخواست فسخ یک‌طرفه با احتساب اخطار جریمه ۲۰ درصدی برای داوری نهایی به کارتابل استاد ارسال گردید.', true);
-        await loadContracts();
-    };
-
-    // ۳. اصلاح کامل نمایش ادله فسخ یک‌طرفه در پنل استاد به همراه تیک‌باکس‌های تایید/رد و مشخص بودن درخواست‌کننده
+    // ۳. اصلاح کامل نمایش ادله و نام درخواست‌کننده به همراه تیک‌باکس تایید یا رد برای استاد
     window.confirmDisputeTerminationByProfessor = async function(contractId, taskId, requesterId) {
         var sb = getSupabaseClient();
         var { data: cData } = await sb.from('contracts').select('termination_reason, termination_requester_id, contractor_id, teams(name), profiles:termination_requester_id(full_name)').eq('id', contractId).single();
@@ -1722,8 +1600,8 @@
 
         var promptHtml = '⚖️ بررسی درخواست فسخ یک‌طرفه\n\n' +
             '▪️ درخواست‌کننده: ' + reqName + ' (' + reqRole + ')\n' +
-            '▪️ ادله و مستندات: \n"' + reasonText + '"\n\n' +
-            'لطفاً تصمیم خود را با وارد کردن یکی از کلمات زیر مشخص کنید:\nتایید (با کسر جریمه) یا رد';
+            '▪️ ادله و مستندات ثبت‌شده:\n"' + reasonText + '"\n\n' +
+            'استاد گرامی، لطفاً تایید یا رد درخواست را بنویسید (تایید / رد):';
 
         var actionType = prompt(promptHtml);
         if (!actionType) return;
@@ -2237,7 +2115,6 @@
         await loadContracts();
     };
 
-    // ۳. فسخ توافقی بدون نیاز به تایید استاد
     window.voteMutualTermination = async function(contractId, role) {
         var sb = getSupabaseClient();
         var updatePayload = {};
@@ -2271,7 +2148,6 @@
         await loadTasks();
     };
 
-    // ۴. باز کردن مدال اخطار جریمه ۲۰ درصدی فسخ یک‌طرفه
     var currentDisputeContractId = null;
     var currentDisputeTaskId = null;
     window.openDisputeModal = function(contractId, taskId) {
@@ -2303,7 +2179,7 @@
         await loadContracts();
     };
 
-    // ۳. رفع مشکل نمایش نامشخص و نمایش کامل نام درخواست‌کننده، نقش و ادله ارسالی در پنل استاد به همراه تیک‌باکس تایید/رد
+    // ۳. اصلاح کامل نمایش ادله و نام درخواست‌کننده به همراه پنجره تایید یا رد برای استاد
     window.confirmDisputeTerminationByProfessor = async function(contractId, taskId, requesterId) {
         var sb = getSupabaseClient();
         var { data: cData } = await sb.from('contracts').select('termination_reason, termination_requester_id, contractor_id, teams(name), profiles:termination_requester_id(full_name)').eq('id', contractId).single();
@@ -2314,8 +2190,8 @@
 
         var promptHtml = '⚖️ بررسی درخواست فسخ یک‌طرفه\n\n' +
             '▪️ درخواست‌کننده: ' + reqName + ' (' + reqRole + ')\n' +
-            '▪️ ادله و مستندات: \n"' + reasonText + '"\n\n' +
-            'لطفاً تصمیم خود را با وارد کردن یکی از کلمات زیر مشخص کنید:\nتایید (با کسر جریمه) یا رد';
+            '▪️ ادله و مستندات ثبت‌شده:\n"' + reasonText + '"\n\n' +
+            'استاد گرامی، لطفاً تایید یا رد درخواست را بنویسید (تایید / رد):';
 
         var actionType = prompt(promptHtml);
         if (!actionType) return;
