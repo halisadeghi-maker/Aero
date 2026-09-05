@@ -188,7 +188,7 @@
 
             </div>
 
-            <!-- نسخه سامانه 2.3.2 -->
+            <!-- درج نسخه 2.3.2 در پایین صفحه ورودی -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
                 نسخه سامانه: <span class="text-teal-700 font-black">2.3.2</span>
             </div>
@@ -445,7 +445,7 @@
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
                         📜 قراردادهای هوشمند
                     </h3>
-                    <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">با کلیک روی هر قرارداد، تاریخچه و فایل‌ها را مشاهده کنید</span>
+                    <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">با کلیک روی هر قرارداد، سوابق و مستندات باز می‌شوند</span>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -478,7 +478,7 @@
         کلیه حقوق مادی و معنوی این سایت متعلق به دانشگاه صنعتی خواجه نصیر الدین طوسی می باشد.
     </footer>
 
-    <!-- ۲. صفحه و مدال جذاب تاریخچه کامل تغییر وضعیت‌ها، فایل‌ها و فایل‌های آپلودشده برای استاد -->
+    <!-- ۲. مدال جذاب سوابق کامل قرارداد برای استاد -->
     <div id="contract-history-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-indigo-200 max-w-2xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
@@ -923,7 +923,7 @@
                 var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
                 currentTeam = tRes.data;
                 if (!currentTeam) {
-                    document.getElementById('create-team-box').classList.remove('hidden');
+                    document.getElementById('create-team-box').classList.add('hidden');
                     document.getElementById('stat-team').innerText = "بدون تیم ثبت‌شده";
                 } else {
                     document.getElementById('stat-team').innerText = currentTeam.name;
@@ -1565,7 +1565,7 @@
         await loadContracts();
     };
 
-    // ۳. رفع مشکل نمایش نامشخص و نمایش کامل نام درخواست‌کننده، تیم، نقش و ادله در پنل استاد به همراه گزینه‌های تایید/رد
+    // ۳. رفع مشکل نمایش نامشخص و نمایش کامل نام درخواست‌کننده واقعی در پنل استاد به همراه تیک‌باکس تایید/رد
     window.confirmDisputeTerminationByProfessor = async function(contractId, taskId, requesterId) {
         var sb = getSupabaseClient();
         var { data: cData } = await sb.from('contracts').select('termination_reason, termination_requester_id, contractor_id, teams(name), profiles:termination_requester_id(full_name)').eq('id', contractId).single();
@@ -1610,70 +1610,6 @@
         }
         await loadContracts();
         await loadTasks();
-    };
-
-    window.voteMutualTermination = async function(contractId, role) {
-        var sb = getSupabaseClient();
-        var updatePayload = {};
-        if (role === 'leader') updatePayload.leader_termination_agreed = true;
-        else if (role === 'member') updatePayload.contractor_termination_agreed = true;
-
-        var { data: cData } = await sb.from('contracts').select('*').eq('id', contractId).single();
-        if (!cData) return;
-
-        var leaderAgreed = (role === 'leader') ? true : cData.leader_termination_agreed;
-        var memberAgreed = (role === 'member') ? true : cData.contractor_termination_agreed;
-
-        if (leaderAgreed && memberAgreed) {
-            updatePayload.status = 'terminated';
-            updatePayload.termination_status = 'mutual_terminated';
-            updatePayload.termination_type = 'mutual';
-
-            await sb.from('tasks').update({ status: 'open' }).eq('id', cData.task_id);
-        } else {
-            updatePayload.termination_status = 'mutual_requested';
-        }
-
-        await sb.from('contracts').update(updatePayload).eq('id', contractId);
-
-        if (leaderAgreed && memberAgreed) {
-            showAppAlert('هر دو طرف با فسخ توافقی موافقت کردند. قرارداد با موفقیت به صورت توافقی باطل شد.', true);
-        } else {
-            showAppAlert('موافقت شما با فسخ توافقی ثبت شد. در انتظار تایید طرف مقابل است.', true);
-        }
-        await loadContracts();
-        await loadTasks();
-    };
-
-    var currentDisputeContractId = null;
-    var currentDisputeTaskId = null;
-    window.openDisputeModal = function(contractId, taskId) {
-        currentDisputeContractId = contractId;
-        currentDisputeTaskId = taskId;
-        document.getElementById('dispute-reason-input').value = '';
-        document.getElementById('dispute-warning-modal').classList.remove('hidden');
-    };
-    window.closeDisputeWarningModal = function() {
-        document.getElementById('dispute-warning-modal').classList.add('hidden');
-        currentDisputeContractId = null;
-        currentDisputeTaskId = null;
-    };
-
-    document.getElementById('confirm-dispute-yes-btn').onclick = async function() {
-        var reason = document.getElementById('dispute-reason-input').value.trim();
-        if (!reason) return showAppAlert('لطفاً ادله و مستندات خود را وارد کنید.', false);
-        var sb = getSupabaseClient();
-
-        await sb.from('contracts').update({
-            termination_status: 'dispute_requested',
-            termination_type: 'one_sided',
-            termination_reason: reason,
-            termination_requester_id: currentUser.id
-        }).eq('id', currentDisputeContractId);
-
-        closeDisputeWarningModal();
-        showAppAlert('درخواست فسخ یک‌طرفه با احتساب اخطار جریمه ۲۰ درصدی برای داوری نهایی به کارتابل استاد ارسال گردید.', true);
-        await loadContracts();
     };
 
     async function loadProfessorTerminationsKPI() {
