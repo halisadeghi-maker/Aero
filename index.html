@@ -97,7 +97,7 @@
         <section id="auth-section" class="max-w-5xl mx-auto my-auto py-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 
-                <!-- کارت ۱: برندینگ خردلی -->
+                <!-- کارت ۱: کارت برندینگ خردلی-طلایی -->
                 <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#fbbf24] to-[#d97706] border-2 border-amber-200">
                     <div class="absolute -top-20 -left-20 w-64 h-64 bg-white/30 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-yellow-200/30 rounded-full blur-3xl pointer-events-none"></div>
@@ -134,7 +134,7 @@
                     </div>
                 </div>
 
-                <!-- کارت ۲: ثبت نام و ورود سبزآبی -->
+                <!-- کارت ۲: ثبت نام و ورود سبزآبی شاداب -->
                 <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-teal-300 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#0d9488] via-[#14b8a6] to-[#0f766e] text-white">
                     <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-300/20 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-200/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -158,7 +158,7 @@
                             <select id="auth-role" class="w-full bg-teal-950/80 border-2 border-teal-300/50 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
                                 <option value="member" class="bg-teal-900 text-white">دانشجو (پیمانکار)</option>
                                 <option value="leader" class="bg-teal-900 text-white">سرگروه (کارفرما)</option>
-                                <option id="option-prof-role" value="professor" class="bg-teal-900 text-white">استاد درس (ثبت‌نام اولین نفر)</option>
+                                <option id="option-prof-role" value="professor" class="bg-teal-900 text-white">استاد درس (ثبت‌نام اولین نفر بدون نیاز به تایید)</option>
                             </select>
                         </div>
                     </div>
@@ -508,7 +508,7 @@
         </div>
     </div>
 
-    <!-- ۴. مدال جذاب هشدار جریمه ۲۰ درصدی فسخ یک‌طرفه -->
+    <!-- ۱۱. مدال جذاب اخطار جریمه ۲۰ درصدی فسخ یک‌طرفه -->
     <div id="dispute-warning-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-rose-500 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-rose-50 text-rose-600 border border-rose-200 animate-bounce">⚖️</div>
@@ -597,7 +597,7 @@
 
             <div class="flex gap-2">
                 <button id="confirm-accept-btn" type="button" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs transition cursor-pointer">امضا و ارسال به کارفرما</button>
-                <button onclick="closeAcceptModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button onclick="closeAcceptModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
@@ -613,7 +613,7 @@
                 <p><strong>۱. احراز هویت و دسترسی:</strong> دسترسی به پروفایل کاربری پس از ثبت‌نام منوط به تایید هویت و صلاحیت توسط استاد درس است.</p>
                 <p><strong>۲. سقف مجاز سکه:</strong> سقف قرارداد برای هر دانشجو حداکثر ۲۵۰ سکه است و پذیرش قرارداد مازاد مسدود می‌باشد.</p>
                 <p><strong>۳. مناقصات پروژه‌های اصلی:</strong> سرگروه‌ها موظفند در مهلت مناقصه پیشنهاد قیمت خود را برای پروژه‌های اصلی ثبت کنند.</p>
-                <p><strong>۴. امضای دوطرفه و فسخ:</strong> قرارداد پس از امضای پیمانکار و کارفرما نافذ می‌شود. فسخ توافقی نیازمند تایید هر دو طرف و سپس تایید نهایی استاد است. فسخ یک‌طرفه با داوری و تایید مستقیم استاد درس انجام می‌شود.</p>
+                <p><strong>۴. امضای دوطرفه و فسخ:</strong> قرارداد پس از امضای پیمانکار و کارفرما نافذ می‌شود. فسخ توافقی با تایید دوطرف بدون دخالت استاد انجام می‌شود. فسخ یک‌طرفه همراه با جریمه ۲۰ درصدی و داوری استاد است.</p>
             </div>
             <button onclick="closeTermsModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs">مطالعه شد و مورد تایید است</button>
         </div>
@@ -1042,6 +1042,7 @@
         }
     };
 
+    // ۱. بررسی اینکه آیا سرگروه در مناقصه دیگری برنده شده است یا خیر
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -1051,6 +1052,12 @@
         if (!res.data || res.data.length === 0) {
             cont.innerHTML = '<div class="col-span-full py-6 text-center text-xs text-slate-400 font-bold">هیچ قرارداد اصلی یا مناقصه بازی تعریف نشده است.</div>';
             return;
+        }
+
+        var isMyTeamAlreadyAwarded = false;
+        if (currentTeam) {
+            var awardedCheck = res.data.some(function(p) { return p.awarded_team_id === currentTeam.id; });
+            if (awardedCheck) isMyTeamAlreadyAwarded = true;
         }
 
         var myTeamBids = {};
@@ -1090,12 +1097,16 @@
                 cardBgClass = "border border-slate-200 bg-slate-100/60 text-slate-500";
                 cardOpacity = "opacity-50 hover:opacity-80 transition-opacity";
             } else if (userProfile.role === 'leader' && hasSubmittedBid) {
-                cardBgClass = "border border-slate-300 bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300 text-slate-700";
+                cardBgClass = "border border-slate-300 bg-gradient-to-br from-slate-100 to-slate-200 text-slate-700";
             }
 
             if (userProfile.role === 'leader') {
                 if (isAwardedToMyTeam) {
                     bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/30 text-center py-2 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال تیم شما (بودجه: ' + p.allocated_coins + ' سکه)</div>';
+                } else if (isMyTeamAlreadyAwarded) {
+                    bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-600 bg-slate-100 p-2.5 rounded-xl border">🔒 تیم شما در مناقصه دیگری برنده شده است؛ امکان شرکت در سایر مناقصات وجود ندارد.</div>';
+                } else if (p.status === 'awarded') {
+                    bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">منعقد شده با تیم ' + (p.teams ? p.teams.name : '') + '</div>';
                 } else if (hasSubmittedBid) {
                     bidArea = '<div class="mt-3 pt-3 border-t border-slate-300 text-center text-xs font-bold text-slate-700 bg-white/80 py-2.5 px-3 rounded-2xl border border-slate-300 shadow-2xs">' +
                         '🔒 پیشنهاد قطعی شما با مبلغ <span class="font-black text-slate-900">' + myTeamBids[p.id].proposed_coins + ' سکه</span> ثبت شد و در انتظار بررسی استاد است.' +
@@ -1122,7 +1133,7 @@
             
             var awardedTeamInfo = '';
             if (p.awarded_team_id && p.teams) {
-                awardedTeamInfo = '<span class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-xs">✓ تخصیص‌یافته به: ' + p.teams.name + '</span>';
+                awardedTeamInfo = '<span class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-xs">تخصیص‌یافته به: ' + p.teams.name + '</span>';
             } else if (userProfile.role === 'leader' && hasSubmittedBid) {
                 awardedTeamInfo = '<span class="bg-slate-600 text-white text-[11px] px-2.5 py-0.5 rounded-full font-bold">پیشنهاد شما ارسال شد</span>';
             } else {
@@ -1143,7 +1154,7 @@
                             '<p class="text-xs text-slate-600 leading-relaxed bg-white/70 p-2.5 rounded-xl border border-slate-200/80">' + p.specifications + '</p>' +
                             rfpDownloadLink +
                             '<div class="pt-2 flex justify-between items-center text-xs font-bold">' +
-                                '<span>بودجه اسمی: <span class="text-amber-800 font-black">' + p.allocated_coins + ' سکه</span></span>' +
+                                '<span>مبلغ قرارداد: <span class="text-amber-800 font-black text-sm">' + p.allocated_coins + ' سکه</span></span>' +
                                 timeRemainingText +
                             '</div>' +
                         '</div>' +
@@ -1153,7 +1164,7 @@
                             '<input type="text" id="mp-edit-title-' + p.id + '" value="' + p.title + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 font-bold">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">نوع و رده هواپیما:</label>' +
                             '<input type="text" id="mp-edit-type-' + p.id + '" value="' + p.aircraft_type + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
-                            '<label class="text-[10px] font-bold text-slate-600 block">بودجه اسمی (سکه):</label>' +
+                            '<label class="text-[10px] font-bold text-slate-600 block">مبلغ بودجه (سکه):</label>' +
                             '<input type="number" id="mp-edit-coins-' + p.id + '" value="' + p.allocated_coins + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 font-bold">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">شرح و ویژگی‌ها:</label>' +
                             '<textarea id="mp-edit-specs-' + p.id + '" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' + (p.specifications || '') + '</textarea>' +
@@ -1291,19 +1302,24 @@
 
         var teamId = selectedRadio.value;
         var teamName = selectedRadio.getAttribute('data-team-name');
-        var coins = selectedRadio.getAttribute('data-coins');
+        var agreedCoins = selectedRadio.getAttribute('data-coins');
 
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').update({
             awarded_team_id: teamId,
+            allocated_coins: parseFloat(agreedCoins),
             status: 'awarded'
         }).eq('id', currentReviewProjectId);
+
+        await sb.from('teams').update({
+            budget: parseFloat(agreedCoins)
+        }).eq('id', teamId);
 
         if (res.error) {
             showAppAlert('خطا در امضای قرارداد: ' + res.error.message, false);
         } else {
             closeProfessorBidsModal();
-            showAppAlert('قرارداد اصلی پروژه با موفقیت به نام تیم «' + teamName + '» با سقف بودجه مصوب ' + coins + ' سکه منعقد شد.', true, 'سامانه');
+            showAppAlert('قرارداد اصلی پروژه با موفقیت به نام تیم «' + teamName + '» با بودجه مصوب ' + agreedCoins + ' سکه منعقد شد.', true, 'سامانه');
             await loadMasterProjects();
         }
     };
@@ -1408,9 +1424,8 @@
             status: 'pending_leader_signature'
         }]);
 
-        if (res.error) {
-            showAppAlert(res.error.message, false);
-        } else {
+        if (res.error) showAppAlert(res.error.message, false);
+        else {
             await sb.from('tasks').update({ status: 'pending_leader_signature' }).eq('id', currentAcceptTaskId);
             showAppAlert('قرارداد توسط شما امضا شد و جهت بررسی شرایط خاص و امضای کارفرما به سرگروه ارسال گردید.', true);
             closeAcceptModal();
