@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۱)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -37,6 +37,7 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.07);
         }
+        /* ۷. نوارهای بالای KPI به رنگ طلایی */
         .kpi-card {
             position: relative;
             overflow: hidden;
@@ -93,11 +94,11 @@
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6 flex-grow w-full">
 
-        <!-- صفحه ورود -->
+        <!-- صفحه ورود با رنگ‌های شاداب و روشن (۹. سبزآبی، خردلی و طوسی) و ۸. درج نسخه سامانه در پایین صفحه -->
         <section id="auth-section" class="max-w-5xl mx-auto my-auto py-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 
-                <!-- کارت ۱: کارت برندینگ خردلی-طلایی -->
+                <!-- کارت ۱: کارت برندینگ خردلی-طلایی شاداب -->
                 <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#fbbf24] to-[#d97706] border-2 border-amber-200">
                     <div class="absolute -top-20 -left-20 w-64 h-64 bg-white/30 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-yellow-200/30 rounded-full blur-3xl pointer-events-none"></div>
@@ -134,7 +135,7 @@
                     </div>
                 </div>
 
-                <!-- کارت ۲: ثبت نام و ورود سبزآبی شاداب -->
+                <!-- کارت ۲: کارت ثبت‌نام و ورود با تم سبزآبی و طوسی شاداب و روشن -->
                 <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-teal-300 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#0d9488] via-[#14b8a6] to-[#0f766e] text-white">
                     <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-300/20 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-200/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -188,16 +189,16 @@
 
             </div>
 
-            <!-- ۸. درج نسخه 2.2 در پایین صفحه ورودی -->
+            <!-- ۸. درج نسخه سامانه در پایین صفحه ورودی -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.1</span>
             </div>
         </section>
 
         <!-- داشبورد اصلی پس از احراز هویت -->
         <div id="dashboard-section" class="hidden space-y-6">
 
-            <!-- کارت‌های KPI -->
+            <!-- کارت‌های KPI با نوارهای طلایی -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
                     <div>
@@ -327,7 +328,7 @@
                 </div>
             </section>
 
-            <!-- پنل ویژه مدیریت استاد (نمایش KPI اثر منفی فسخ‌ها) -->
+            <!-- پنل ویژه مدیریت استاد (نمایش KPI تعداد فسخ‌های یک‌طرفه و توافقی به عنوان اثر منفی) -->
             <section id="professor-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-6 border border-indigo-200">
                 <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
                     <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
@@ -370,7 +371,7 @@
                     </div>
                 </div>
 
-                <!-- ۶. گزارش KPI اثر منفی فسخ‌های یک‌طرفه و توافقی -->
+                <!-- ۶. گزارش KPI اثر منفی فسخ‌های یک‌طرفه و توافقی برای افراد و سرگروه‌ها -->
                 <div class="border border-rose-200 rounded-2xl p-4 bg-gradient-to-br from-rose-50/50 to-amber-50/40 shadow-sm space-y-3">
                     <h5 class="text-xs font-black text-rose-900 flex items-center gap-2">
                         <span>⚠️</span> گزارش KPI اثر منفی (تعداد فسخ‌های یک‌طرفه و توافقی کاربران و تیم‌ها)
@@ -424,7 +425,7 @@
                 </div>
             </section>
 
-            <!-- بازار تسک‌های باز -->
+            <!-- بازار تسک‌های باز با پالت‌های گرادیانی منسجم برای هر گروه -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
@@ -438,12 +439,12 @@
                 </div>
             </section>
 
-            <!-- ۳ و ۴. قراردادهای هوشمند (اصلاح عناوین) -->
+            <!-- قراردادهای هوشمند -->
             <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
-                        📜 قراردادهای هوشمند
+                        📜 قراردادهای هوشمند و چرخه هوشمند فسخ
                     </h3>
                     <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">مشاهده وضعیت قراردادها</span>
                 </div>
@@ -458,8 +459,8 @@
                                 <th class="p-3 font-bold">پیمانکار</th>
                                 <th class="p-3 font-bold">ارزش قرارداد</th>
                                 <th class="p-3 font-bold">شرایط خاص پیمانکار</th>
-                                <th class="p-3 font-bold">وضعیت قرارداد</th>
-                                <th class="p-3 font-bold">عملیات و فرآیند فسخ و گزارش</th>
+                                <th class="p-3 font-bold">وضعیت فارسی</th>
+                                <th class="p-3 font-bold">عملیات و فرآیند فسخ</th>
                             </tr>
                         </thead>
                         <tbody id="contracts-table-body" class="divide-y divide-slate-100">
@@ -493,7 +494,7 @@
         </div>
     </div>
 
-    <!-- مدال هشدار تکراری بودن کتابچه -->
+    <!-- ۵. مدال جذاب اخطار و هشدار تکراری بودن کتابچه هنگام تعریف تسک -->
     <div id="duplicate-booklet-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">⚠️</div>
@@ -508,7 +509,7 @@
         </div>
     </div>
 
-    <!-- مدال تایید قطعی پیشنهاد مناقصه -->
+    <!-- مدال تایید قطعی پیشنهاد مناقصه توسط سرگروه -->
     <div id="bid-confirm-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">👨‍🏫</div>
@@ -556,11 +557,11 @@
         </div>
     </div>
 
-    <!-- مدال قبول تسک -->
+    <!-- مدال قبول تسک توسط دانشجو با پیشنهاد قیمت و شرایط خاص -->
     <div id="accept-task-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
             <h4 class="text-sm font-black text-[#0f284e]">📝 امضا و ارسال پیشنهاد همکاری به کارفرما</h4>
-            <p class="text-xs text-slate-500">قیمت پیشنهادی و شرایط خاص خود (حداکثر ۲۰۰ کلمه) را ثبت کنید.</p>
+            <p class="text-xs text-slate-500">قیمت پیشنهادی و شرایط خاص خود (حداکثر ۲۰۰ کلمه) را ثبت کنید. در صورت پذیرش سرگروه، مبلغ تسک به قیمت پیشنهادی شما تغییر کرده و از بودجه وی کسر می‌شود.</p>
             
             <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">قیمت پیشنهادی شما (سکه)</label>
@@ -580,11 +581,11 @@
         </div>
     </div>
 
-    <!-- مدال ادله فسخ یک‌طرفه -->
+    <!-- مدال ثبت ادله فسخ یک‌طرفه -->
     <div id="dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
             <h4 class="text-sm font-black text-rose-800">⚖️ ثبت ادله فسخ یک‌طرفه جهت ارجاع به استاد درس</h4>
-            <p class="text-xs text-slate-600 leading-relaxed">دلایل و مستندات خود مبنی بر عدم امکان ادامه همکاری را بنویسید.</p>
+            <p class="text-xs text-slate-600 leading-relaxed">دلایل و مستندات خود مبنی بر عدم امکان ادامه همکاری را بنویسید تا درخواست برای تایید نهایی به استاد ارسال شود.</p>
             <textarea id="dispute-reason-input" rows="4" placeholder="دلایل و مستندات عدم انجام تعهدات..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></textarea>
             <div class="flex gap-2">
                 <button id="confirm-dispute-btn" type="button" class="w-1/2 bg-rose-600 text-white font-bold py-2 rounded-xl text-xs">ارسال درخواست فسخ</button>
@@ -1002,6 +1003,7 @@
         }
     };
 
+    // بارگذاری هوشمند کارت‌های قرارداد اصلی (۳. نمایش کمرنگ برای عموم و پررنگ برای تیم سرگروه برنده)
     async function loadMasterProjects() {
         var sb = getSupabaseClient();
         var res = await sb.from('master_projects').select('*, teams(name)');
@@ -1424,81 +1426,6 @@
         await loadTasks();
     };
 
-    // ۵. آپلود گزارش پیشرفت توسط پیمانکار و ارسال برای کارفرما
-    window.uploadAndSendReport = async function(taskId, contractId) {
-        var sb = getSupabaseClient();
-        var fileInput = document.getElementById('file-' + taskId);
-        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            return showAppAlert('لطفاً ابتدا فایل گزارش پیشرفت را انتخاب کنید.', false);
-        }
-
-        var file = fileInput.files[0];
-        var fName = 'report_' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '');
-        var upRes = await sb.storage.from('reports').upload(fName, file);
-        if (upRes.error) {
-            return showAppAlert('خطا در آپلود فایل: ' + upRes.error.message, false);
-        }
-
-        var downloadUrl = sb.storage.from('reports').getPublicUrl(fName).data.publicUrl;
-
-        await sb.from('tasks').update({
-            submission_url: downloadUrl,
-            status: 'leader_review',
-            leader_approved: false
-        }).eq('id', taskId);
-
-        await sb.from('contracts').update({
-            status: 'leader_review',
-            submission_url: downloadUrl
-        }).eq('id', contractId);
-
-        showAppAlert('گزارش پیشرفت با موفقیت آپلود شد و برای بررسی به سرگروه ارسال گردید.', true);
-        await loadContracts();
-    };
-
-    // ۵. تایید یا رد گزارش توسط سرگروه (کارفرما)
-    window.leaderReportDecision = async function(taskId, contractId, isApproved) {
-        var sb = getSupabaseClient();
-        if (isApproved) {
-            await sb.from('tasks').update({ leader_approved: true, status: 'professor_review' }).eq('id', taskId);
-            await sb.from('contracts').update({ leader_signed: true, status: 'professor_review' }).eq('id', contractId);
-            showAppAlert('گزارش توسط سرگروه تایید و برای ارزیابی نهایی و امتیازدهی به استاد ارسال شد.', true);
-        } else {
-            await sb.from('tasks').update({ status: 'in_progress', submission_url: null }).eq('id', taskId);
-            await sb.from('contracts').update({ status: 'in_progress', submission_url: null }).eq('id', contractId);
-            showAppAlert('گزارش توسط سرگروه رد شد تا پیمانکار فایل اصلاح‌شده را ارسال کند.', false);
-        }
-        await loadContracts();
-    };
-
-    // ۵. ارزیابی نهایی و امتیازدهی سکه توسط استاد (محاسبه: سکه استاد / اسمی کتابچه * سکه توافقی)
-    window.professorAwardFinalPayout = async function(contractId, taskId, bookletId, agreedCoins) {
-        var sb = getSupabaseClient();
-
-        // دریافت ارزش اسمی کتابچه
-        var bRes = await sb.from('booklets').select('nominal_coins').eq('id', bookletId).single();
-        var nominalCoins = bRes.data ? parseFloat(bRes.data.nominal_coins) : 100;
-
-        var professorScoreStr = prompt('استاد گرامی، امتیاز/سکه تخصیصی خود را برای این گزارش وارد کنید (معیار ارزیابی):');
-        if (!professorScoreStr) return;
-        var professorScore = parseFloat(professorScoreStr);
-        if (isNaN(professorScore)) return showAppAlert('مقدار نامعتبر.', false);
-
-        // فرمول: (سکه استاد / سکه اسمی کتابچه) * سکه توافقی با سرگروه
-        var finalPayout = (professorScore / nominalCoins) * parseFloat(agreedCoins);
-        finalPayout = Math.round(finalPayout * 10) / 10; // گرد کردن تا یک اعشار
-
-        await sb.from('contracts').update({
-            status: 'completed',
-            final_payout: finalPayout
-        }).eq('id', contractId);
-
-        await sb.from('tasks').update({ status: 'completed' }).eq('id', taskId);
-
-        showAppAlert('ارزیابی و امتیازدهی با موفقیت ثبت شد.\nمبلغ ' + finalPayout + ' سکه نهایی به کیف پول دانشجو واریز گردید.', true, 'سامانه');
-        await loadContracts();
-    };
-
     // ۳. رای فسخ توافقی: هر دو طرف باید بزنند تا به درخواست فسخ توافقی تبدیل شود
     window.voteMutualTermination = async function(contractId, role) {
         var sb = getSupabaseClient();
@@ -1533,12 +1460,12 @@
         var sb = getSupabaseClient();
         await sb.from('contracts').update({ status: 'terminated', termination_status: 'mutual_terminated' }).eq('id', contractId);
         await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
-        showAppAlert('فسخ توافقی توسط استاد تایید گردید و قرارداد به عنوان «باطل شده به صورت فسخ توافقی» ثبت شد.', true, 'سامانه');
+        showAppAlert('فسخ توافقی توسط استاد تایید گردید و قرارداد به طور کامل فسخ شد.', true, 'سامانه');
         await loadContracts();
         await loadTasks();
     };
 
-    // ۴. ثبت ادله فسخ یک‌طرفه
+    // ۱ و ۲ و ۴. ثبت درخواست فسخ یک‌طرفه با ارسال ادله و بازگشت به جاری در صورت رد استاد
     var currentDisputeContractId = null;
     var currentDisputeTaskId = null;
     window.openDisputeModal = function(contractId, taskId) {
@@ -1565,7 +1492,7 @@
         await loadContracts();
     };
 
-    // ۴. تایید فسخ یک‌طرفه یا رد آن توسط استاد
+    // ۲. تایید فسخ یک‌طرفه یا رد آن توسط استاد (با امکان ارسال پیام به درخواست‌کننده و بازگشت به وضعیت جاری)
     window.confirmDisputeTerminationByProfessor = async function(contractId, taskId, requesterId) {
         var actionType = prompt('استاد گرامی، چه تصمیمی درباره این درخواست فسخ یک‌طرفه دارید؟\nوارد کنید: تایید یا رد');
         if (!actionType) return;
@@ -1574,7 +1501,7 @@
         if (actionType.trim() === 'تایید') {
             await sb.from('contracts').update({ status: 'terminated', termination_status: 'dispute_terminated' }).eq('id', contractId);
             await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
-            showAppAlert('فسخ یک‌طرفه توسط استاد تایید شد و قرارداد به عنوان «باطل شده با فسخ یک طرفه» ثبت گردید.', true, 'سامانه');
+            showAppAlert('فسخ یک‌طرفه توسط استاد تایید شد و قرارداد فسخ گردید.', true, 'سامانه');
         } else if (actionType.trim() === 'رد') {
             var msg = prompt('پیام دلیل رد درخواست را برای کاربر درخواست‌کننده بنویسید:');
             await sb.from('contracts').update({
@@ -1589,7 +1516,7 @@
         await loadTasks();
     };
 
-    // ۶. محاسبه و نمایش تعداد قراردادهای فسخ‌شده به عنوان اثر منفی KPI در پنل استاد
+    // ۶. محاسبه و نمایش تعداد قراردادهای فسخ‌شده به عنوان اثر منفی KPI برای افراد و سرگروه‌ها در پنل استاد
     async function loadProfessorTerminationsKPI() {
         var sb = getSupabaseClient();
         var res = await sb.from('contracts').select('*, teams(name), profiles(full_name)').eq('status', 'terminated');
@@ -1600,23 +1527,17 @@
             return;
         }
 
-        var mutualTermCount = 0;
-        var oneSidedTermCount = 0;
         var teamTermCounts = {};
         var userTermCounts = {};
 
         res.data.forEach(function(c) {
-            if (c.termination_status === 'mutual_terminated') mutualTermCount++;
-            if (c.termination_status === 'dispute_terminated') oneSidedTermCount++;
-
             var tName = c.teams ? c.teams.name : 'تیم نامشخص';
             var uName = c.profiles ? c.profiles.full_name : 'دانشجو';
             teamTermCounts[tName] = (teamTermCounts[tName] || 0) + 1;
             userTermCounts[uName] = (userTermCounts[uName] || 0) + 1;
         });
 
-        var html = '<div class="text-xs font-black text-rose-800 mb-2">کل فسخ‌های توافقی: ' + mutualTermCount + ' | کل فسخ‌های یک‌طرفه: ' + oneSidedTermCount + '</div>';
-        html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">';
+        var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">';
         
         html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">تخلفات و فسخ‌ها به تفکیک تیم‌ها (اثر منفی):</strong>';
         for (var t in teamTermCounts) {
@@ -1634,14 +1555,14 @@
         div.innerHTML = html;
     }
 
-    // ۱. پالت‌های رنگی مدرن و جذاب با گرادیان برای تفکیک تسک‌های هر سرگروه به هنگام ثبت‌نام و ایجاد تیم
+    // ۷. پالت‌های رنگی مدرن و جذاب با گرادیان برای تفکیک تسک‌های سرگروه‌های مختلف
     var teamColorSchemes = [
-        { bgStyle: "background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 100%);", borderStyle: "border: 2.5px solid #059669;", textStyle: "color: #064e3b;", badgeStyle: "background: #059669; color: #fff;" },
-        { bgStyle: "background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);", borderStyle: "border: 2.5px solid #0284c7;", textStyle: "color: #075985;", badgeStyle: "background: #0284c7; color: #fff;" },
-        { bgStyle: "background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 100%);", borderStyle: "border: 2.5px solid #9333ea;", textStyle: "color: #581c87;", badgeStyle: "background: #9333ea; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 100%);", borderStyle: "border: 2px solid #059669;", textStyle: "color: #064e3b;", badgeStyle: "background: #059669; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);", borderStyle: "border: 2px solid #0284c7;", textStyle: "color: #0369a1;", badgeStyle: "background: #0284c7; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 100%);", borderStyle: "border: 2px solid #9333ea;", textStyle: "color: #581c87;", badgeStyle: "background: #9333ea; color: #fff;" },
         { bgStyle: "background: linear-gradient(135deg, #fffbeb 0%, #fde68a 100%);", borderStyle: "border: 2.5px solid #d97706;", textStyle: "color: #78350f;", badgeStyle: "background: #d97706; color: #fff;" },
-        { bgStyle: "background: linear-gradient(135deg, #fff1f2 0%, #fecdd3 100%);", borderStyle: "border: 2.5px solid #e11d48;", textStyle: "color: #881337;", badgeStyle: "background: #e11d48; color: #fff;" },
-        { bgStyle: "background: linear-gradient(135deg, #f0fdfa 0%, #99f6e4 100%);", borderStyle: "border: 2.5px solid #0d9488;", textStyle: "color: #115e59;", badgeStyle: "background: #0d9488; color: #fff;" }
+        { bgStyle: "background: linear-gradient(135deg, #fff1f2 0%, #fecdd3 100%);", borderStyle: "border: 2px solid #e11d48;", textStyle: "color: #881337;", badgeStyle: "background: #e11d48; color: #fff;" },
+        { bgStyle: "background: linear-gradient(135deg, #f0fdfa 0%, #99f6e4 100%);", borderStyle: "border: 2px solid #0d9488;", textStyle: "color: #115e59;", badgeStyle: "background: #0d9488; color: #fff;" }
     ];
 
     function getTeamColor(teamId) {
@@ -1680,7 +1601,7 @@
         }
     };
 
-    // ۱. بارگذاری تسک‌های بازار با رنگ متفاوت برای هر سرگروه
+    // بارگذاری تسک‌های بازار با رنگ‌های متفاوت برای هر گروه (۷)
     async function loadTasks() {
         var sb = getSupabaseClient();
         var res = await sb.from('tasks').select('*, teams(name), booklets(booklet_number, title)').eq('status', 'open');
@@ -1770,10 +1691,41 @@
         }
     }
 
-    // ۲ و ۳ و ۴ و ۵. بارگذاری قراردادها با پشتیبانی کامل از چرخه آپلود فایل، تایید سرگروه، امتیازدهی فرمولی استاد و وضعیت‌های جدید
+    // ۱ و ۳ و ۴. ترجمه هوشمند وضعیت‌ها به فارسی همراه با منطق دقیق دکمه‌های فسخ
+    function getPersianStatusBadge(c, userRole) {
+        if (c.status === 'terminated') {
+            return '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-rose-300">❌ قرارداد فسخ‌شده</span>';
+        }
+        if (c.termination_status === 'mutual_requested') {
+            // ۱. درخواست فسخ توافقی
+            return '<span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-300 animate-pulse">⚠️ درخواست فسخ توافقی</span>';
+        }
+        if (c.termination_status === 'dispute_requested') {
+            // ۱ و ۲. درخواست فسخ یک‌طرفه از سمت کارفرما یا پیمانکار
+            var reqRoleText = (c.termination_requester_id === c.contractor_id) ? 'پیمانکار' : 'کارفرما';
+            return '<span class="bg-red-100 text-red-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-red-300 animate-pulse">⚖️ درخواست فسخ یک‌طرفه (' + reqRoleText + ')</span>';
+        }
+        if (c.status === 'pending_leader_signature') {
+            return '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-200">⏳ در انتظار تایید سرگروه</span>';
+        }
+        if (c.status === 'in_progress') {
+            return '<span class="bg-sky-100 text-sky-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-sky-200">⚙️ در حال انجام</span>';
+        }
+        if (c.status === 'leader_review') {
+            return '<span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-indigo-200">🔍 بررسی گزارش توسط سرگروه</span>';
+        }
+        if (c.status === 'professor_review') {
+            return '<span class="bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-purple-200">🎓 ارزیابی نهایی استاد</span>';
+        }
+        if (c.status === 'completed') {
+            return '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-emerald-300">✓ خاتمه‌یافته و تسویه‌شده</span>';
+        }
+        return '<span class="bg-slate-100 text-slate-800 px-2 py-0.5 rounded text-[11px] font-bold">درحال بررسی</span>';
+    }
+
     async function loadContracts() {
         var sb = getSupabaseClient();
-        var query = sb.from('contracts').select('*, tasks(*, booklets(id, booklet_number, nominal_coins)), teams(name), profiles(full_name)');
+        var query = sb.from('contracts').select('*, tasks(*, booklets(booklet_number)), teams(name), profiles(full_name)');
         
         if (userProfile.role === 'member') query = query.eq('contractor_id', currentUser.id);
         else if (userProfile.role === 'leader' && currentTeam) query = query.eq('team_id', currentTeam.id);
@@ -1801,6 +1753,7 @@
                 var statusBadge = getPersianStatusBadge(c, userProfile.role);
                 var actionCol = '';
 
+                // نمایش پیام رد استاد در صورت وجود
                 var rejectionNotice = '';
                 if (c.professor_rejection_message && c.contractor_id === currentUser.id) {
                     rejectionNotice = '<div class="text-[10px] text-rose-600 font-bold bg-rose-50 p-1.5 rounded mt-1 border border-rose-200">پیام استاد: ' + c.professor_rejection_message + '</div>';
@@ -1813,66 +1766,39 @@
                             '<button onclick="rejectContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-black shadow-sm cursor-pointer">رد درخواست</button>' +
                             '</div>';
                     } else {
-                        actionCol = '<span class="text-slate-400 text-xs">در انتظار تایید کارفرما</span>';
+                        actionCol = '<span class="text-slate-400 text-xs">در انتظار تصمیم کارفرما</span>';
                     }
                 } else if (c.status === 'terminated') {
                     actionCol = '<span class="text-rose-600 font-bold text-xs">قرارداد باطل گردید</span>';
-                } else if (c.status === 'in_progress') {
-                    if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
-                        actionCol = '<div class="space-y-1.5">' +
-                            '<input type="file" id="file-' + c.task_id + '" class="text-[10px] text-slate-600 block w-40 border border-slate-200 p-1 rounded-lg bg-slate-50">' +
-                            '<button onclick="uploadAndSendReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[10px] px-2.5 py-1 rounded-lg font-black shadow-xs cursor-pointer">📤 آپلود و ارسال گزارش</button>' +
-                            '</div>';
-                    } else {
-                        actionCol = '<span class="text-slate-400 text-xs">در حال انجام کار</span>';
-                    }
-                } else if (c.status === 'leader_review') {
-                    if (userProfile.role === 'leader') {
-                        var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-bold block mb-1">📥 دانلود گزارش</a>' : '';
-                        actionCol = '<div>' + fileLink + '<div class="flex gap-1">' +
-                            '<button onclick="leaderReportDecision(\'' + c.task_id + '\', \'' + c.id + '\', true)" class="bg-emerald-600 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">تایید و ارسال به استاد</button>' +
-                            '<button onclick="leaderReportDecision(\'' + c.task_id + '\', \'' + c.id + '\', false)" class="bg-rose-600 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">رد گزارش</button>' +
-                            '</div></div>';
-                    } else {
-                        actionCol = '<span class="text-slate-400 text-xs">در دست بررسی سرگروه</span>';
-                    }
-                } else if (c.status === 'professor_review') {
-                    if (userProfile.role === 'professor') {
-                        var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-bold block mb-1">📥 دانلود گزارش</a>' : '';
-                        var bookletNominal = (c.tasks && c.tasks.booklets) ? c.tasks.booklets.nominal_coins : 100;
-                        actionCol = '<div>' + fileLink + '<button onclick="professorAwardFinalPayout(\'' + c.id + '\', \'' + c.task_id + '\', ' + (c.tasks?.booklets?.id || 1) + ', ' + c.agreed_base_coins + ')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-sm">🎓 ارزیابی و امتیازدهی سکه</button></div>';
-                    } else {
-                        actionCol = '<span class="text-purple-700 font-bold text-xs">در دست بررسی استاد</span>';
-                    }
-                } else if (c.status === 'completed') {
-                    actionCol = '<span class="text-emerald-700 font-bold text-xs">تسویه شده (' + (c.final_payout || 0) + ' سکه)</span>';
-                }
-
-                // دکمه‌های فسخ در انتهای پنل عملیات
-                if (c.status !== 'completed' && c.status !== 'terminated') {
+                } else {
                     if (userProfile.role === 'professor') {
                         var profButtons = '';
+                        // ۱. تایید فسخ توافقی توسط استاد
                         if (c.termination_status === 'mutual_requested') {
-                            profButtons += '<button onclick="confirmMutualTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-amber-600 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">تایید فسخ توافقی</button> ';
+                            profButtons += '<button onclick="confirmMutualTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">تایید فسخ توافقی</button> ';
                         }
+                        // ۱ و ۲. در بخش قراردادهای استاد دکمه تایید فسخ یک طرفه نمایش داده شود
                         if (c.termination_status === 'dispute_requested') {
-                            profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\', \'' + c.termination_requester_id + '\')" class="bg-rose-600 text-white px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">تایید فسخ یک‌طرفه</button>';
+                            profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\', \'' + c.termination_requester_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">تایید فسخ یک‌طرفه</button>';
                         }
-                        if (profButtons) actionCol += '<div class="mt-1 pt-1 border-t border-slate-200">' + profButtons + '</div>';
+                        actionCol = profButtons || '<span class="text-slate-400 text-xs">در حال اجرا</span>';
                     } else {
+                        // ۳ و ۴. قوانین مربوط به دکمه‌های فسخ توافقی و یک‌طرفه
                         var mutualBtnText = 'فسخ توافقی';
-                        if (userProfile.role === 'leader' && c.leader_termination_agreed) mutualBtnText = '✓ تایید شما';
-                        if (userProfile.role === 'member' && c.contractor_termination_agreed) mutualBtnText = '✓ تایید شما';
+                        if (userProfile.role === 'leader' && c.leader_termination_agreed) mutualBtnText = '✓ تایید توافق شما';
+                        if (userProfile.role === 'member' && c.contractor_termination_agreed) mutualBtnText = '✓ تایید توافق شما';
 
-                        var terminationButtons = '<div class="mt-1.5 pt-1.5 border-t border-slate-200 flex gap-1">';
+                        var actionButtonsHtml = '';
+                        // ۳. در صورتی که فسخ یک طرفه زده شود همچنان امکان استفاده از فسخ توافقی وجود دارد
                         if (c.termination_status !== 'dispute_requested') {
-                            terminationButtons += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
+                            actionButtonsHtml += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
                         }
+                        // ۴. در فسخ یک طرفه فقط دکمه فسخ یک طرفه برای سرگروه و دانشجو فعال باشد (اگر قبلاً فسخ توافقی درخواست نشده باشد)
                         if (c.termination_status !== 'mutual_requested') {
-                            terminationButtons += '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>';
+                            actionButtonsHtml += '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 px-2 py-1 rounded-lg text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>';
                         }
-                        terminationButtons += '</div>';
-                        actionCol += terminationButtons;
+
+                        actionCol = actionButtonsHtml;
                     }
                 }
 
@@ -1960,6 +1886,7 @@
         }
     }
 
+    // ۶. نمایش آمار KPI اثر منفی فسخ‌های یک‌طرفه و توافقی در پنل استاد
     async function loadProfessorTerminationsKPI() {
         var sb = getSupabaseClient();
         var res = await sb.from('contracts').select('*, teams(name), profiles(full_name)').eq('status', 'terminated');
@@ -1970,23 +1897,17 @@
             return;
         }
 
-        var mutualTermCount = 0;
-        var oneSidedTermCount = 0;
         var teamTermCounts = {};
         var userTermCounts = {};
 
         res.data.forEach(function(c) {
-            if (c.termination_status === 'mutual_terminated') mutualTermCount++;
-            if (c.termination_status === 'dispute_terminated') oneSidedTermCount++;
-
             var tName = c.teams ? c.teams.name : 'تیم نامشخص';
             var uName = c.profiles ? c.profiles.full_name : 'دانشجو';
             teamTermCounts[tName] = (teamTermCounts[tName] || 0) + 1;
             userTermCounts[uName] = (userTermCounts[uName] || 0) + 1;
         });
 
-        var html = '<div class="text-xs font-black text-rose-800 mb-2">کل فسخ‌های توافقی: ' + mutualTermCount + ' | کل فسخ‌های یک‌طرفه: ' + oneSidedTermCount + '</div>';
-        html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">';
+        var html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">';
         
         html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">تخلفات و فسخ‌ها به تفکیک تیم‌ها (اثر منفی):</strong>';
         for (var t in teamTermCounts) {
@@ -2066,14 +1987,18 @@
         }
     };
 
+    // ۵. هشدار جذاب در صورت تعریف بیش از یک تسک از یک کتابچه توسط سرگروه
+    var pendingTaskInsertData = null;
+
     document.getElementById('create-task-btn').onclick = async function() {
         var bId = document.getElementById('task-booklet-select').value;
         var title = document.getElementById('task-title-input').value.trim();
         var coins = parseFloat(document.getElementById('task-coins-input').value);
         if (!title || isNaN(coins) || coins <= 0 || !currentTeam) return showAppAlert('اطلاعات تسک را کامل وارد نمایید.', false);
-        
+
         var sb = getSupabaseClient();
 
+        // بررسی اینکه آیا قبلاً از این کتابچه تسکی تعریف شده است یا خیر
         var existingBookletTasks = await sb.from('tasks').select('id, title').eq('team_id', currentTeam.id).eq('booklet_id', parseInt(bId)).neq('status', 'terminated');
         if (existingBookletTasks.data && existingBookletTasks.data.length > 0) {
             pendingTaskInsertData = { bookletId: parseInt(bId), title: title, coins: coins };
@@ -2090,7 +2015,6 @@
         pendingTaskInsertData = null;
     };
 
-    var pendingTaskInsertData = null;
     document.getElementById('duplicate-yes-btn').onclick = async function() {
         if (!pendingTaskInsertData) return;
         var data = pendingTaskInsertData;
