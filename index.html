@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۶)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۷)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۲.۶) -->
+            <!-- نسخه سامانه (۲.۲.۷) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2.6</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.2.7</span>
             </div>
         </section>
 
@@ -477,6 +477,41 @@
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/80 mt-12 py-4 px-6 text-center text-xs text-slate-600 font-medium">
         کلیه حقوق مادی و معنوی این سایت متعلق به دانشگاه صنعتی خواجه نصیر الدین طوسی می باشد.
     </footer>
+
+    <!-- مدال جذاب داوری فسخ یک‌طرفه توسط استاد -->
+    <div id="professor-dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border-2 border-rose-300 max-w-lg w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <h4 class="text-sm font-black text-rose-900">⚖️ داوری و تعیین تکلیف درخواست فسخ یک‌طرفه</h4>
+                <button onclick="closeProfessorDisputeModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-amber-50 border border-amber-200 p-3 rounded-2xl text-xs text-amber-900 leading-relaxed">
+                    <strong>ادله ثبت‌شده توسط درخواست‌کننده:</strong>
+                    <p id="prof-dispute-reason-display" class="mt-1 font-medium text-slate-700"></p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-2">انتخاب تصمیم داوری:</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer bg-emerald-50 px-4 py-2.5 rounded-xl border border-emerald-300 flex-1 justify-center font-bold text-emerald-800">
+                            <input type="radio" name="prof_dispute_decision" value="approve" checked class="w-4 h-4 text-emerald-600 focus:ring-emerald-500" onchange="toggleProfDisputeInput()"> تایید فسخ (باطل شدن قرارداد)
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer bg-rose-50 px-4 py-2.5 rounded-xl border border-rose-300 flex-1 justify-center font-bold text-rose-800">
+                            <input type="radio" name="prof_dispute_decision" value="reject" class="w-4 h-4 text-rose-600 focus:ring-rose-500" onchange="toggleProfDisputeInput()"> رد درخواست فسخ
+                        </label>
+                    </div>
+                </div>
+                <div id="prof-dispute-reject-box" class="hidden space-y-1.5 pt-1">
+                    <label class="block text-xs font-bold text-slate-700">متن دلیل رد درخواست (حداکثر ۲۰۰ کلمه):</label>
+                    <textarea id="prof-dispute-reject-msg" rows="4" maxlength="1200" placeholder="دلایل رد درخواست فسخ..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs"></textarea>
+                </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="confirm-prof-dispute-btn" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت و اعمال تصمیم داوری</button>
+                <button onclick="closeProfessorDisputeModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+            </div>
+        </div>
+    </div>
 
     <!-- مدال تاریخچه و لاگ جدول‌بندی شده قرارداد -->
     <div id="contract-history-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
@@ -1516,7 +1551,6 @@
         await loadTasks();
     };
 
-    // آپلود گزارش توسط پیمانکار و ثبت در جدول لاگ تاریخچه (حفظ تمام فایل‌های قبلی)
     window.uploadAndSendReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
@@ -1611,7 +1645,7 @@
         currentRejectTaskId = null;
     };
 
-    // ثبت دلیل رد گزارش در جدول لاگ تفکیکی
+    // ثبت دلیل رد گزارش در لاگ با حفظ رکوردهای قبلی
     document.getElementById('confirm-leader-reject-btn').onclick = async function() {
         var reason = document.getElementById('leader-reject-reason-input').value.trim();
         if (!reason) return showAppAlert('لطفاً دلیل رد گزارش را وارد کنید.', false);
@@ -1742,7 +1776,6 @@
     };
     window.closeDisputeModal = function() { document.getElementById('dispute-modal').classList.add('hidden'); };
 
-    // ثبت ادله درخواست فسخ یک‌طرفه در جدول لاگ
     document.getElementById('confirm-dispute-btn').onclick = async function() {
         var reason = document.getElementById('dispute-reason-input').value.trim();
         if (!reason) return showAppAlert('لطفاً ادله و دلایل خود را بنویسید.', false);
@@ -1776,51 +1809,118 @@
         await loadContracts();
     };
 
-    window.confirmDisputeTerminationByProfessor = async function(contractId, taskId, requesterId) {
+    // متغیرهای موقت برای مدال جذاب داوری استاد
+    var currentProfDisputeContractId = null;
+    var currentProfDisputeTaskId = null;
+
+    window.openProfessorDisputeModal = function(contractId, taskId) {
+        currentProfDisputeContractId = contractId;
+        currentProfDisputeTaskId = taskId;
+        var c = allLoadedContracts.find(function(item) { return item.id === contractId; });
+        var reasonText = c && c.termination_reason ? c.termination_reason : 'بدون ادله ثبت‌شده';
+
+        document.getElementById('prof-dispute-reason-display').innerText = reasonText;
+        document.querySelector('input[name="prof_dispute_decision"][value="approve"]').checked = true;
+        document.getElementById('prof-dispute-reject-msg').value = '';
+        document.getElementById('prof-dispute-reject-box').classList.add('hidden');
+        document.getElementById('professor-dispute-modal').classList.remove('hidden');
+    };
+
+    window.closeProfessorDisputeModal = function() {
+        document.getElementById('professor-dispute-modal').classList.add('hidden');
+        currentProfDisputeContractId = null;
+        currentProfDisputeTaskId = null;
+    };
+
+    window.toggleProfDisputeInput = function() {
+        var decision = document.querySelector('input[name="prof_dispute_decision"]:checked').value;
+        var box = document.getElementById('prof-dispute-reject-box');
+        if (decision === 'reject') {
+            box.classList.remove('hidden');
+        } else {
+            box.classList.add('hidden');
+        }
+    };
+
+    document.getElementById('confirm-prof-dispute-btn').onclick = async function() {
+        var decision = document.querySelector('input[name="prof_dispute_decision"]:checked').value;
         var sb = getSupabaseClient();
-        var { data: cData } = await sb.from('contracts').select('termination_reason, profiles:termination_requester_id(full_name), action_logs').eq('id', contractId).single();
-        var reasonText = cData ? (cData.termination_reason || 'بدون ادله ثبت‌شده') : 'نامشخص';
-        var reqName = (cData && cData.profiles) ? cData.profiles.full_name : 'کاربر';
-
-        var actionType = prompt('⚖️ ادله ارسالی توسط «' + reqName + '»:\n\n"' + reasonText + '"\n\nاستاد گرامی، تصمیم خود را وارد کنید:\nتایید یا رد');
-        if (!actionType) return;
-
-        var existingLogs = cData && cData.action_logs ? cData.action_logs : [];
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === currentProfDisputeContractId; });
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
         var now = new Date();
+        var dateStr = now.toLocaleDateString('fa-IR');
+        var timeStr = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
 
-        if (actionType.trim() === 'تایید') {
+        if (decision === 'approve') {
             existingLogs.push({
                 sender: 'استاد',
-                date: now.toLocaleDateString('fa-IR'),
-                time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+                date: dateStr,
+                time: timeStr,
                 type: 'تایید فسخ یک طرفه و باطل شدن قرارداد'
             });
-            await sb.from('contracts').update({ status: 'terminated', termination_status: 'dispute_terminated', action_logs: existingLogs }).eq('id', contractId);
-            await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
-            showAppAlert('فسخ یک‌طرفه توسط استاد تایید و در لاگ ثبت گردید.', true, 'سامانه');
-        } else if (actionType.trim() === 'رد') {
-            var msg = prompt('پیام دلیل رد درخواست را برای کاربر درخواست‌کننده بنویسید:');
+
+            await sb.from('contracts').update({ 
+                status: 'terminated', 
+                termination_status: 'dispute_terminated', 
+                action_logs: existingLogs 
+            }).eq('id', currentProfDisputeContractId);
+
+            await sb.from('tasks').update({ status: 'terminated' }).eq('id', currentProfDisputeTaskId);
+
+            closeProfessorDisputeModal();
+            showAppAlert('فسخ یک‌طرفه توسط استاد تایید شد و قرارداد باطل گردید.', true, 'سامانه');
+        } else {
+            var msg = document.getElementById('prof-dispute-reject-msg').value.trim();
+            if (!msg) return showAppAlert('لطفاً دلیل رد درخواست فسخ را وارد کنید.', false);
+            var words = msg.split(/\s+/).length;
+            if (words > 200) return showAppAlert('متن دلیل رد درخواست نمی‌تواند بیش از ۲۰۰ کلمه باشد.', false);
+
             existingLogs.push({
                 sender: 'استاد',
-                date: now.toLocaleDateString('fa-IR'),
-                time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+                date: dateStr,
+                time: timeStr,
                 type: 'رد درخواست فسخ یک طرفه',
-                details: msg || 'درخواست رد شد'
+                details: msg
             });
+
             await sb.from('contracts').update({
                 termination_status: 'none',
                 termination_type: null,
                 termination_reason: null,
-                professor_rejection_message: msg || 'درخواست فسخ یک‌طرفه شما توسط استاد رد شد.',
+                professor_rejection_message: msg,
                 action_logs: existingLogs
-            }).eq('id', contractId);
-            showAppAlert('درخواست فسخ توسط استاد رد شد.', true, 'سامانه');
+            }).eq('id', currentProfDisputeContractId);
+
+            closeProfessorDisputeModal();
+            showAppAlert('درخواست فسخ توسط استاد رد شد و در لاگ ثبت گردید.', true, 'سامانه');
         }
+
         await loadContracts();
         await loadTasks();
     };
 
-    // تابع باز کردن پنجره تاریخچه و لاگ جدول‌بندی شده دقیق
+    // تایید فسخ توافقی توسط استاد
+    window.confirmMutualTerminationByProfessor = async function(contractId, taskId) {
+        if (!confirm('استاد گرامی، آیا با تایید نهایی فسخ توافقی این قرارداد موافقت می‌فرمایید؟')) return;
+        var sb = getSupabaseClient();
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+        var now = new Date();
+        existingLogs.push({
+            sender: 'استاد',
+            date: now.toLocaleDateString('fa-IR'),
+            time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+            type: 'تایید فسخ توافقی'
+        });
+
+        await sb.from('contracts').update({ status: 'terminated', termination_status: 'mutual_terminated', action_logs: existingLogs }).eq('id', contractId);
+        await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
+        showAppAlert('فسخ توافقی توسط استاد تایید گردید.', true, 'سامانه');
+        await loadContracts();
+        await loadTasks();
+    };
+
+    // باز کردن پنجره تاریخچه و لاگ جدول‌بندی شده دقیق
     window.openContractHistory = function(contractId) {
         var c = allLoadedContracts.find(function(item) { return item.id === contractId; });
         if (!c) return showAppAlert('اطلاعات قرارداد یافت نشد.', false);
@@ -2179,7 +2279,7 @@
                         var profButtons = '';
                         if (c.termination_status === 'dispute_requested' || c.termination_status === 'mutual_requested') {
                             if (c.termination_status === 'dispute_requested') {
-                                profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\', \'' + c.termination_requester_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">⚖️ داوری فسخ یک‌طرفه</button>';
+                                profButtons += '<button onclick="openProfessorDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">⚖️ داوری فسخ یک‌طرفه</button>';
                             }
                             if (c.termination_status === 'mutual_requested') {
                                 profButtons += '<button onclick="confirmMutualTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">🤝 تایید فسخ توافقی</button>';
