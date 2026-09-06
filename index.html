@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۵)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۶)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۲.۵) -->
+            <!-- نسخه سامانه (۲.۲.۶) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2.5</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.2.6</span>
             </div>
         </section>
 
@@ -443,7 +443,7 @@
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
-                        📜 قراردادهای هوشمند و نظارت عالیه (برای مشاهده تاریخچه کامل و لاگ‌ها، روی نام کتابچه کلیک کنید)
+                        📜 قراردادهای هوشمند و نظارت عالیه (جهت مشاهده جدول تفکیکی لاگ‌ها، روی نام کتابچه کلیک کنید)
                     </h3>
                     <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">دسترسی کامل به تاریخچه مکاتبات و مستندات</span>
                 </div>
@@ -452,7 +452,7 @@
                     <table class="w-full text-right text-xs">
                         <thead class="bg-slate-100/90 text-slate-700 border-b border-slate-200">
                             <tr>
-                                <th class="p-3 font-bold">کتابچه (مشاهده تاریخچه 🔍)</th>
+                                <th class="p-3 font-bold">کتابچه (مشاهده لاگ جدول 🔍)</th>
                                 <th class="p-3 font-bold">تیم</th>
                                 <th class="p-3 font-bold">تسک</th>
                                 <th class="p-3 font-bold">پیمانکار</th>
@@ -478,20 +478,36 @@
         کلیه حقوق مادی و معنوی این سایت متعلق به دانشگاه صنعتی خواجه نصیر الدین طوسی می باشد.
     </footer>
 
-    <!-- مدال تاریخچه و لاگ کامل قرارداد -->
+    <!-- مدال تاریخچه و لاگ جدول‌بندی شده قرارداد -->
     <div id="contract-history-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-indigo-200 max-w-2xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+        <div class="bg-white border-2 border-indigo-200 max-w-4xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-3">
                 <div>
-                    <h4 class="text-sm font-black text-[#0f284e]">📜 تاریخچه کامل رویدادها، مستندات و لاگ مکاتبات قرارداد</h4>
+                    <h4 class="text-sm font-black text-[#0f284e]">📜 لاگ جامع و جدول‌بندی شده مکاتبات، فایل‌ها و رویدادهای قرارداد</h4>
                     <p id="history-modal-subtitle" class="text-[11px] text-slate-500 mt-0.5"></p>
                 </div>
                 <button onclick="closeContractHistoryModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
-            <div id="history-content-container" class="space-y-3 text-xs text-slate-700">
-                <!-- محتوای لاگ‌ها به صورت دینامیک درج می‌شود -->
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-right text-xs border border-slate-200 rounded-xl overflow-hidden">
+                    <thead class="bg-indigo-50 text-indigo-950 font-bold">
+                        <tr>
+                            <th class="p-3 text-center">ردیف</th>
+                            <th class="p-3">ارسال‌کننده</th>
+                            <th class="p-3 text-center">تاریخ</th>
+                            <th class="p-3 text-center">ساعت</th>
+                            <th class="p-3">نوع پیام / رویداد</th>
+                            <th class="p-3 text-center">فایل ارسال‌شده</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body" class="divide-y divide-slate-200">
+                        <!-- ردیف‌های جدول لاگ به صورت دینامیک درج می‌شود -->
+                    </tbody>
+                </table>
             </div>
-            <button onclick="closeContractHistoryModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs mt-2">بستن پنجره تاریخچه</button>
+
+            <button onclick="closeContractHistoryModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs mt-2 cursor-pointer">بستن پنجره لاگ</button>
         </div>
     </div>
 
@@ -499,7 +515,7 @@
     <div id="leader-reject-report-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
             <h4 class="text-sm font-black text-rose-800">❌ ثبت دلیل و پیام رد گزارش توسط سرگروه</h4>
-            <p class="text-xs text-slate-600 leading-relaxed">دلایل و ایرادات گزارش را وارد کنید (حداکثر ۵۰۰ کلمه). این پیام برای پیمانکار و استاد در لاگ ثبت خواهد شد.</p>
+            <p class="text-xs text-slate-600 leading-relaxed">دلایل و ایرادات گزارش را وارد کنید (حداکثر ۵۰۰ کلمه). این پیام به عنوان لاگ برای پیمانکار و استاد ثبت خواهد شد.</p>
             <textarea id="leader-reject-reason-input" rows="5" placeholder="دلیل رد گزارش..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs"></textarea>
             <div class="flex gap-2">
                 <button id="confirm-leader-reject-btn" type="button" class="w-1/2 bg-rose-600 text-white font-bold py-2 rounded-xl text-xs">ثبت و ارسال به پیمانکار</button>
@@ -633,7 +649,7 @@
             <div class="text-xs text-slate-600 leading-relaxed space-y-3 text-justify">
                 <p><strong>۱. احراز هویت و دسترسی:</strong> دسترسی به پروفایل کاربری پس از ثبت‌نام منوط به تایید هویت و صلاحیت توسط استاد درس است.</p>
                 <p><strong>۲. سقف مجاز سکه:</strong> سقف قرارداد برای هر دانشجو حداکثر ۲۵۰ سکه است و پذیرش قرارداد مازاد مسدود می‌باشد.</p>
-                <p><strong>۳. نظارت عالیه و تاریخچه لاگ‌ها:</strong> سامانه مجهز به ثبت کامل تاریخچه لاگ‌ها، مستندات و مکاتبات است تا در صورت بروز اختلاف، استاد به تمام سوابق دسترسی داشته باشد.</p>
+                <p><strong>۳. نظارت عالیه و تاریخچه لاگ‌ها:</strong> سامانه مجهز به ثبت کامل تاریخچه لاگ‌ها با جدول تفکیکی مستندات و مکاتبات است تا در صورت بروز اختلاف، استاد به تمام سوابق با تاریخ و ساعت دسترسی داشته باشد.</p>
             </div>
             <button onclick="closeTermsModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs">مطالعه شد و مورد تایید است</button>
         </div>
@@ -656,7 +672,7 @@
     var SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co";
     var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1waWRhamphbGxhcGxjY3l0bmpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxOTQxNjQsImV4cCI6MjEwMzc3MDE2NH0.W6qh3zA-V0QLqLNfPybLpWhjagORAG3_aiBRMoEeUyI";
     var client = null;
-    var allLoadedContracts = []; // برای دسترسی آسان به اطلاعات قراردادها جهت نمایش تاریخچه
+    var allLoadedContracts = []; 
 
     function getSupabaseClient() {
         if (client) return client;
@@ -1500,6 +1516,7 @@
         await loadTasks();
     };
 
+    // آپلود گزارش توسط پیمانکار و ثبت در جدول لاگ تاریخچه (حفظ تمام فایل‌های قبلی)
     window.uploadAndSendReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
@@ -1516,6 +1533,24 @@
 
         var downloadUrl = sb.storage.from('reports').getPublicUrl(fName).data.publicUrl;
 
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+
+        var now = new Date();
+        var dateStr = now.toLocaleDateString('fa-IR');
+        var timeStr = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
+
+        var newLogItem = {
+            sender: 'پیمانکار',
+            date: dateStr,
+            time: timeStr,
+            type: 'ارسال گزارش پیشرفت',
+            file_url: downloadUrl,
+            file_name: file.name
+        };
+
+        existingLogs.push(newLogItem);
+
         await sb.from('tasks').update({
             submission_url: downloadUrl,
             status: 'leader_review',
@@ -1524,18 +1559,40 @@
 
         await sb.from('contracts').update({
             status: 'leader_review',
-            submission_url: downloadUrl
+            submission_url: downloadUrl,
+            action_logs: existingLogs
         }).eq('id', contractId);
 
-        showAppAlert('گزارش پیشرفت با موفقیت آپلود شد و وضعیت قرارداد به «در انتظار تایید سرگروه» تغییر یافت.', true);
+        showAppAlert('گزارش پیشرفت با موفقیت آپلود شد و به همراه تاریخ و زمان در لاگ ثبت گردید.', true);
         await loadContracts();
     };
 
     window.leaderApproveReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+
+        var now = new Date();
+        var dateStr = now.toLocaleDateString('fa-IR');
+        var timeStr = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
+
+        existingLogs.push({
+            sender: 'کارفرما',
+            date: dateStr,
+            time: timeStr,
+            type: 'تایید گزارش و ارسال به استاد',
+            file_url: null,
+            file_name: null
+        });
+
         await sb.from('tasks').update({ leader_approved: true, status: 'professor_review' }).eq('id', taskId);
-        await sb.from('contracts').update({ leader_signed: true, status: 'professor_review' }).eq('id', contractId);
-        showAppAlert('گزارش توسط سرگروه تایید شد. وضعیت قرارداد به «در انتظار ارزیابی استاد» تبدیل گردید.', true);
+        await sb.from('contracts').update({ 
+            leader_signed: true, 
+            status: 'professor_review', 
+            action_logs: existingLogs 
+        }).eq('id', contractId);
+
+        showAppAlert('گزارش توسط سرگروه تایید شد و رویداد در لاگ ثبت گردید.', true);
         await loadContracts();
         await loadTasks();
     };
@@ -1554,7 +1611,7 @@
         currentRejectTaskId = null;
     };
 
-    // ذخیره تاریخچه پیام‌های رد گزارش به صورت تجمیعی جهت حفظ لاگ‌ها
+    // ثبت دلیل رد گزارش در جدول لاگ تفکیکی
     document.getElementById('confirm-leader-reject-btn').onclick = async function() {
         var reason = document.getElementById('leader-reject-reason-input').value.trim();
         if (!reason) return showAppAlert('لطفاً دلیل رد گزارش را وارد کنید.', false);
@@ -1562,23 +1619,33 @@
         if (words > 500) return showAppAlert('دلیل رد گزارش نمی‌تواند بیش از ۵۰۰ کلمه باشد.', false);
 
         var sb = getSupabaseClient();
-        
-        // دریافت اطلاعات قبلی قرارداد جهت الحاق لاگ پیام رد گزارش
         var targetContract = allLoadedContracts.find(function(c) { return c.id === currentRejectContractId; });
-        var oldMsg = targetContract && targetContract.leader_rejection_message ? targetContract.leader_rejection_message : '';
-        var timestamp = new Date().toLocaleDateString('fa-IR') + ' ' + new Date().toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
-        var newEntry = '📅 [' + timestamp + ']: ' + reason;
-        var updatedMessages = (oldMsg ? oldMsg + '\n\n' : '') + newEntry;
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+
+        var now = new Date();
+        var dateStr = now.toLocaleDateString('fa-IR');
+        var timeStr = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
+
+        existingLogs.push({
+            sender: 'کارفرما',
+            date: dateStr,
+            time: timeStr,
+            type: 'ادله رد گزارش',
+            details: reason,
+            file_url: null,
+            file_name: null
+        });
 
         await sb.from('tasks').update({ status: 'in_progress', submission_url: null }).eq('id', currentRejectTaskId);
         await sb.from('contracts').update({ 
             status: 'in_progress', 
             submission_url: null, 
-            leader_rejection_message: updatedMessages 
+            action_logs: existingLogs,
+            leader_rejection_message: reason 
         }).eq('id', currentRejectContractId);
 
         closeLeaderRejectModal();
-        showAppAlert('گزارش رد شد و در تاریخچه لاگ‌ها ثبت گردید. وضعیت قرارداد به «در حال انجام» بازگشت.', true);
+        showAppAlert('گزارش رد شد و در جدول لاگ‌ها ثبت گردید. وضعیت به «در حال انجام» بازگشت.', true);
         await loadContracts();
         await loadTasks();
     };
@@ -1597,9 +1664,21 @@
         var finalPayout = (professorScore / nominalCoins) * parseFloat(agreedCoins);
         finalPayout = Math.round(finalPayout * 10) / 10;
 
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+        var now = new Date();
+        existingLogs.push({
+            sender: 'استاد',
+            date: now.toLocaleDateString('fa-IR'),
+            time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+            type: 'ارزیابی و اتمام یافته',
+            details: 'تخصیص ' + finalPayout + ' سکه نهایی'
+        });
+
         await sb.from('contracts').update({
             status: 'completed',
-            final_payout: finalPayout
+            final_payout: finalPayout,
+            action_logs: existingLogs
         }).eq('id', contractId);
 
         await sb.from('tasks').update({ status: 'completed' }).eq('id', taskId);
@@ -1620,6 +1699,17 @@
         var leaderAgreed = (role === 'leader') ? true : cData.leader_termination_agreed;
         var memberAgreed = (role === 'member') ? true : cData.contractor_termination_agreed;
 
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+        var now = new Date();
+        existingLogs.push({
+            sender: role === 'leader' ? 'کارفرما' : 'پیمانکار',
+            date: now.toLocaleDateString('fa-IR'),
+            time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+            type: 'درخواست فسخ توافقی'
+        });
+        updatePayload.action_logs = existingLogs;
+
         if (leaderAgreed && memberAgreed) {
             updatePayload.status = 'terminated';
             updatePayload.termination_status = 'mutual_terminated';
@@ -1634,9 +1724,9 @@
         if (leaderAgreed && memberAgreed) {
             var { data: tData } = await sb.from('contracts').select('task_id').eq('id', contractId).single();
             if (tData) await sb.from('tasks').update({ status: 'terminated' }).eq('id', tData.task_id);
-            showAppAlert('هر دو طرف با فسخ توافقی موافقت کردند. قرارداد به صورت خودکار باطل شد و به عنوان «باطل شده (فسخ توافقی)» ثبت گردید.', true);
+            showAppAlert('هر دو طرف با فسخ توافقی موافقت کردند. قرارداد به صورت خودکار باطل شد.', true);
         } else {
-            showAppAlert('درخواست فسخ توافقی ثبت شد و وضعیت قرارداد به «درخواست فسخ توافقی» تغییر یافت. در انتظار تایید طرف مقابل است.', true);
+            showAppAlert('درخواست فسخ توافقی ثبت شد و در انتظار تایید طرف مقابل است.', true);
         }
         await loadContracts();
         await loadTasks();
@@ -1652,50 +1742,85 @@
     };
     window.closeDisputeModal = function() { document.getElementById('dispute-modal').classList.add('hidden'); };
 
+    // ثبت ادله درخواست فسخ یک‌طرفه در جدول لاگ
     document.getElementById('confirm-dispute-btn').onclick = async function() {
         var reason = document.getElementById('dispute-reason-input').value.trim();
         if (!reason) return showAppAlert('لطفاً ادله و دلایل خود را بنویسید.', false);
         var sb = getSupabaseClient();
+
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === currentDisputeContractId; });
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+        var now = new Date();
+        var senderRole = (userProfile.role === 'leader') ? 'کارفرما' : 'پیمانکار';
+
+        existingLogs.push({
+            sender: senderRole,
+            date: now.toLocaleDateString('fa-IR'),
+            time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+            type: 'ادله درخواست فسخ یک طرفه',
+            details: reason,
+            file_url: null,
+            file_name: null
+        });
+
         await sb.from('contracts').update({
             termination_status: 'dispute_requested',
             termination_type: 'one_sided',
             termination_reason: reason,
-            termination_requester_id: currentUser.id
+            termination_requester_id: currentUser.id,
+            action_logs: existingLogs
         }).eq('id', currentDisputeContractId);
 
-        showAppAlert('درخواست فسخ یک‌طرفه ثبت شد. وضعیت قرارداد به «درخواست فسخ یک طرفه» تغییر یافت و جهت داوری به استاد ارسال گردید.', true);
+        showAppAlert('درخواست فسخ یک‌طرفه و ادله شما به همراه تاریخ و ساعت در لاگ ثبت شد.', true);
         closeDisputeModal();
         await loadContracts();
     };
 
     window.confirmDisputeTerminationByProfessor = async function(contractId, taskId, requesterId) {
         var sb = getSupabaseClient();
-        var { data: cData } = await sb.from('contracts').select('termination_reason, profiles:termination_requester_id(full_name)').eq('id', contractId).single();
+        var { data: cData } = await sb.from('contracts').select('termination_reason, profiles:termination_requester_id(full_name), action_logs').eq('id', contractId).single();
         var reasonText = cData ? (cData.termination_reason || 'بدون ادله ثبت‌شده') : 'نامشخص';
         var reqName = (cData && cData.profiles) ? cData.profiles.full_name : 'کاربر';
 
         var actionType = prompt('⚖️ ادله ارسالی توسط «' + reqName + '»:\n\n"' + reasonText + '"\n\nاستاد گرامی، تصمیم خود را وارد کنید:\nتایید یا رد');
         if (!actionType) return;
 
+        var existingLogs = cData && cData.action_logs ? cData.action_logs : [];
+        var now = new Date();
+
         if (actionType.trim() === 'تایید') {
-            await sb.from('contracts').update({ status: 'terminated', termination_status: 'dispute_terminated' }).eq('id', contractId);
+            existingLogs.push({
+                sender: 'استاد',
+                date: now.toLocaleDateString('fa-IR'),
+                time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+                type: 'تایید فسخ یک طرفه و باطل شدن قرارداد'
+            });
+            await sb.from('contracts').update({ status: 'terminated', termination_status: 'dispute_terminated', action_logs: existingLogs }).eq('id', contractId);
             await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
-            showAppAlert('فسخ یک‌طرفه توسط استاد تایید شد و قرارداد به عنوان «باطل شده (فسخ یک طرفه)» ثبت گردید.', true, 'سامانه');
+            showAppAlert('فسخ یک‌طرفه توسط استاد تایید و در لاگ ثبت گردید.', true, 'سامانه');
         } else if (actionType.trim() === 'رد') {
             var msg = prompt('پیام دلیل رد درخواست را برای کاربر درخواست‌کننده بنویسید:');
+            existingLogs.push({
+                sender: 'استاد',
+                date: now.toLocaleDateString('fa-IR'),
+                time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+                type: 'رد درخواست فسخ یک طرفه',
+                details: msg || 'درخواست رد شد'
+            });
             await sb.from('contracts').update({
                 termination_status: 'none',
                 termination_type: null,
                 termination_reason: null,
-                professor_rejection_message: msg || 'درخواست فسخ یک‌طرفه شما توسط استاد رد شد.'
+                professor_rejection_message: msg || 'درخواست فسخ یک‌طرفه شما توسط استاد رد شد.',
+                action_logs: existingLogs
             }).eq('id', contractId);
-            showAppAlert('درخواست فسخ رد شد و وضعیت قرارداد به حالت جاری بازگشت.', true, 'سامانه');
+            showAppAlert('درخواست فسخ توسط استاد رد شد.', true, 'سامانه');
         }
         await loadContracts();
         await loadTasks();
     };
 
-    // تابع باز کردن پنجره تاریخچه و لاگ کامل قرارداد
+    // تابع باز کردن پنجره تاریخچه و لاگ جدول‌بندی شده دقیق
     window.openContractHistory = function(contractId) {
         var c = allLoadedContracts.find(function(item) { return item.id === contractId; });
         if (!c) return showAppAlert('اطلاعات قرارداد یافت نشد.', false);
@@ -1707,32 +1832,32 @@
 
         document.getElementById('history-modal-subtitle').innerText = 'کتابچه ' + bookletNum + ' (' + bookletTitle + ') | تیم: ' + teamName + ' | پیمانکار: ' + contractorName;
 
-        var container = document.getElementById('history-content-container');
-        container.innerHTML = '';
+        var tbody = document.getElementById('history-table-body');
+        tbody.innerHTML = '';
 
-        var html = '<div class="space-y-3 p-2 bg-slate-50 rounded-2xl border border-slate-200">';
-        html += '<div class="p-3 bg-white rounded-xl shadow-2xs border border-slate-200"><strong>📌 مشخصات اصلی قرارداد:</strong><br>• تسک: ' + (c.tasks?.title || '-') + '<br>• ارزش قرارداد: ' + (c.agreed_base_coins || 0) + ' سکه<br>• شرایط خاص پیمانکار: ' + (c.contractor_terms || 'ثبت نشده') + '</div>';
+        var logs = c.action_logs && Array.isArray(c.action_logs) ? c.action_logs : [];
 
-        if (c.submission_url) {
-            html += '<div class="p-3 bg-blue-50/70 rounded-xl shadow-2xs border border-blue-200"><strong>📁 آخرین سند گزارش ارسال‌شده:</strong><br><a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black">📥 دانلود فایل ارسالی</a></div>';
+        if (logs.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400">هنوز رویداد یا فایلی در این قرارداد ثبت نشده است.</td></tr>';
         } else {
-            html += '<div class="p-3 bg-white rounded-xl shadow-2xs border border-slate-200 text-slate-400">📁 هیچ فایل گزارشی برای این قرارداد هنوز ارسال نشده است.</div>';
+            logs.forEach(function(log, idx) {
+                var fileCell = log.file_url ? '<a href="' + log.file_url + '" target="_blank" class="text-blue-700 underline font-black">📥 دانلود فایل (' + (log.file_name || 'گزارش') + ')</a>' : '<span class="text-slate-400">-</span>';
+                var typeDesc = log.type;
+                if (log.details) {
+                    typeDesc += '<br><span class="text-[11px] text-slate-600 font-normal">توضیح: ' + log.details + '</span>';
+                }
+
+                tbody.innerHTML += '<tr class="hover:bg-slate-50 transition">' +
+                    '<td class="p-3 text-center font-bold">' + (idx + 1) + '</td>' +
+                    '<td class="p-3 font-black text-[#0f284e]">' + (log.sender || 'سامانه') + '</td>' +
+                    '<td class="p-3 text-center text-slate-600">' + (log.date || '-') + '</td>' +
+                    '<td class="p-3 text-center text-slate-600">' + (log.time || '-') + '</td>' +
+                    '<td class="p-3 font-medium text-slate-800">' + typeDesc + '</td>' +
+                    '<td class="p-3 text-center">' + fileCell + '</td>' +
+                    '</tr>';
+            });
         }
 
-        if (c.leader_rejection_message) {
-            html += '<div class="p-3 bg-rose-50 rounded-xl shadow-2xs border border-rose-200"><strong>❌ تاریخچه پیام‌ها و دلایل رد گزارش توسط سرگروه:</strong><pre class="mt-1 whitespace-pre-wrap font-sans text-rose-900">' + c.leader_rejection_message + '</pre></div>';
-        }
-
-        if (c.termination_reason) {
-            html += '<div class="p-3 bg-amber-50 rounded-xl shadow-2xs border border-amber-200"><strong>⚖️ ادله و مستندات فسخ یک‌طرفه:</strong><p class="mt-1 text-amber-900">' + c.termination_reason + '</p></div>';
-        }
-
-        if (c.professor_rejection_message) {
-            html += '<div class="p-3 bg-indigo-50 rounded-xl shadow-2xs border border-indigo-100"><strong>🎓 نظر و قضاوت استاد:</strong><p class="mt-1 text-indigo-900">' + c.professor_rejection_message + '</p></div>';
-        }
-
-        html += '</div>';
-        container.innerHTML = html;
         document.getElementById('contract-history-modal').classList.remove('hidden');
     };
 
@@ -1969,7 +2094,7 @@
         else if (userProfile.role === 'leader' && currentTeam) query = query.eq('team_id', currentTeam.id);
 
         var res = await query;
-        allLoadedContracts = res.data || []; // ذخیره جهت استفاده در مدال تاریخچه
+        allLoadedContracts = res.data || []; 
         var tbody = document.getElementById('contracts-table-body');
         tbody.innerHTML = '';
 
@@ -1995,17 +2120,12 @@
                 var documentsAndMessages = '';
                 if (c.leader_rejection_message) {
                     documentsAndMessages += '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
-                        '❌ <strong>پیام‌های رد گزارش:</strong><br>' + c.leader_rejection_message +
+                        '❌ <strong>آخرین پیام رد گزارش:</strong><br>' + c.leader_rejection_message +
                         '</div>';
                 }
                 if (c.termination_reason) {
                     documentsAndMessages += '<div class="text-[10px] text-amber-800 font-bold bg-amber-50 p-2 rounded mt-1.5 border border-amber-200 leading-relaxed">' +
                         '⚖️ <strong>ادله فسخ یک‌طرفه:</strong><br>' + c.termination_reason +
-                        '</div>';
-                }
-                if (c.professor_rejection_message) {
-                    documentsAndMessages += '<div class="text-[10px] text-indigo-800 font-bold bg-indigo-50 p-2 rounded mt-1.5 border border-indigo-100 leading-relaxed">' +
-                        '🎓 <strong>نظر استاد:</strong><br>' + c.professor_rejection_message +
                         '</div>';
                 }
 
@@ -2015,8 +2135,6 @@
                             '<button onclick="signContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\', ' + c.agreed_base_coins + ')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-black shadow-sm cursor-pointer">پذیرش و کسر بودجه</button>' +
                             '<button onclick="rejectContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-black shadow-sm cursor-pointer">رد درخواست</button>' +
                             '</div>';
-                    } else if (userProfile.role === 'professor') {
-                        actionCol = '<span class="text-slate-500 text-xs">در انتظار تایید کارفرما</span>';
                     } else {
                         actionCol = '<span class="text-slate-400 text-xs">در انتظار تایید کارفرما</span>';
                     }
@@ -2028,14 +2146,12 @@
                             '<input type="file" id="file-' + c.task_id + '" class="text-[10px] text-slate-600 block w-40 border border-slate-200 p-1 rounded-lg bg-slate-50">' +
                             '<button onclick="uploadAndSendReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[10px] px-2.5 py-1 rounded-lg font-black shadow-xs cursor-pointer">📤 آپلود و ارسال گزارش</button>' +
                             '</div>';
-                    } else if (userProfile.role === 'professor') {
-                        actionCol = '<span class="text-slate-500 text-xs">در حال انجام توسط تیم</span>';
                     } else {
                         actionCol = '<span class="text-slate-400 text-xs">در حال انجام کار</span>';
                     }
                 } else if (c.status === 'leader_review') {
                     if (userProfile.role === 'leader') {
-                        var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود و مشاهده گزارش ارسال شده</a>' : '<span class="text-slate-400 block mb-1">فایلی آپلود نشده</span>';
+                        var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش جدید</a>' : '<span class="text-slate-400 block mb-1">فایلی آپلود نشده</span>';
                         actionCol = '<div>' + fileLink + '<div class="flex gap-1.5">' +
                             '<button onclick="leaderApproveReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-xs">تایید گزارش</button>' +
                             '<button onclick="openLeaderRejectModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-xs">رد گزارش</button>' +
@@ -2063,10 +2179,10 @@
                         var profButtons = '';
                         if (c.termination_status === 'dispute_requested' || c.termination_status === 'mutual_requested') {
                             if (c.termination_status === 'dispute_requested') {
-                                profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\', \'' + c.termination_requester_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">⚖️ داوری و تعیین تکلیف فسخ یک‌طرفه</button>';
+                                profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\', \'' + c.termination_requester_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">⚖️ داوری فسخ یک‌طرفه</button>';
                             }
                             if (c.termination_status === 'mutual_requested') {
-                                profButtons += '<button onclick="confirmMutualTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">🤝 تایید نهایی فسخ توافقی</button>';
+                                profButtons += '<button onclick="confirmMutualTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">🤝 تایید فسخ توافقی</button>';
                             }
                         }
                         if (profButtons) actionCol += '<div class="mt-2 pt-2 border-t border-slate-200">' + profButtons + '</div>';
@@ -2087,10 +2203,9 @@
                     }
                 }
 
-                // قابل کلیک کردن روی نام کتابچه جهت گشودن پنجره تاریخچه و لاگ کامل
                 var bookletCellHtml = '<a href="javascript:void(0)" onclick="openContractHistory(\'' + c.id + '\')" class="font-black text-[#0f284e] hover:text-indigo-600 underline decoration-indigo-300 decoration-2 transition flex items-center gap-1">' +
                     '<span>کتابچه ' + (c.tasks?.booklets?.booklet_number || '-') + '</span>' +
-                    '<span class="text-[10px] bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded border border-indigo-200">🔍 لاگ</span>' +
+                    '<span class="text-[10px] bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded border border-indigo-200">🔍 لاگ جدول</span>' +
                     '</a>';
 
                 tbody.innerHTML += '<tr class="hover:bg-slate-50/80 transition">' +
