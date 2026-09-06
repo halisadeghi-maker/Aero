@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۳)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۴)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۲.۳) -->
+            <!-- نسخه سامانه (۲.۲.۴) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2.3</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.2.4</span>
             </div>
         </section>
 
@@ -443,9 +443,9 @@
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
-                        📜 قراردادهای هوشمند
+                        📜 قراردادهای هوشمند و نظارت عالیه
                     </h3>
-                    <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">مشاهده وضعیت قراردادها</span>
+                    <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">دسترسی کامل به مکاتبات و مستندات</span>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -457,9 +457,9 @@
                                 <th class="p-3 font-bold">تسک</th>
                                 <th class="p-3 font-bold">پیمانکار</th>
                                 <th class="p-3 font-bold">ارزش قرارداد</th>
-                                <th class="p-3 font-bold">شرایط خاص پیمانکار</th>
+                                <th class="p-3 font-bold">شرایط خاص و مستندات مکاتبات</th>
                                 <th class="p-3 font-bold">وضعیت قرارداد</th>
-                                <th class="p-3 font-bold">عملیات و فرآیند بررسی گزارش و فسخ</th>
+                                <th class="p-3 font-bold">عملیات نظارت، ارزیابی و قضاوت</th>
                             </tr>
                         </thead>
                         <tbody id="contracts-table-body" class="divide-y divide-slate-100">
@@ -482,7 +482,7 @@
     <div id="leader-reject-report-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
             <h4 class="text-sm font-black text-rose-800">❌ ثبت دلیل و پیام رد گزارش توسط سرگروه</h4>
-            <p class="text-xs text-slate-600 leading-relaxed">دلایل و ایرادات گزارش را وارد کنید (حداکثر ۵۰۰ کلمه). این پیام برای پیمانکار ارسال خواهد شد.</p>
+            <p class="text-xs text-slate-600 leading-relaxed">دلایل و ایرادات گزارش را وارد کنید (حداکثر ۵۰۰ کلمه). این پیام برای پیمانکار و استاد قابل مشاهده خواهد بود.</p>
             <textarea id="leader-reject-reason-input" rows="5" placeholder="دلیل رد گزارش..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs"></textarea>
             <div class="flex gap-2">
                 <button id="confirm-leader-reject-btn" type="button" class="w-1/2 bg-rose-600 text-white font-bold py-2 rounded-xl text-xs">ثبت و ارسال به پیمانکار</button>
@@ -616,8 +616,7 @@
             <div class="text-xs text-slate-600 leading-relaxed space-y-3 text-justify">
                 <p><strong>۱. احراز هویت و دسترسی:</strong> دسترسی به پروفایل کاربری پس از ثبت‌نام منوط به تایید هویت و صلاحیت توسط استاد درس است.</p>
                 <p><strong>۲. سقف مجاز سکه:</strong> سقف قرارداد برای هر دانشجو حداکثر ۲۵۰ سکه است و پذیرش قرارداد مازاد مسدود می‌باشد.</p>
-                <p><strong>۳. مناقصات پروژه‌های اصلی:</strong> سرگروه‌هایی که قبلاً برنده مناقصه شده و قرارداد منعقد کرده‌اند، امکان شرکت در مناقصات باز دیگر را ندارند.</p>
-                <p><strong>۴. امضای دوطرفه و فسخ:</strong> قرارداد پس از امضای پیمانکار و کارفرما نافذ می‌شود. فسخ توافقی نیازمند درخواست هر دو طرف و سپس تایید نهایی است. فسخ یک‌طرفه با درخواست یکی از طرفین و تایید مستقیم استاد درس انجام می‌شود.</p>
+                <p><strong>۳. نظارت عالیه استاد:</strong> استاد درس به عنوان رگولاتور ارشد به تمام مکاتبات، گزارش‌ها و ادله فسخ دسترسی کامل جهت قضاوت دارد.</p>
             </div>
             <button onclick="closeTermsModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs">مطالعه شد و مورد تایید است</button>
         </div>
@@ -1483,7 +1482,6 @@
         await loadTasks();
     };
 
-    // (بند ۱) بعد از آپلود و ارسال گزارش توسط پیمانکار، وضعیت قرارداد به "در انتظار تایید سرگروه" تغییر کند.
     window.uploadAndSendReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
         var fileInput = document.getElementById('file-' + taskId);
@@ -1495,7 +1493,7 @@
         var fName = 'report_' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '');
         var upRes = await sb.storage.from('reports').upload(fName, file);
         if (upRes.error) {
-            return showAppAlert('خطا در آپلود فایل: ' + jupRes.error.message, false);
+            return showAppAlert('خطا در آپلود فایل: ' + upRes.error.message, false);
         }
 
         var downloadUrl = sb.storage.from('reports').getPublicUrl(fName).data.publicUrl;
@@ -1516,7 +1514,6 @@
         await loadContracts();
     };
 
-    // (بند ۴) در صورتی که سرگروه گزارش نهایی را تایید کرد، وضعیت قرارداد به "در انتظار ارزیابی استاد" تبدیل شود.
     window.leaderApproveReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
         await sb.from('tasks').update({ leader_approved: true, status: 'professor_review' }).eq('id', taskId);
@@ -1526,7 +1523,6 @@
         await loadTasks();
     };
 
-    // (بند ۳) مدیریت رد گزارش توسط سرگروه همراه با مدال ۵۰۰ کلمه‌ای و بازگشت به وضعیت "در حال انجام"
     var currentRejectContractId = null;
     var currentRejectTaskId = null;
     window.openLeaderRejectModal = function(contractId, taskId) {
@@ -1556,7 +1552,7 @@
         }).eq('id', currentRejectContractId);
 
         closeLeaderRejectModal();
-        showAppAlert('گزارش رد شد و پیام شما برای پیمانکار ارسال گردید. وضعیت قرارداد به «در حال انجام» بازگشت.', true);
+        showAppAlert('گزارش رد شد و پیام شما برای پیمانکار و استاد ثبت گردید. وضعیت قرارداد به «در حال انجام» بازگشت.', true);
         await loadContracts();
         await loadTasks();
     };
@@ -1898,6 +1894,7 @@
         var sb = getSupabaseClient();
         var query = sb.from('contracts').select('*, tasks(*, booklets(id, booklet_number, nominal_coins)), teams(name), profiles(full_name)');
         
+        // اگر کاربر استاد باشد، به تمامی قراردادها دسترسی دارد تا نظارت عالیه و قضاوت انجام دهد.
         if (userProfile.role === 'member') query = query.eq('contractor_id', currentUser.id);
         else if (userProfile.role === 'leader' && currentTeam) query = query.eq('team_id', currentTeam.id);
 
@@ -1924,16 +1921,21 @@
                 var statusBadge = getPersianStatusBadge(c, userProfile.role);
                 var actionCol = '';
 
-                // (بند ۳) نمایش پیام رد گزارش در بخش بررسی گزارش برای پیمانکار
-                var rejectionNotice = '';
-                if (c.leader_rejection_message && c.contractor_id === currentUser.id) {
-                    rejectionNotice = '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
-                        '⚠️ <strong>پیام سرگروه در رد گزارش:</strong><br>' + c.leader_rejection_message +
+                // نمایش مکاتبات، پیام‌های رد گزارش سرگروه و ادله فسخ یک‌طرفه برای همه نقش‌ها (به‌ویژه استاد و پیمانکار)
+                var documentsAndMessages = '';
+                if (c.leader_rejection_message) {
+                    documentsAndMessages += '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
+                        '❌ <strong>پیام رد گزارش توسط سرگروه:</strong><br>' + c.leader_rejection_message +
                         '</div>';
                 }
-                if (c.professor_rejection_message && c.contractor_id === currentUser.id) {
-                    rejectionNotice += '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
-                        '⚠️ <strong>پیام استاد:</strong><br>' + c.professor_rejection_message +
+                if (c.termination_reason) {
+                    documentsAndMessages += '<div class="text-[10px] text-amber-800 font-bold bg-amber-50 p-2 rounded mt-1.5 border border-amber-200 leading-relaxed">' +
+                        '⚖️ <strong>ادله فسخ یک‌طرفه:</strong><br>' + c.termination_reason +
+                        '</div>';
+                }
+                if (c.professor_rejection_message) {
+                    documentsAndMessages += '<div class="text-[10px] text-indigo-800 font-bold bg-indigo-50 p-2 rounded mt-1.5 border border-indigo-100 leading-relaxed">' +
+                        '🎓 <strong>نظر استاد:</strong><br>' + c.professor_rejection_message +
                         '</div>';
                 }
 
@@ -1943,6 +1945,8 @@
                             '<button onclick="signContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\', ' + c.agreed_base_coins + ')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-black shadow-sm cursor-pointer">پذیرش و کسر بودجه</button>' +
                             '<button onclick="rejectContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-black shadow-sm cursor-pointer">رد درخواست</button>' +
                             '</div>';
+                    } else if (userProfile.role === 'professor') {
+                        actionCol = '<span class="text-slate-500 text-xs">در انتظار تایید کارفرما</span>';
                     } else {
                         actionCol = '<span class="text-slate-400 text-xs">در انتظار تایید کارفرما</span>';
                     }
@@ -1954,40 +1958,48 @@
                             '<input type="file" id="file-' + c.task_id + '" class="text-[10px] text-slate-600 block w-40 border border-slate-200 p-1 rounded-lg bg-slate-50">' +
                             '<button onclick="uploadAndSendReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[10px] px-2.5 py-1 rounded-lg font-black shadow-xs cursor-pointer">📤 آپلود و ارسال گزارش</button>' +
                             '</div>';
+                    } else if (userProfile.role === 'professor') {
+                        actionCol = '<span class="text-slate-500 text-xs">در حال انجام توسط تیم</span>';
                     } else {
                         actionCol = '<span class="text-slate-400 text-xs">در حال انجام کار</span>';
                     }
                 } else if (c.status === 'leader_review') {
-                    // (بند ۲ و ۳) در پنل سرگروه فایل ارسال شده قابل مشاهده و دانلود بوده و دو گزینه "تایید گزارش" و "رد گزارش" ظاهر شود.
                     if (userProfile.role === 'leader') {
                         var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود و مشاهده گزارش ارسال شده</a>' : '<span class="text-slate-400 block mb-1">فایلی آپلود نشده</span>';
                         actionCol = '<div>' + fileLink + '<div class="flex gap-1.5">' +
                             '<button onclick="leaderApproveReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-xs">تایید گزارش</button>' +
                             '<button onclick="openLeaderRejectModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-xs">رد گزارش</button>' +
                             '</div></div>';
+                    } else if (userProfile.role === 'professor') {
+                        var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش (مشاهده ناظر)</a>' : '<span class="text-slate-400 text-xs">فایلی موجود نیست</span>';
+                        actionCol = '<div>' + fileLink + '<span class="text-indigo-700 font-bold text-xs">در دست بررسی کارفرما</span></div>';
                     } else {
                         actionCol = '<span class="text-indigo-700 font-bold text-xs">در انتظار تایید سرگروه</span>';
                     }
                 } else if (c.status === 'professor_review') {
-                    // (بند ۴) گزارش در پنل استاد قابل دانلود و نمره‌دهی (سکه) باشد.
+                    var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش نهایی</a>' : '';
                     if (userProfile.role === 'professor') {
-                        var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش نهایی</a>' : '';
                         actionCol = '<div>' + fileLink + '<button onclick="professorAwardFinalPayout(\'' + c.id + '\', \'' + c.task_id + '\', ' + (c.tasks?.booklets?.id || 1) + ', ' + c.agreed_base_coins + ')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-sm">🎓 ارزیابی و امتیازدهی سکه</button></div>';
                     } else {
-                        var fileLink = (userProfile.role === 'leader' && c.submission_url) ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline block mb-1">📥 دانلود گزارش</a>' : '';
                         actionCol = '<div>' + fileLink + '<span class="text-purple-700 font-bold text-xs">در انتظار ارزیابی استاد</span></div>';
                     }
                 } else if (c.status === 'completed') {
-                    actionCol = '<span class="text-emerald-700 font-bold text-xs">اتمام‌یافته (' + (c.final_payout || 0) + ' سکه)</span>';
+                    var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline block mb-1">📥 دانلود گزارش تسویه‌شده</a>' : '';
+                    actionCol = '<div>' + fileLink + '<span class="text-emerald-700 font-bold text-xs">اتمام‌یافته (' + (c.final_payout || 0) + ' سکه)</span></div>';
                 }
 
                 if (c.status !== 'completed' && c.status !== 'terminated') {
                     if (userProfile.role === 'professor') {
                         var profButtons = '';
-                        if (c.termination_status === 'dispute_requested') {
-                            profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\', \'' + c.termination_requester_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">تایید فسخ یک‌طرفه</button>';
+                        if (c.termination_status === 'dispute_requested' || c.termination_status === 'mutual_requested') {
+                            if (c.termination_status === 'dispute_requested') {
+                                profButtons += '<button onclick="confirmDisputeTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\', \'' + c.termination_requester_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">⚖️ داوری و تعیین تکلیف فسخ یک‌طرفه</button>';
+                            }
+                            if (c.termination_status === 'mutual_requested') {
+                                profButtons += '<button onclick="confirmMutualTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">🤝 تایید نهایی فسخ توافقی</button>';
+                            }
                         }
-                        if (profButtons) actionCol += '<div class="mt-1 pt-1 border-t border-slate-200">' + profButtons + '</div>';
+                        if (profButtons) actionCol += '<div class="mt-2 pt-2 border-t border-slate-200">' + profButtons + '</div>';
                     } else {
                         var mutualBtnText = 'فسخ توافقی';
                         if (userProfile.role === 'leader' && c.leader_termination_agreed) mutualBtnText = '✓ تایید شما';
@@ -2011,7 +2023,7 @@
                     '<td class="p-3">' + (c.tasks ? c.tasks.title : '') + '</td>' +
                     '<td class="p-3">' + (c.profiles ? c.profiles.full_name : '') + '</td>' +
                     '<td class="p-3 font-black text-amber-700 text-sm">' + (c.agreed_base_coins || 0) + ' سکه</td>' +
-                    '<td class="p-3 text-slate-600 max-w-xs">' + (c.contractor_terms || 'شرایط عادی') + rejectionNotice + '</td>' +
+                    '<td class="p-3 text-slate-600 max-w-xs">' + (c.contractor_terms || 'شرایط عادی') + documentsAndMessages + '</td>' +
                     '<td class="p-3">' + statusBadge + '</td>' +
                     '<td class="p-3">' + actionCol + '</td>' +
                     '</tr>';
