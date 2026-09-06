@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱۷)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱۸)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۲.۱۷) -->
+            <!-- نسخه سامانه (۲.۲.۱۸) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2.17</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.2.18</span>
             </div>
         </section>
 
@@ -2198,6 +2198,49 @@
                     '<div class="mt-4 pt-2">' + actionArea + '</div>' +
                 '</div>';
         }
+    }
+
+    function getPersianStatusBadgeSync(c, userRole) {
+        if (c.status === 'terminated') {
+            if (c.termination_status === 'mutual_terminated') {
+                return '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-rose-300">باطل شده (فسخ توافقی)</span>';
+            }
+            if (c.termination_status === 'dispute_terminated') {
+                return '<span class="bg-red-100 text-red-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-red-300">باطل شده (فسخ یک طرفه)</span>';
+            }
+            return '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-rose-300">❌ قرارداد فسخ‌شده</span>';
+        }
+
+        if (c.termination_status === 'mutual_requested') {
+            return '<span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-300 animate-pulse">درخواست فسخ توافقی</span>';
+        }
+
+        if (c.termination_status === 'dispute_requested' || c.status === 'dispute_requested') {
+            var reqRoleText = (c.termination_requester_id === c.contractor_id) ? '(پیمانکار)' : '(کارفرما)';
+            return '<span class="bg-red-100 text-red-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-red-300 animate-pulse">درخواست فسخ یک طرفه ' + reqRoleText + '</span>';
+        }
+
+        if (c.status === 'pending_leader_signature') {
+            return '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-200">⏳ در انتظار تایید سرگروه</span>';
+        }
+
+        if (c.status === 'in_progress') {
+            return '<span class="bg-sky-100 text-sky-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-sky-200">در حال انجام</span>';
+        }
+
+        if (c.status === 'leader_review') {
+            return '<span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-indigo-200">در انتظار تایید سرگروه</span>';
+        }
+
+        if (c.status === 'professor_review') {
+            return '<span class="bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-purple-200">در انتظار ارزیابی استاد</span>';
+        }
+
+        if (c.status === 'completed') {
+            return '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-emerald-300">اتمام یافته</span>';
+        }
+
+        return '<span class="bg-slate-100 text-slate-800 px-2 py-0.5 rounded text-[11px] font-bold">درحال بررسی</span>';
     }
 
     async function loadBooklets() {
