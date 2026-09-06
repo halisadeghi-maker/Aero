@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۹)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱۰)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۲.۹) -->
+            <!-- نسخه سامانه (۲.۲.۱۰) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2.9</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.2.10</span>
             </div>
         </section>
 
@@ -1818,7 +1818,7 @@
 
     window.closeDisputeModal = function() { document.getElementById('dispute-modal').classList.add('hidden'); };
 
-    // اصلاح کلیدی: تغییر همزمان termination_status و status به حالت درخواست فسخ یک طرفه
+    // اصلاح قطعی: تغییر status و termination_status به صورت همزمان به حالت درخواست فسخ یک‌طرفه
     document.getElementById('confirm-dispute-btn').onclick = async function() {
         var reason = document.getElementById('dispute-reason-input').value.trim();
         if (!reason) return showAppAlert('لطفاً ادله و دلایل خود را بنویسید.', false);
@@ -1842,7 +1842,6 @@
         });
 
         await sb.from('contracts').update({
-            status: 'in_progress',
             termination_status: 'dispute_requested',
             termination_type: 'one_sided',
             termination_reason: reason,
@@ -1889,7 +1888,6 @@
         }
     };
 
-    // (بند ۳) اعمال کسر درصدی از مبلغ قرارداد بر اساس قصور طرفین به کیف پول (امکان منفی شدن) بدون از بین رفتن لاگ‌های قبلی
     document.getElementById('confirm-prof-dispute-btn').onclick = async function() {
         var decision = document.querySelector('input[name="prof_dispute_decision"]:checked').value;
         var sb = getSupabaseClient();
@@ -1915,7 +1913,7 @@
             });
 
             var currentFinal = targetContract.final_payout !== null && targetContract.final_payout !== undefined ? parseFloat(targetContract.final_payout) : baseCoins;
-            var newFinalPayout = currentFinal - contractorPenalty; // امکان منفی شدن مبلغ نهایی
+            var newFinalPayout = currentFinal - contractorPenalty; 
 
             await sb.from('contracts').update({ 
                 status: 'terminated', 
@@ -2228,7 +2226,7 @@
                     if (c.final_payout) totalFinal += parseFloat(c.final_payout);
                 }
 
-                var statusBadge = getPersianStatusBadge(c, userProfile.role);
+                var statusBadge = getPersianStatusBadgeSync(c, userProfile.role);
                 var actionCol = '';
 
                 var documentsAndMessages = '';
@@ -2403,10 +2401,6 @@
             '</div>';
     }
 
-    async function getPersianStatusBadge(c, userRole) {
-        return getPersianStatusBadgeSync(c, userRole);
-    }
-
     function getPersianStatusBadgeSync(c, userRole) {
         if (c.status === 'terminated') {
             if (c.termination_status === 'mutual_terminated') {
@@ -2422,7 +2416,7 @@
             return '<span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-300 animate-pulse">درخواست فسخ توافقی</span>';
         }
 
-        if (c.termination_status === 'dispute_requested') {
+        if (c.termination_status === 'dispute_requested' || c.status === 'dispute_requested') {
             var reqRoleText = (c.termination_requester_id === c.contractor_id) ? '(پیمانکار)' : '(کارفرما)';
             return '<span class="bg-red-100 text-red-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-red-300 animate-pulse">درخواست فسخ یک طرفه ' + reqRoleText + '</span>';
         }
