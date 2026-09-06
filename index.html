@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۲)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه 2.2.2 -->
+            <!-- نسخه سامانه 2.2.1 -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2.2</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.2.1</span>
             </div>
         </section>
 
@@ -241,7 +241,7 @@
                         <h3 class="text-base font-black text-amber-900 flex items-center gap-2">
                             <span>🏆</span> مناقصات پروژه‌های اصلی استاد (کارفرمای عالی) و سرگروه‌ها
                         </h3>
-                        <p class="text-xs text-amber-700 font-medium">سرگروهی که در مناقصه‌ای برنده شده باشد، امکان شرکت در سایر مناقصات باز را ندارد.</p>
+                        <p class="text-xs text-amber-700 font-medium">سرگروهی که در مناقصه برنده شده و قرارداد منعقد کرده، امکان شرکت در سایر مناقصات باز را ندارد.</p>
                     </div>
                     <span class="text-xs bg-gradient-to-r from-amber-500 to-amber-600 text-white px-3.5 py-1 rounded-full font-bold shadow-xs">مناقصه هوشمند کلاسی</span>
                 </div>
@@ -370,6 +370,14 @@
                     </div>
                 </div>
 
+                <!-- گزارش KPI اثر منفی فسخ‌ها -->
+                <div class="border border-rose-200 rounded-2xl p-4 bg-gradient-to-br from-rose-50/50 to-amber-50/40 shadow-sm space-y-3">
+                    <h5 class="text-xs font-black text-rose-900 flex items-center gap-2">
+                        <span>⚠️</span> گزارش KPI اثر منفی (تعداد فسخ‌های یک‌طرفه و توافقی کاربران و تیم‌ها)
+                    </h5>
+                    <div id="professor-kpi-terminations" class="text-xs space-y-1 text-slate-700">در حال بارگذاری آمار تخلفات و فسخ‌ها...</div>
+                </div>
+
                 <!-- تایید یا رد کاربران جدید و مدیریت حذف اعضا -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div class="border border-slate-200 rounded-2xl p-4 bg-white shadow-sm">
@@ -423,7 +431,7 @@
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500 ml-2 animate-pulse"></span>
                         📋 بازار تسک‌های باز و نیازمند پیمانکار
                     </h3>
-                    <span class="text-xs text-slate-500 font-medium">کارت‌های هر سرگروه دارای رنگ‌بندی گرادیانی مدرن و متمایز است</span>
+                    <span class="text-xs text-slate-500 font-medium">تسک‌های هر گروه دارای رنگ‌بندی گرادیانی کاملاً یکتا و متمایز هستند</span>
                 </div>
                 <div id="tasks-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="col-span-full py-8 text-center text-slate-400 text-xs font-medium">در حال بارگذاری تسک‌ها...</div>
@@ -435,7 +443,7 @@
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
                     <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
-                        📜 قراردادهای هوشمند و چرخه فسخ توافقی / یک‌طرفه
+                        📜 قراردادهای هوشمند
                     </h3>
                     <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">مشاهده وضعیت قراردادها</span>
                 </div>
@@ -451,7 +459,7 @@
                                 <th class="p-3 font-bold">ارزش قرارداد</th>
                                 <th class="p-3 font-bold">شرایط خاص پیمانکار</th>
                                 <th class="p-3 font-bold">وضعیت قرارداد</th>
-                                <th class="p-3 font-bold">عملیات و فرآیند فسخ</th>
+                                <th class="p-3 font-bold">عملیات و فرآیند فسخ و گزارش</th>
                             </tr>
                         </thead>
                         <tbody id="contracts-table-body" class="divide-y divide-slate-100">
@@ -485,7 +493,22 @@
         </div>
     </div>
 
-    <!-- مدال تایید قطعی پیشنهاد مناقصه توسط سرگروه -->
+    <!-- مدال هشدار تکراری بودن کتابچه -->
+    <div id="duplicate-booklet-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+            <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">⚠️</div>
+            <div>
+                <h4 class="text-base font-black text-[#0f284e]">اخطار تکرار کتابچه</h4>
+                <p id="duplicate-modal-text" class="text-xs text-slate-700 font-bold mt-2 leading-relaxed whitespace-pre-line"></p>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="duplicate-yes-btn" type="button" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">بله، اطمینان دارم</button>
+                <button onclick="closeDuplicateModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مدال تایید قطعی پیشنهاد مناقصه -->
     <div id="bid-confirm-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">👨‍🏫</div>
@@ -533,11 +556,11 @@
         </div>
     </div>
 
-    <!-- مدال قبول تسک توسط دانشجو با پیشنهاد قیمت و شرایط خاص -->
+    <!-- مدال قبول تسک -->
     <div id="accept-task-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
             <h4 class="text-sm font-black text-[#0f284e]">📝 امضا و ارسال پیشنهاد همکاری به کارفرما</h4>
-            <p class="text-xs text-slate-500">قیمت پیشنهادی و شرایط خاص خود (حداکثر ۲۰۰ کلمه) را ثبت کنید. در صورت پذیرش سرگروه، مبلغ تسک به قیمت پیشنهادی شما تغییر کرده و از بودجه وی کسر می‌شود.</p>
+            <p class="text-xs text-slate-500">قیمت پیشنهادی و شرایط خاص خود (حداکثر ۲۰۰ کلمه) را ثبت کنید.</p>
             
             <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">قیمت پیشنهادی شما (سکه)</label>
@@ -557,15 +580,15 @@
         </div>
     </div>
 
-    <!-- مدال ثبت ادله فسخ یک‌طرفه -->
+    <!-- مدال ادله فسخ یک‌طرفه -->
     <div id="dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
             <h4 class="text-sm font-black text-rose-800">⚖️ ثبت ادله فسخ یک‌طرفه جهت ارجاع به استاد درس</h4>
-            <p class="text-xs text-slate-600 leading-relaxed">دلایل و مستندات خود مبنی بر عدم امکان ادامه همکاری را بنویسید تا درخواست برای بررسی به استاد ارسال شود.</p>
+            <p class="text-xs text-slate-600 leading-relaxed">دلایل و مستندات خود مبنی بر عدم امکان ادامه همکاری را بنویسید.</p>
             <textarea id="dispute-reason-input" rows="4" placeholder="دلایل و مستندات عدم انجام تعهدات..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></textarea>
             <div class="flex gap-2">
                 <button id="confirm-dispute-btn" type="button" class="w-1/2 bg-rose-600 text-white font-bold py-2 rounded-xl text-xs">ارسال درخواست فسخ</button>
-                <button onclick="closeDisputeModal()" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
+                <button onclick="closeDisputeModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
             </div>
         </div>
     </div>
@@ -581,7 +604,7 @@
                 <p><strong>۱. احراز هویت و دسترسی:</strong> دسترسی به پروفایل کاربری پس از ثبت‌نام منوط به تایید هویت و صلاحیت توسط استاد درس است.</p>
                 <p><strong>۲. سقف مجاز سکه:</strong> سقف قرارداد برای هر دانشجو حداکثر ۲۵۰ سکه است و پذیرش قرارداد مازاد مسدود می‌باشد.</p>
                 <p><strong>۳. مناقصات پروژه‌های اصلی:</strong> سرگروه‌ها موظفند در مهلت مناقصه پیشنهاد قیمت خود را برای پروژه‌های اصلی ثبت کنند.</p>
-                <p><strong>۴. امضای دوطرفه و فسخ:</strong> قرارداد پس از امضای پیمانکار و کارفرما نافذ می‌شود. فسخ توافقی با تایید هر دو طرف به صورت خودکار انجام می‌شود. فسخ یک‌طرفه با ارسال درخواست و داوری استاد درس انجام می‌شود.</p>
+                <p><strong>۴. امضای دوطرفه و فسخ:</strong> قرارداد پس از امضای پیمانکار و کارفرما نافذ می‌شود. فسخ توافقی نیازمند تایید هر دو طرف و سپس تایید نهایی استاد است. فسخ یک‌طرفه با داوری و تایید مستقیم استاد درس انجام می‌شود.</p>
             </div>
             <button onclick="closeTermsModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs">مطالعه شد و مورد تایید است</button>
         </div>
@@ -865,10 +888,12 @@
             if (userProfile.role === 'professor') {
                 document.getElementById('professor-panel').classList.remove('hidden');
                 document.getElementById('stat-team').innerText = "ناظر عالی (استاد)";
+                await loadProfessorTerminationsKPI();
                 await loadPendingUsers();
                 await loadProfessorSummary();
             } else if (userProfile.role === 'leader') {
                 document.getElementById('leader-panel').classList.remove('hidden');
+                document.getElementById('leader-budget-panel').classList.remove('hidden');
                 var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
                 currentTeam = tRes.data;
                 if (!currentTeam) {
@@ -1553,15 +1578,15 @@
         }
 
         if (c.status === 'pending_leader_signature') {
-            return '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-200">⏳ در انتظار امضای کارفرما</span>';
+            return '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[11px] font-bold">⏳ در انتظار امضای کارفرما</span>';
         }
 
         if (c.status === 'in_progress') {
-            return '<span class="bg-sky-100 text-sky-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-sky-200">در حال انجام</span>'; // ۵
+            return '<span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded text-[11px] font-bold">در حال انجام</span>'; // ۵
         }
 
         if (c.status === 'completed') {
-            return '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-emerald-300">اتمام یافته</span>'; // ۶
+            return '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[11px] font-bold">اتمام یافته</span>'; // ۶
         }
 
         return '<span class="bg-slate-100 text-slate-800 px-2 py-0.5 rounded text-[11px] font-bold">درحال بررسی</span>';
