@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۷)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۸)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۲.۷) -->
+            <!-- نسخه سامانه (۲.۲.۸) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2.7</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.2.8</span>
             </div>
         </section>
 
@@ -478,11 +478,28 @@
         کلیه حقوق مادی و معنوی این سایت متعلق به دانشگاه صنعتی خواجه نصیر الدین طوسی می باشد.
     </footer>
 
-    <!-- مدال جذاب داوری فسخ یک‌طرفه توسط استاد -->
+    <!-- مدال جذاب هشدار فسخ یک‌طرفه -->
+    <div id="dispute-warning-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+            <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">⚠️</div>
+            <div>
+                <h4 class="text-base font-black text-amber-900">هشدار قوانین داوری و فسخ یک‌طرفه</h4>
+                <p class="text-xs text-slate-700 font-bold mt-2 leading-relaxed">
+                    داوری فسخ برعهده استاد بوده و **۲۰ درصد مبلغ قرارداد** به عنوان جریمه به طرف متخلف یا هر دو طرف اعمال خواهد شد. تشخیص میزان قصور هر یک از طرفین برعهده استاد است.
+                </p>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="confirm-dispute-warning-btn" type="button" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ادامه و ثبت ادله فسخ</button>
+                <button onclick="closeDisputeWarningModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مدال جذاب داوری فسخ یک‌طرفه توسط استاد با تعیین درصد قصور -->
     <div id="professor-dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border-2 border-rose-300 max-w-lg w-full rounded-3xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
-                <h4 class="text-sm font-black text-rose-900">⚖️ داوری و تعیین تکلیف درخواست فسخ یک‌طرفه</h4>
+                <h4 class="text-sm font-black text-rose-900">⚖️ داوری و تعیین درصد قصور فسخ یک‌طرفه</h4>
                 <button onclick="closeProfessorDisputeModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
             <div class="space-y-3">
@@ -494,16 +511,30 @@
                     <label class="block text-xs font-bold text-slate-700 mb-2">انتخاب تصمیم داوری:</label>
                     <div class="flex gap-4">
                         <label class="flex items-center gap-2 cursor-pointer bg-emerald-50 px-4 py-2.5 rounded-xl border border-emerald-300 flex-1 justify-center font-bold text-emerald-800">
-                            <input type="radio" name="prof_dispute_decision" value="approve" checked class="w-4 h-4 text-emerald-600 focus:ring-emerald-500" onchange="toggleProfDisputeInput()"> تایید فسخ (باطل شدن قرارداد)
+                            <input type="radio" name="prof_dispute_decision" value="approve" checked class="w-4 h-4 text-emerald-600 focus:ring-emerald-500" onchange="toggleProfDisputeInput()"> تایید فسخ (باطل شدن)
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer bg-rose-50 px-4 py-2.5 rounded-xl border border-rose-300 flex-1 justify-center font-bold text-rose-800">
                             <input type="radio" name="prof_dispute_decision" value="reject" class="w-4 h-4 text-rose-600 focus:ring-rose-500" onchange="toggleProfDisputeInput()"> رد درخواست فسخ
                         </label>
                     </div>
                 </div>
+
+                <!-- تعیین درصد قصور طرفین (درصد از مبلغ قرارداد) -->
+                <div class="grid grid-cols-2 gap-3 pt-1">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">درصد قصور کارفرما (سرگروه):</label>
+                        <input type="number" id="fault-leader-percent" value="0" min="0" max="100" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-700 mb-1">درصد قصور پیمانکار (دانشجو):</label>
+                        <input type="number" id="fault-contractor-percent" value="0" min="0" max="100" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
+                    </div>
+                </div>
+                <span class="text-[10px] text-slate-500 block">مبلغ جریمه بر اساس درصد قصور از کیف پول نهایی افراد کسر خواهد شد (امکان منفی شدن کیف پول وجود دارد).</span>
+
                 <div id="prof-dispute-reject-box" class="hidden space-y-1.5 pt-1">
                     <label class="block text-xs font-bold text-slate-700">متن دلیل رد درخواست (حداکثر ۲۰۰ کلمه):</label>
-                    <textarea id="prof-dispute-reject-msg" rows="4" maxlength="1200" placeholder="دلایل رد درخواست فسخ..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs"></textarea>
+                    <textarea id="prof-dispute-reject-msg" rows="3" maxlength="1200" placeholder="دلایل رد درخواست فسخ..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></textarea>
                 </div>
             </div>
             <div class="flex gap-2 pt-2">
@@ -543,6 +574,19 @@
             </div>
 
             <button onclick="closeContractHistoryModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs mt-2 cursor-pointer">بستن پنجره لاگ</button>
+        </div>
+    </div>
+
+    <!-- مدال ادله فسخ یک‌طرفه -->
+    <div id="dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <h4 class="text-sm font-black text-rose-800">⚖️ ثبت ادله فسخ یک‌طرفه جهت ارجاع به استاد درس</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">دلایل و مستندات خود مبنی بر عدم امکان ادامه همکاری را بنویسید.</p>
+            <textarea id="dispute-reason-input" rows="4" placeholder="دلایل و مستندات عدم انجام تعهدات..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></textarea>
+            <div class="flex gap-2">
+                <button id="confirm-dispute-btn" type="button" class="w-1/2 bg-rose-600 text-white font-bold py-2 rounded-xl text-xs">ارسال درخواست فسخ</button>
+                <button onclick="closeDisputeModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
+            </div>
         </div>
     </div>
 
@@ -661,19 +705,6 @@
         </div>
     </div>
 
-    <!-- مدال ادله فسخ یک‌طرفه -->
-    <div id="dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
-            <h4 class="text-sm font-black text-rose-800">⚖️ ثبت ادله فسخ یک‌طرفه جهت ارجاع به استاد درس</h4>
-            <p class="text-xs text-slate-600 leading-relaxed">دلایل و مستندات خود مبنی بر عدم امکان ادامه همکاری را بنویسید.</p>
-            <textarea id="dispute-reason-input" rows="4" placeholder="دلایل و مستندات عدم انجام تعهدات..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></textarea>
-            <div class="flex gap-2">
-                <button id="confirm-dispute-btn" type="button" class="w-1/2 bg-rose-600 text-white font-bold py-2 rounded-xl text-xs">ارسال درخواست فسخ</button>
-                <button onclick="closeDisputeModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
-            </div>
-        </div>
-    </div>
-
     <!-- مدال قوانین و مقررات -->
     <div id="terms-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-slate-200 max-w-xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
@@ -684,7 +715,7 @@
             <div class="text-xs text-slate-600 leading-relaxed space-y-3 text-justify">
                 <p><strong>۱. احراز هویت و دسترسی:</strong> دسترسی به پروفایل کاربری پس از ثبت‌نام منوط به تایید هویت و صلاحیت توسط استاد درس است.</p>
                 <p><strong>۲. سقف مجاز سکه:</strong> سقف قرارداد برای هر دانشجو حداکثر ۲۵۰ سکه است و پذیرش قرارداد مازاد مسدود می‌باشد.</p>
-                <p><strong>۳. نظارت عالیه و تاریخچه لاگ‌ها:</strong> سامانه مجهز به ثبت کامل تاریخچه لاگ‌ها با جدول تفکیکی مستندات و مکاتبات است تا در صورت بروز اختلاف، استاد به تمام سوابق با تاریخ و ساعت دسترسی داشته باشد.</p>
+                <p><strong>۳. قوانین فسخ و جریمه:</strong> داوری فسخ یک‌طرفه برعهده استاد بوده و ۲۰ درصد مبلغ قرارداد به عنوان جریمه به متخلف اعمال می‌شود.</p>
             </div>
             <button onclick="closeTermsModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs">مطالعه شد و مورد تایید است</button>
         </div>
@@ -1645,7 +1676,6 @@
         currentRejectTaskId = null;
     };
 
-    // ثبت دلیل رد گزارش در لاگ با حفظ رکوردهای قبلی
     document.getElementById('confirm-leader-reject-btn').onclick = async function() {
         var reason = document.getElementById('leader-reject-reason-input').value.trim();
         if (!reason) return showAppAlert('لطفاً دلیل رد گزارش را وارد کنید.', false);
@@ -1766,14 +1796,28 @@
         await loadTasks();
     };
 
-    var currentDisputeContractId = null;
-    var currentDisputeTaskId = null;
+    // (بند ۲) هشدار جذاب هنگام زدن دکمه فسخ یک‌طرفه با ذکر قانون ۲۰ درصد جریمه و تشخیص قصور توسط استاد
+    var pendingDisputeContractId = null;
+    var pendingDisputeTaskId = null;
+
     window.openDisputeModal = function(contractId, taskId) {
-        currentDisputeContractId = contractId;
-        currentDisputeTaskId = taskId;
+        pendingDisputeContractId = contractId;
+        pendingDisputeTaskId = taskId;
+        document.getElementById('dispute-warning-modal').classList.remove('hidden');
+    };
+
+    window.closeDisputeWarningModal = function() {
+        document.getElementById('dispute-warning-modal').classList.add('hidden');
+        pendingDisputeContractId = null;
+        pendingDisputeTaskId = null;
+    };
+
+    document.getElementById('confirm-dispute-warning-btn').onclick = function() {
+        closeDisputeWarningModal();
         document.getElementById('dispute-reason-input').value = '';
         document.getElementById('dispute-modal').classList.remove('hidden');
     };
+
     window.closeDisputeModal = function() { document.getElementById('dispute-modal').classList.add('hidden'); };
 
     document.getElementById('confirm-dispute-btn').onclick = async function() {
@@ -1781,7 +1825,7 @@
         if (!reason) return showAppAlert('لطفاً ادله و دلایل خود را بنویسید.', false);
         var sb = getSupabaseClient();
 
-        var targetContract = allLoadedContracts.find(function(c) { return c.id === currentDisputeContractId; });
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === pendingDisputeContractId; });
         var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
         var now = new Date();
         var senderRole = (userProfile.role === 'leader') ? 'کارفرما' : 'پیمانکار';
@@ -1802,14 +1846,14 @@
             termination_reason: reason,
             termination_requester_id: currentUser.id,
             action_logs: existingLogs
-        }).eq('id', currentDisputeContractId);
+        }).eq('id', pendingDisputeContractId);
 
         showAppAlert('درخواست فسخ یک‌طرفه و ادله شما به همراه تاریخ و ساعت در لاگ ثبت شد.', true);
         closeDisputeModal();
         await loadContracts();
     };
 
-    // متغیرهای موقت برای مدال جذاب داوری استاد
+    // (بند ۳) متغیرهای موقت برای مدال داوری فسخ یک‌طرفه استاد با امکان کسر درصد قصور از کیف پول
     var currentProfDisputeContractId = null;
     var currentProfDisputeTaskId = null;
 
@@ -1822,6 +1866,8 @@
         document.getElementById('prof-dispute-reason-display').innerText = reasonText;
         document.querySelector('input[name="prof_dispute_decision"][value="approve"]').checked = true;
         document.getElementById('prof-dispute-reject-msg').value = '';
+        document.getElementById('fault-leader-percent').value = '0';
+        document.getElementById('fault-contractor-percent').value = '0';
         document.getElementById('prof-dispute-reject-box').classList.add('hidden');
         document.getElementById('professor-dispute-modal').classList.remove('hidden');
     };
@@ -1851,24 +1897,38 @@
         var dateStr = now.toLocaleDateString('fa-IR');
         var timeStr = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
 
+        var faultLeader = parseFloat(document.getElementById('fault-leader-percent').value) || 0;
+        var faultContractor = parseFloat(document.getElementById('fault-contractor-percent').value) || 0;
+        var baseCoins = targetContract ? parseFloat(targetContract.agreed_base_coins || 0) : 0;
+
+        // کسر جریمه از کیف پول نهایی افراد (محاسبه بر اساس درصد قصور از مبلغ قرارداد)
+        var leaderPenalty = (faultLeader / 100) * baseCoins;
+        var contractorPenalty = (faultContractor / 100) * baseCoins;
+
         if (decision === 'approve') {
             existingLogs.push({
                 sender: 'استاد',
                 date: dateStr,
                 time: timeStr,
-                type: 'تایید فسخ یک طرفه و باطل شدن قرارداد'
+                type: 'تایید فسخ یک طرفه و باطل شدن قرارداد',
+                details: 'قصور کارفرما: ' + faultLeader + '٪ (' + leaderPenalty + ' سکه کسر جریمه) | قصور پیمانکار: ' + faultContractor + '٪ (' + contractorPenalty + ' سکه کسر جریمه)'
             });
+
+            // ثبت باطل شدن و اعمال جریمه در صورت وجود فینال پایلوت یا پاداش نهایی
+            var currentFinal = targetContract.final_payout !== null && targetContract.final_payout !== undefined ? parseFloat(targetContract.final_payout) : baseCoins;
+            var newFinalPayout = currentFinal - contractorPenalty;
 
             await sb.from('contracts').update({ 
                 status: 'terminated', 
                 termination_status: 'dispute_terminated', 
+                final_payout: newFinalPayout,
                 action_logs: existingLogs 
             }).eq('id', currentProfDisputeContractId);
 
             await sb.from('tasks').update({ status: 'terminated' }).eq('id', currentProfDisputeTaskId);
 
             closeProfessorDisputeModal();
-            showAppAlert('فسخ یک‌طرفه توسط استاد تایید شد و قرارداد باطل گردید.', true, 'سامانه');
+            showAppAlert('فسخ یک‌طرفه تایید شد. جریمه‌های تعیین‌شده بر اساس درصد قصور اعمال و در لاگ ثبت گردید.', true, 'سامانه');
         } else {
             var msg = document.getElementById('prof-dispute-reject-msg').value.trim();
             if (!msg) return showAppAlert('لطفاً دلیل رد درخواست فسخ را وارد کنید.', false);
@@ -1880,7 +1940,7 @@
                 date: dateStr,
                 time: timeStr,
                 type: 'رد درخواست فسخ یک طرفه',
-                details: msg
+                details: msg + ' (قصور کارفرما: ' + faultLeader + '٪ | قصور پیمانکار: ' + faultContractor + '٪)'
             });
 
             await sb.from('contracts').update({
@@ -1899,7 +1959,6 @@
         await loadTasks();
     };
 
-    // تایید فسخ توافقی توسط استاد
     window.confirmMutualTerminationByProfessor = async function(contractId, taskId) {
         if (!confirm('استاد گرامی، آیا با تایید نهایی فسخ توافقی این قرارداد موافقت می‌فرمایید؟')) return;
         var sb = getSupabaseClient();
@@ -2274,6 +2333,7 @@
                     actionCol = '<div>' + fileLink + '<span class="text-emerald-700 font-bold text-xs">اتمام‌یافته (' + (c.final_payout || 0) + ' سکه)</span></div>';
                 }
 
+                // (بند ۱) محدودسازی دکمه‌های فسخ یک‌طرفه و فسخ توافقی بر اساس وضعیت قرارداد
                 if (c.status !== 'completed' && c.status !== 'terminated') {
                     if (userProfile.role === 'professor') {
                         var profButtons = '';
@@ -2292,12 +2352,24 @@
                         if (userProfile.role === 'member' && c.contractor_termination_agreed) mutualBtnText = '✓ تایید شما';
 
                         var terminationButtons = '<div class="mt-1.5 pt-1.5 border-t border-slate-200 flex gap-1">';
-                        if (c.termination_status !== 'dispute_requested') {
-                            terminationButtons += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
+                        
+                        // حالت اول: در حال انجام کار -> هر دو دکمه فعال
+                        // حالت دوم: فسخ توافقی -> فقط دکمه فسخ توافقی فعال
+                        var isInProgress = (c.status === 'in_progress');
+                        var isMutualReq = (c.termination_status === 'mutual_requested');
+
+                        if (isInProgress || isMutualReq) {
+                            if (c.termination_status !== 'dispute_requested') {
+                                terminationButtons += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
+                            }
                         }
-                        if (c.termination_status !== 'mutual_requested') {
-                            terminationButtons += '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>';
+
+                        if (isInProgress) {
+                            if (c.termination_status !== 'mutual_requested') {
+                                terminationButtons += '<button onclick="openDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">فسخ یک‌طرفه</button>';
+                            }
                         }
+
                         terminationButtons += '</div>';
                         actionCol += terminationButtons;
                     }
