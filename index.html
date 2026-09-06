@@ -1481,7 +1481,7 @@
         }
 
         var file = fileInput.files[0];
-        var fName = 'report_' + Date.now + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '');
+        var fName = 'report_' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '');
         var upRes = await sb.storage.from('reports').upload(fName, file);
         if (upRes.error) {
             return showAppAlert('خطا در آپلود فایل: ' + upRes.error.message, false);
