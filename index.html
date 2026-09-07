@@ -1841,13 +1841,19 @@
             file_name: null
         });
 
-        await sb.from('contracts').update({
+        var disputeUpdateRes = await sb.from('contracts').update({
             termination_status: 'dispute_requested',
             termination_type: 'one_sided',
             termination_reason: reason,
             termination_requester_id: currentUser.id,
             action_logs: existingLogs
-        }).eq('id', pendingDisputeContractId);
+        }).eq('id', pendingDisputeContractId).select();
+
+        if (disputeUpdateRes.error || !disputeUpdateRes.data || disputeUpdateRes.data.length === 0) {
+            var errMsg = disputeUpdateRes.error ? disputeUpdateRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد (ممکن است ستون termination_requester_id در جدول contracts وجود نداشته باشد یا سطح دسترسی RLS اجازه ندهد).';
+            showAppAlert('خطا در ثبت درخواست فسخ یک‌طرفه: ' + errMsg, false);
+            return;
+        }
 
         showAppAlert('درخواست فسخ یک‌طرفه ثبت شد. وضعیت قرارداد به «درخواست فسخ یک طرفه» تغییر یافت و جهت داوری به استاد ارسال گردید.', true);
         closeDisputeModal();
