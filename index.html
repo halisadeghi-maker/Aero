@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱۱)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱۰)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -322,6 +322,10 @@
                         </div>
                         <div class="w-full bg-amber-100 rounded-full h-3.5 overflow-hidden shadow-inner">
                             <div id="wallet-final-bar" class="bg-gradient-to-r from-amber-400 via-amber-500 to-emerald-500 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
+                        </div>
+                        <div id="wallet-penalty-row" class="flex justify-between items-center text-[11px]" style="display:none;">
+                            <span class="font-bold text-rose-700">جریمه فسخ یک‌طرفه (کسر شده):</span>
+                            <span id="wallet-penalty-text" class="font-black text-rose-700">۰ سکه</span>
                         </div>
                     </div>
                 </div>
@@ -1908,6 +1912,7 @@
         var baseCoins = targetContract ? parseFloat(targetContract.agreed_base_coins || 0) : 0;
 
         var contractorPenalty = (faultContractor / 100) * baseCoins;
+        var leaderPenalty = (faultLeader / 100) * baseCoins;
 
         if (decision === 'approve') {
             existingLogs.push({
@@ -1915,16 +1920,17 @@
                 date: dateStr,
                 time: timeStr,
                 type: 'تایید فسخ یک طرفه و باطل شدن قرارداد',
-                details: 'قصور کارفرما: ' + faultLeader + '٪ | قصور پیمانکار: ' + faultContractor + '٪ (کسر جریمه از پیمانکار: ' + contractorPenalty + ' سکه)'
+                details: 'قصور کارفرما: ' + faultLeader + '٪ (کسر جریمه از بودجه کارفرما: ' + leaderPenalty + ' سکه) | قصور پیمانکار: ' + faultContractor + '٪ (کسر جریمه از کیف پول پیمانکار: ' + contractorPenalty + ' سکه)'
             });
 
-            var currentFinal = targetContract.final_payout !== null && targetContract.final_payout !== undefined ? parseFloat(targetContract.final_payout) : baseCoins;
-            var newFinalPayout = currentFinal - contractorPenalty; 
+            var finalPayoutBase = targetContract.final_payout !== null && targetContract.final_payout !== undefined ? parseFloat(targetContract.final_payout) : baseCoins;
 
             await sb.from('contracts').update({ 
                 status: 'terminated', 
                 termination_status: 'dispute_terminated', 
-                final_payout: newFinalPayout,
+                final_payout: finalPayoutBase,
+                contractor_penalty_coins: contractorPenalty,
+                leader_penalty_coins: leaderPenalty,
                 action_logs: existingLogs 
             }).eq('id', currentProfDisputeContractId);
 
@@ -2028,39 +2034,67 @@
 
     async function loadProfessorTerminationsKPI() {
         var sb = getSupabaseClient();
-        var res = await sb.from('contracts').select('*, teams(name), profiles(full_name)').eq('status', 'terminated');
+        var res = await sb.from('contracts').select('*, teams(name), profiles(full_name)');
         var div = document.getElementById('professor-kpi-terminations');
         div.innerHTML = '';
         if (!res.data || res.data.length === 0) {
-            div.innerHTML = '<span class="text-slate-500 font-medium">هیچ قرارداد فسخ‌شده‌ای در سامانه ثبت نشده است (شاخص مثبت).</span>';
+            div.innerHTML = '<span class="text-slate-500 font-medium">هیچ قراردادی در سامانه ثبت نشده است.</span>';
             return;
         }
 
+        var totalOngoing = 0;
         var mutualTermCount = 0;
         var oneSidedTermCount = 0;
-        var teamTermCounts = {};
+        var totalPendingSign = 0;
+        var teamStats = {};
         var userTermCounts = {};
 
         res.data.forEach(function(c) {
-            if (c.termination_status === 'mutual_terminated') mutualTermCount++;
-            if (c.termination_status === 'dispute_terminated') oneSidedTermCount++;
-
             var tName = c.teams ? c.teams.name : 'تیم نامشخص';
-            var uName = c.profiles ? c.profiles.full_name : 'دانشجو';
-            teamTermCounts[tName] = (teamTermCounts[tName] || 0) + 1;
-            userTermCounts[uName] = (userTermCounts[uName] || 0) + 1;
+            if (!teamStats[tName]) teamStats[tName] = { ongoing: 0, mutual: 0, oneSided: 0, pendingSign: 0 };
+
+            if (c.status === 'terminated') {
+                if (c.termination_status === 'mutual_terminated') { mutualTermCount++; teamStats[tName].mutual++; }
+                if (c.termination_status === 'dispute_terminated') {
+                    oneSidedTermCount++; teamStats[tName].oneSided++;
+                    var uName = c.profiles ? c.profiles.full_name : 'دانشجو';
+                    userTermCounts[uName] = (userTermCounts[uName] || 0) + 1;
+                }
+            } else {
+                totalOngoing++; teamStats[tName].ongoing++;
+            }
+
+            if (c.status === 'pending_leader_signature') { totalPendingSign++; teamStats[tName].pendingSign++; }
         });
 
-        var html = '<div class="text-xs font-black text-rose-800 mb-2">کل فسخ‌های توافقی: ' + mutualTermCount + ' | کل فسخ‌های یک‌طرفه: ' + oneSidedTermCount + '</div>';
+        var html = '<div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-black mb-3">' +
+            '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">جاری (کل)</div><div class="text-sky-700 text-sm">' + totalOngoing + '</div></div>' +
+            '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">فسخ توافقی (کل)</div><div class="text-amber-700 text-sm">' + mutualTermCount + '</div></div>' +
+            '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">فسخ یک‌طرفه (کل)</div><div class="text-rose-700 text-sm">' + oneSidedTermCount + '</div></div>' +
+            '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">امضانشده (کل)</div><div class="text-indigo-700 text-sm">' + totalPendingSign + '</div></div>' +
+            '</div>';
+
         html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">';
-        
-        html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">تخلفات و فسخ‌ها به تفکیک تیم‌ها (اثر منفی):</strong>';
-        for (var t in teamTermCounts) {
-            html += '<div class="flex justify-between text-slate-700 py-0.5"><span>تیم ' + t + ':</span><span class="font-black text-rose-600">' + teamTermCounts[t] + ' فسخ</span></div>';
+
+        html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">وضعیت قراردادها به تفکیک تیم‌ها:</strong>';
+        for (var t in teamStats) {
+            var s = teamStats[t];
+            html += '<div class="flex justify-between items-center text-slate-700 py-1 border-b border-slate-100 last:border-0 gap-2">' +
+                '<span class="font-bold whitespace-nowrap">تیم ' + t + '</span>' +
+                '<span class="text-[10px] flex flex-wrap gap-1.5 justify-end">' +
+                    '<span class="text-sky-700">جاری: ' + s.ongoing + '</span>' +
+                    '<span class="text-amber-700">توافقی: ' + s.mutual + '</span>' +
+                    '<span class="text-rose-700">یک‌طرفه: ' + s.oneSided + '</span>' +
+                    '<span class="text-indigo-700">امضانشده: ' + s.pendingSign + '</span>' +
+                '</span>' +
+                '</div>';
         }
         html += '</div>';
 
-        html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">تخلفات و فسخ‌ها به تفکیک دانشجویان (اثر منفی):</strong>';
+        html += '<div class="bg-white p-3 rounded-xl border border-rose-200 shadow-2xs"><strong class="text-rose-900 block mb-1">فسخ‌های یک‌طرفه به تفکیک دانشجویان (اثر منفی):</strong>';
+        if (Object.keys(userTermCounts).length === 0) {
+            html += '<span class="text-slate-400 font-medium">موردی ثبت نشده است.</span>';
+        }
         for (var u in userTermCounts) {
             html += '<div class="flex justify-between text-slate-700 py-0.5"><span>پیمانکار ' + u + ':</span><span class="font-black text-rose-600">' + userTermCounts[u] + ' فسخ</span></div>';
         }
@@ -2222,14 +2256,25 @@
 
         var totalFinal = 0;
         var totalCommitted = 0;
+        var totalContractorPenalty = 0;
         var termCount = 0;
+        var mutualTermCount = 0;
+        var oneSidedTermCount = 0;
+        var pendingSignCount = 0;
 
         if (allLoadedContracts) {
             allLoadedContracts.forEach(function(c) {
-                if (c.status === 'terminated') termCount++;
-                if (c.contractor_id === currentUser.id && c.status !== 'terminated') {
-                    totalCommitted += parseFloat(c.agreed_base_coins || 0);
+                if (c.status === 'terminated') {
+                    termCount++;
+                    if (c.termination_status === 'mutual_terminated') mutualTermCount++;
+                    if (c.termination_status === 'dispute_terminated') oneSidedTermCount++;
+                }
+                if (c.status === 'pending_leader_signature') pendingSignCount++;
+
+                if (c.contractor_id === currentUser.id) {
+                    if (c.status !== 'terminated') totalCommitted += parseFloat(c.agreed_base_coins || 0);
                     if (c.final_payout) totalFinal += parseFloat(c.final_payout);
+                    totalContractorPenalty += parseFloat(c.contractor_penalty_coins || 0);
                 }
 
                 var statusBadge = getPersianStatusBadgeSync(c, userProfile.role);
@@ -2244,6 +2289,16 @@
                 if (c.termination_reason) {
                     documentsAndMessages += '<div class="text-[10px] text-amber-800 font-bold bg-amber-50 p-2 rounded mt-1.5 border border-amber-200 leading-relaxed">' +
                         '⚖️ <strong>ادله فسخ یک‌طرفه:</strong><br>' + c.termination_reason +
+                        '</div>';
+                }
+                if (c.contractor_penalty_coins) {
+                    documentsAndMessages += '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
+                        '💸 <strong>جریمه پیمانکار:</strong> ' + c.contractor_penalty_coins + ' سکه (کسر از کیف پول نهایی)' +
+                        '</div>';
+                }
+                if (c.leader_penalty_coins) {
+                    documentsAndMessages += '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
+                        '💸 <strong>جریمه کارفرما:</strong> ' + c.leader_penalty_coins + ' سکه (کسر از بودجه قابل تخصیص)' +
                         '</div>';
                 }
 
@@ -2349,10 +2404,23 @@
             });
         }
 
+        totalFinal = totalFinal - totalContractorPenalty;
+
         document.getElementById('wallet-committed-text').innerText = totalCommitted.toFixed(1) + ' سکه';
         document.getElementById('wallet-committed-bar').style.width = Math.min(100, (totalCommitted / 250) * 100) + '%';
         document.getElementById('wallet-final-text').innerText = totalFinal.toFixed(1) + ' سکه';
         document.getElementById('wallet-final-bar').style.width = Math.min(100, (totalFinal / 250) * 100) + '%';
+
+        var penaltyRow = document.getElementById('wallet-penalty-row');
+        var penaltyText = document.getElementById('wallet-penalty-text');
+        if (penaltyRow && penaltyText) {
+            if (totalContractorPenalty > 0) {
+                penaltyRow.style.display = 'flex';
+                penaltyText.innerText = '−' + totalContractorPenalty.toFixed(1) + ' سکه';
+            } else {
+                penaltyRow.style.display = 'none';
+            }
+        }
         
         var badge = document.getElementById('tank-badge-status');
         if (badge) {
@@ -2375,7 +2443,15 @@
 
         if (userProfile.role === 'leader' && currentTeam) {
             var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
-            var totalApprovedBudget = mpRes.data ? parseFloat(mpRes.data.allocated_coins) : (currentTeam.budget ? parseFloat(currentTeam.budget) : 0);
+            var totalContractBudget = mpRes.data ? parseFloat(mpRes.data.allocated_coins) : (currentTeam.budget ? parseFloat(currentTeam.budget) : 0);
+
+            var teamPenaltyRes = await sb.from('contracts').select('leader_penalty_coins').eq('team_id', currentTeam.id);
+            var totalLeaderPenalty = 0;
+            if (teamPenaltyRes.data) {
+                teamPenaltyRes.data.forEach(function(c) { totalLeaderPenalty += parseFloat(c.leader_penalty_coins || 0); });
+            }
+
+            var allocatableBudget = Math.max(0, totalContractBudget - totalLeaderPenalty);
 
             var teamTasksRes = await sb.from('tasks').select('allocated_nominal_coins, status').eq('team_id', currentTeam.id).neq('status', 'terminated');
             var spentCoins = 0;
@@ -2385,11 +2461,11 @@
                 });
             }
 
-            var remainingBudget = Math.max(0, totalApprovedBudget - spentCoins);
-            var spentPercent = totalApprovedBudget > 0 ? Math.min(100, (spentCoins / totalApprovedBudget) * 100) : 0;
+            var remainingBudget = Math.max(0, allocatableBudget - spentCoins);
+            var spentPercent = allocatableBudget > 0 ? Math.min(100, (spentCoins / allocatableBudget) * 100) : 0;
 
-            document.getElementById('team-budget-badge').innerText = 'بودجه مصوب: ' + totalApprovedBudget + ' سکه | باقیمانده: ' + remainingBudget + ' سکه';
-            document.getElementById('donut-total-text').innerText = totalApprovedBudget;
+            document.getElementById('team-budget-badge').innerText = 'بودجه قرارداد: ' + totalContractBudget + ' | جرایم: ' + totalLeaderPenalty + ' | قابل تخصیص: ' + allocatableBudget + ' | باقیمانده: ' + remainingBudget + ' سکه';
+            document.getElementById('donut-total-text').innerText = allocatableBudget;
             document.getElementById('donut-spent-text').innerText = spentCoins;
             document.getElementById('donut-remain-text').innerText = remainingBudget;
             document.getElementById('donut-center-percent').innerText = Math.round(spentPercent) + '٪';
@@ -2400,11 +2476,15 @@
             if (donutCircle) donutCircle.style.strokeDashoffset = offset;
         }
 
-        document.getElementById('stat-contracts-container').innerHTML = 
-            '<div class="text-xs space-y-0.5 font-bold">' +
-            '<div>فعال: ' + ((allLoadedContracts ? allLoadedContracts.length : 0) - termCount) + '</div>' +
-            '<div class="text-rose-600">فسخ‌شده: ' + termCount + '</div>' +
-            '</div>';
+        var kpiHtml = '<div class="text-xs space-y-0.5 font-bold">' +
+            '<div>جاری: ' + ((allLoadedContracts ? allLoadedContracts.length : 0) - termCount) + '</div>' +
+            '<div class="text-amber-600">فسخ توافقی: ' + mutualTermCount + '</div>' +
+            '<div class="text-rose-600">فسخ یک‌طرفه: ' + oneSidedTermCount + '</div>';
+        if (userProfile.role === 'leader' || userProfile.role === 'professor') {
+            kpiHtml += '<div class="text-sky-600">تعریف‌شده و امضانشده: ' + pendingSignCount + '</div>';
+        }
+        kpiHtml += '</div>';
+        document.getElementById('stat-contracts-container').innerHTML = kpiHtml;
     }
 
     function getPersianStatusBadgeSync(c, userRole) {
@@ -2565,14 +2645,22 @@
         }
 
         var totalBudget = parseFloat(mpRes.data.allocated_coins);
+
+        var penaltyRes = await sb.from('contracts').select('leader_penalty_coins').eq('team_id', currentTeam.id);
+        var totalPenalty = 0;
+        if (penaltyRes.data) {
+            penaltyRes.data.forEach(function(c) { totalPenalty += parseFloat(c.leader_penalty_coins || 0); });
+        }
+        var allocatableBudget = Math.max(0, totalBudget - totalPenalty);
+
         var teamTasks = await sb.from('tasks').select('allocated_nominal_coins').eq('team_id', currentTeam.id).neq('status', 'terminated');
         var currentSpent = 0;
         if (teamTasks.data) {
             teamTasks.data.forEach(function(t) { currentSpent += parseFloat(t.allocated_nominal_coins || 0); });
         }
 
-        if (currentSpent + coins > totalBudget) {
-            return showAppAlert('خطای سقف بودجه: با ایجاد این تسک، مجموع بودجه تسک‌های تیم (' + (currentSpent + coins) + ' سکه) از سقف بودجه تخصیص‌یافته مناقصه (' + totalBudget + ' سکه) فراتر می‌رود.', false);
+        if (currentSpent + coins > allocatableBudget) {
+            return showAppAlert('خطای سقف بودجه: با ایجاد این تسک، مجموع بودجه تسک‌های تیم (' + (currentSpent + coins) + ' سکه) از سقف بودجه قابل تخصیص (' + allocatableBudget + ' سکه پس از کسر ' + totalPenalty + ' سکه جریمه) فراتر می‌رود.', false);
         }
 
         var res = await sb.from('tasks').insert([{
