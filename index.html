@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱۰)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱۱)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -1811,7 +1811,7 @@
     };
 
     document.getElementById('confirm-dispute-warning-btn').onclick = function() {
-        closeDisputeWarningModal();
+        document.getElementById('dispute-warning-modal').classList.add('hidden');
         document.getElementById('dispute-reason-input').value = '';
         document.getElementById('dispute-modal').classList.remove('hidden');
     };
@@ -1850,7 +1850,7 @@
         }).eq('id', pendingDisputeContractId).select();
 
         if (disputeUpdateRes.error || !disputeUpdateRes.data || disputeUpdateRes.data.length === 0) {
-            var errMsg = disputeUpdateRes.error ? disputeUpdateRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد (ممکن است ستون termination_requester_id در جدول contracts وجود نداشته باشد یا سطح دسترسی RLS اجازه ندهد).';
+            var errMsg = disputeUpdateRes.error ? disputeUpdateRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
             showAppAlert('خطا در ثبت درخواست فسخ یک‌طرفه: ' + errMsg, false);
             return;
         }
