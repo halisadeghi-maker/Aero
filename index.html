@@ -1923,16 +1923,22 @@
                 details: 'قصور کارفرما: ' + faultLeader + '٪ (کسر جریمه از بودجه کارفرما: ' + leaderPenalty + ' سکه) | قصور پیمانکار: ' + faultContractor + '٪ (کسر جریمه از کیف پول پیمانکار: ' + contractorPenalty + ' سکه)'
             });
 
-            var finalPayoutBase = targetContract.final_payout !== null && targetContract.final_payout !== undefined ? parseFloat(targetContract.final_payout) : baseCoins;
+            var finalPayoutBase = targetContract && targetContract.final_payout !== null && targetContract.final_payout !== undefined ? parseFloat(targetContract.final_payout) : baseCoins;
 
-            await sb.from('contracts').update({ 
+            var profApproveRes = await sb.from('contracts').update({ 
                 status: 'terminated', 
                 termination_status: 'dispute_terminated', 
                 final_payout: finalPayoutBase,
                 contractor_penalty_coins: contractorPenalty,
                 leader_penalty_coins: leaderPenalty,
                 action_logs: existingLogs 
-            }).eq('id', currentProfDisputeContractId);
+            }).eq('id', currentProfDisputeContractId).select();
+
+            if (profApproveRes.error || !profApproveRes.data || profApproveRes.data.length === 0) {
+                var errMsgApprove = profApproveRes.error ? profApproveRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+                showAppAlert('خطا در ثبت تصمیم داوری: ' + errMsgApprove, false);
+                return;
+            }
 
             await sb.from('tasks').update({ status: 'terminated' }).eq('id', currentProfDisputeTaskId);
 
@@ -1952,13 +1958,19 @@
                 details: msg + ' (قصور کارفرما: ' + faultLeader + '٪ | قصور پیمانکار: ' + faultContractor + '٪)'
             });
 
-            await sb.from('contracts').update({
+            var profRejectRes = await sb.from('contracts').update({
                 termination_status: 'none',
                 termination_type: null,
                 termination_reason: null,
                 professor_rejection_message: msg,
                 action_logs: existingLogs
-            }).eq('id', currentProfDisputeContractId);
+            }).eq('id', currentProfDisputeContractId).select();
+
+            if (profRejectRes.error || !profRejectRes.data || profRejectRes.data.length === 0) {
+                var errMsgReject = profRejectRes.error ? profRejectRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+                showAppAlert('خطا در ثبت رد درخواست فسخ: ' + errMsgReject, false);
+                return;
+            }
 
             closeProfessorDisputeModal();
             showAppAlert('درخواست فسخ توسط استاد رد شد و در لاگ ثبت گردید.', true, 'سامانه');
@@ -2289,6 +2301,11 @@
                 if (c.termination_reason) {
                     documentsAndMessages += '<div class="text-[10px] text-amber-800 font-bold bg-amber-50 p-2 rounded mt-1.5 border border-amber-200 leading-relaxed">' +
                         '⚖️ <strong>ادله فسخ یک‌طرفه:</strong><br>' + c.termination_reason +
+                        '</div>';
+                }
+                if (c.professor_rejection_message) {
+                    documentsAndMessages += '<div class="text-[10px] text-indigo-800 font-bold bg-indigo-50 p-2 rounded mt-1.5 border border-indigo-200 leading-relaxed">' +
+                        '👨‍🏫 <strong>دلیل رد درخواست فسخ توسط استاد:</strong><br>' + c.professor_rejection_message +
                         '</div>';
                 }
                 if (c.contractor_penalty_coins) {
