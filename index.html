@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۲.۱۰)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۰)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۲.۱۰) -->
+            <!-- نسخه سامانه (۲.۳.۰) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.2.10</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.0</span>
             </div>
         </section>
 
@@ -262,9 +262,17 @@
                             سقف بودجه سرگروه معادل قیمت تاییدشده در مناقصه است. تعریف هر تسک تنها در محدوده باقیمانده این بودجه امکان‌پذیر می‌باشد.
                         </p>
                         <div class="flex flex-wrap gap-4 pt-3 text-xs font-bold">
+                            <span class="flex items-center gap-2 bg-sky-50/80 px-3 py-1.5 rounded-xl border border-sky-100">
+                                <span class="w-3.5 h-3.5 rounded-full bg-sky-600"></span>
+                                بودجه قرارداد: <span id="donut-contract-budget-text" class="text-sky-700 font-black">۰</span> سکه
+                            </span>
                             <span class="flex items-center gap-2 bg-indigo-50/80 px-3 py-1.5 rounded-xl border border-indigo-100">
                                 <span class="w-3.5 h-3.5 rounded-full bg-[#0f284e]"></span>
                                 بودجه کل: <span id="donut-total-text" class="text-[#0f284e] font-black">۰</span> سکه
+                            </span>
+                            <span class="flex items-center gap-2 bg-red-50/80 px-3 py-1.5 rounded-xl border border-red-100">
+                                <span class="w-3.5 h-3.5 rounded-full bg-red-600"></span>
+                                مبلغ جریمه: <span id="donut-penalty-text" class="text-red-700 font-black">۰</span> سکه
                             </span>
                             <span class="flex items-center gap-2 bg-rose-50/80 px-3 py-1.5 rounded-xl border border-rose-100">
                                 <span class="w-3.5 h-3.5 rounded-full bg-rose-500"></span>
@@ -377,7 +385,7 @@
                 <!-- گزارش KPI اثر منفی فسخ‌ها -->
                 <div class="border border-rose-200 rounded-2xl p-4 bg-gradient-to-br from-rose-50/50 to-amber-50/40 shadow-sm space-y-3">
                     <h5 class="text-xs font-black text-rose-900 flex items-center gap-2">
-                        <span>⚠️</span> گزارش KPI اثر منفی (تعداد فسخ‌های یک‌طرفه و توافقی کاربران و تیم‌ها)
+                        <span>⚠️</span> شاخص های کلیدی قراردادها
                     </h5>
                     <div id="professor-kpi-terminations" class="text-xs space-y-1 text-slate-700">در حال بارگذاری آمار تخلفات و فسخ‌ها...</div>
                 </div>
@@ -543,6 +551,32 @@
             <div class="flex gap-2 pt-2">
                 <button id="confirm-prof-dispute-btn" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت و اعمال تصمیم داوری</button>
                 <button onclick="closeProfessorDisputeModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مدال ارزیابی نهایی و امتیازدهی استاد -->
+    <div id="professor-award-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border-2 border-indigo-300 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <h4 class="text-sm font-black text-indigo-900 flex items-center gap-2"><span>🎓</span> ارزیابی نهایی و امتیازدهی استاد</h4>
+                <button onclick="closeProfessorAwardModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
+            </div>
+            <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-2xl text-xs text-indigo-900 leading-relaxed space-y-1.5">
+                <div class="flex justify-between"><span>معیار ارزیابی (سکه اسمی جزوه):</span><strong id="prof-award-nominal-coins" class="text-indigo-950">۰</strong></div>
+                <div class="flex justify-between"><span>سکه توافق‌شده قرارداد:</span><strong id="prof-award-agreed-coins" class="text-indigo-950">۰</strong></div>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-2">امتیاز/سکه تخصیصی استاد به کیفیت گزارش نهایی:</label>
+                <input type="number" id="prof-award-score-input" min="0" step="0.5" oninput="updateProfAwardPreview()" placeholder="مثال: 85" class="w-full bg-slate-50 border-2 border-indigo-200 focus:border-indigo-400 focus:outline-none rounded-xl p-3 text-lg font-black text-slate-800 text-center transition">
+            </div>
+            <div class="bg-emerald-50 border-2 border-emerald-200 p-4 rounded-2xl text-center">
+                <span class="text-[10px] text-emerald-700 font-bold block mb-1">💰 مبلغ نهایی قابل واریز به کیف پول دانشجو</span>
+                <span id="prof-award-final-preview" class="text-2xl font-black text-emerald-800">۰ سکه</span>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="confirm-prof-award-btn" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">✅ ثبت نهایی امتیاز</button>
+                <button onclick="closeProfessorAwardModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
@@ -1723,33 +1757,71 @@
         var bRes = await sb.from('booklets').select('nominal_coins').eq('id', bookletId).single();
         var nominalCoins = bRes.data ? parseFloat(bRes.data.nominal_coins) : 100;
 
-        var professorScoreStr = prompt('استاد گرامی، امتیاز/سکه تخصیصی خود را برای این گزارش وارد کنید (معیار ارزیابی):');
-        if (!professorScoreStr) return;
-        var professorScore = parseFloat(professorScoreStr);
-        if (isNaN(professorScore)) return showAppAlert('مقدار نامعتبر.', false);
+        pendingAwardContractId = contractId;
+        pendingAwardTaskId = taskId;
+        pendingAwardAgreedCoins = parseFloat(agreedCoins);
+        pendingAwardNominalCoins = nominalCoins;
 
-        var finalPayout = (professorScore / nominalCoins) * parseFloat(agreedCoins);
+        document.getElementById('prof-award-nominal-coins').innerText = nominalCoins + ' سکه';
+        document.getElementById('prof-award-agreed-coins').innerText = pendingAwardAgreedCoins + ' سکه';
+        document.getElementById('prof-award-score-input').value = '';
+        document.getElementById('prof-award-final-preview').innerText = '۰ سکه';
+        document.getElementById('professor-award-modal').classList.remove('hidden');
+    };
+
+    window.updateProfAwardPreview = function() {
+        var scoreStr = document.getElementById('prof-award-score-input').value;
+        var score = parseFloat(scoreStr);
+        if (isNaN(score)) {
+            document.getElementById('prof-award-final-preview').innerText = '۰ سکه';
+            return;
+        }
+        var finalPayout = (score / pendingAwardNominalCoins) * pendingAwardAgreedCoins;
+        finalPayout = Math.round(finalPayout * 10) / 10;
+        document.getElementById('prof-award-final-preview').innerText = finalPayout + ' سکه';
+    };
+
+    window.closeProfessorAwardModal = function() {
+        document.getElementById('professor-award-modal').classList.add('hidden');
+        pendingAwardContractId = null;
+        pendingAwardTaskId = null;
+    };
+
+    document.getElementById('confirm-prof-award-btn').onclick = async function() {
+        var sb = getSupabaseClient();
+        var scoreStr = document.getElementById('prof-award-score-input').value;
+        var professorScore = parseFloat(scoreStr);
+        if (!scoreStr || isNaN(professorScore)) return showAppAlert('لطفاً امتیاز/سکه معتبری وارد کنید.', false);
+
+        var finalPayout = (professorScore / pendingAwardNominalCoins) * pendingAwardAgreedCoins;
         finalPayout = Math.round(finalPayout * 10) / 10;
 
-        var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === pendingAwardContractId; });
         var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
         var now = new Date();
         existingLogs.push({
             sender: 'استاد',
             date: now.toLocaleDateString('fa-IR'),
             time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
-            type: 'ارزیابی و اتمام یافته',
-            details: 'تخصیص ' + finalPayout + ' سکه نهایی'
+            type: 'اتمام پروژه',
+            details: 'ارزیابی نهایی انجام و مبلغ ' + finalPayout + ' سکه تایید و به کیف پول دانشجو تخصیص یافت.'
         });
 
-        await sb.from('contracts').update({
+        var awardRes = await sb.from('contracts').update({
             status: 'completed',
             final_payout: finalPayout,
             action_logs: existingLogs
-        }).eq('id', contractId);
+        }).eq('id', pendingAwardContractId).select();
 
-        await sb.from('tasks').update({ status: 'completed' }).eq('id', taskId);
+        if (awardRes.error || !awardRes.data || awardRes.data.length === 0) {
+            var errMsgAward = awardRes.error ? awardRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+            showAppAlert('خطا در ثبت ارزیابی نهایی: ' + errMsgAward, false);
+            return;
+        }
 
+        await sb.from('tasks').update({ status: 'completed' }).eq('id', pendingAwardTaskId);
+
+        closeProfessorAwardModal();
         showAppAlert('ارزیابی و امتیازدهی با موفقیت ثبت شد.\nمبلغ ' + finalPayout + ' سکه نهایی به کیف پول دانشجو واریز گردید.', true, 'سامانه');
         await loadContracts();
     };
@@ -1865,6 +1937,10 @@
     };
 
     var currentProfDisputeContractId = null;
+    var pendingAwardContractId = null;
+    var pendingAwardTaskId = null;
+    var pendingAwardAgreedCoins = 0;
+    var pendingAwardNominalCoins = 100;
     var currentProfDisputeTaskId = null;
 
     window.openProfessorDisputeModal = function(contractId, taskId) {
@@ -2482,6 +2558,8 @@
             var spentPercent = allocatableBudget > 0 ? Math.min(100, (spentCoins / allocatableBudget) * 100) : 0;
 
             document.getElementById('team-budget-badge').innerText = 'بودجه قرارداد: ' + totalContractBudget + ' | جرایم: ' + totalLeaderPenalty + ' | قابل تخصیص: ' + allocatableBudget + ' | باقیمانده: ' + remainingBudget + ' سکه';
+            document.getElementById('donut-contract-budget-text').innerText = totalContractBudget;
+            document.getElementById('donut-penalty-text').innerText = totalLeaderPenalty;
             document.getElementById('donut-total-text').innerText = allocatableBudget;
             document.getElementById('donut-spent-text').innerText = spentCoins;
             document.getElementById('donut-remain-text').innerText = remainingBudget;
