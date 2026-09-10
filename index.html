@@ -448,12 +448,13 @@
                         <input type="text" id="task-title-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="مثلاً: استخراج قطبی پسا و CLmax بر اساس روش روزکام">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">ارزش اسمی بسته کاری (سکه)</label>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">قیمت پیشنهادی قرارداد این بسته کاری (سکه)</label>
                         <div class="flex space-x-2 space-x-reverse">
                             <input type="number" id="task-coins-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="سکه">
                             <button id="create-task-btn" type="button" class="bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 px-4 rounded-xl text-xs font-bold shadow-md transition cursor-pointer">ایجاد</button>
                         </div>
                     </div>
+                    <div id="booklet-real-value-note" class="md:col-span-4 text-[11px] text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-1.5 font-bold hidden"></div>
                 </div>
             </section>
 
@@ -2337,7 +2338,7 @@
                         '</div>' +
 
                         '<div class="flex items-center justify-between pt-2 border-t border-slate-200/80">' +
-                            '<span class="text-[11px] text-slate-600 font-bold">ارزش اسمی پایه بسته کاری:</span>' +
+                            '<span class="text-[11px] text-slate-600 font-bold">قیمت اولیه پیشنهادی سرگروه:</span>' +
                             '<div class="flex items-center space-x-1.5 space-x-reverse font-black text-amber-700 text-sm">' +
                                 '<svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" stroke="currentColor">' +
                                     '<ellipse cx="11" cy="9" rx="6" ry="2.5" stroke-width="1.6"/>' +
@@ -2662,11 +2663,23 @@
         if (res.data) {
             sel.innerHTML = '';
             res.data.forEach(function(b) {
-                var opt = '<option value="' + b.id + '">کتابچه ' + b.booklet_number + ': ' + b.title + ' (' + b.nominal_coins + ' سکه)</option>';
+                var opt = '<option value="' + b.id + '" data-real-value="' + b.nominal_coins + '">کتابچه ' + b.booklet_number + ': ' + b.title + ' (' + b.nominal_coins + ' سکه)</option>';
                 sel.innerHTML += opt;
             });
+            updateBookletRealValueNote();
         }
     }
+
+    function updateBookletRealValueNote() {
+        var sel = document.getElementById('task-booklet-select');
+        var note = document.getElementById('booklet-real-value-note');
+        if (!sel || !note || !sel.selectedOptions || !sel.selectedOptions[0]) { if (note) note.classList.add('hidden'); return; }
+        var realValue = sel.selectedOptions[0].getAttribute('data-real-value');
+        if (!realValue) { note.classList.add('hidden'); return; }
+        note.innerText = '📖 ارزش واقعی این کتابچه (فقط برای محاسبه نمرهٔ پیمانکار استفاده می‌شود، نه برای تعیین قیمت قرارداد): ' + realValue + ' سکه';
+        note.classList.remove('hidden');
+    }
+    document.getElementById('task-booklet-select').addEventListener('change', updateBookletRealValueNote);
 
     async function loadProfessorSummary() {
         var sb = getSupabaseClient();
