@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۵)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۶)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۵) -->
+            <!-- نسخه سامانه (۲.۳.۶) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.5</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.6</span>
             </div>
         </section>
 
@@ -341,6 +341,9 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- دعوت‌های عضویت ثابت در انتظار تایید دانشجو -->
+                <div id="membership-invites-box" class="hidden space-y-2"></div>
 
                 <!-- عضویت ثابت جاری دانشجو در شرکت -->
                 <div id="my-membership-box" class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -513,7 +516,7 @@
                                 <th class="p-3 font-bold">بسته کاری</th>
                                 <th class="p-3 font-bold">پیمانکار</th>
                                 <th class="p-3 font-bold">ارزش قرارداد</th>
-                                <th class="p-3 font-bold">شرایط خاص و مکاتبات جاری</th>
+                                <th class="p-3 font-bold">پیام جدید</th>
                                 <th class="p-3 font-bold">وضعیت قرارداد</th>
                                 <th class="p-3 font-bold">عملیات نظارت، ارزیابی و قضاوت</th>
                             </tr>
@@ -885,6 +888,12 @@
         return new Date(gy, m, g_day_no + 1);
     }
 
+    function roundCoin(v) {
+        var n = parseFloat(v);
+        if (isNaN(n)) return 0;
+        return Math.round(n * 10) / 10;
+    }
+
     function parseJalaliDateTimeString(str) {
         if (!str) return null;
         try {
@@ -1126,6 +1135,7 @@
             await loadTasks();
             await loadContracts();
             await loadMyMembershipBox();
+            await loadMembershipInvites();
 
         } catch (e) {
             showError("خطا در بارگذاری داده‌ها: " + e.message);
@@ -1300,7 +1310,7 @@
 
             if (userProfile.role === 'leader') {
                 if (isAwardedToMyTeam) {
-                    bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/30 text-center py-2 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال شرکت شما (بودجه: ' + p.allocated_coins + ' سکه)</div>';
+                    bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/30 text-center py-2 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال شرکت شما (بودجه: ' + roundCoin(p.allocated_coins) + ' سکه)</div>';
                 } else if (p.status === 'awarded') {
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">منعقد شده با شرکت ' + (p.teams ? p.teams.name : '') + '</div>';
                 } else if (teamAlreadyWon && p.status === 'open') {
@@ -1309,7 +1319,7 @@
                         '</div>';
                 } else if (hasSubmittedBid) {
                     bidArea = '<div class="mt-3 pt-3 border-t border-slate-300 text-center text-xs font-bold text-slate-700 bg-white/80 py-2.5 px-3 rounded-2xl border border-slate-300 shadow-2xs">' +
-                        '🔒 پیشنهاد قطعی شما با مبلغ <span class="font-black text-slate-900">' + myTeamBids[p.id].proposed_coins + ' سکه</span> ثبت شد و در انتظار بررسی استاد است.' +
+                        '🔒 پیشنهاد قطعی شما با مبلغ <span class="font-black text-slate-900">' + roundCoin(myTeamBids[p.id].proposed_coins) + ' سکه</span> ثبت شد و در انتظار بررسی استاد است.' +
                         '</div>';
                 } else if (userProfile.role === 'leader' && (!currentTeam || currentTeam.status !== 'active')) {
                     bidArea = '<div class="mt-3 pt-3 border-t border-slate-300 text-center text-xs font-bold text-amber-800 bg-amber-50 p-2.5 rounded-xl border border-amber-200">' +
@@ -1358,7 +1368,7 @@
                             '<p class="text-xs text-slate-600 leading-relaxed bg-white/70 p-2.5 rounded-xl border border-slate-200/80">' + p.specifications + '</p>' +
                             rfpDownloadLink +
                             '<div class="pt-2 flex justify-between items-center text-xs font-bold">' +
-                                '<span>مبلغ قرارداد: <span class="text-amber-800 font-black text-sm">' + p.allocated_coins + ' سکه</span></span>' +
+                                '<span>مبلغ قرارداد: <span class="text-amber-800 font-black text-sm">' + roundCoin(p.allocated_coins) + ' سکه</span></span>' +
                                 timeRemainingText +
                             '</div>' +
                         '</div>' +
@@ -1414,10 +1424,10 @@
         }
 
         pendingBidProjectId = projectId;
-        pendingBidCoins = parseFloat(coins);
+        pendingBidCoins = roundCoin(coins);
 
         var msgText = 'سرگروه محترم شرکت ' + currentTeam.name + '؛\n' +
-            'آیا از قیمت پیشنهادی خود به میزان «' + coins + ' سکه» برای پروژه «' + projectTitle + '» اطمینان دارید؟\n' +
+            'آیا از قیمت پیشنهادی خود به میزان «' + roundCoin(coins) + ' سکه» برای پروژه «' + projectTitle + '» اطمینان دارید؟\n' +
             '⚠️ توجه فرمایید: بعد از تایید امکان تغییر پیشنهاد وجود ندارد.';
         
         document.getElementById('bid-confirm-text').innerText = msgText;
@@ -1474,7 +1484,7 @@
         
         var tbody = document.getElementById('prof-bids-table-body');
         tbody.innerHTML = '';
-        document.getElementById('prof-bids-modal-subtitle').innerText = 'پروژه: ' + projectTitle + ' | بودجه اسمی پایه: ' + baseCoins + ' سکه';
+        document.getElementById('prof-bids-modal-subtitle').innerText = 'پروژه: ' + projectTitle + ' | بودجه اسمی پایه: ' + roundCoin(baseCoins) + ' سکه';
 
         if (!bidsRes.data || bidsRes.data.length === 0) {
             tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-slate-400 font-bold">هنوز پیشنهادی از سوی سرگروه‌ها برای این پروژه ارسال نشده است.</td></tr>';
@@ -1493,7 +1503,7 @@
                     '</td>' +
                     '<td class="p-3 font-black text-slate-800">' + teamName + '</td>' +
                     '<td class="p-3 text-slate-600">' + leaderName + '</td>' +
-                    '<td class="p-3 font-black text-amber-700 text-center text-sm">' + b.proposed_coins + ' سکه</td>' +
+                    '<td class="p-3 font-black text-amber-700 text-center text-sm">' + roundCoin(b.proposed_coins) + ' سکه</td>' +
                     '<td class="p-3 text-slate-500 text-center">' + bDate + '</td>' +
                     '</tr>';
             });
@@ -1533,7 +1543,7 @@
             showAppAlert('خطا در امضای قرارداد: ' + res.error.message, false);
         } else {
             closeProfessorBidsModal();
-            showAppAlert('قرارداد اصلی با موفقیت با شرکت «' + teamName + '» منعقد گردید و سقف بودجه ' + agreedCoins + ' سکه به این سرگروه تخصیص یافت.', true, 'سامانه');
+            showAppAlert('قرارداد اصلی با موفقیت با شرکت «' + teamName + '» منعقد گردید و سقف بودجه ' + roundCoin(agreedCoins) + ' سکه به این سرگروه تخصیص یافت.', true, 'سامانه');
             await loadMasterProjects();
             await loadContracts();
         }
@@ -1649,7 +1659,7 @@
             showAppAlert(res.error.message, false);
         } else {
             await sb.from('tasks').update({ status: 'pending_leader_signature' }).eq('id', currentAcceptTaskId);
-            showAppAlert('پیشنهاد همکاری با قیمت ' + proposedCoins + ' سکه و شرایط خاص شما ثبت و جهت تایید به کارفرما ارسال شد.', true);
+            showAppAlert('پیشنهاد همکاری با قیمت ' + roundCoin(proposedCoins) + ' سکه و شرایط خاص شما ثبت و جهت تایید به کارفرما ارسال شد.', true);
             closeAcceptModal();
             await loadTasks();
             await loadContracts();
@@ -1669,7 +1679,7 @@
             status: 'in_progress'
         }).eq('id', contractId);
 
-        showAppAlert('قرارداد توسط کارفرما تایید شد. مبلغ بسته کاری به ' + agreedCoins + ' سکه تغییر یافت و از بودجه شرکت شما کسر گردید.', true);
+        showAppAlert('قرارداد توسط کارفرما تایید شد. مبلغ بسته کاری به ' + roundCoin(agreedCoins) + ' سکه تغییر یافت و از بودجه شرکت شما کسر گردید.', true);
         await loadContracts();
         await loadTasks();
     };
@@ -1829,8 +1839,8 @@
         pendingAwardAgreedCoins = parseFloat(agreedCoins);
         pendingAwardNominalCoins = nominalCoins;
 
-        document.getElementById('prof-award-nominal-coins').innerText = nominalCoins + ' سکه';
-        document.getElementById('prof-award-agreed-coins').innerText = pendingAwardAgreedCoins + ' سکه';
+        document.getElementById('prof-award-nominal-coins').innerText = roundCoin(nominalCoins) + ' سکه';
+        document.getElementById('prof-award-agreed-coins').innerText = roundCoin(pendingAwardAgreedCoins) + ' سکه';
         document.getElementById('prof-award-score-input').value = '';
         document.getElementById('prof-award-final-preview').innerText = '۰ سکه';
         document.getElementById('professor-award-modal').classList.remove('hidden');
@@ -1845,7 +1855,7 @@
         }
         var finalPayout = (score / pendingAwardNominalCoins) * pendingAwardAgreedCoins;
         finalPayout = Math.round(finalPayout * 10) / 10;
-        document.getElementById('prof-award-final-preview').innerText = finalPayout + ' سکه';
+        document.getElementById('prof-award-final-preview').innerText = roundCoin(finalPayout) + ' سکه';
     };
 
     window.closeProfessorAwardModal = function() {
@@ -1871,7 +1881,7 @@
             date: now.toLocaleDateString('fa-IR'),
             time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
             type: 'اتمام پروژه',
-            details: 'ارزیابی نهایی انجام و مبلغ ' + finalPayout + ' سکه تایید و به کیف پول دانشجو تخصیص یافت.'
+            details: 'ارزیابی نهایی انجام و مبلغ ' + roundCoin(finalPayout) + ' سکه تایید و به کیف پول دانشجو تخصیص یافت.'
         });
 
         var awardRes = await sb.from('contracts').update({
@@ -1889,7 +1899,7 @@
         await sb.from('tasks').update({ status: 'completed' }).eq('id', pendingAwardTaskId);
 
         closeProfessorAwardModal();
-        showAppAlert('ارزیابی و امتیازدهی با موفقیت ثبت شد.\nمبلغ ' + finalPayout + ' سکه نهایی به کیف پول دانشجو واریز گردید.', true, 'سامانه');
+        showAppAlert('ارزیابی و امتیازدهی با موفقیت ثبت شد.\nمبلغ ' + roundCoin(finalPayout) + ' سکه نهایی به کیف پول دانشجو واریز گردید.', true, 'سامانه');
         await loadContracts();
     };
 
@@ -2054,8 +2064,8 @@
         var faultContractor = parseFloat(document.getElementById('fault-contractor-percent').value) || 0;
         var baseCoins = targetContract ? parseFloat(targetContract.agreed_base_coins || 0) : 0;
 
-        var contractorPenalty = (faultContractor / 100) * baseCoins;
-        var leaderPenalty = (faultLeader / 100) * baseCoins;
+        var contractorPenalty = roundCoin((faultContractor / 100) * baseCoins);
+        var leaderPenalty = roundCoin((faultLeader / 100) * baseCoins);
 
         if (decision === 'approve') {
             existingLogs.push({
@@ -2063,7 +2073,7 @@
                 date: dateStr,
                 time: timeStr,
                 type: 'تایید فسخ یک طرفه و باطل شدن قرارداد',
-                details: 'قصور کارفرما: ' + faultLeader + '٪ (کسر جریمه از بودجه کارفرما: ' + leaderPenalty + ' سکه) | قصور پیمانکار: ' + faultContractor + '٪ (کسر جریمه از کیف پول پیمانکار: ' + contractorPenalty + ' سکه)'
+                details: 'قصور کارفرما: ' + faultLeader + '٪ (کسر جریمه از بودجه کارفرما: ' + roundCoin(leaderPenalty) + ' سکه) | قصور پیمانکار: ' + faultContractor + '٪ (کسر جریمه از کیف پول پیمانکار: ' + roundCoin(contractorPenalty) + ' سکه)'
             });
 
             var finalPayoutBase = targetContract && targetContract.final_payout !== null && targetContract.final_payout !== undefined ? parseFloat(targetContract.final_payout) : baseCoins;
@@ -2308,8 +2318,15 @@
     window.submitInternalBid = async function(taskId) {
         var sb = getSupabaseClient();
         var input = document.getElementById('internal-bid-input-' + taskId);
-        var coins = parseFloat(input.value);
+        var coins = roundCoin(input.value);
         if (!coins || coins <= 0) return showAppAlert('لطفاً مبلغ پیشنهادی معتبری وارد کنید.', false);
+
+        var myContractsRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', currentUser.id).neq('status', 'terminated');
+        var myCurrentTotal = 0;
+        (myContractsRes.data || []).forEach(function(c) { myCurrentTotal += parseFloat(c.agreed_base_coins || 0); });
+        if (roundCoin(myCurrentTotal + coins) > 250) {
+            return showAppAlert('با قیمت پیشنهادی، تعداد سکه‌های قراردادهای شما از سقف مجاز عبور می‌کند.', false);
+        }
 
         var existing = await sb.from('task_bids').select('id').eq('task_id', taskId).eq('bidder_id', currentUser.id).maybeSingle();
         var res;
@@ -2347,7 +2364,7 @@
                 return '<div class="border ' + boxClass + ' rounded-xl p-3 flex justify-between items-center gap-2">' +
                     '<div>' +
                         '<div class="text-xs font-black text-slate-800 flex items-center gap-1.5">' + bidderName + ' ' + badge + '</div>' +
-                        '<div class="text-[11px] text-slate-500">پیشنهاد: <strong class="text-indigo-700">' + b.proposed_coins + ' سکه</strong></div>' +
+                        '<div class="text-[11px] text-slate-500">پیشنهاد: <strong class="text-indigo-700">' + roundCoin(b.proposed_coins) + ' سکه</strong></div>' +
                     '</div>' +
                     '<button onclick="awardInternalBid(\'' + b.id + '\', \'' + taskId + '\', \'' + b.bidder_id + '\', ' + b.proposed_coins + ')" class="bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[10px] font-black px-3 py-1.5 rounded-lg cursor-pointer shadow-sm whitespace-nowrap">انتخاب این پیشنهاد</button>' +
                     '</div>';
@@ -2363,13 +2380,14 @@
     };
 
     window.awardInternalBid = async function(bidId, taskId, bidderId, proposedCoins) {
+        proposedCoins = roundCoin(proposedCoins);
         if (!confirm('آیا از انتخاب این پیشنهاد به مبلغ ' + proposedCoins + ' سکه اطمینان دارید؟ پس از تایید، این بسته کاری قطعاً به این دانشجو واگذار می‌شود و امکان بازگشت وجود ندارد.')) return;
         var sb = getSupabaseClient();
 
         var existingContractsRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', bidderId).neq('status', 'terminated');
         var currentTotal = 0;
         (existingContractsRes.data || []).forEach(function(c) { currentTotal += parseFloat(c.agreed_base_coins || 0); });
-        if (currentTotal + parseFloat(proposedCoins) > 250) {
+        if (roundCoin(currentTotal + proposedCoins) > 250) {
             return showAppAlert('این دانشجو با احتساب این پیشنهاد از سقف مجاز ۲۵۰ سکه عبور می‌کند؛ سامانه اجازهٔ انتخاب این پیشنهاد را نمی‌دهد.', false);
         }
 
@@ -2463,7 +2481,7 @@
                     var myBid = myBidsByTask[t.id];
                     if (deadlinePassed) {
                         actionArea = myBid
-                            ? '<div class="text-center py-2 bg-emerald-50 rounded-xl text-emerald-700 text-xs font-bold border border-emerald-200">✅ پیشنهاد ثبت‌شدهٔ شما: ' + myBid.proposed_coins + ' سکه (مهلت پایان یافته، منتظر تصمیم سرگروه)</div>'
+                            ? '<div class="text-center py-2 bg-emerald-50 rounded-xl text-emerald-700 text-xs font-bold border border-emerald-200">✅ پیشنهاد ثبت‌شدهٔ شما: ' + roundCoin(myBid.proposed_coins) + ' سکه (مهلت پایان یافته، منتظر تصمیم سرگروه)</div>'
                             : '<div class="text-center py-2 bg-amber-50 rounded-xl text-amber-700 text-xs font-bold border border-amber-200">⏳ مهلت این مناقصه به پایان رسیده است.</div>';
                     } else {
                         actionArea = '<div class="space-y-1">' +
@@ -2471,7 +2489,7 @@
                                 '<input type="number" id="internal-bid-input-' + t.id + '" value="' + (myBid ? myBid.proposed_coins : '') + '" placeholder="پیشنهاد قیمت شما (سکه)" class="w-full bg-white border border-indigo-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-indigo-500">' +
                                 '<button onclick="submitInternalBid(\'' + t.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">' + (myBid ? 'به‌روزرسانی' : 'ثبت پیشنهاد') + '</button>' +
                             '</div>' +
-                            '<div class="text-[10px] text-slate-400 text-center">سقف باقیماندهٔ شما تا انعقاد قرارداد جدید: <strong class="text-slate-600">' + myRemainingCap + ' سکه</strong> (از سقف کلی ۲۵۰ سکه)</div>' +
+                            '<div class="text-[10px] text-slate-400 text-center">سقف باقیماندهٔ شما تا انعقاد قرارداد جدید: <strong class="text-slate-600">' + roundCoin(myRemainingCap) + ' سکه</strong> (از سقف کلی ۲۵۰ سکه)</div>' +
                             '</div>';
                     }
                 }
@@ -2534,7 +2552,7 @@
                                     '<path d="M15 14v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5v-4" stroke-width="1.6"/>' +
                                     '<path d="M15 18v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5v-4" stroke-width="1.6"/>' +
                                 '</svg>' +
-                                '<span>' + t.allocated_nominal_coins + ' سکه</span>' +
+                                '<span>' + roundCoin(t.allocated_nominal_coins) + ' سکه</span>' +
                             '</div>' +
                         '</div>' +
 
@@ -2609,12 +2627,12 @@
                 }
                 if (c.contractor_penalty_coins) {
                     documentsAndMessages += '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
-                        '💸 <strong>جریمه پیمانکار:</strong> ' + c.contractor_penalty_coins + ' سکه (کسر از کیف پول نهایی)' +
+                        '💸 <strong>جریمه پیمانکار:</strong> ' + roundCoin(c.contractor_penalty_coins) + ' سکه (کسر از کیف پول نهایی)' +
                         '</div>';
                 }
                 if (c.leader_penalty_coins) {
                     documentsAndMessages += '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
-                        '💸 <strong>جریمه کارفرما:</strong> ' + c.leader_penalty_coins + ' سکه (کسر از بودجه قابل تخصیص)' +
+                        '💸 <strong>جریمه کارفرما:</strong> ' + roundCoin(c.leader_penalty_coins) + ' سکه (کسر از بودجه قابل تخصیص)' +
                         '</div>';
                 }
 
@@ -2707,13 +2725,18 @@
                     '<span class="text-[10px] bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded border border-indigo-200">🔍 لاگ جدول</span>' +
                     '</a>';
 
+                var hasNewMessage = documentsAndMessages !== '';
+                var newMessageCell = hasNewMessage
+                    ? '<a href="javascript:void(0)" onclick="openContractHistory(\'' + c.id + '\')" class="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 border border-indigo-200 px-2.5 py-1 rounded-full text-[11px] font-black hover:bg-indigo-100 transition cursor-pointer">🔔 پیام جدید</a>'
+                    : '<span class="text-[11px] text-slate-300">—</span>';
+
                 tbody.innerHTML += '<tr class="hover:bg-slate-50/80 transition">' +
                     '<td class="p-3">' + bookletCellHtml + '</td>' +
                     '<td class="p-3 font-bold">' + (c.teams ? c.teams.name : '') + '</td>' +
                     '<td class="p-3">' + (c.tasks ? c.tasks.title : '') + '</td>' +
                     '<td class="p-3">' + (c.profiles ? c.profiles.full_name : '') + '</td>' +
-                    '<td class="p-3 font-black text-amber-700 text-sm">' + (c.agreed_base_coins || 0) + ' سکه</td>' +
-                    '<td class="p-3 text-slate-600 max-w-xs">' + (c.contractor_terms || 'شرایط عادی') + documentsAndMessages + '</td>' +
+                    '<td class="p-3 font-black text-amber-700 text-sm">' + roundCoin(c.agreed_base_coins || 0) + ' سکه</td>' +
+                    '<td class="p-3 text-center">' + newMessageCell + '</td>' +
                     '<td class="p-3">' + statusBadge + '</td>' +
                     '<td class="p-3">' + actionCol + '</td>' +
                     '</tr>';
@@ -2797,7 +2820,7 @@
             var remainingBudget = Math.max(0, allocatableBudget - spentCoins);
             var spentPercent = allocatableBudget > 0 ? Math.min(100, (spentCoins / allocatableBudget) * 100) : 0;
 
-            document.getElementById('team-budget-badge').innerText = 'بودجه قرارداد: ' + totalContractBudget + ' | جرایم: ' + totalLeaderPenalty + ' | قابل تخصیص: ' + allocatableBudget + ' | باقیمانده: ' + remainingBudget + ' سکه';
+            document.getElementById('team-budget-badge').innerText = 'بودجه قرارداد: ' + totalContractBudget + ' | جرایم: ' + totalLeaderPenalty + ' | قابل تخصیص: ' + allocatableBudget + ' | باقیمانده: ' + roundCoin(remainingBudget) + ' سکه';
             document.getElementById('donut-contract-budget-text').innerText = totalContractBudget;
             document.getElementById('donut-penalty-text').innerText = totalLeaderPenalty;
             document.getElementById('donut-total-text').innerText = allocatableBudget;
@@ -2872,7 +2895,7 @@
         if (res.data) {
             sel.innerHTML = '';
             res.data.forEach(function(b) {
-                var opt = '<option value="' + b.id + '" data-real-value="' + b.nominal_coins + '">کتابچه ' + b.booklet_number + ': ' + b.title + ' (' + b.nominal_coins + ' سکه)</option>';
+                var opt = '<option value="' + b.id + '" data-real-value="' + b.nominal_coins + '">کتابچه ' + b.booklet_number + ': ' + b.title + ' (' + roundCoin(b.nominal_coins) + ' سکه)</option>';
                 sel.innerHTML += opt;
             });
             updateBookletRealValueNote();
@@ -2885,7 +2908,7 @@
         if (!sel || !note || !sel.selectedOptions || !sel.selectedOptions[0]) { if (note) note.classList.add('hidden'); return; }
         var realValue = sel.selectedOptions[0].getAttribute('data-real-value');
         if (!realValue) { note.classList.add('hidden'); return; }
-        note.innerText = '📖 ارزش واقعی این کتابچه (فقط برای محاسبه نمرهٔ پیمانکار استفاده می‌شود، نه برای تعیین قیمت قرارداد): ' + realValue + ' سکه';
+        note.innerText = '📖 ارزش واقعی این کتابچه (فقط برای محاسبه نمرهٔ پیمانکار استفاده می‌شود، نه برای تعیین قیمت قرارداد): ' + roundCoin(realValue) + ' سکه';
         note.classList.remove('hidden');
     }
     document.getElementById('task-booklet-select').addEventListener('change', updateBookletRealValueNote);
@@ -2937,8 +2960,23 @@
         box.classList.remove('hidden');
         var sb = getSupabaseClient();
 
-        var membersRes = await sb.from('team_members').select('id, profile_id, profiles(full_name)').eq('team_id', currentTeam.id).eq('status', 'active');
-        var members = membersRes.data || [];
+        if (currentTeam.status === 'warning') {
+            var justDissolved = await dissolveCompanyIfExpired(currentTeam.id);
+            if (justDissolved) {
+                var freshTeamRes = await sb.from('teams').select('*').eq('id', currentTeam.id).single();
+                if (freshTeamRes.data) currentTeam = freshTeamRes.data;
+            }
+        }
+
+        if (currentTeam.status === 'dissolved') {
+            renderDissolvedCompanyBox();
+            return;
+        }
+
+        var membersRes = await sb.from('team_members').select('id, profile_id, status, profiles(full_name)').eq('team_id', currentTeam.id).in('status', ['active', 'pending']);
+        var allRows = membersRes.data || [];
+        var members = allRows.filter(function(r) { return r.status === 'active'; });
+        var pendingInvites = allRows.filter(function(r) { return r.status === 'pending'; });
 
         var statusBadge = document.getElementById('company-status-badge');
         var warningBanner = document.getElementById('warning-deadline-banner');
@@ -2969,10 +3007,10 @@
         }
 
         var rosterList = document.getElementById('roster-list');
-        if (members.length === 0) {
+        if (members.length === 0 && pendingInvites.length === 0) {
             rosterList.innerHTML = '<div class="text-[11px] text-slate-400 text-center py-2">هنوز عضو ثابتی اضافه نشده است.</div>';
         } else {
-            rosterList.innerHTML = members.map(function(m) {
+            var activeRowsHtml = members.map(function(m) {
                 var canRemove = currentTeam.status === 'forming';
                 var actionHtml = canRemove
                     ? '<button onclick="removeFixedMember(\'' + m.id + '\')" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold cursor-pointer">حذف</button>'
@@ -2982,6 +3020,13 @@
                     actionHtml +
                     '</div>';
             }).join('');
+            var pendingRowsHtml = pendingInvites.map(function(m) {
+                return '<div class="flex justify-between items-center bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 text-xs">' +
+                    '<span class="font-bold text-amber-800">⏳ ' + (m.profiles ? m.profiles.full_name : 'نامشخص') + ' <span class="font-normal text-amber-600">(در انتظار تایید دانشجو)</span></span>' +
+                    '<button onclick="removeFixedMember(\'' + m.id + '\')" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold cursor-pointer">لغو دعوت</button>' +
+                    '</div>';
+            }).join('');
+            rosterList.innerHTML = activeRowsHtml + pendingRowsHtml;
         }
 
         var addControls = document.getElementById('roster-add-controls');
@@ -3023,7 +3068,7 @@
     async function loadFreeAgentOptions(restrictedToWarningRecruitment) {
         var sb = getSupabaseClient();
         var allMembersRes = await sb.from('profiles').select('id, full_name').eq('role', 'member').eq('is_approved', true);
-        var takenRes = await sb.from('team_members').select('profile_id').eq('status', 'active');
+        var takenRes = await sb.from('team_members').select('profile_id').in('status', ['active', 'pending']);
         var takenIds = (takenRes.data || []).map(function(r) { return r.profile_id; });
         var select = document.getElementById('free-agent-select');
         var available = (allMembersRes.data || []).filter(function(p) { return takenIds.indexOf(p.id) === -1; });
@@ -3062,27 +3107,28 @@
         var profileId = select.value;
         if (!profileId) return showAppAlert('لطفاً یک دانشجو را از فهرست انتخاب کنید.', false);
 
+        var conflictRes = await sb.from('team_members').select('id').eq('profile_id', profileId).in('status', ['active', 'pending']);
+        if (conflictRes.data && conflictRes.data.length > 0) {
+            return showAppAlert('این دانشجو هم‌اکنون عضو ثابت یا دارای دعوت در انتظار تایید از شرکت دیگری است و قابل دعوت نیست.', false);
+        }
+
         var countRes = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', currentTeam.id).eq('status', 'active');
         if ((countRes.count || 0) >= 6) return showAppAlert('یک شرکت حداکثر می‌تواند ۶ عضو ثابت داشته باشد.', false);
 
-        var insRes = await sb.from('team_members').insert([{ team_id: currentTeam.id, profile_id: profileId, status: 'active' }]).select();
-        if (insRes.error || !insRes.data || insRes.data.length === 0) {
-            var em = insRes.error ? insRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
-            return showAppAlert('خطا در افزودن عضو: ' + em, false);
+        var existingRowRes = await sb.from('team_members').select('id').eq('team_id', currentTeam.id).eq('profile_id', profileId).maybeSingle();
+        var res;
+        if (existingRowRes.data) {
+            res = await sb.from('team_members').update({ status: 'pending', exited_at: null, exit_penalty_applied: false }).eq('id', existingRowRes.data.id).select();
+        } else {
+            res = await sb.from('team_members').insert([{ team_id: currentTeam.id, profile_id: profileId, status: 'pending' }]).select();
         }
 
-        if (currentTeam.status === 'warning') {
-            var newCountRes = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', currentTeam.id).eq('status', 'active');
-            if ((newCountRes.count || 0) >= 3) {
-                var resolveRes = await sb.from('teams').update({ status: 'active', warning_started_at: null }).eq('id', currentTeam.id).select();
-                if (resolveRes.data && resolveRes.data[0]) currentTeam = resolveRes.data[0];
-                showAppAlert('عضو ثابت جدید اضافه شد و شرکت از وضعیت هشدار خارج گردید.', true, 'سامانه');
-            } else {
-                showAppAlert('عضو ثابت جدید اضافه شد، اما همچنان تا خروج از وضعیت هشدار به عضو دیگری نیاز دارید.', true);
-            }
-        } else {
-            showAppAlert('عضو ثابت با موفقیت اضافه شد.', true);
+        if (res.error || !res.data || res.data.length === 0) {
+            var em = res.error ? res.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+            return showAppAlert('خطا در ارسال دعوت عضویت: ' + em, false);
         }
+
+        showAppAlert('دعوت عضویت ثابت برای این دانشجو ارسال شد. عضویت او رسمی می‌شود به‌محض این‌که در پنل خودش دعوت را تایید کند.', true);
         await loadCompanyRosterBox();
     };
 
@@ -3122,11 +3168,22 @@
         if (!box || userProfile.role !== 'member') { if (box) box.classList.add('hidden'); return; }
 
         var sb = getSupabaseClient();
-        var mRes = await sb.from('team_members').select('id, team_id, teams(name)').eq('profile_id', currentUser.id).eq('status', 'active').maybeSingle();
+        var mRes = await sb.from('team_members').select('id, team_id, teams(name, status, warning_started_at)').eq('profile_id', currentUser.id).eq('status', 'active').maybeSingle();
 
         if (!mRes.data) {
             box.classList.add('hidden');
             return;
+        }
+
+        if (mRes.data.teams && mRes.data.teams.status === 'warning') {
+            var justDissolved = await dissolveCompanyIfExpired(mRes.data.team_id);
+            if (justDissolved) {
+                box.classList.remove('hidden');
+                textEl.innerText = 'شرکت شما به دلیل عدم جذب به‌موقع عضو ثابت جدید منحل شد — ۱۵ سکه جریمه از کیف پول شما کسر گردید.';
+                btn.classList.add('hidden');
+                await loadContracts();
+                return;
+            }
         }
 
         box.classList.remove('hidden');
@@ -3177,7 +3234,124 @@
         await loadMyMembershipBox();
         await loadContracts();
     };
+
+    async function loadMembershipInvites() {
+        var box = document.getElementById('membership-invites-box');
+        if (!box || userProfile.role !== 'member') { if (box) box.classList.add('hidden'); return; }
+
+        var sb = getSupabaseClient();
+        var res = await sb.from('team_members').select('id, team_id, teams(name)').eq('profile_id', currentUser.id).eq('status', 'pending');
+        var invites = res.data || [];
+
+        if (invites.length === 0) {
+            box.classList.add('hidden');
+            box.innerHTML = '';
+            return;
+        }
+
+        box.classList.remove('hidden');
+        box.innerHTML = invites.map(function(inv) {
+            var teamName = inv.teams ? inv.teams.name : 'نامشخص';
+            return '<div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">' +
+                '<div class="text-xs text-indigo-900"><span class="font-black">📩 دعوت عضویت ثابت: </span>شرکت «' + teamName + '» شما را به عضویت ثابت خود دعوت کرده است.</div>' +
+                '<div class="flex gap-2">' +
+                    '<button onclick="acceptMembershipInvite(\'' + inv.id + '\', \'' + inv.team_id + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-4 py-2 rounded-xl cursor-pointer shadow-sm transition">قبول عضویت</button>' +
+                    '<button onclick="rejectMembershipInvite(\'' + inv.id + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold px-4 py-2 rounded-xl cursor-pointer transition">رد دعوت</button>' +
+                '</div>' +
+                '</div>';
+        }).join('');
+    }
+
+    window.acceptMembershipInvite = async function(inviteId, teamId) {
+        if (!confirm('با قبول این دعوت، رسماً به عضو ثابت این شرکت تبدیل می‌شوید. آیا مطمئن هستید؟')) return;
+        var sb = getSupabaseClient();
+
+        var updRes = await sb.from('team_members').update({ status: 'active' }).eq('id', inviteId).select();
+        if (updRes.error || !updRes.data || updRes.data.length === 0) {
+            var em = updRes.error ? updRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+            return showAppAlert('خطا در تایید عضویت: ' + em, false);
+        }
+
+        var teamRes = await sb.from('teams').select('status').eq('id', teamId).single();
+        if (teamRes.data && teamRes.data.status === 'warning') {
+            var cntRes = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', teamId).eq('status', 'active');
+            if ((cntRes.count || 0) >= 3) {
+                await sb.from('teams').update({ status: 'active', warning_started_at: null }).eq('id', teamId);
+            }
+        }
+
+        showAppAlert('عضویت ثابت شما با موفقیت تایید شد.', true, 'سامانه');
+        await loadMembershipInvites();
+        await loadMyMembershipBox();
+        await loadContracts();
+    };
+
+    window.rejectMembershipInvite = async function(inviteId) {
+        if (!confirm('آیا از رد این دعوت عضویت اطمینان دارید؟')) return;
+        var sb = getSupabaseClient();
+        var delRes = await sb.from('team_members').delete().eq('id', inviteId).select();
+        if (delRes.error) return showAppAlert('خطا در رد دعوت: ' + delRes.error.message, false);
+        showAppAlert('دعوت عضویت رد شد.', true);
+        await loadMembershipInvites();
+    };
     // =================== پایان فاز ۷ ===================
+
+    // ===================== فاز ۸: انحلال شرکت و پیامدها =====================
+    async function dissolveCompanyIfExpired(teamId) {
+        var sb = getSupabaseClient();
+        var teamRes = await sb.from('teams').select('*').eq('id', teamId).single();
+        var team = teamRes.data;
+        if (!team) return false;
+        if (team.status === 'dissolved') return true;
+        if (team.status !== 'warning' || !team.warning_started_at) return false;
+
+        var deadline = new Date(team.warning_started_at);
+        deadline.setDate(deadline.getDate() + 7);
+        if (new Date().getTime() < deadline.getTime()) return false;
+
+        // مهلت یک‌هفته‌ای بدون جذب عضو ثابت جدید به پایان رسیده؛ اجرای پیامدهای انحلال:
+
+        // ۱) لغو تمام قراردادهای شرکت و باطل شدن سکه‌های آن‌ها
+        await sb.from('contracts').update({ status: 'terminated', termination_status: 'company_dissolved' }).eq('team_id', teamId).neq('status', 'terminated');
+
+        // ۲) توقف تمام بسته‌های کاری این شرکت (چون خود شرکت دیگر وجود ندارد)
+        await sb.from('tasks').update({ status: 'terminated' }).eq('team_id', teamId).neq('status', 'terminated');
+
+        // ۳) جریمه ۱۵ سکه‌ای برای تمام اعضای ثابت باقی‌مانده (مسئولیت جمعی)
+        var remainingMembersRes = await sb.from('team_members').select('id').eq('team_id', teamId).eq('status', 'active');
+        var remainingIds = (remainingMembersRes.data || []).map(function(m) { return m.id; });
+        if (remainingIds.length > 0) {
+            await sb.from('team_members').update({ status: 'exited', exited_at: new Date().toISOString(), exit_penalty_applied: true }).in('id', remainingIds);
+        }
+
+        // ۴) ثبت وضعیت نهایی انحلال شرکت (جریمه ۲۵ سکه‌ای سرگروه و صفر شدن ۲۵٪ امتیاز تکمیل پروژه، در فرمول نمره‌دهی نهایی سرگروه اعمال می‌شود)
+        await sb.from('teams').update({ status: 'dissolved', dissolved_at: new Date().toISOString() }).eq('id', teamId);
+
+        return true;
+    }
+
+    function renderDissolvedCompanyBox() {
+        var statusBadge = document.getElementById('company-status-badge');
+        var warningBanner = document.getElementById('warning-deadline-banner');
+        var rosterList = document.getElementById('roster-list');
+        var addControls = document.getElementById('roster-add-controls');
+        var finalizeBtn = document.getElementById('finalize-company-btn');
+        var activeNote = document.getElementById('company-active-note');
+        var freeMarketStatus = document.getElementById('free-market-status');
+
+        statusBadge.className = 'text-[10px] font-black px-2.5 py-1 rounded-full border bg-slate-200 text-slate-700 border-slate-300';
+        statusBadge.innerText = '⛔ منحل‌شده';
+
+        warningBanner.classList.remove('hidden');
+        warningBanner.innerText = '⛔ این شرکت به دلیل عدم جذب به‌موقع عضو ثابت جدید در مهلت یک‌هفته‌ای، منحل شده است. تمام قراردادهای این شرکت باطل شدند، تمام اعضای ثابت باقی‌مانده ۱۵ سکه جریمه شدند، و طبق فرمول نمره‌دهی نهایی، ۲۵ سکه جریمه و صفر شدن سهم «تکمیل پروژه» برای سرگروه اعمال خواهد شد.';
+
+        rosterList.innerHTML = '<div class="text-[11px] text-slate-400 text-center py-2">این شرکت منحل شده و دیگر عضو ثابت فعالی ندارد.</div>';
+        addControls.classList.add('hidden');
+        finalizeBtn.classList.add('hidden');
+        activeNote.classList.add('hidden');
+        if (freeMarketStatus) freeMarketStatus.classList.add('hidden');
+    }
+    // =================== پایان فاز ۸ ===================
 
     // ===================== فاز ۵: آستانه ورود به بازار آزاد =====================
     async function checkAndOpenFreeMarket(teamId) {
@@ -3261,7 +3435,7 @@
     document.getElementById('create-task-btn').onclick = async function() {
         var bId = document.getElementById('task-booklet-select').value;
         var title = document.getElementById('task-title-input').value.trim();
-        var coins = parseFloat(document.getElementById('task-coins-input').value);
+        var coins = roundCoin(document.getElementById('task-coins-input').value);
         var deadlineShamsi = document.getElementById('task-deadline-shamsi').value.trim();
         if (!title || isNaN(coins) || coins <= 0 || !currentTeam) return showAppAlert('اطلاعات بسته کاری را کامل وارد نمایید.', false);
 
@@ -3327,7 +3501,7 @@
         }
 
         if (currentSpent + coins > allocatableBudget) {
-            return showAppAlert('خطای سقف بودجه: با ایجاد این بسته کاری، مجموع بودجه بسته‌های کاری شرکت (' + (currentSpent + coins) + ' سکه) از سقف بودجه قابل تخصیص (' + allocatableBudget + ' سکه پس از کسر ' + totalPenalty + ' سکه جریمه) فراتر می‌رود.', false);
+            return showAppAlert('خطای سقف بودجه: با ایجاد این بسته کاری، مجموع بودجه بسته‌های کاری شرکت (' + (currentSpent + coins) + ' سکه) از سقف بودجه قابل تخصیص (' + roundCoin(allocatableBudget) + ' سکه پس از کسر ' + roundCoin(totalPenalty) + ' سکه جریمه) فراتر می‌رود.', false);
         }
 
         var freeMarketCheck = await checkAndOpenFreeMarket(currentTeam.id);
