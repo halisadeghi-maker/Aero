@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۲)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۳)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۲) -->
+            <!-- نسخه سامانه (۲.۳.۳) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.2</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.3</span>
             </div>
         </section>
 
@@ -458,7 +458,7 @@
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs font-bold text-slate-600 mb-1">مهلت مناقصهٔ داخلی (فقط اعضای ثابت شرکت شما تا این تاریخ می‌توانند پیشنهاد بدهند)</label>
-                        <input type="datetime-local" id="task-deadline-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800">
+                        <input type="text" id="task-deadline-shamsi" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۰۶/۱۵ ۱۴:۰۰" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-800 cursor-pointer" readonly>
                         <span class="text-[10px] text-slate-400 block mt-0.5">خالی بگذارید تا مهلت پیش‌فرض (۳ روز از الان) اعمال شود.</span>
                     </div>
                     <div id="booklet-real-value-note" class="md:col-span-4 text-[11px] text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-1.5 font-bold hidden"></div>
@@ -2360,10 +2360,12 @@
         var taskRes = await sb.from('tasks').select('booklet_id').eq('id', taskId).single();
         var bookletId = taskRes.data ? taskRes.data.booklet_id : null;
         if (bookletId) {
-            var dupRes = await sb.from('contracts').select('id, tasks(booklet_id)').eq('contractor_id', bidderId).neq('status', 'terminated');
-            var hasTaken = (dupRes.data || []).some(function(c) { return c.tasks && c.tasks.booklet_id === bookletId; });
-            if (hasTaken) {
-                return showAppAlert('این دانشجو قبلاً یک بسته کاری از همین شماره کتابچه دریافت کرده است؛ سامانه اجازهٔ انتخاب این پیشنهاد را نمی‌دهد.', false);
+            var dupRes = await sb.from('contracts').select('id, team_id, tasks(booklet_id)').eq('contractor_id', bidderId).neq('status', 'terminated');
+            var hasTakenFromOtherTeam = (dupRes.data || []).some(function(c) {
+                return c.tasks && c.tasks.booklet_id === bookletId && c.team_id !== currentTeam.id;
+            });
+            if (hasTakenFromOtherTeam) {
+                return showAppAlert('این دانشجو قبلاً یک بسته کاری از همین شماره کتابچه را از شرکت دیگری دریافت کرده است؛ دریافت همان کتابچه از دو شرکت مختلف مجاز نیست.', false);
             }
         }
 
@@ -2429,9 +2431,10 @@
 
             var actionArea = '';
             if (userProfile.role === 'member') {
-                if (t.market_phase === 'free_market') {
-                    actionArea = '<button onclick="openAcceptTaskModal(\'' + t.id + '\', \'' + t.team_id + '\', ' + t.allocated_nominal_coins + ', ' + t.booklet_id + ')" class="w-full bg-gradient-to-r from-[#0f284e] to-[#1e3a8a] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md cursor-pointer transition">امضا، پیشنهاد قیمت و شرایط</button>';
-                } else if (myFixedTeamIds.indexOf(t.team_id) === -1) {
+                var isInternalPhase = (t.market_phase === 'internal');
+                var eligibleToBid = isInternalPhase ? (myFixedTeamIds.indexOf(t.team_id) !== -1) : true;
+
+                if (!eligibleToBid) {
                     actionArea = '<div class="text-center py-2 bg-white/70 rounded-xl text-slate-500 text-xs font-medium border border-slate-200/60">🔒 مناقصه داخلی — فقط اعضای ثابت همین شرکت می‌توانند پیشنهاد دهند.</div>';
                 } else {
                     var deadlinePassed = t.bidding_deadline && nowTime.getTime() > new Date(t.bidding_deadline).getTime();
@@ -2439,7 +2442,7 @@
                     if (deadlinePassed) {
                         actionArea = myBid
                             ? '<div class="text-center py-2 bg-emerald-50 rounded-xl text-emerald-700 text-xs font-bold border border-emerald-200">✅ پیشنهاد ثبت‌شدهٔ شما: ' + myBid.proposed_coins + ' سکه (مهلت پایان یافته، منتظر تصمیم سرگروه)</div>'
-                            : '<div class="text-center py-2 bg-amber-50 rounded-xl text-amber-700 text-xs font-bold border border-amber-200">⏳ مهلت مناقصه داخلی این بسته کاری به پایان رسیده است.</div>';
+                            : '<div class="text-center py-2 bg-amber-50 rounded-xl text-amber-700 text-xs font-bold border border-amber-200">⏳ مهلت این مناقصه به پایان رسیده است.</div>';
                     } else {
                         actionArea = '<div class="flex gap-2">' +
                             '<input type="number" id="internal-bid-input-' + t.id + '" value="' + (myBid ? myBid.proposed_coins : '') + '" placeholder="پیشنهاد قیمت شما (سکه)" class="w-full bg-white border border-indigo-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-indigo-500">' +
@@ -2448,20 +2451,13 @@
                     }
                 }
             } else if (isOwnerLeader) {
-                if (t.market_phase === 'internal') {
-                    actionArea = '<div class="space-y-2">' +
-                        '<button onclick="openInternalBidsModal(\'' + t.id + '\')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black py-2 rounded-xl shadow-sm transition cursor-pointer">📥 بررسی و انتخاب از میان پیشنهادها</button>' +
-                        '<div class="flex space-x-2 space-x-reverse">' +
-                            '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-200 shadow-xs transition cursor-pointer">ویرایش مستقیم</button>' +
-                            '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold py-2 rounded-xl transition cursor-pointer">حذف بسته کاری</button>' +
-                        '</div>' +
-                        '</div>';
-                } else {
-                    actionArea = '<div class="flex space-x-2 space-x-reverse">' +
+                actionArea = '<div class="space-y-2">' +
+                    '<button onclick="openInternalBidsModal(\'' + t.id + '\')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black py-2 rounded-xl shadow-sm transition cursor-pointer">📥 بررسی و انتخاب از میان پیشنهادها</button>' +
+                    '<div class="flex space-x-2 space-x-reverse">' +
                         '<button onclick="toggleCardEdit(\'' + t.id + '\')" class="w-1/2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold py-2 rounded-xl border border-slate-200 shadow-xs transition cursor-pointer">ویرایش مستقیم</button>' +
                         '<button onclick="deleteTask(\'' + t.id + '\')" class="w-1/2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold py-2 rounded-xl transition cursor-pointer">حذف بسته کاری</button>' +
-                        '</div>';
-                }
+                    '</div>' +
+                    '</div>';
             } else if (isProfessor) {
                 actionArea = '<button onclick="deleteTask(\'' + t.id + '\')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold py-2 rounded-lg cursor-pointer transition shadow-sm">حذف بسته کاری توسط استاد</button>';
             } else {
@@ -2515,6 +2511,11 @@
                                 '</svg>' +
                                 '<span>' + t.allocated_nominal_coins + ' سکه</span>' +
                             '</div>' +
+                        '</div>' +
+
+                        '<div class="flex items-center justify-between text-[10px] font-bold pt-1">' +
+                            '<span class="px-2 py-0.5 rounded-full ' + (t.market_phase === 'free_market' ? 'bg-emerald-100 text-emerald-800' : 'bg-indigo-100 text-indigo-800') + '">' + (t.market_phase === 'free_market' ? '🌍 بازار آزاد' : '🏢 مناقصه داخلی') + '</span>' +
+                            (t.bidding_deadline ? '<span class="text-slate-500">⏰ مهلت: ' + new Date(t.bidding_deadline).toLocaleDateString('fa-IR') + ' ساعت ' + new Date(t.bidding_deadline).toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit'}) + '</span>' : '') +
                         '</div>' +
                     '</div>' +
 
@@ -3097,12 +3098,16 @@
         var bId = document.getElementById('task-booklet-select').value;
         var title = document.getElementById('task-title-input').value.trim();
         var coins = parseFloat(document.getElementById('task-coins-input').value);
-        var deadlineRaw = document.getElementById('task-deadline-input').value;
+        var deadlineShamsi = document.getElementById('task-deadline-shamsi').value.trim();
         if (!title || isNaN(coins) || coins <= 0 || !currentTeam) return showAppAlert('اطلاعات بسته کاری را کامل وارد نمایید.', false);
 
         var deadlineIso;
-        if (deadlineRaw) {
-            deadlineIso = new Date(deadlineRaw).toISOString();
+        if (deadlineShamsi) {
+            var parsedDeadline = parseJalaliDateTimeString(deadlineShamsi);
+            if (!parsedDeadline || isNaN(parsedDeadline.getTime())) {
+                return showAppAlert('فرمت تاریخ شمسی مهلت مناقصه معتبر نیست. لطفاً از طریق تقویم انتخاب کنید.', false);
+            }
+            deadlineIso = parsedDeadline.toISOString();
         } else {
             var d = new Date();
             d.setDate(d.getDate() + 3);
@@ -3161,22 +3166,28 @@
             return showAppAlert('خطای سقف بودجه: با ایجاد این بسته کاری، مجموع بودجه بسته‌های کاری شرکت (' + (currentSpent + coins) + ' سکه) از سقف بودجه قابل تخصیص (' + allocatableBudget + ' سکه پس از کسر ' + totalPenalty + ' سکه جریمه) فراتر می‌رود.', false);
         }
 
+        var freeMarketCheck = await checkAndOpenFreeMarket(currentTeam.id);
+        var initialMarketPhase = freeMarketCheck.ready ? 'free_market' : 'internal';
+
         var res = await sb.from('tasks').insert([{
             team_id: currentTeam.id,
             booklet_id: bookletId,
             title: title,
             allocated_nominal_coins: coins,
             status: 'open',
-            market_phase: 'internal',
+            market_phase: initialMarketPhase,
             bidding_deadline: deadlineIso
         }]);
 
         if (res.error) showAppAlert(res.error.message, false);
         else {
-            showAppAlert('بسته کاری با موفقیت در سقف بودجه تخصیص‌یافته ایجاد گردید و مناقصه داخلی آن تا مهلت تعیین‌شده باز است.', true);
+            var successMsg = initialMarketPhase === 'free_market'
+                ? 'بسته کاری با موفقیت ایجاد گردید. از آنجا که تمام اعضای ثابت شرکت شما قبلاً به ۱۵۰ سکه رسیده‌اند، این بسته کاری مستقیماً در بازار آزاد قرار گرفت.'
+                : 'بسته کاری با موفقیت در سقف بودجه تخصیص‌یافته ایجاد گردید و مناقصه داخلی آن تا مهلت تعیین‌شده باز است.';
+            showAppAlert(successMsg, true);
             document.getElementById('task-title-input').value = '';
             document.getElementById('task-coins-input').value = '';
-            document.getElementById('task-deadline-input').value = '';
+            document.getElementById('task-deadline-shamsi').value = '';
             await loadTasks();
             await loadContracts();
         }
