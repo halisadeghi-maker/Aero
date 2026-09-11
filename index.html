@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۲)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۱) -->
+            <!-- نسخه سامانه (۲.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.1</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.2</span>
             </div>
         </section>
 
@@ -432,6 +432,8 @@
 
                     <button id="finalize-company-btn" type="button" class="hidden w-full bg-gradient-to-r from-[#0f284e] to-[#1e3a8a] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">✅ قطعی‌سازی ترکیب شرکت و ورود به مناقصه اصلی</button>
                     <div id="company-active-note" class="hidden text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 font-bold text-center">✅ ترکیب شرکت قطعی شده و اکنون می‌توانید در مناقصه اصلی شرکت کنید.</div>
+
+                    <div id="free-market-status" class="hidden mt-3 pt-3 border-t border-slate-200"></div>
                 </div>
 
                 <div class="flex justify-between items-center">
@@ -2386,8 +2388,10 @@
 
         closeInternalBidsModal();
         showAppAlert('پیشنهاد انتخاب و قرارداد با موفقیت منعقد گردید.', true, 'سامانه');
+        await checkAndOpenFreeMarket(currentTeam.id);
         await loadTasks();
         await loadContracts();
+        await loadCompanyRosterBox();
     };
     // =================== پایان فاز ۴ ===================
 
@@ -2929,8 +2933,10 @@
             addControls.classList.add('hidden');
             finalizeBtn.classList.add('hidden');
             activeNote.classList.remove('hidden');
+            await renderFreeMarketStatus(members);
         } else {
             activeNote.classList.add('hidden');
+            document.getElementById('free-market-status').classList.add('hidden');
             if (members.length >= 6) {
                 addControls.classList.add('hidden');
             } else {
@@ -3007,6 +3013,61 @@
         await loadMasterProjects();
     };
     // =================== پایان فاز ۲ ===================
+
+    // ===================== فاز ۵: آستانه ورود به بازار آزاد =====================
+    async function checkAndOpenFreeMarket(teamId) {
+        var sb = getSupabaseClient();
+        var membersRes = await sb.from('team_members').select('profile_id, profiles(full_name)').eq('team_id', teamId).eq('status', 'active');
+        var members = membersRes.data || [];
+        if (members.length === 0) return { ready: false, progress: [] };
+
+        var progress = [];
+        var allReached = true;
+        for (const m of members) {
+            var cRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', m.profile_id).neq('status', 'terminated');
+            var total = 0;
+            (cRes.data || []).forEach(function(c) { total += parseFloat(c.agreed_base_coins || 0); });
+            var reached = total >= 150;
+            if (!reached) allReached = false;
+            progress.push({ name: m.profiles ? m.profiles.full_name : 'نامشخص', total: total, reached: reached });
+        }
+
+        if (allReached) {
+            var openRes = await sb.from('tasks').select('id').eq('team_id', teamId).eq('status', 'open').eq('market_phase', 'internal');
+            var openIds = (openRes.data || []).map(function(t) { return t.id; });
+            if (openIds.length > 0) {
+                await sb.from('tasks').update({ market_phase: 'free_market' }).in('id', openIds);
+            }
+        }
+
+        return { ready: allReached, progress: progress };
+    }
+
+    async function renderFreeMarketStatus(members) {
+        var box = document.getElementById('free-market-status');
+        if (!currentTeam || members.length === 0) { box.classList.add('hidden'); return; }
+        box.classList.remove('hidden');
+        box.innerHTML = '<div class="text-[11px] text-slate-400 text-center py-2">در حال بررسی آستانهٔ بازار آزاد...</div>';
+
+        var result = await checkAndOpenFreeMarket(currentTeam.id);
+
+        var rows = result.progress.map(function(p) {
+            var pct = Math.min(100, Math.round((p.total / 150) * 100));
+            var barColor = p.reached ? 'bg-emerald-500' : 'bg-amber-500';
+            return '<div class="flex items-center justify-between text-[11px] py-1">' +
+                '<span class="font-bold text-slate-700">' + (p.reached ? '✅' : '⏳') + ' ' + p.name + '</span>' +
+                '<span class="font-black ' + (p.reached ? 'text-emerald-700' : 'text-amber-700') + '">' + p.total + ' / ۱۵۰ سکه</span>' +
+                '</div>' +
+                '<div class="w-full bg-slate-100 rounded-full h-1.5 mb-1.5"><div class="h-1.5 rounded-full ' + barColor + '" style="width:' + pct + '%"></div></div>';
+        }).join('');
+
+        var banner = result.ready
+            ? '<div class="text-[11px] text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 font-bold text-center mb-2">🌍 تمام اعضای ثابت به ۱۵۰ سکه قرارداد رسیده‌اند؛ بسته‌های کاری باقی‌مانده اکنون در بازار آزاد قابل دسترسی همه هستند.</div>'
+            : '<div class="text-[11px] text-amber-800 bg-amber-50 border border-amber-200 rounded-xl p-2.5 font-bold text-center mb-2">🔒 تا رسیدن تمام اعضای ثابت به ۱۵۰ سکه قرارداد، بسته‌های کاری باقی‌مانده وارد بازار آزاد نمی‌شوند.</div>';
+
+        box.innerHTML = '<h4 class="text-xs font-black text-slate-700 mb-2">📊 وضعیت آستانهٔ بازار آزاد</h4>' + banner + rows;
+    }
+    // =================== پایان فاز ۵ ===================
 
     window.deleteTask = async function(taskId) {
         if (!confirm('آیا از حذف این بسته کاری اطمینان دارید؟')) return;
