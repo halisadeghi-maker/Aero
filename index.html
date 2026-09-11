@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۴)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۵)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۴) -->
+            <!-- نسخه سامانه (۲.۳.۵) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.4</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.5</span>
             </div>
         </section>
 
@@ -335,7 +335,20 @@
                             <span class="font-bold text-rose-700">جریمه فسخ یک‌طرفه (کسر شده):</span>
                             <span id="wallet-penalty-text" class="font-black text-rose-700">۰ سکه</span>
                         </div>
+                        <div id="wallet-exit-penalty-row" class="flex justify-between items-center text-[11px]" style="display:none;">
+                            <span class="font-bold text-rose-700">جریمه خروج از شرکت (کسر شده):</span>
+                            <span id="wallet-exit-penalty-text" class="font-black text-rose-700">۰ سکه</span>
+                        </div>
                     </div>
+                </div>
+
+                <!-- عضویت ثابت جاری دانشجو در شرکت -->
+                <div id="my-membership-box" class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                    <div class="text-xs text-slate-700">
+                        <span class="font-bold">🏢 وضعیت عضویت ثابت شما: </span>
+                        <span id="my-membership-text" class="font-black text-[#0f284e]"></span>
+                    </div>
+                    <button id="exit-fixed-membership-btn" type="button" class="hidden bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold px-4 py-2 rounded-xl transition cursor-pointer whitespace-nowrap">خروج از عضویت ثابت شرکت</button>
                 </div>
             </section>
 
@@ -420,6 +433,8 @@
                         <span id="company-status-badge" class="text-[10px] font-black px-2.5 py-1 rounded-full border">در حال محاسبه...</span>
                     </div>
                     <p class="text-[11px] text-slate-500 mb-3 leading-relaxed">قبل از شرکت در مناقصه اصلی، شرکت شما باید بین ۳ تا ۶ عضو ثابت داشته باشد. اعضای ثابت تا قبل از باز شدن بازار آزاد، فقط از همین شرکت قرارداد دریافت می‌کنند.</p>
+
+                    <div id="warning-deadline-banner" class="hidden text-[11px] text-rose-800 bg-rose-50 border border-rose-300 rounded-xl p-2.5 font-bold text-center mb-3 leading-relaxed"></div>
 
                     <div id="roster-add-controls" class="flex gap-2 mb-3">
                         <select id="free-agent-select" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
@@ -1110,6 +1125,7 @@
             await loadBooklets();
             await loadTasks();
             await loadContracts();
+            await loadMyMembershipBox();
 
         } catch (e) {
             showError("خطا در بارگذاری داده‌ها: " + e.message);
@@ -2704,7 +2720,13 @@
             });
         }
 
-        totalFinal = totalFinal - totalContractorPenalty;
+        var totalExitPenalty = 0;
+        if (userProfile.role === 'member') {
+            var exitPenaltyRes = await sb.from('team_members').select('id').eq('profile_id', currentUser.id).eq('exit_penalty_applied', true);
+            totalExitPenalty = (exitPenaltyRes.data || []).length * 15;
+        }
+
+        totalFinal = totalFinal - totalContractorPenalty - totalExitPenalty;
 
         document.getElementById('wallet-committed-text').innerText = totalCommitted.toFixed(1) + ' سکه';
         document.getElementById('wallet-committed-bar').style.width = Math.min(100, (totalCommitted / 250) * 100) + '%';
@@ -2719,6 +2741,17 @@
                 penaltyText.innerText = '−' + totalContractorPenalty.toFixed(1) + ' سکه';
             } else {
                 penaltyRow.style.display = 'none';
+            }
+        }
+
+        var exitPenaltyRow = document.getElementById('wallet-exit-penalty-row');
+        var exitPenaltyText = document.getElementById('wallet-exit-penalty-text');
+        if (exitPenaltyRow && exitPenaltyText) {
+            if (totalExitPenalty > 0) {
+                exitPenaltyRow.style.display = 'flex';
+                exitPenaltyText.innerText = '−' + totalExitPenalty.toFixed(1) + ' سکه';
+            } else {
+                exitPenaltyRow.style.display = 'none';
             }
         }
         
@@ -2908,15 +2941,31 @@
         var members = membersRes.data || [];
 
         var statusBadge = document.getElementById('company-status-badge');
+        var warningBanner = document.getElementById('warning-deadline-banner');
+
         if (currentTeam.status === 'active') {
             statusBadge.className = 'text-[10px] font-black px-2.5 py-1 rounded-full border bg-emerald-100 text-emerald-800 border-emerald-300';
             statusBadge.innerText = '✅ شرکت تشکیل شده (' + members.length + ' عضو)';
+            warningBanner.classList.add('hidden');
         } else if (currentTeam.status === 'warning') {
             statusBadge.className = 'text-[10px] font-black px-2.5 py-1 rounded-full border bg-rose-100 text-rose-800 border-rose-300';
             statusBadge.innerText = '⚠️ وضعیت هشدار (' + members.length + ' عضو)';
+            warningBanner.classList.remove('hidden');
+            if (currentTeam.warning_started_at) {
+                var deadline = new Date(currentTeam.warning_started_at);
+                deadline.setDate(deadline.getDate() + 7);
+                var msLeft = deadline.getTime() - new Date().getTime();
+                if (msLeft > 0) {
+                    var daysLeft = Math.ceil(msLeft / (1000 * 60 * 60 * 24));
+                    warningBanner.innerText = '⚠️ تعداد اعضای ثابت شرکت شما به کمتر از ۳ نفر رسیده است. تا ' + deadline.toLocaleDateString('fa-IR') + ' (' + daysLeft + ' روز دیگر) فرصت دارید عضو ثابت جدید واجد شرایط جذب کنید، وگرنه شرکت منحل خواهد شد.';
+                } else {
+                    warningBanner.innerText = '⛔ مهلت یک‌هفته‌ای برای جذب عضو ثابت جدید به پایان رسیده است. این شرکت مشمول انحلال است.';
+                }
+            }
         } else {
             statusBadge.className = 'text-[10px] font-black px-2.5 py-1 rounded-full border bg-amber-100 text-amber-800 border-amber-300';
             statusBadge.innerText = 'در حال تشکیل (' + members.length + ' از حداقل ۳ عضو)';
+            warningBanner.classList.add('hidden');
         }
 
         var rosterList = document.getElementById('roster-list');
@@ -2924,7 +2973,7 @@
             rosterList.innerHTML = '<div class="text-[11px] text-slate-400 text-center py-2">هنوز عضو ثابتی اضافه نشده است.</div>';
         } else {
             rosterList.innerHTML = members.map(function(m) {
-                var canRemove = currentTeam.status !== 'active';
+                var canRemove = currentTeam.status === 'forming';
                 var actionHtml = canRemove
                     ? '<button onclick="removeFixedMember(\'' + m.id + '\')" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold cursor-pointer">حذف</button>'
                     : '<span class="text-[10px] text-slate-400 font-bold">عضو ثابت</span>';
@@ -2944,6 +2993,16 @@
             finalizeBtn.classList.add('hidden');
             activeNote.classList.remove('hidden');
             await renderFreeMarketStatus(members);
+        } else if (currentTeam.status === 'warning') {
+            activeNote.classList.add('hidden');
+            document.getElementById('free-market-status').classList.add('hidden');
+            finalizeBtn.classList.add('hidden');
+            if (members.length >= 6) {
+                addControls.classList.add('hidden');
+            } else {
+                addControls.classList.remove('hidden');
+                await loadFreeAgentOptions(true);
+            }
         } else {
             activeNote.classList.add('hidden');
             document.getElementById('free-market-status').classList.add('hidden');
@@ -2951,7 +3010,7 @@
                 addControls.classList.add('hidden');
             } else {
                 addControls.classList.remove('hidden');
-                await loadFreeAgentOptions();
+                await loadFreeAgentOptions(false);
             }
             if (members.length >= 3 && members.length <= 6) {
                 finalizeBtn.classList.remove('hidden');
@@ -2961,13 +3020,33 @@
         }
     }
 
-    async function loadFreeAgentOptions() {
+    async function loadFreeAgentOptions(restrictedToWarningRecruitment) {
         var sb = getSupabaseClient();
         var allMembersRes = await sb.from('profiles').select('id, full_name').eq('role', 'member').eq('is_approved', true);
         var takenRes = await sb.from('team_members').select('profile_id').eq('status', 'active');
         var takenIds = (takenRes.data || []).map(function(r) { return r.profile_id; });
         var select = document.getElementById('free-agent-select');
         var available = (allMembersRes.data || []).filter(function(p) { return takenIds.indexOf(p.id) === -1; });
+
+        if (restrictedToWarningRecruitment) {
+            var eligible = [];
+            for (const p of available) {
+                var cRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', p.id).eq('team_id', currentTeam.id).neq('status', 'terminated');
+                var total = 0;
+                (cRes.data || []).forEach(function(c) { total += parseFloat(c.agreed_base_coins || 0); });
+                if (total >= 150) eligible.push(p);
+            }
+            available = eligible;
+            if (available.length === 0) {
+                select.innerHTML = '<option value="">هیچ پیمانکار واجد شرایطی (حداقل ۱۵۰ سکه سابقه قرارداد با این شرکت) یافت نشد</option>';
+                return;
+            }
+            select.innerHTML = '<option value="">— انتخاب دانشجوی واجد شرایط —</option>' + available.map(function(p) {
+                return '<option value="' + p.id + '">' + p.full_name + '</option>';
+            }).join('');
+            return;
+        }
+
         if (available.length === 0) {
             select.innerHTML = '<option value="">هیچ پیمانکار آزادی برای افزودن موجود نیست</option>';
             return;
@@ -2992,7 +3071,18 @@
             return showAppAlert('خطا در افزودن عضو: ' + em, false);
         }
 
-        showAppAlert('عضو ثابت با موفقیت اضافه شد.', true);
+        if (currentTeam.status === 'warning') {
+            var newCountRes = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', currentTeam.id).eq('status', 'active');
+            if ((newCountRes.count || 0) >= 3) {
+                var resolveRes = await sb.from('teams').update({ status: 'active', warning_started_at: null }).eq('id', currentTeam.id).select();
+                if (resolveRes.data && resolveRes.data[0]) currentTeam = resolveRes.data[0];
+                showAppAlert('عضو ثابت جدید اضافه شد و شرکت از وضعیت هشدار خارج گردید.', true, 'سامانه');
+            } else {
+                showAppAlert('عضو ثابت جدید اضافه شد، اما همچنان تا خروج از وضعیت هشدار به عضو دیگری نیاز دارید.', true);
+            }
+        } else {
+            showAppAlert('عضو ثابت با موفقیت اضافه شد.', true);
+        }
         await loadCompanyRosterBox();
     };
 
@@ -3023,6 +3113,71 @@
         await loadMasterProjects();
     };
     // =================== پایان فاز ۲ ===================
+
+    // ===================== فاز ۷: خروج عضو ثابت، جریمه و وضعیت هشدار =====================
+    async function loadMyMembershipBox() {
+        var box = document.getElementById('my-membership-box');
+        var textEl = document.getElementById('my-membership-text');
+        var btn = document.getElementById('exit-fixed-membership-btn');
+        if (!box || userProfile.role !== 'member') { if (box) box.classList.add('hidden'); return; }
+
+        var sb = getSupabaseClient();
+        var mRes = await sb.from('team_members').select('id, team_id, teams(name)').eq('profile_id', currentUser.id).eq('status', 'active').maybeSingle();
+
+        if (!mRes.data) {
+            box.classList.add('hidden');
+            return;
+        }
+
+        box.classList.remove('hidden');
+        var teamName = mRes.data.teams ? mRes.data.teams.name : 'نامشخص';
+        textEl.innerText = 'عضو ثابت شرکت «' + teamName + '»';
+        btn.classList.remove('hidden');
+        btn.setAttribute('data-membership-id', mRes.data.id);
+        btn.setAttribute('data-team-id', mRes.data.team_id);
+    }
+
+    document.getElementById('exit-fixed-membership-btn').onclick = async function() {
+        var membershipId = this.getAttribute('data-membership-id');
+        var teamId = this.getAttribute('data-team-id');
+        var sb = getSupabaseClient();
+
+        var mpRes = await sb.from('master_projects').select('id').eq('awarded_team_id', teamId).eq('status', 'awarded').maybeSingle();
+        var mainContractSigned = !!mpRes.data;
+
+        var warnMsg = mainContractSigned
+            ? 'قرارداد اصلی این شرکت با استاد منعقد شده است؛ در صورت خروج از عضویت ثابت، ۱۵ سکه از کیف پول نهایی شما کسر خواهد شد. آیا مطمئن هستید؟'
+            : 'آیا از خروج از عضویت ثابت این شرکت اطمینان دارید؟ (چون هنوز قرارداد اصلی امضا نشده، جریمه‌ای اعمال نمی‌شود)';
+        if (!confirm(warnMsg)) return;
+
+        var updRes = await sb.from('team_members').update({
+            status: 'exited',
+            exited_at: new Date().toISOString(),
+            exit_penalty_applied: mainContractSigned
+        }).eq('id', membershipId).select();
+
+        if (updRes.error || !updRes.data || updRes.data.length === 0) {
+            var em = updRes.error ? updRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+            return showAppAlert('خطا در ثبت خروج: ' + em, false);
+        }
+
+        var remainCountRes = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', teamId).eq('status', 'active');
+        var remainCount = remainCountRes.count || 0;
+        if (remainCount < 3) {
+            var teamRes = await sb.from('teams').select('status, warning_started_at').eq('id', teamId).single();
+            if (teamRes.data && teamRes.data.status !== 'warning') {
+                await sb.from('teams').update({ status: 'warning', warning_started_at: new Date().toISOString() }).eq('id', teamId);
+            }
+        }
+
+        showAppAlert(mainContractSigned
+            ? 'خروج شما از شرکت ثبت شد و ۱۵ سکه جریمه از کیف پول نهایی‌تان کسر گردید.'
+            : 'خروج شما از شرکت با موفقیت ثبت شد.', true, 'سامانه');
+
+        await loadMyMembershipBox();
+        await loadContracts();
+    };
+    // =================== پایان فاز ۷ ===================
 
     // ===================== فاز ۵: آستانه ورود به بازار آزاد =====================
     async function checkAndOpenFreeMarket(teamId) {
