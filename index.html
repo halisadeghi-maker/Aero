@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۳)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۴)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۳) -->
+            <!-- نسخه سامانه (۲.۳.۴) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.3</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.4</span>
             </div>
         </section>
 
@@ -2410,12 +2410,18 @@
 
         var myFixedTeamIds = [];
         var myBidsByTask = {};
+        var myRemainingCap = 250;
         if (userProfile.role === 'member') {
             var myMembershipRes = await sb.from('team_members').select('team_id').eq('profile_id', currentUser.id).eq('status', 'active');
             myFixedTeamIds = (myMembershipRes.data || []).map(function(r) { return r.team_id; });
 
             var myBidsRes = await sb.from('task_bids').select('task_id, proposed_coins').eq('bidder_id', currentUser.id);
             (myBidsRes.data || []).forEach(function(b) { myBidsByTask[b.task_id] = b; });
+
+            var myContractsRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', currentUser.id).neq('status', 'terminated');
+            var myContractedTotal = 0;
+            (myContractsRes.data || []).forEach(function(c) { myContractedTotal += parseFloat(c.agreed_base_coins || 0); });
+            myRemainingCap = Math.max(0, 250 - myContractedTotal);
         }
 
         var nowTime = new Date();
@@ -2444,9 +2450,12 @@
                             ? '<div class="text-center py-2 bg-emerald-50 rounded-xl text-emerald-700 text-xs font-bold border border-emerald-200">✅ پیشنهاد ثبت‌شدهٔ شما: ' + myBid.proposed_coins + ' سکه (مهلت پایان یافته، منتظر تصمیم سرگروه)</div>'
                             : '<div class="text-center py-2 bg-amber-50 rounded-xl text-amber-700 text-xs font-bold border border-amber-200">⏳ مهلت این مناقصه به پایان رسیده است.</div>';
                     } else {
-                        actionArea = '<div class="flex gap-2">' +
-                            '<input type="number" id="internal-bid-input-' + t.id + '" value="' + (myBid ? myBid.proposed_coins : '') + '" placeholder="پیشنهاد قیمت شما (سکه)" class="w-full bg-white border border-indigo-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-indigo-500">' +
-                            '<button onclick="submitInternalBid(\'' + t.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">' + (myBid ? 'به‌روزرسانی' : 'ثبت پیشنهاد') + '</button>' +
+                        actionArea = '<div class="space-y-1">' +
+                            '<div class="flex gap-2">' +
+                                '<input type="number" id="internal-bid-input-' + t.id + '" value="' + (myBid ? myBid.proposed_coins : '') + '" placeholder="پیشنهاد قیمت شما (سکه)" class="w-full bg-white border border-indigo-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-indigo-500">' +
+                                '<button onclick="submitInternalBid(\'' + t.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">' + (myBid ? 'به‌روزرسانی' : 'ثبت پیشنهاد') + '</button>' +
+                            '</div>' +
+                            '<div class="text-[10px] text-slate-400 text-center">سقف باقیماندهٔ شما تا انعقاد قرارداد جدید: <strong class="text-slate-600">' + myRemainingCap + ' سکه</strong> (از سقف کلی ۲۵۰ سکه)</div>' +
                             '</div>';
                     }
                 }
