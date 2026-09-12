@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۸)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۹)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۸) -->
+            <!-- نسخه سامانه (۲.۳.۹) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.8</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.9</span>
             </div>
         </section>
 
@@ -298,6 +298,33 @@
                 </div>
             </section>
 
+            <!-- نمره نهایی سرگروه -->
+            <section id="leader-grade-box" class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-3 hidden">
+                <h3 class="text-sm font-black text-[#0f284e] flex items-center gap-2"><span>🎓</span> نمرهٔ نهایی سرگروه (برآورد لحظه‌ای)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="bg-sky-50 border border-sky-200 rounded-2xl p-3 text-center">
+                        <div class="text-[10px] text-sky-700 font-bold mb-1">کیفیت کل پروژه (۵۰٪)</div>
+                        <div id="grade-quality-score" class="text-lg font-black text-sky-900">۰</div>
+                        <div id="grade-quality-detail" class="text-[10px] text-sky-600 mt-0.5"></div>
+                    </div>
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 text-center">
+                        <div class="text-[10px] text-emerald-700 font-bold mb-1">تکمیل پروژه (۲۵٪)</div>
+                        <div id="grade-completion-score" class="text-lg font-black text-emerald-900">۰</div>
+                        <div id="grade-completion-detail" class="text-[10px] text-emerald-600 mt-0.5"></div>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 text-center">
+                        <div class="text-[10px] text-amber-700 font-bold mb-1">بهره‌وری اقتصادی (۲۵٪)</div>
+                        <div id="grade-economic-score" class="text-lg font-black text-amber-900">۰</div>
+                        <div id="grade-economic-detail" class="text-[10px] text-amber-600 mt-0.5"></div>
+                    </div>
+                </div>
+                <div class="bg-[#0f284e] rounded-2xl p-3 text-center">
+                    <span class="text-[10px] text-amber-200 font-bold block">مجموع نمره سرگروه (از ۱۰۰)</span>
+                    <span id="grade-total-score" class="text-2xl font-black text-amber-300">۰</span>
+                </div>
+                <div id="grade-dissolution-note" class="hidden text-[11px] text-rose-700 bg-rose-50 border border-rose-200 rounded-xl p-2.5 font-bold text-center"></div>
+            </section>
+
             <!-- کیف سکه دانشجو (پیمانکار) -->
             <section id="member-tank-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -339,6 +366,15 @@
                             <span class="font-bold text-rose-700">جریمه خروج از شرکت (کسر شده):</span>
                             <span id="wallet-exit-penalty-text" class="font-black text-rose-700">۰ سکه</span>
                         </div>
+                        <div class="flex justify-between items-center text-[11px] pt-1">
+                            <span class="font-bold text-slate-600">سود / زیان (تسویه‌شده نسبت به قرارداد):</span>
+                            <span id="wallet-profit-loss-text" class="font-black">۰ سکه</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 mt-1 border-t border-slate-200">
+                            <span class="font-bold text-emerald-800 text-xs">🎓 نمره معادل پروژه:</span>
+                            <span id="wallet-grade-text" class="font-black text-emerald-800 text-sm">۰ نمره</span>
+                        </div>
+                        <div id="wallet-grade-warning" class="hidden text-[10px] text-rose-600 font-bold text-center bg-rose-50 border border-rose-200 rounded-lg p-1.5">⚠️ چون مجموع قراردادهای منعقدشدهٔ شما کمتر از ۱۵۰ سکه است، طبق قوانین سامانه هیچ نمره‌ای بابت پروژه دریافت نمی‌کنید.</div>
                     </div>
                 </div>
 
@@ -404,6 +440,14 @@
                         <span>⚠️</span> شاخص های کلیدی قراردادها
                     </h5>
                     <div id="professor-kpi-terminations" class="text-xs space-y-1 text-slate-700">در حال بارگذاری آمار تخلفات و فسخ‌ها...</div>
+                </div>
+
+                <!-- نمرات سرگروهان -->
+                <div class="border border-indigo-200 rounded-2xl p-4 bg-gradient-to-br from-indigo-50/50 to-sky-50/40 shadow-sm space-y-3">
+                    <h5 class="text-xs font-black text-indigo-900 flex items-center gap-2">
+                        <span>🎓</span> نمرات سرگروهان (کیفیت ۵۰٪ + تکمیل پروژه ۲۵٪ + بهره‌وری اقتصادی ۲۵٪)
+                    </h5>
+                    <div id="professor-leader-grades" class="text-xs space-y-1.5 text-slate-700">در حال بارگذاری نمرات...</div>
                 </div>
 
                 <!-- تایید یا رد کاربران جدید و مدیریت حذف اعضا -->
@@ -610,16 +654,18 @@
                 <button onclick="closeProfessorAwardModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
             <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-2xl text-xs text-indigo-900 leading-relaxed space-y-1.5">
-                <div class="flex justify-between"><span>معیار ارزیابی (سکه اسمی جزوه):</span><strong id="prof-award-nominal-coins" class="text-indigo-950">۰</strong></div>
-                <div class="flex justify-between"><span>سکه توافق‌شده قرارداد:</span><strong id="prof-award-agreed-coins" class="text-indigo-950">۰</strong></div>
+                <div class="flex justify-between"><span>ارزش واقعی کتابچه (تعیین‌شده توسط استاد):</span><strong id="prof-award-nominal-coins" class="text-indigo-950">۰</strong></div>
+                <div class="flex justify-between text-slate-500"><span>سکه توافق‌شده قرارداد (فقط جهت اطلاع):</span><strong id="prof-award-agreed-coins">۰</strong></div>
             </div>
             <div>
-                <label class="block text-xs font-bold text-slate-700 mb-2">امتیاز/سکه تخصیصی استاد به کیفیت گزارش نهایی:</label>
-                <input type="number" id="prof-award-score-input" min="0" step="0.5" oninput="updateProfAwardPreview()" placeholder="مثال: 85" class="w-full bg-slate-50 border-2 border-indigo-200 focus:border-indigo-400 focus:outline-none rounded-xl p-3 text-lg font-black text-slate-800 text-center transition">
+                <label class="block text-xs font-bold text-slate-700 mb-2">درصد کیفیت این بسته کاری (۰ تا ۱۰۰):</label>
+                <input type="number" id="prof-award-score-input" min="0" max="100" step="1" oninput="updateProfAwardPreview()" placeholder="مثال: 90" class="w-full bg-slate-50 border-2 border-indigo-200 focus:border-indigo-400 focus:outline-none rounded-xl p-3 text-lg font-black text-slate-800 text-center transition">
+                <span class="text-[10px] text-slate-400 block mt-1">طبق فرمول نمره‌دهی: سکهٔ نهایی = (درصد کیفیت ÷ ۱۰۰) × ارزش واقعی کتابچه — مستقل از قیمت توافقی قرارداد.</span>
             </div>
-            <div class="bg-emerald-50 border-2 border-emerald-200 p-4 rounded-2xl text-center">
-                <span class="text-[10px] text-emerald-700 font-bold block mb-1">💰 مبلغ نهایی قابل واریز به کیف پول دانشجو</span>
+            <div class="bg-emerald-50 border-2 border-emerald-200 p-4 rounded-2xl text-center space-y-1">
+                <span class="text-[10px] text-emerald-700 font-bold block">💰 سکهٔ نهایی قابل واریز به کیف پول دانشجو</span>
                 <span id="prof-award-final-preview" class="text-2xl font-black text-emerald-800">۰ سکه</span>
+                <span id="prof-award-grade-preview" class="text-[11px] text-emerald-600 font-bold block">معادل ۰ نمره (هر سکه = ۰٫۰۵ نمره)</span>
             </div>
             <div class="flex gap-2 pt-2">
                 <button id="confirm-prof-award-btn" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">✅ ثبت نهایی امتیاز</button>
@@ -1104,6 +1150,7 @@
                 document.getElementById('professor-panel').classList.remove('hidden');
                 document.getElementById('stat-team').innerText = "ناظر عالی (استاد)";
                 await loadProfessorTerminationsKPI();
+                await loadProfessorLeaderGrades();
                 await loadPendingUsers();
                 await loadProfessorSummary();
             } else if (userProfile.role === 'leader') {
@@ -1848,15 +1895,17 @@
     };
 
     window.updateProfAwardPreview = function() {
-        var scoreStr = document.getElementById('prof-award-score-input').value;
-        var score = parseFloat(scoreStr);
-        if (isNaN(score)) {
+        var qualityStr = document.getElementById('prof-award-score-input').value;
+        var quality = parseFloat(qualityStr);
+        if (isNaN(quality)) {
             document.getElementById('prof-award-final-preview').innerText = '۰ سکه';
+            document.getElementById('prof-award-grade-preview').innerText = 'معادل ۰ نمره (هر سکه = ۰٫۰۵ نمره)';
             return;
         }
-        var finalPayout = (score / pendingAwardNominalCoins) * pendingAwardAgreedCoins;
-        finalPayout = Math.round(finalPayout * 10) / 10;
-        document.getElementById('prof-award-final-preview').innerText = roundCoin(finalPayout) + ' سکه';
+        var finalPayout = roundCoin((quality / 100) * pendingAwardNominalCoins);
+        var gradePoints = roundCoin(finalPayout * 0.05);
+        document.getElementById('prof-award-final-preview').innerText = finalPayout + ' سکه';
+        document.getElementById('prof-award-grade-preview').innerText = 'معادل ' + gradePoints + ' نمره (هر سکه = ۰٫۰۵ نمره)';
     };
 
     window.closeProfessorAwardModal = function() {
@@ -1867,12 +1916,11 @@
 
     document.getElementById('confirm-prof-award-btn').onclick = async function() {
         var sb = getSupabaseClient();
-        var scoreStr = document.getElementById('prof-award-score-input').value;
-        var professorScore = parseFloat(scoreStr);
-        if (!scoreStr || isNaN(professorScore)) return showAppAlert('لطفاً امتیاز/سکه معتبری وارد کنید.', false);
+        var qualityStr = document.getElementById('prof-award-score-input').value;
+        var quality = parseFloat(qualityStr);
+        if (!qualityStr || isNaN(quality) || quality < 0 || quality > 100) return showAppAlert('لطفاً درصد کیفیتی معتبر بین ۰ تا ۱۰۰ وارد کنید.', false);
 
-        var finalPayout = (professorScore / pendingAwardNominalCoins) * pendingAwardAgreedCoins;
-        finalPayout = Math.round(finalPayout * 10) / 10;
+        var finalPayout = roundCoin((quality / 100) * pendingAwardNominalCoins);
 
         var targetContract = allLoadedContracts.find(function(c) { return c.id === pendingAwardContractId; });
         var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
@@ -1882,13 +1930,15 @@
             date: now.toLocaleDateString('fa-IR'),
             time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
             type: 'اتمام پروژه',
-            details: 'ارزیابی نهایی انجام و مبلغ ' + roundCoin(finalPayout) + ' سکه تایید و به کیف پول دانشجو تخصیص یافت.'
+            details: 'کیفیت ' + quality + '٪ ارزیابی شد و مبلغ ' + roundCoin(finalPayout) + ' سکه (بر اساس ارزش واقعی کتابچه) تایید و به کیف پول دانشجو تخصیص یافت.'
         });
 
         var awardRes = await sb.from('contracts').update({
             status: 'completed',
             final_payout: finalPayout,
-            action_logs: existingLogs
+            quality_percent: quality,
+            action_logs: existingLogs,
+            last_message_at: new Date().toISOString()
         }).eq('id', pendingAwardContractId).select();
 
         if (awardRes.error || !awardRes.data || awardRes.data.length === 0) {
@@ -2295,6 +2345,69 @@
         html += '</div>';
         div.innerHTML = html;
     }
+
+    // ===================== فاز ۹: نمرات سرگروهان از دید استاد =====================
+    async function loadProfessorLeaderGrades() {
+        var sb = getSupabaseClient();
+        var div = document.getElementById('professor-leader-grades');
+        if (!div) return;
+
+        var teamsRes = await sb.from('teams').select('*').neq('status', 'forming');
+        var teams = teamsRes.data || [];
+
+        if (teams.length === 0) {
+            div.innerHTML = '<span class="text-slate-500 font-medium">هنوز هیچ شرکتی تشکیل نشده است.</span>';
+            return;
+        }
+
+        var rows = [];
+        for (const team of teams) {
+            var allTeamTasksRes = await sb.from('tasks').select('status, allocated_nominal_coins').eq('team_id', team.id);
+            var allTeamTasks = allTeamTasksRes.data || [];
+
+            var completedContractsRes = await sb.from('contracts').select('quality_percent').eq('team_id', team.id).eq('status', 'completed');
+            var completedContracts = completedContractsRes.data || [];
+
+            var qualityScore = 0, avgQuality = 0;
+            if (completedContracts.length > 0) {
+                var qualitySum = completedContracts.reduce(function(sum, c) { return sum + parseFloat(c.quality_percent || 0); }, 0);
+                avgQuality = qualitySum / completedContracts.length;
+                qualityScore = roundCoin((avgQuality / 100) * 50);
+            }
+
+            var completionScore = 0;
+            if (!team.completion_score_zeroed && allTeamTasks.length > 0) {
+                var allDelivered = allTeamTasks.every(function(t) { return t.status === 'completed'; });
+                var allHighQuality = completedContracts.length === allTeamTasks.length && completedContracts.every(function(c) { return parseFloat(c.quality_percent || 0) >= 85; });
+                if (allDelivered && allHighQuality) completionScore = 25;
+            }
+
+            var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', team.id).eq('status', 'awarded').maybeSingle();
+            var totalContractBudget = mpRes.data ? parseFloat(mpRes.data.allocated_coins) : 0;
+            var penaltyRes = await sb.from('contracts').select('leader_penalty_coins').eq('team_id', team.id);
+            var totalLeaderPenalty = (penaltyRes.data || []).reduce(function(s, c) { return s + parseFloat(c.leader_penalty_coins || 0); }, 0);
+            var allocatableBudget = Math.max(0, totalContractBudget - totalLeaderPenalty);
+            var spentCoins = allTeamTasks.reduce(function(s, t) { return s + parseFloat(t.allocated_nominal_coins || 0); }, 0);
+            var remainingBudget = Math.max(0, allocatableBudget - spentCoins);
+            var economicScore = roundCoin(Math.min(1, remainingBudget / 200) * 25);
+
+            var totalGrade = roundCoin(qualityScore + completionScore + economicScore);
+            var statusLabel = team.status === 'dissolved' ? '⛔ منحل‌شده' : (team.status === 'warning' ? '⚠️ هشدار' : '✅ فعال');
+
+            rows.push('<div class="bg-white p-3 rounded-xl border border-slate-200 flex flex-wrap justify-between items-center gap-2">' +
+                '<div><span class="font-black text-slate-800">شرکت ' + team.name + '</span> <span class="text-[10px] text-slate-400">(' + statusLabel + ')</span></div>' +
+                '<div class="text-[11px] flex flex-wrap gap-2">' +
+                    '<span class="text-sky-700">کیفیت: ' + qualityScore + '/۵۰</span>' +
+                    '<span class="text-emerald-700">تکمیل: ' + completionScore + '/۲۵</span>' +
+                    '<span class="text-amber-700">اقتصادی: ' + economicScore + '/۲۵</span>' +
+                    '<span class="font-black text-[#0f284e]">مجموع: ' + totalGrade + '/۱۰۰</span>' +
+                '</div>' +
+                '</div>');
+        }
+
+        div.innerHTML = rows.join('');
+    }
+    // =================== پایان فاز ۹ (بخش استاد) ===================
 
     var teamColorSchemes = [
         { bgStyle: "background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 100%);", borderStyle: "border: 2.5px solid #059669;", textStyle: "color: #064e3b;", badgeStyle: "background: #059669; color: #fff;" },
@@ -2811,6 +2924,26 @@
             }
         }
         
+        var profitLossEl = document.getElementById('wallet-profit-loss-text');
+        if (profitLossEl) {
+            var profitLoss = roundCoin(totalFinal - totalCommitted);
+            profitLossEl.innerText = (profitLoss > 0 ? '+' : '') + profitLoss + ' سکه';
+            profitLossEl.className = 'font-black ' + (profitLoss > 0 ? 'text-emerald-700' : (profitLoss < 0 ? 'text-rose-700' : 'text-slate-500'));
+        }
+
+        var gradeTextEl = document.getElementById('wallet-grade-text');
+        var gradeWarningEl = document.getElementById('wallet-grade-warning');
+        if (gradeTextEl && gradeWarningEl) {
+            if (userProfile.role === 'member' && totalCommitted < 150) {
+                gradeTextEl.innerText = '۰ نمره';
+                gradeWarningEl.classList.remove('hidden');
+            } else {
+                var gradePoints = roundCoin(Math.max(0, totalFinal) * 0.05);
+                gradeTextEl.innerText = gradePoints + ' نمره';
+                gradeWarningEl.classList.add('hidden');
+            }
+        }
+
         var badge = document.getElementById('tank-badge-status');
         if (badge) {
             if (totalFinal >= 200) {
@@ -2865,6 +2998,62 @@
             var offset = circumference - (spentPercent / 100) * circumference;
             var donutCircle = document.getElementById('donut-circle-spent');
             if (donutCircle) donutCircle.style.strokeDashoffset = offset;
+
+            // ===== فاز ۹: محاسبه نمره سه‌بخشی سرگروه =====
+            var teamFreshRes = await sb.from('teams').select('status, completion_score_zeroed, leader_dissolution_penalty_coins').eq('id', currentTeam.id).single();
+            var teamFresh = teamFreshRes.data || {};
+
+            var allTeamTasksRes = await sb.from('tasks').select('status').eq('team_id', currentTeam.id);
+            var allTeamTasks = allTeamTasksRes.data || [];
+
+            var completedContractsRes = await sb.from('contracts').select('quality_percent').eq('team_id', currentTeam.id).eq('status', 'completed');
+            var completedContracts = completedContractsRes.data || [];
+
+            var qualityScore = 0;
+            var avgQuality = 0;
+            if (completedContracts.length > 0) {
+                var qualitySum = completedContracts.reduce(function(sum, c) { return sum + parseFloat(c.quality_percent || 0); }, 0);
+                avgQuality = qualitySum / completedContracts.length;
+                qualityScore = roundCoin((avgQuality / 100) * 50);
+            }
+
+            var completionScore = 0;
+            var completionDetail = 'هنوز تمام بسته‌های کاری تحویل نشده‌اند.';
+            if (teamFresh.completion_score_zeroed) {
+                completionDetail = 'به دلیل انحلال شرکت، این بخش صفر شده است.';
+            } else if (allTeamTasks.length > 0) {
+                var allDelivered = allTeamTasks.every(function(t) { return t.status === 'completed'; });
+                var allHighQuality = completedContracts.length === allTeamTasks.length && completedContracts.every(function(c) { return parseFloat(c.quality_percent || 0) >= 85; });
+                if (allDelivered && allHighQuality) {
+                    completionScore = 25;
+                    completionDetail = 'همه بسته‌های کاری با کیفیت حداقل ۸۵٪ تحویل شدند.';
+                } else if (allDelivered) {
+                    completionDetail = 'همه بسته‌ها تحویل شدند، اما کیفیت همه به ۸۵٪ نرسیده است.';
+                }
+            }
+
+            var economicScore = roundCoin(Math.min(1, remainingBudget / 200) * 25);
+            var totalLeaderGrade = roundCoin(qualityScore + completionScore + economicScore);
+
+            var gradeBox = document.getElementById('leader-grade-box');
+            if (gradeBox) {
+                gradeBox.classList.remove('hidden');
+                document.getElementById('grade-quality-score').innerText = qualityScore;
+                document.getElementById('grade-quality-detail').innerText = 'میانگین کیفیت: ' + roundCoin(avgQuality) + '٪ (از ' + completedContracts.length + ' بسته تحویل‌شده)';
+                document.getElementById('grade-completion-score').innerText = completionScore;
+                document.getElementById('grade-completion-detail').innerText = completionDetail;
+                document.getElementById('grade-economic-score').innerText = economicScore;
+                document.getElementById('grade-economic-detail').innerText = 'سود مدیریت باقیمانده: ' + roundCoin(remainingBudget) + ' از ۲۰۰ سکه';
+                document.getElementById('grade-total-score').innerText = totalLeaderGrade;
+
+                var dissolutionNote = document.getElementById('grade-dissolution-note');
+                if (teamFresh.leader_dissolution_penalty_coins > 0) {
+                    dissolutionNote.classList.remove('hidden');
+                    dissolutionNote.innerText = '⛔ به دلیل انحلال این شرکت، علاوه بر نمرهٔ بالا، ' + roundCoin(teamFresh.leader_dissolution_penalty_coins) + ' سکه جریمه از کیف پول نهایی شما کسر شده است.';
+                } else {
+                    dissolutionNote.classList.add('hidden');
+                }
+            }
         }
 
         var kpiHtml = '<div class="text-xs space-y-0.5 font-bold">' +
