@@ -1902,9 +1902,9 @@
             document.getElementById('prof-award-grade-preview').innerText = 'معادل ۰ نمره (هر سکه = ۰٫۰۵ نمره)';
             return;
         }
-        var finalPayout = roundCoin((quality / 100) *  pendingAwardNominalCoins);
+        var finalPayout = roundCoin((quality / 100) * pendingAwardNominalCoins);
         var gradePoints = roundCoin(finalPayout * 0.05);
-        document.getElementById('prof-award-final-preview').innerText =  + ' سکه';
+        document.getElementById('prof-award-final-preview').innerText = finalPayout + ' سکه';
         document.getElementById('prof-award-grade-preview').innerText = 'معادل ' + gradePoints + ' نمره (هر سکه = ۰٫۰۵ نمره)';
     };
 
