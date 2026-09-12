@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۶)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۷)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۶) -->
+            <!-- نسخه سامانه (۲.۳.۷) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.6</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.7</span>
             </div>
         </section>
 
@@ -1819,7 +1819,8 @@
             status: 'in_progress', 
             submission_url: null, 
             action_logs: existingLogs,
-            leader_rejection_message: reason 
+            leader_rejection_message: reason,
+            last_message_at: new Date().toISOString()
         }).eq('id', currentRejectContractId);
 
         closeLeaderRejectModal();
@@ -1999,7 +2000,8 @@
             termination_type: 'one_sided',
             termination_reason: reason,
             termination_requester_id: currentUser.id,
-            action_logs: existingLogs
+            action_logs: existingLogs,
+            last_message_at: new Date().toISOString()
         }).eq('id', pendingDisputeContractId).select();
 
         if (disputeUpdateRes.error || !disputeUpdateRes.data || disputeUpdateRes.data.length === 0) {
@@ -2084,7 +2086,8 @@
                 final_payout: finalPayoutBase,
                 contractor_penalty_coins: contractorPenalty,
                 leader_penalty_coins: leaderPenalty,
-                action_logs: existingLogs 
+                action_logs: existingLogs,
+                last_message_at: new Date().toISOString()
             }).eq('id', currentProfDisputeContractId).select();
 
             if (profApproveRes.error || !profApproveRes.data || profApproveRes.data.length === 0) {
@@ -2116,7 +2119,8 @@
                 termination_type: null,
                 termination_reason: null,
                 professor_rejection_message: msg,
-                action_logs: existingLogs
+                action_logs: existingLogs,
+                last_message_at: new Date().toISOString()
             }).eq('id', currentProfDisputeContractId).select();
 
             if (profRejectRes.error || !profRejectRes.data || profRejectRes.data.length === 0) {
@@ -2153,9 +2157,22 @@
         await loadTasks();
     };
 
-    window.openContractHistory = function(contractId) {
+    window.openContractHistory = async function(contractId) {
         var c = allLoadedContracts.find(function(item) { return item.id === contractId; });
         if (!c) return showAppAlert('اطلاعات قرارداد یافت نشد.', false);
+
+        var viewerSeenCol = userProfile.role === 'member' ? 'contractor_seen_message_at' : (userProfile.role === 'leader' ? 'leader_seen_message_at' : 'professor_seen_message_at');
+        if (c.last_message_at && (!c[viewerSeenCol] || new Date(c[viewerSeenCol]).getTime() < new Date(c.last_message_at).getTime())) {
+            var seenPayload = {};
+            seenPayload[viewerSeenCol] = new Date().toISOString();
+            var sb = getSupabaseClient();
+            var seenRes = await sb.from('contracts').update(seenPayload).eq('id', contractId).select();
+            if (!seenRes.error && seenRes.data && seenRes.data[0]) {
+                c[viewerSeenCol] = seenRes.data[0][viewerSeenCol];
+                var badgeCell = document.getElementById('new-msg-cell-' + contractId);
+                if (badgeCell) badgeCell.innerHTML = '<span class="text-[11px] text-slate-300">—</span>';
+            }
+        }
 
         var bookletNum = c.tasks?.booklets?.booklet_number || '-';
         var bookletTitle = c.tasks?.booklets?.title || 'کتابچه طراحی';
@@ -2199,7 +2216,7 @@
 
     async function loadProfessorTerminationsKPI() {
         var sb = getSupabaseClient();
-        var res = await sb.from('contracts').select('*, teams(name), profiles(full_name)');
+        var res = await sb.from('contracts').select('*, teams(name), profiles!contractor_id(full_name)');
         var div = document.getElementById('professor-kpi-terminations');
         div.innerHTML = '';
         if (!res.data || res.data.length === 0) {
@@ -2569,12 +2586,17 @@
 
     async function loadContracts() {
         var sb = getSupabaseClient();
-        var query = sb.from('contracts').select('*, tasks(*, booklets(id, booklet_number, nominal_coins)), teams(name), profiles(full_name)');
+        var query = sb.from('contracts').select('*, tasks(*, booklets(id, booklet_number, nominal_coins)), teams(name), profiles!contractor_id(full_name)');
         
         if (userProfile.role === 'member') query = query.eq('contractor_id', currentUser.id);
         else if (userProfile.role === 'leader' && currentTeam) query = query.eq('team_id', currentTeam.id);
 
         var res = await query;
+        if (res.error) {
+            document.getElementById('contracts-table-body').innerHTML = '<tr><td colspan="8" class="p-6 text-center text-rose-600 font-bold">خطا در بارگذاری قراردادها: ' + res.error.message + '</td></tr>';
+            console.error('loadContracts error:', res.error);
+            return;
+        }
         allLoadedContracts = res.data || []; 
         var tbody = document.getElementById('contracts-table-body');
         tbody.innerHTML = '';
@@ -2725,7 +2747,8 @@
                     '<span class="text-[10px] bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded border border-indigo-200">🔍 لاگ جدول</span>' +
                     '</a>';
 
-                var hasNewMessage = documentsAndMessages !== '';
+                var viewerSeenCol = userProfile.role === 'member' ? 'contractor_seen_message_at' : (userProfile.role === 'leader' ? 'leader_seen_message_at' : 'professor_seen_message_at');
+                var hasNewMessage = !!(c.last_message_at && (!c[viewerSeenCol] || new Date(c[viewerSeenCol]).getTime() < new Date(c.last_message_at).getTime()));
                 var newMessageCell = hasNewMessage
                     ? '<a href="javascript:void(0)" onclick="openContractHistory(\'' + c.id + '\')" class="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 border border-indigo-200 px-2.5 py-1 rounded-full text-[11px] font-black hover:bg-indigo-100 transition cursor-pointer">🔔 پیام جدید</a>'
                     : '<span class="text-[11px] text-slate-300">—</span>';
@@ -2736,7 +2759,7 @@
                     '<td class="p-3">' + (c.tasks ? c.tasks.title : '') + '</td>' +
                     '<td class="p-3">' + (c.profiles ? c.profiles.full_name : '') + '</td>' +
                     '<td class="p-3 font-black text-amber-700 text-sm">' + roundCoin(c.agreed_base_coins || 0) + ' سکه</td>' +
-                    '<td class="p-3 text-center">' + newMessageCell + '</td>' +
+                    '<td class="p-3 text-center" id="new-msg-cell-' + c.id + '">' + newMessageCell + '</td>' +
                     '<td class="p-3">' + statusBadge + '</td>' +
                     '<td class="p-3">' + actionCol + '</td>' +
                     '</tr>';
