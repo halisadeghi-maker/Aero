@@ -1902,7 +1902,7 @@
             document.getElementById('prof-award-grade-preview').innerText = 'معادل ۰ نمره (هر سکه = ۰٫۰۵ نمره)';
             return;
         }
-        var finalPayout = roundCoin((quality / 100) * pendingAwardNominalCoins);
+        var finalPayout = roundCoin((quality / 100) * (pendingAwardAgreedCoins  /  pendingAwardNominalCoins));
         var gradePoints = roundCoin(finalPayout * 0.05);
         document.getElementById('prof-award-final-preview').innerText = finalPayout + ' سکه';
         document.getElementById('prof-award-grade-preview').innerText = 'معادل ' + gradePoints + ' نمره (هر سکه = ۰٫۰۵ نمره)';
@@ -1920,7 +1920,7 @@
         var quality = parseFloat(qualityStr);
         if (!qualityStr || isNaN(quality) || quality < 0 || quality > 100) return showAppAlert('لطفاً درصد کیفیتی معتبر بین ۰ تا ۱۰۰ وارد کنید.', false);
 
-        var finalPayout = roundCoin((quality / 100) * pendingAwardNominalCoins);
+        var finalPayout = roundCoin((quality / 100) * (pendingAwardAgreedCoins  /  pendingAwardNominalCoins);
 
         var targetContract = allLoadedContracts.find(function(c) { return c.id === pendingAwardContractId; });
         var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
