@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۷)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۸)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۷) -->
+            <!-- نسخه سامانه (۲.۳.۸) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.7</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.8</span>
             </div>
         </section>
 
@@ -2216,6 +2216,12 @@
 
     async function loadProfessorTerminationsKPI() {
         var sb = getSupabaseClient();
+
+        var warningTeamsRes = await sb.from('teams').select('id').eq('status', 'warning');
+        for (const wt of (warningTeamsRes.data || [])) {
+            await dissolveCompanyIfExpired(wt.id);
+        }
+
         var res = await sb.from('contracts').select('*, teams(name), profiles!contractor_id(full_name)');
         var div = document.getElementById('professor-kpi-terminations');
         div.innerHTML = '';
@@ -2227,13 +2233,14 @@
         var totalOngoing = 0;
         var mutualTermCount = 0;
         var oneSidedTermCount = 0;
+        var dissolvedTermCount = 0;
         var totalPendingSign = 0;
         var teamStats = {};
         var userTermCounts = {};
 
         res.data.forEach(function(c) {
             var tName = c.teams ? c.teams.name : 'شرکت نامشخص';
-            if (!teamStats[tName]) teamStats[tName] = { ongoing: 0, mutual: 0, oneSided: 0, pendingSign: 0 };
+            if (!teamStats[tName]) teamStats[tName] = { ongoing: 0, mutual: 0, oneSided: 0, dissolved: 0, pendingSign: 0 };
 
             if (c.status === 'terminated') {
                 if (c.termination_status === 'mutual_terminated') { mutualTermCount++; teamStats[tName].mutual++; }
@@ -2242,6 +2249,7 @@
                     var uName = c.profiles ? c.profiles.full_name : 'دانشجو';
                     userTermCounts[uName] = (userTermCounts[uName] || 0) + 1;
                 }
+                if (c.termination_status === 'company_dissolved') { dissolvedTermCount++; teamStats[tName].dissolved++; }
             } else {
                 totalOngoing++; teamStats[tName].ongoing++;
             }
@@ -2249,10 +2257,11 @@
             if (c.status === 'pending_leader_signature') { totalPendingSign++; teamStats[tName].pendingSign++; }
         });
 
-        var html = '<div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-black mb-3">' +
+        var html = '<div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs font-black mb-3">' +
             '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">جاری (کل)</div><div class="text-sky-700 text-sm">' + totalOngoing + '</div></div>' +
             '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">فسخ توافقی (کل)</div><div class="text-amber-700 text-sm">' + mutualTermCount + '</div></div>' +
             '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">فسخ یک‌طرفه (کل)</div><div class="text-rose-700 text-sm">' + oneSidedTermCount + '</div></div>' +
+            '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">باطل به دلیل انحلال (کل)</div><div class="text-slate-700 text-sm">' + dissolvedTermCount + '</div></div>' +
             '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">امضانشده (کل)</div><div class="text-indigo-700 text-sm">' + totalPendingSign + '</div></div>' +
             '</div>';
 
@@ -2267,6 +2276,7 @@
                     '<span class="text-sky-700">جاری: ' + s.ongoing + '</span>' +
                     '<span class="text-amber-700">توافقی: ' + s.mutual + '</span>' +
                     '<span class="text-rose-700">یک‌طرفه: ' + s.oneSided + '</span>' +
+                    (s.dissolved > 0 ? '<span class="text-slate-500">انحلال: ' + s.dissolved + '</span>' : '') +
                     '<span class="text-indigo-700">امضانشده: ' + s.pendingSign + '</span>' +
                 '</span>' +
                 '</div>';
@@ -3347,8 +3357,13 @@
             await sb.from('team_members').update({ status: 'exited', exited_at: new Date().toISOString(), exit_penalty_applied: true }).in('id', remainingIds);
         }
 
-        // ۴) ثبت وضعیت نهایی انحلال شرکت (جریمه ۲۵ سکه‌ای سرگروه و صفر شدن ۲۵٪ امتیاز تکمیل پروژه، در فرمول نمره‌دهی نهایی سرگروه اعمال می‌شود)
-        await sb.from('teams').update({ status: 'dissolved', dissolved_at: new Date().toISOString() }).eq('id', teamId);
+        // ۴) ثبت وضعیت نهایی انحلال شرکت به همراه جریمه ۲۵ سکه‌ای سرگروه و صفر شدن سهم «تکمیل پروژه» از نمره او
+        await sb.from('teams').update({
+            status: 'dissolved',
+            dissolved_at: new Date().toISOString(),
+            leader_dissolution_penalty_coins: 25,
+            completion_score_zeroed: true
+        }).eq('id', teamId);
 
         return true;
     }
@@ -3366,7 +3381,7 @@
         statusBadge.innerText = '⛔ منحل‌شده';
 
         warningBanner.classList.remove('hidden');
-        warningBanner.innerText = '⛔ این شرکت به دلیل عدم جذب به‌موقع عضو ثابت جدید در مهلت یک‌هفته‌ای، منحل شده است. تمام قراردادهای این شرکت باطل شدند، تمام اعضای ثابت باقی‌مانده ۱۵ سکه جریمه شدند، و طبق فرمول نمره‌دهی نهایی، ۲۵ سکه جریمه و صفر شدن سهم «تکمیل پروژه» برای سرگروه اعمال خواهد شد.';
+        warningBanner.innerText = '⛔ این شرکت به دلیل عدم جذب به‌موقع عضو ثابت جدید در مهلت یک‌هفته‌ای، منحل شده است. تمام قراردادهای این شرکت باطل شدند، تمام اعضای ثابت باقی‌مانده ۱۵ سکه جریمه شدند، و برای سرگروه ۲۵ سکه جریمه ثبت و سهم «تکمیل پروژه» از نمرهٔ او صفر گردید.';
 
         rosterList.innerHTML = '<div class="text-[11px] text-slate-400 text-center py-2">این شرکت منحل شده و دیگر عضو ثابت فعالی ندارد.</div>';
         addControls.classList.add('hidden');
