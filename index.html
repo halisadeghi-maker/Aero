@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۲)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۳)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -191,9 +191,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۱۲) -->
+            <!-- نسخه سامانه (۲.۳.۱۳) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.12</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.13</span>
             </div>
         </section>
 
@@ -3459,9 +3459,9 @@
             await sb.from('contracts').delete().not('id', 'is', null);
             await sb.from('tasks').delete().not('id', 'is', null);
             await sb.from('team_members').delete().not('id', 'is', null);
-            await sb.from('teams').delete().not('id', 'is', null);
             await sb.from('project_bids').delete().not('id', 'is', null);
             await sb.from('master_projects').delete().not('id', 'is', null);
+            await sb.from('teams').delete().not('id', 'is', null);
             await sb.from('booklets').delete().not('id', 'is', null);
 
             var reportFiles = await sb.storage.from('reports').list();
@@ -4098,6 +4098,12 @@
     window.addEventListener('load', function() {
         var sb = getSupabaseClient();
         if (sb) {
+            sb.auth.onAuthStateChange(function(event) {
+                if (event === 'PASSWORD_RECOVERY') {
+                    document.getElementById('set-new-password-modal').classList.remove('hidden');
+                }
+            });
+
             sb.auth.getSession().then(async function(res) {
                 if (res.data && res.data.session) {
                     currentUser = res.data.session.user;
