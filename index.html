@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۱)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۲)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -188,9 +188,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۱۱) -->
+            <!-- نسخه سامانه (۲.۳.۱۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.11</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.12</span>
             </div>
         </section>
 
@@ -472,6 +472,7 @@
 
             <!-- پنل سرگروه -->
             <section id="leader-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-4 border-slate-200">
+                <div id="prior-dissolution-notice" class="hidden pb-4 border-b border-slate-200 text-[11px] text-rose-800 bg-rose-50 border border-rose-300 rounded-2xl p-3 font-bold leading-relaxed"></div>
                 <div id="create-team-box" class="pb-4 border-b border-slate-200 hidden">
                     <h3 class="text-sm font-bold text-amber-800 mb-2">ثبت نام شرکت طراحی هواپیما</h3>
                     <div class="flex space-x-2 space-x-reverse">
@@ -1182,11 +1183,24 @@
             } else if (userProfile.role === 'leader') {
                 document.getElementById('leader-panel').classList.remove('hidden');
                 document.getElementById('leader-budget-panel').classList.remove('hidden');
-                var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
+                var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).neq('status', 'dissolved').maybeSingle();
                 currentTeam = tRes.data;
                 if (!currentTeam) {
                     document.getElementById('create-team-box').classList.remove('hidden');
                     document.getElementById('stat-team').innerText = "بدون شرکت ثبت‌شده";
+
+                    var priorDissolvedRes = await sb.from('teams').select('name').eq('leader_id', currentUser.id).eq('status', 'dissolved').order('dissolved_at', { ascending: false }).limit(1).maybeSingle();
+                    var leaderProfPenaltyRes = await sb.from('profiles').select('dissolution_penalty_coins').eq('id', currentUser.id).maybeSingle();
+                    var accumulatedPenalty = leaderProfPenaltyRes.data ? parseFloat(leaderProfPenaltyRes.data.dissolution_penalty_coins || 0) : 0;
+                    var priorNoticeBox = document.getElementById('prior-dissolution-notice');
+                    if (priorDissolvedRes.data) {
+                        priorNoticeBox.classList.remove('hidden');
+                        priorNoticeBox.innerText = '⛔ شرکت قبلی شما («' + priorDissolvedRes.data.name + '») منحل شده و قرارداد اصلی آن با استاد لغو گردید. ' +
+                            (accumulatedPenalty > 0 ? 'مجموع ' + accumulatedPenalty + ' سکه جریمهٔ دائمی از نمرهٔ نهایی شرکت بعدی شما کسر خواهد شد. ' : '') +
+                            'برای ادامهٔ کار، یک شرکت جدید تشکیل دهید و دوباره در مناقصهٔ اصلی شرکت کنید؛ تمام قوانین برای شرکت جدید مانند قبل برقرار است.';
+                    } else {
+                        priorNoticeBox.classList.add('hidden');
+                    }
                 } else {
                     document.getElementById('stat-team').innerText = currentTeam.name;
                 }
@@ -1472,7 +1486,7 @@
     window.promptBidConfirmation = async function(projectId, projectTitle) {
         var sb = getSupabaseClient();
         if (!currentTeam) {
-            var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).maybeSingle();
+            var tRes = await sb.from('teams').select('*').eq('leader_id', currentUser.id).neq('status', 'dissolved').maybeSingle();
             currentTeam = tRes.data;
         }
 
@@ -2378,7 +2392,7 @@
         var div = document.getElementById('professor-leader-grades');
         if (!div) return;
 
-        var teamsRes = await sb.from('teams').select('*').neq('status', 'forming');
+        var teamsRes = await sb.from('teams').select('*').in('status', ['active', 'warning']);
         var teams = teamsRes.data || [];
 
         if (teams.length === 0) {
@@ -2708,7 +2722,7 @@
     async function calculateLeaderGrade(teamId) {
         var sb = getSupabaseClient();
 
-        var teamRes = await sb.from('teams').select('status, completion_score_zeroed, leader_dissolution_penalty_coins').eq('id', teamId).single();
+        var teamRes = await sb.from('teams').select('status, completion_score_zeroed, leader_id').eq('id', teamId).single();
         var team = teamRes.data || {};
         var isDissolved = team.status === 'dissolved' || !!team.completion_score_zeroed;
 
@@ -2785,8 +2799,19 @@
         var economicScorePercent = 25 * (R / 200);
 
         var totalPercent = qualityScorePercent + completionScorePercent + economicScorePercent;
-        var totalCoins = totalPercent * 2;
-        var totalMark = totalPercent / 10;
+        var rawCoins = totalPercent * 2;
+
+        // جریمهٔ دائمی سطح پروفایل سرگروه، ناشی از انحلال شرکت قبلی (در صورت وجود).
+        // این جریمه به‌صورت سکهٔ منفی از نمرهٔ نهایی شرکت جدید کسر می‌شود، حتی اگر
+        // خود این شرکت (teamId) هرگز منحل نشده باشد ولی شرکت قبلی همین سرگروه منحل شده باشد.
+        var permanentPenaltyCoins = 0;
+        if (team.leader_id) {
+            var leaderProfRes = await sb.from('profiles').select('dissolution_penalty_coins').eq('id', team.leader_id).maybeSingle();
+            permanentPenaltyCoins = leaderProfRes.data ? parseFloat(leaderProfRes.data.dissolution_penalty_coins || 0) : 0;
+        }
+
+        var totalCoins = rawCoins - permanentPenaltyCoins;
+        var totalMark = totalCoins / 20;
 
         return {
             Q: Q,
@@ -2794,6 +2819,7 @@
             completionScorePercent: completionScorePercent,
             economicScorePercent: economicScorePercent,
             totalPercent: totalPercent,
+            rawCoins: rawCoins,
             totalCoins: totalCoins,
             totalMark: totalMark,
             mainContractPrice: mainContractPrice,
@@ -2803,7 +2829,7 @@
             allBookletsDelivered: allBookletsDelivered,
             deliveredBookletCount: deliveredBookletCount,
             totalBookletCount: booklets.length,
-            dissolutionPenaltyCoins: parseFloat(team.leader_dissolution_penalty_coins || 0)
+            dissolutionPenaltyCoins: permanentPenaltyCoins
         };
     }
     // =================== پایان تابع مرکزی نمره سرگروه ===================
@@ -3123,7 +3149,7 @@
                 var dissolutionNote = document.getElementById('grade-dissolution-note');
                 if (leaderGrade.dissolutionPenaltyCoins > 0) {
                     dissolutionNote.classList.remove('hidden');
-                    dissolutionNote.innerText = '⛔ به دلیل انحلال این شرکت، علاوه بر نمرهٔ بالا، ' + roundCoin(leaderGrade.dissolutionPenaltyCoins) + ' سکه جریمه از کیف پول نهایی شما کسر شده است.';
+                    dissolutionNote.innerText = '⛔ به دلیل انحلال یکی از شرکت‌های قبلی شما، ' + roundCoin(leaderGrade.dissolutionPenaltyCoins) + ' سکه جریمهٔ دائمی از نمرهٔ نهاییِ شرکتِ فعلی شما کسر شده است (نمرهٔ خام قبل از کسر جریمه: ' + roundCoin(leaderGrade.rawCoins) + ' سکه).';
                 } else {
                     dissolutionNote.classList.add('hidden');
                 }
@@ -3620,11 +3646,22 @@
             await sb.from('team_members').update({ status: 'exited', exited_at: new Date().toISOString(), exit_penalty_applied: true }).in('id', remainingIds);
         }
 
-        // ۴) ثبت وضعیت نهایی انحلال شرکت به همراه جریمه ۲۵ سکه‌ای سرگروه و صفر شدن سهم «تکمیل پروژه» از نمره او
+        // ۴) لغو قرارداد اصلی شرکت با استاد؛ پروژه به حالت باز برمی‌گردد تا سرگروه با شرکت جدید دوباره در مناقصه شرکت کند
+        await sb.from('master_projects').update({ awarded_team_id: null, status: 'open' }).eq('awarded_team_id', teamId).eq('status', 'awarded');
+
+        // ۵) جریمهٔ از دست دادن سهم ۲۵٪ تکمیل پروژه، به سکهٔ منفی تبدیل و به‌صورت دائمی روی پروفایل سرگروه ثبت می‌شود
+        //    (نه روی خود شرکت، چون شرکت منحل شده و سرگروه باید شرکت جدیدی تشکیل دهد؛ این جریمه باید همراه او بماند)
+        //    ۲۵٪ از سهم نمره = ۵۰ سکه، طبق تبدیل رسمی «۱۰۰٪ نمره سرگروه = ۲۰۰ سکه»
+        var DISSOLUTION_PENALTY_COINS = 50;
+        var leaderProfileRes = await sb.from('profiles').select('dissolution_penalty_coins').eq('id', team.leader_id).maybeSingle();
+        var priorPenalty = leaderProfileRes.data ? parseFloat(leaderProfileRes.data.dissolution_penalty_coins || 0) : 0;
+        await sb.from('profiles').update({ dissolution_penalty_coins: priorPenalty + DISSOLUTION_PENALTY_COINS }).eq('id', team.leader_id);
+
+        // ۶) ثبت وضعیت نهایی انحلال شرکت (برای تاریخچه) و صفر شدن سهم «تکمیل پروژه» این شرکت خاص
         await sb.from('teams').update({
             status: 'dissolved',
             dissolved_at: new Date().toISOString(),
-            leader_dissolution_penalty_coins: 25,
+            leader_dissolution_penalty_coins: DISSOLUTION_PENALTY_COINS,
             completion_score_zeroed: true
         }).eq('id', teamId);
 
@@ -3644,7 +3681,7 @@
         statusBadge.innerText = '⛔ منحل‌شده';
 
         warningBanner.classList.remove('hidden');
-        warningBanner.innerText = '⛔ این شرکت به دلیل عدم جذب به‌موقع عضو ثابت جدید در مهلت یک‌هفته‌ای، منحل شده است. تمام قراردادهای این شرکت باطل شدند، تمام اعضای ثابت باقی‌مانده ۱۵ سکه جریمه شدند، و برای سرگروه ۲۵ سکه جریمه ثبت و سهم «تکمیل پروژه» از نمرهٔ او صفر گردید.';
+        warningBanner.innerText = '⛔ این شرکت به دلیل عدم جذب به‌موقع عضو ثابت جدید در مهلت یک‌هفته‌ای، منحل شده است. قرارداد اصلی این شرکت با استاد لغو شد، تمام قراردادهای داخلی باطل شدند، تمام اعضای ثابت باقی‌مانده ۱۵ سکه جریمه شدند، و ۵۰ سکه جریمهٔ دائمی (معادل ۲۵٪ سهم تکمیل پروژه) به کارنامهٔ سرگروه اضافه شد که در نمرهٔ شرکت بعدی او کسر خواهد شد. برای ادامه، باید شرکت جدیدی تشکیل دهید و دوباره در مناقصهٔ اصلی شرکت کنید.';
 
         rosterList.innerHTML = '<div class="text-[11px] text-slate-400 text-center py-2">این شرکت منحل شده و دیگر عضو ثابت فعالی ندارد.</div>';
         addControls.classList.add('hidden');
