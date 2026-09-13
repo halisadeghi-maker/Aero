@@ -172,6 +172,9 @@
                             <label class="block text-xs font-bold text-teal-50 mb-1">رمز عبور (حداقل ۶ کاراکتر)</label>
                             <input type="password" id="auth-password" class="w-full bg-teal-950/40 border-2 border-teal-300/50 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-300 text-sm">
                         </div>
+                        <div id="forgot-password-link-row" class="text-left">
+                            <a href="javascript:void(0)" onclick="openForgotPasswordModal()" class="text-[11px] text-amber-200 underline hover:text-amber-100 font-bold">رمز عبور را فراموش کرده‌اید؟</a>
+                        </div>
 
                         <div id="terms-container" style="display: none;" class="flex items-center space-x-2 space-x-reverse pt-1 text-xs">
                             <input type="checkbox" id="terms-checkbox" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400 bg-teal-950 border-teal-300 cursor-pointer">
@@ -468,6 +471,21 @@
                         <div id="prof-freelancers-list" class="space-y-2 text-xs text-slate-600 max-h-48 overflow-y-auto">در حال بارگذاری...</div>
                     </div>
                 </div>
+                <!-- منطقه خطر: بازنشانی کامل سامانه -->
+                <div class="border-2 border-rose-400 rounded-2xl p-4 bg-gradient-to-br from-rose-50 to-rose-100/60 shadow-sm space-y-3">
+                    <h5 class="text-xs font-black text-rose-900 flex items-center gap-2"><span>☢️</span> منطقهٔ خطر — بازنشانی کامل سامانه</h5>
+                    <p class="text-[11px] text-rose-800 leading-relaxed font-bold">
+                        این عملیات تمام کاربران (سرگروه‌ها و پیمانکاران)، شرکت‌ها، پروژه‌های اصلی، کتابچه‌ها، بسته‌های کاری، پیشنهادها، قراردادها و فایل‌های آپلودشده (RFP و گزارش‌ها) را برای همیشه حذف می‌کند. فقط حساب کاربری خودِ شما (استاد) باقی می‌ماند. این عملیات <u>غیرقابل بازگشت</u> است.
+                    </p>
+                    <p class="text-[10px] text-rose-700 leading-relaxed">
+                        ⚠️ توجه فنی: این دکمه فقط اطلاعات داخل پایگاه‌داده و فایل‌ها را پاک می‌کند. حساب‌های ورود (ایمیل/رمز عبور) دانشجویان در سامانهٔ احراز هویت Supabase باقی می‌مانند و باید جداگانه از پنل Authentication در Supabase حذف شوند (این کار از داخل مرورگر با دسترسی سطح استاد ممکن نیست).
+                    </p>
+                    <div>
+                        <label class="block text-[11px] font-bold text-rose-800 mb-1">برای فعال‌سازی دکمه، عبارت زیر را دقیقاً تایپ کنید: <span class="font-black">بازنشانی کامل</span></label>
+                        <input type="text" id="reset-confirm-input" oninput="document.getElementById('execute-reset-btn').disabled = (this.value.trim() !== 'بازنشانی کامل')" class="w-full bg-white border-2 border-rose-300 rounded-xl p-2.5 text-xs font-bold text-rose-900" placeholder="بازنشانی کامل">
+                    </div>
+                    <button id="execute-reset-btn" onclick="executeFullSystemReset()" type="button" disabled class="w-full bg-rose-700 hover:bg-rose-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-black py-3 rounded-xl text-xs shadow-md transition cursor-pointer">☢️ بازنشانی کامل و غیرقابل بازگشت سامانه</button>
+                </div>
             </section>
 
             <!-- پنل سرگروه -->
@@ -563,18 +581,19 @@
                     <table class="w-full text-right text-xs">
                         <thead class="bg-slate-100/90 text-slate-700 border-b border-slate-200">
                             <tr>
-                                <th class="p-3 font-bold">کتابچه (مشاهده لاگ جدول 🔍)</th>
-                                <th class="p-3 font-bold">شرکت</th>
-                                <th class="p-3 font-bold">بسته کاری</th>
-                                <th class="p-3 font-bold">پیمانکار</th>
-                                <th class="p-3 font-bold">ارزش قرارداد</th>
+                                <th class="p-3 font-bold">#</th>
+                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('booklet')">کتابچه (مشاهده لاگ جدول 🔍) <span id="sort-arrow-booklet"></span></th>
+                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('team')">شرکت <span id="sort-arrow-team"></span></th>
+                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('task')">بسته کاری <span id="sort-arrow-task"></span></th>
+                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('contractor')">پیمانکار <span id="sort-arrow-contractor"></span></th>
+                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('value')">ارزش قرارداد <span id="sort-arrow-value"></span></th>
                                 <th class="p-3 font-bold">پیام جدید</th>
-                                <th class="p-3 font-bold">وضعیت قرارداد</th>
+                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('status')">وضعیت قرارداد <span id="sort-arrow-status"></span></th>
                                 <th class="p-3 font-bold">عملیات نظارت، ارزیابی و قضاوت</th>
                             </tr>
                         </thead>
                         <tbody id="contracts-table-body" class="divide-y divide-slate-100">
-                            <tr><td colspan="8" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>
+                            <tr><td colspan="9" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -630,7 +649,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-3 pt-1">
+                <div id="prof-dispute-fault-box" class="grid grid-cols-2 gap-3 pt-1">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-700 mb-1">درصد قصور کارفرما (سرگروه):</label>
                         <input type="number" id="fault-leader-percent" value="0" min="0" max="100" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
@@ -640,7 +659,7 @@
                         <input type="number" id="fault-contractor-percent" value="0" min="0" max="100" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-bold text-slate-800">
                     </div>
                 </div>
-                <span class="text-[10px] text-slate-500 block">مبلغ جریمه بر اساس درصد قصور از کیف پول نهایی افراد کسر خواهد شد (امکان منفی شدن کیف پول وجود دارد).</span>
+                <span id="prof-dispute-fault-note" class="text-[10px] text-slate-500 block">مبلغ جریمه بر اساس درصد قصور از کیف پول نهایی افراد کسر خواهد شد (امکان منفی شدن کیف پول وجود دارد).</span>
 
                 <div id="prof-dispute-reject-box" class="hidden space-y-1.5 pt-1">
                     <label class="block text-xs font-bold text-slate-700">متن دلیل رد درخواست (حداکثر ۲۰۰ کلمه):</label>
@@ -753,6 +772,36 @@
                 <button onclick="submitChangePassword()" type="button" class="w-1/2 bg-[#0f284e] text-amber-300 font-bold py-2 rounded-xl text-xs">ثبت تغییر</button>
                 <button onclick="closePasswordModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
             </div>
+        </div>
+    </div>
+
+    <!-- مدال فراموشی رمز عبور: ارسال لینک بازیابی به ایمیل -->
+    <div id="forgot-password-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <h4 class="text-sm font-black text-[#0f284e]">🔓 بازیابی رمز عبور</h4>
+            <p class="text-[11px] text-slate-500 leading-relaxed">ایمیلی که با آن ثبت‌نام کرده‌اید را وارد کنید؛ لینک بازیابی رمز عبور به آن ارسال می‌شود.</p>
+            <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">ایمیل ثبت‌نام‌شده</label>
+                <input type="email" id="forgot-password-email" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs" placeholder="user@kntu.ac.ir">
+            </div>
+            <div id="forgot-password-status" class="hidden text-[11px] font-bold p-2 rounded-lg"></div>
+            <div class="flex gap-2">
+                <button id="send-reset-link-btn" onclick="submitForgotPassword()" type="button" class="w-1/2 bg-[#0f284e] text-amber-300 font-bold py-2 rounded-xl text-xs cursor-pointer">ارسال لینک بازیابی</button>
+                <button onclick="closeForgotPasswordModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs cursor-pointer">انصراف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مدال تعیین رمز عبور جدید (بعد از کلیک روی لینک ایمیل بازیابی) -->
+    <div id="set-new-password-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <h4 class="text-sm font-black text-[#0f284e]">🔑 تعیین رمز عبور جدید</h4>
+            <p class="text-[11px] text-slate-500 leading-relaxed">هویت شما از طریق لینک ایمیل تایید شد. رمز عبور جدید خود را وارد کنید.</p>
+            <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">رمز عبور جدید (حداقل ۶ کاراکتر)</label>
+                <input type="password" id="recovery-new-password" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs">
+            </div>
+            <button onclick="submitSetNewPassword()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs cursor-pointer">ثبت رمز عبور جدید و ورود</button>
         </div>
     </div>
 
@@ -948,6 +997,53 @@
         return Math.round(n * 10) / 10;
     }
 
+    // ===================== مرتب‌سازی جدول قراردادهای هوشمند =====================
+    var contractsSortState = { key: null, ascending: true };
+
+    function getContractSortValue(c, key) {
+        switch (key) {
+            case 'booklet': return c.tasks?.booklets?.booklet_number != null ? parseFloat(c.tasks.booklets.booklet_number) : (c.tasks?.booklets?.title || '');
+            case 'team': return c.teams ? c.teams.name : '';
+            case 'task': return c.tasks ? c.tasks.title : '';
+            case 'contractor': return c.profiles ? c.profiles.full_name : '';
+            case 'value': return parseFloat(c.agreed_base_coins || 0);
+            case 'status': return c.status || '';
+            default: return '';
+        }
+    }
+
+    function applyContractsSort() {
+        if (!contractsSortState.key || !allLoadedContracts) return;
+        var key = contractsSortState.key;
+        var dir = contractsSortState.ascending ? 1 : -1;
+        allLoadedContracts.sort(function(a, b) {
+            var va = getContractSortValue(a, key);
+            var vb = getContractSortValue(b, key);
+            if (typeof va === 'number' && typeof vb === 'number') return (va - vb) * dir;
+            return String(va).localeCompare(String(vb), 'fa') * dir;
+        });
+    }
+
+    function updateSortArrows() {
+        ['booklet', 'team', 'task', 'contractor', 'value', 'status'].forEach(function(k) {
+            var el = document.getElementById('sort-arrow-' + k);
+            if (!el) return;
+            el.innerText = (contractsSortState.key === k) ? (contractsSortState.ascending ? '▲' : '▼') : '';
+        });
+    }
+
+    window.sortContractsTable = function(key) {
+        if (contractsSortState.key === key) {
+            contractsSortState.ascending = !contractsSortState.ascending;
+        } else {
+            contractsSortState.key = key;
+            contractsSortState.ascending = true;
+        }
+        updateSortArrows();
+        loadContracts();
+    };
+    // =================== پایان مرتب‌سازی جدول قراردادهای هوشمند ===================
+
     // ===================== تابع مرکزی محاسبه سکه نهایی پیمانکار =====================
     // FinalContractCoins = ContractCoins × QualityPercent (به‌صورت اعشاری)
     // این مقدار کاملاً مستقل از ارزش ذاتی/واقعی کتابچه است.
@@ -1030,12 +1126,72 @@
         }
     };
 
+    // ===================== فراموشی رمز عبور =====================
+    window.openForgotPasswordModal = function() {
+        document.getElementById('forgot-password-email').value = document.getElementById('auth-email').value || '';
+        document.getElementById('forgot-password-status').classList.add('hidden');
+        document.getElementById('forgot-password-modal').classList.remove('hidden');
+    };
+    window.closeForgotPasswordModal = function() {
+        document.getElementById('forgot-password-modal').classList.add('hidden');
+    };
+
+    window.submitForgotPassword = async function() {
+        var email = document.getElementById('forgot-password-email').value.trim();
+        var statusBox = document.getElementById('forgot-password-status');
+        if (!email) {
+            statusBox.className = 'text-[11px] font-bold p-2 rounded-lg bg-rose-50 text-rose-700 border border-rose-200';
+            statusBox.innerText = 'لطفاً ایمیل خود را وارد کنید.';
+            statusBox.classList.remove('hidden');
+            return;
+        }
+        var btn = document.getElementById('send-reset-link-btn');
+        btn.disabled = true;
+        btn.innerText = 'در حال ارسال...';
+
+        var sb = getSupabaseClient();
+        var res = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+
+        btn.disabled = false;
+        btn.innerText = 'ارسال لینک بازیابی';
+
+        // به‌عمد همیشه پیام موفقیت یکسان نمایش داده می‌شود (چه ایمیل در سامانه ثبت باشد چه نباشد)
+        // تا امکان حدس زدن ایمیل‌های ثبت‌شده در سامانه توسط افراد غیرمجاز وجود نداشته باشد.
+        statusBox.className = 'text-[11px] font-bold p-2 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200';
+        statusBox.innerText = 'در صورتی که این ایمیل در سامانه ثبت شده باشد، لینک بازیابی رمز عبور برای آن ارسال گردید. صندوق ورودی (و پوشهٔ اسپم) خود را بررسی کنید.';
+        statusBox.classList.remove('hidden');
+        if (res.error) console.error('resetPasswordForEmail error:', res.error);
+    };
+
+    window.submitSetNewPassword = async function() {
+        var newPass = document.getElementById('recovery-new-password').value;
+        if (!newPass || newPass.length < 6) return showAppAlert('رمز عبور باید حداقل ۶ کاراکتر باشد.', false);
+        var sb = getSupabaseClient();
+        var res = await sb.auth.updateUser({ password: newPass });
+        if (res.error) {
+            showAppAlert('خطا در ثبت رمز عبور جدید: ' + res.error.message, false);
+            return;
+        }
+        document.getElementById('set-new-password-modal').classList.add('hidden');
+        showAppAlert('رمز عبور شما با موفقیت تغییر یافت. اکنون وارد سامانه می‌شوید.', true, 'سامانه');
+        var sessionRes = await sb.auth.getSession();
+        if (sessionRes.data && sessionRes.data.session) {
+            currentUser = sessionRes.data.session.user;
+            var chk = await sb.from('profiles').select('id, is_approved').eq('id', currentUser.id).maybeSingle();
+            if (chk.data && chk.data.is_approved) {
+                await initDashboard();
+            }
+        }
+    };
+    // =================== پایان فراموشی رمز عبور ===================
+
     document.getElementById('tab-login').onclick = function() {
         currentMode = 'login';
         document.getElementById('tab-login').className = "w-1/2 pb-3 font-black text-amber-300 border-b-4 border-amber-300 cursor-pointer text-sm md:text-base drop-shadow-sm";
         document.getElementById('tab-signup').className = "w-1/2 pb-3 font-bold text-teal-100 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
         document.getElementById('signup-extra-fields').style.display = 'none';
         document.getElementById('terms-container').style.display = 'none';
+        document.getElementById('forgot-password-link-row').style.display = 'block';
         document.getElementById('auth-submit-btn').innerText = "ورود به سامانه";
         document.getElementById('auth-error').classList.add('hidden');
     };
@@ -1046,6 +1202,7 @@
         document.getElementById('tab-login').className = "w-1/2 pb-3 font-bold text-teal-100 border-b-4 border-transparent cursor-pointer text-sm md:text-base";
         document.getElementById('signup-extra-fields').style.display = 'block';
         document.getElementById('terms-container').style.display = 'flex';
+        document.getElementById('forgot-password-link-row').style.display = 'none';
         document.getElementById('auth-submit-btn').innerText = "ایجاد حساب کاربری";
         document.getElementById('auth-error').classList.add('hidden');
 
@@ -1130,6 +1287,7 @@
                         full_name: fullName, 
                         student_id: studentId, 
                         role: role, 
+                        email: email,
                         is_approved: isFirstProfessor ? true : false 
                     }
                 ]);
@@ -1651,7 +1809,8 @@
             div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
                 '<div class="flex flex-col">' +
                     '<span class="font-bold text-slate-800">' + u.full_name + ' (' + roleTitle + ')</span>' +
-                    '<span class="text-[10px] text-slate-500">شماره: ' + u.student_id + '</span>' +
+                    '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + u.student_id + '</span>' +
+                    '<span class="text-[10px] text-slate-500">نام کاربری (ایمیل): ' + (u.email || 'ثبت‌نشده') + '</span>' +
                 '</div>' +
                 '<div class="flex gap-1.5">' +
                     '<button type="button" onclick="approveUser(\'' + u.id + '\', true, \'' + u.full_name + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer">✓ تایید</button>' +
@@ -2124,6 +2283,8 @@
         document.getElementById('fault-leader-percent').value = '0';
         document.getElementById('fault-contractor-percent').value = '0';
         document.getElementById('prof-dispute-reject-box').classList.add('hidden');
+        document.getElementById('prof-dispute-fault-box').classList.remove('hidden');
+        document.getElementById('prof-dispute-fault-note').classList.remove('hidden');
         document.getElementById('professor-dispute-modal').classList.remove('hidden');
     };
 
@@ -2136,10 +2297,16 @@
     window.toggleProfDisputeInput = function() {
         var decision = document.querySelector('input[name="prof_dispute_decision"]:checked').value;
         var box = document.getElementById('prof-dispute-reject-box');
+        var faultBox = document.getElementById('prof-dispute-fault-box');
+        var faultNote = document.getElementById('prof-dispute-fault-note');
         if (decision === 'reject') {
             box.classList.remove('hidden');
+            faultBox.classList.add('hidden');
+            faultNote.classList.add('hidden');
         } else {
             box.classList.add('hidden');
+            faultBox.classList.remove('hidden');
+            faultNote.classList.remove('hidden');
         }
     };
 
@@ -2324,7 +2491,6 @@
         var mutualTermCount = 0;
         var oneSidedTermCount = 0;
         var dissolvedTermCount = 0;
-        var totalPendingSign = 0;
         var teamStats = {};
         var userTermCounts = {};
 
@@ -2343,8 +2509,15 @@
             } else {
                 totalOngoing++; teamStats[tName].ongoing++;
             }
+        });
 
-            if (c.status === 'pending_leader_signature') { totalPendingSign++; teamStats[tName].pendingSign++; }
+        // امضاء نشده = بسته‌های کاری باز در بازار که هنوز قراردادی برایشان منعقد نشده (نه بر اساس وضعیت قرارداد)
+        var openTasksRes = await sb.from('tasks').select('team_id, teams(name)').eq('status', 'open');
+        var totalPendingSign = (openTasksRes.data || []).length;
+        (openTasksRes.data || []).forEach(function(t) {
+            var tName = t.teams ? t.teams.name : 'شرکت نامشخص';
+            if (!teamStats[tName]) teamStats[tName] = { ongoing: 0, mutual: 0, oneSided: 0, dissolved: 0, pendingSign: 0 };
+            teamStats[tName].pendingSign++;
         });
 
         var html = '<div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs font-black mb-3">' +
@@ -2352,7 +2525,7 @@
             '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">فسخ توافقی (کل)</div><div class="text-amber-700 text-sm">' + mutualTermCount + '</div></div>' +
             '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">فسخ یک‌طرفه (کل)</div><div class="text-rose-700 text-sm">' + oneSidedTermCount + '</div></div>' +
             '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">باطل به دلیل انحلال (کل)</div><div class="text-slate-700 text-sm">' + dissolvedTermCount + '</div></div>' +
-            '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">امضانشده (کل)</div><div class="text-indigo-700 text-sm">' + totalPendingSign + '</div></div>' +
+            '<div class="bg-white p-2 rounded-xl border border-slate-200 text-center"><div class="text-slate-500 font-bold text-[10px]">بسته‌های کاری قرارداد نشده (کل)</div><div class="text-indigo-700 text-sm">' + totalPendingSign + '</div></div>' +
             '</div>';
 
         html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">';
@@ -2843,16 +3016,17 @@
 
         var res = await query;
         if (res.error) {
-            document.getElementById('contracts-table-body').innerHTML = '<tr><td colspan="8" class="p-6 text-center text-rose-600 font-bold">خطا در بارگذاری قراردادها: ' + res.error.message + '</td></tr>';
+            document.getElementById('contracts-table-body').innerHTML = '<tr><td colspan="9" class="p-6 text-center text-rose-600 font-bold">خطا در بارگذاری قراردادها: ' + res.error.message + '</td></tr>';
             console.error('loadContracts error:', res.error);
             return;
         }
         allLoadedContracts = res.data || []; 
+        applyContractsSort();
         var tbody = document.getElementById('contracts-table-body');
         tbody.innerHTML = '';
 
         if (!allLoadedContracts || allLoadedContracts.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>';
         }
 
         var totalFinal = 0;
@@ -2864,7 +3038,7 @@
         var pendingSignCount = 0;
 
         if (allLoadedContracts) {
-            allLoadedContracts.forEach(function(c) {
+            allLoadedContracts.forEach(function(c, rowIdx) {
                 if (c.status === 'terminated') {
                     termCount++;
                     if (c.termination_status === 'mutual_terminated') mutualTermCount++;
@@ -2908,7 +3082,11 @@
                         '</div>';
                 }
 
-                if (c.status === 'pending_leader_signature') {
+                var isFrozenByDispute = (c.termination_status === 'dispute_requested' && userProfile.role !== 'professor');
+
+                if (isFrozenByDispute) {
+                    actionCol = '<span class="text-amber-700 font-bold text-xs bg-amber-50 border border-amber-200 rounded-lg px-2 py-1 inline-block">⏳ به دلیل درخواست فسخ یک‌طرفه، این قرارداد غیرفعال است و در انتظار داوری استاد می‌باشد.</span>';
+                } else if (c.status === 'pending_leader_signature') {
                     if (userProfile.role === 'leader') {
                         actionCol = '<div class="flex gap-1.5">' +
                             '<button onclick="signContractByLeader(\'' + c.id + '\', \'' + c.task_id + '\', ' + c.agreed_base_coins + ')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-black shadow-sm cursor-pointer">پذیرش و کسر بودجه</button>' +
@@ -2965,7 +3143,7 @@
                             }
                         }
                         if (profButtons) actionCol += '<div class="mt-2 pt-2 border-t border-slate-200">' + profButtons + '</div>';
-                    } else {
+                    } else if (!isFrozenByDispute) {
                         var mutualBtnText = 'فسخ توافقی';
                         if (userProfile.role === 'leader' && c.leader_termination_agreed) mutualBtnText = '✓ تایید شما';
                         if (userProfile.role === 'member' && c.contractor_termination_agreed) mutualBtnText = '✓ تایید شما';
@@ -3004,6 +3182,7 @@
                     : '<span class="text-[11px] text-slate-300">—</span>';
 
                 tbody.innerHTML += '<tr class="hover:bg-slate-50/80 transition">' +
+                    '<td class="p-3 text-slate-400 font-bold">' + (rowIdx + 1) + '</td>' +
                     '<td class="p-3">' + bookletCellHtml + '</td>' +
                     '<td class="p-3 font-bold">' + (c.teams ? c.teams.name : '') + '</td>' +
                     '<td class="p-3">' + (c.tasks ? c.tasks.title : '') + '</td>' +
@@ -3161,7 +3340,14 @@
             '<div class="text-amber-600">فسخ توافقی: ' + mutualTermCount + '</div>' +
             '<div class="text-rose-600">فسخ یک‌طرفه: ' + oneSidedTermCount + '</div>';
         if (userProfile.role === 'leader' || userProfile.role === 'professor') {
-            kpiHtml += '<div class="text-sky-600">تعریف‌شده و امضانشده: ' + pendingSignCount + '</div>';
+            var openTasksQuery = sb.from('tasks').select('id', { count: 'exact', head: true }).eq('status', 'open');
+            if (userProfile.role === 'leader' && currentTeam) openTasksQuery = openTasksQuery.eq('team_id', currentTeam.id);
+            var openTasksRes = await openTasksQuery;
+            var unsignedCount = openTasksRes.count || 0;
+            kpiHtml += '<div class="text-sky-600">امضاء نشده: ' + unsignedCount + '</div>';
+
+            var titleEl = document.getElementById('stat-contracts-title');
+            if (titleEl) titleEl.innerText = (userProfile.role === 'professor') ? 'قراردادها' : 'قراردادهای من';
         }
         kpiHtml += '</div>';
         document.getElementById('stat-contracts-container').innerHTML = kpiHtml;
@@ -3250,12 +3436,52 @@
             div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
                 '<div class="flex flex-col">' +
                     '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
-                    '<span class="text-[10px] text-slate-500">شماره: ' + m.student_id + '</span>' +
+                    '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + m.student_id + '</span>' +
+                    '<span class="text-[10px] text-slate-500">نام کاربری (ایمیل): ' + (m.email || 'ثبت‌نشده') + '</span>' +
                 '</div>' +
                 '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs cursor-pointer">🗑️ حذف کاربر</button>' +
                 '</div>';
         });
     }
+
+    // ===================== منطقهٔ خطر: بازنشانی کامل سامانه =====================
+    window.executeFullSystemReset = async function() {
+        var typed = document.getElementById('reset-confirm-input').value.trim();
+        if (typed !== 'بازنشانی کامل') return showAppAlert('عبارت تاییدیه را دقیقاً مطابق نمونه وارد کنید.', false);
+        if (!confirm('این عملیات تمام کاربران، شرکت‌ها، قراردادها و فایل‌های سامانه را برای همیشه حذف می‌کند و غیرقابل بازگشت است. آیا کاملاً مطمئن هستید؟')) return;
+        if (!confirm('تاییدیهٔ نهایی: آیا واقعاً می‌خواهید همین الان کل پایگاه‌دادهٔ سامانه را بازنشانی کنید؟')) return;
+
+        var sb = getSupabaseClient();
+        showAppAlert('در حال بازنشانی کامل سامانه... لطفاً تا پایان عملیات صفحه را نبندید.', true, 'سامانه');
+
+        try {
+            await sb.from('task_bids').delete().not('id', 'is', null);
+            await sb.from('contracts').delete().not('id', 'is', null);
+            await sb.from('tasks').delete().not('id', 'is', null);
+            await sb.from('team_members').delete().not('id', 'is', null);
+            await sb.from('teams').delete().not('id', 'is', null);
+            await sb.from('project_bids').delete().not('id', 'is', null);
+            await sb.from('master_projects').delete().not('id', 'is', null);
+            await sb.from('booklets').delete().not('id', 'is', null);
+
+            var reportFiles = await sb.storage.from('reports').list();
+            if (reportFiles.data && reportFiles.data.length > 0) {
+                await sb.storage.from('reports').remove(reportFiles.data.map(function(f) { return f.name; }));
+            }
+            var rfpFilesList = await sb.storage.from('rfp_files').list();
+            if (rfpFilesList.data && rfpFilesList.data.length > 0) {
+                await sb.storage.from('rfp_files').remove(rfpFilesList.data.map(function(f) { return f.name; }));
+            }
+
+            await sb.from('profiles').delete().neq('id', currentUser.id);
+
+            showAppAlert('بازنشانی کامل سامانه با موفقیت انجام شد. صفحه اکنون مجدداً بارگذاری می‌شود.', true, 'سامانه');
+            setTimeout(function() { window.location.reload(); }, 2500);
+        } catch (e) {
+            showAppAlert('خطا در حین بازنشانی سامانه: ' + e.message + '\nممکن است بخشی از داده‌ها پاک شده باشد؛ وضعیت را بررسی کنید.', false);
+        }
+    };
+    // =================== پایان منطقهٔ خطر ===================
 
     window.deleteUserByProfessor = async function(userId, name) {
         if (!confirm('استاد گرامی، آیا از حذف قطعی کاربر «' + name + '» از سامانه اطمینان دارید؟ کلیه قراردادها و تعهدات وابسته به این کاربر نیز پاکسازی خواهد شد.')) return;
