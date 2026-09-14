@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۴)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۷)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -191,9 +191,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۱۴) -->
+            <!-- نسخه سامانه (۲.۳.۱۷) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.14</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.17</span>
             </div>
         </section>
 
@@ -201,7 +201,7 @@
         <div id="dashboard-section" class="hidden space-y-6">
 
             <!-- کارت‌های KPI -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
                     <div>
                         <span class="text-slate-500 text-xs font-bold">نقش شما در سامانه</span>
@@ -226,14 +226,6 @@
                         </div>
                     </div>
                     <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center font-black text-xl shadow-inner">📝</div>
-                </div>
-
-                <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
-                    <div>
-                        <span class="text-slate-500 text-xs font-bold">سکه تسویه‌شده</span>
-                        <h3 id="stat-coins" class="text-lg font-black text-amber-600 mt-1">۰ سکه</h3>
-                    </div>
-                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center font-black text-xl shadow-inner">🪙</div>
                 </div>
             </div>
 
@@ -362,10 +354,10 @@
 
                     <div class="bg-gradient-to-br from-amber-50/60 to-emerald-50/60 border border-amber-200/80 rounded-2xl p-4 space-y-2">
                         <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-amber-900">سکه‌های تسویه‌شده و تایید نهایی:</span>
+                            <span class="font-bold text-slate-700">سکه‌های قطعی‌شده (پس از ارزیابی کیفیت):</span>
                             <span id="wallet-final-text" class="font-black text-amber-600 text-sm">۰ سکه</span>
                         </div>
-                        <div class="w-full bg-amber-100 rounded-full h-3.5 overflow-hidden shadow-inner">
+                        <div class="w-full bg-slate-200 rounded-full h-3.5 overflow-hidden shadow-inner">
                             <div id="wallet-final-bar" class="bg-gradient-to-r from-amber-400 via-amber-500 to-emerald-500 h-full rounded-full transition-all duration-700" style="width: 0%;"></div>
                         </div>
                         <div id="wallet-penalty-row" class="flex justify-between items-center text-[11px]" style="display:none;">
@@ -736,49 +728,61 @@
 
     <!-- مدال ادله فسخ یک‌طرفه -->
     <div id="dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
-            <h4 class="text-sm font-black text-rose-800">⚖️ ثبت ادله فسخ یک‌طرفه جهت ارجاع به استاد درس</h4>
+        <div class="bg-white border-2 border-rose-300 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <h4 class="text-sm font-black text-rose-800">⚖️ ثبت ادله فسخ یک‌طرفه جهت ارجاع به استاد درس</h4>
+                <button onclick="closeDisputeModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
+            </div>
             <p class="text-xs text-slate-600 leading-relaxed">دلایل و مستندات خود مبنی بر عدم امکان ادامه همکاری را بنویسید.</p>
             <textarea id="dispute-reason-input" rows="4" placeholder="دلایل و مستندات عدم انجام تعهدات..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></textarea>
             <div class="flex gap-2">
-                <button id="confirm-dispute-btn" type="button" class="w-1/2 bg-rose-600 text-white font-bold py-2 rounded-xl text-xs">ارسال درخواست فسخ</button>
-                <button onclick="closeDisputeModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
+                <button id="confirm-dispute-btn" type="button" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ارسال درخواست فسخ</button>
+                <button onclick="closeDisputeModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال رد گزارش توسط سرگروه -->
     <div id="leader-reject-report-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
-            <h4 class="text-sm font-black text-rose-800">❌ ثبت دلیل و پیام رد گزارش توسط سرگروه</h4>
+        <div class="bg-white border-2 border-rose-300 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <h4 class="text-sm font-black text-rose-800">❌ ثبت دلیل و پیام رد گزارش توسط سرگروه</h4>
+                <button onclick="closeLeaderRejectModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
+            </div>
             <p class="text-xs text-slate-600 leading-relaxed">دلایل و ایرادات گزارش را وارد کنید (حداکثر ۵۰۰ کلمه). این پیام به عنوان لاگ برای پیمانکار و استاد ثبت خواهد شد.</p>
             <textarea id="leader-reject-reason-input" rows="5" placeholder="دلیل رد گزارش..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs"></textarea>
             <div class="flex gap-2">
-                <button id="confirm-leader-reject-btn" type="button" class="w-1/2 bg-rose-600 text-white font-bold py-2 rounded-xl text-xs">ثبت و ارسال به پیمانکار</button>
-                <button onclick="closeLeaderRejectModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
+                <button id="confirm-leader-reject-btn" type="button" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت و ارسال به پیمانکار</button>
+                <button onclick="closeLeaderRejectModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال تغییر رمز عبور -->
     <div id="password-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
-            <h4 class="text-sm font-black text-[#0f284e]">🔑 تغییر رمز عبور کاربری</h4>
+        <div class="bg-white border-2 border-slate-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <h4 class="text-sm font-black text-[#0f284e]">🔑 تغییر رمز عبور کاربری</h4>
+                <button onclick="closePasswordModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
+            </div>
             <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1">رمز عبور جدید (حداقل ۶ کاراکتر)</label>
                 <input type="password" id="new-password-input" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs">
             </div>
             <div class="flex gap-2">
-                <button onclick="submitChangePassword()" type="button" class="w-1/2 bg-[#0f284e] text-amber-300 font-bold py-2 rounded-xl text-xs">ثبت تغییر</button>
-                <button onclick="closePasswordModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs">انصراف</button>
+                <button onclick="submitChangePassword()" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت تغییر</button>
+                <button onclick="closePasswordModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال فراموشی رمز عبور: ارسال لینک بازیابی به ایمیل -->
     <div id="forgot-password-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
-            <h4 class="text-sm font-black text-[#0f284e]">🔓 بازیابی رمز عبور</h4>
+        <div class="bg-white border-2 border-slate-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <h4 class="text-sm font-black text-[#0f284e]">🔓 بازیابی رمز عبور</h4>
+                <button onclick="closeForgotPasswordModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
+            </div>
             <p class="text-[11px] text-slate-500 leading-relaxed">ایمیلی که با آن ثبت‌نام کرده‌اید را وارد کنید؛ لینک بازیابی رمز عبور به آن ارسال می‌شود.</p>
             <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1">ایمیل ثبت‌نام‌شده</label>
@@ -786,22 +790,24 @@
             </div>
             <div id="forgot-password-status" class="hidden text-[11px] font-bold p-2 rounded-lg"></div>
             <div class="flex gap-2">
-                <button id="send-reset-link-btn" onclick="submitForgotPassword()" type="button" class="w-1/2 bg-[#0f284e] text-amber-300 font-bold py-2 rounded-xl text-xs cursor-pointer">ارسال لینک بازیابی</button>
-                <button onclick="closeForgotPasswordModal()" type="button" class="w-1/2 bg-slate-200 text-slate-700 font-bold py-2 rounded-xl text-xs cursor-pointer">انصراف</button>
+                <button id="send-reset-link-btn" onclick="submitForgotPassword()" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ارسال لینک بازیابی</button>
+                <button onclick="closeForgotPasswordModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال تعیین رمز عبور جدید (بعد از کلیک روی لینک ایمیل بازیابی) -->
     <div id="set-new-password-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
-            <h4 class="text-sm font-black text-[#0f284e]">🔑 تعیین رمز عبور جدید</h4>
+        <div class="bg-white border-2 border-slate-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
+                <h4 class="text-sm font-black text-[#0f284e]">🔑 تعیین رمز عبور جدید</h4>
+            </div>
             <p class="text-[11px] text-slate-500 leading-relaxed">هویت شما از طریق لینک ایمیل تایید شد. رمز عبور جدید خود را وارد کنید.</p>
             <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1">رمز عبور جدید (حداقل ۶ کاراکتر)</label>
                 <input type="password" id="recovery-new-password" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs">
             </div>
-            <button onclick="submitSetNewPassword()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs cursor-pointer">ثبت رمز عبور جدید و ورود</button>
+            <button onclick="submitSetNewPassword()" type="button" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت رمز عبور جدید و ورود</button>
         </div>
     </div>
 
@@ -883,8 +889,11 @@
 
     <!-- مدال قبول بسته کاری -->
     <div id="accept-task-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
-            <h4 class="text-sm font-black text-[#0f284e]">📝 امضا و ارسال پیشنهاد همکاری به کارفرما</h4>
+        <div class="bg-white border-2 border-emerald-300 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                <h4 class="text-sm font-black text-[#0f284e]">📝 امضا و ارسال پیشنهاد همکاری به کارفرما</h4>
+                <button onclick="closeAcceptModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
+            </div>
             <p class="text-xs text-slate-500">قیمت پیشنهادی و شرایط خاص خود (حداکثر ۲۰۰ کلمه) را ثبت کنید.</p>
             
             <div>
@@ -899,37 +908,61 @@
             </div>
 
             <div class="flex gap-2">
-                <button id="confirm-accept-btn" type="button" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs transition cursor-pointer">امضا و ارسال به کارفرما</button>
-                <button onclick="closeAcceptModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button id="confirm-accept-btn" type="button" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">امضا و ارسال به کارفرما</button>
+                <button onclick="closeAcceptModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال قوانین و مقررات -->
     <div id="terms-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
+        <div class="bg-white border-2 border-slate-300 max-w-xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                 <h4 class="text-sm font-black text-[#0f284e]">📜 قوانین، مقررات و راهنمای بازار کار درس طراحی هواپیما</h4>
-                <button onclick="closeTermsModal()" class="text-slate-400 hover:text-slate-600 font-bold text-base cursor-pointer">✕</button>
+                <button onclick="closeTermsModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
             <div class="text-xs text-slate-600 leading-relaxed space-y-3 text-justify">
-                <p><strong>۱. احراز هویت و دسترسی:</strong> دسترسی به پروفایل کاربری پس از ثبت‌نام منوط به تایید هویت و صلاحیت توسط استاد درس است.</p>
-                <p><strong>۲. سقف مجاز سکه:</strong> سقف قرارداد برای هر دانشجو حداکثر ۲۵۰ سکه است و پذیرش قرارداد مازاد مسدود می‌باشد.</p>
-                <p><strong>۳. قوانین فسخ و جریمه:</strong> داوری فسخ یک‌طرفه برعهده استاد بوده و ۲۰ درصد مبلغ قرارداد به عنوان جریمه به متخلف اعمال می‌شود.</p>
+                <p><strong>۱. فضای کلی سامانه:</strong> این سامانه یک شبیه‌ساز شرکت مهندسی است، نه یک سیستم سادهٔ تقسیم تمرین. استاد درس نقش کارفرمای اصلی (مناقصه‌گزار) را دارد؛ دانشجویان یا «سرگروه» (مدیر یک شرکت) یا «پیمانکار» (عضو ثابت یک شرکت یا پیمانکار آزاد در بازار) هستند. دسترسی هر حساب پس از ثبت‌نام منوط به تایید استاد است.</p>
+
+                <p><strong>۲. تشکیل شرکت:</strong> پیش از شرکت در مناقصهٔ اصلی، هر سرگروه باید شرکتی با <strong>حداقل ۳ و حداکثر ۶ عضو ثابت</strong> تشکیل دهد. عضویت با «دعوت» سرگروه آغاز و فقط با «تایید خودِ دانشجو» در پنل او رسمی می‌شود؛ هیچ‌کس هم‌زمان نمی‌تواند عضو ثابت یا دارای دعوتِ در انتظار در بیش از یک شرکت باشد.</p>
+
+                <p><strong>۳. مناقصهٔ اصلی و بسته‌های کاری:</strong> پروژه شامل چند کتابچهٔ طراحی است که استاد برای هرکدام یک «ارزش واقعی» (فقط برای محاسبهٔ نمره) تعیین می‌کند. شرکت‌های تشکیل‌شده در مناقصهٔ اصلی شرکت می‌کنند و برندهٔ آن، پیمانکار اصلی پروژه می‌شود. سپس سرگروه هر کتابچه را به یک یا چند «بستهٔ کاری» تقسیم و برای هرکدام «قیمت پیشنهادی قرارداد» تعیین می‌کند — این قیمت می‌تواند کمتر یا بیشتر از ارزش واقعی کتابچه باشد.</p>
+
+                <p><strong>۴. مناقصهٔ داخلی و بازار آزاد:</strong> ابتدا فقط اعضای ثابتِ همان شرکت مجازند برای بسته‌های کاری آن شرکت پیشنهاد قیمت ثبت کنند (تا پایان مهلت تعیین‌شده)؛ سرگروه از میان پیشنهادها (نه لزوماً ارزان‌ترین) یکی را انتخاب می‌کند. وقتی <strong>همهٔ</strong> اعضای ثابت یک شرکت به سقف <strong>۱۵۰ سکهٔ قرارداد</strong> برسند، بسته‌های باقی‌ماندهٔ همان شرکت وارد «بازار آزاد» می‌شوند و از آن پس هر دانشجویی (عضو ثابت سایر شرکت‌ها یا پیمانکار آزاد) می‌تواند برایشان پیشنهاد بدهد.</p>
+
+                <p><strong>۵. سقف‌ها و ممنوعیت‌های قرارداد:</strong> سقف کل قراردادهای هر دانشجو (فارغ از این‌که با چند شرکت باشد) <strong>۲۵۰ سکه</strong> است و سامانه به‌طور خودکار از عبور از این سقف جلوگیری می‌کند. یک دانشجو می‌تواند چند بستهٔ کاری از <strong>یک کتابچهٔ همان شرکت</strong> را بگیرد، اما هرگز نمی‌تواند یک کتابچهٔ مشابه را هم‌زمان از <strong>دو شرکت مختلف</strong> دریافت کند.</p>
+
+                <p><strong>۶. خروج از عضویت ثابت و وضعیت هشدار:</strong> عضو ثابت هر زمان می‌تواند از شرکت خارج شود. اگر این خروج <strong>بعد از امضای قرارداد اصلی</strong> شرکت با استاد رخ دهد، <strong>۱۵ سکه</strong> از کیف پول نهایی همان عضو کسر می‌شود. اگر با این خروج تعداد اعضای ثابت به کمتر از ۳ نفر برسد، شرکت وارد «وضعیت هشدار» می‌شود و سرگروه یک هفته فرصت دارد عضو ثابت جدیدی (با حداقل ۱۵۰ سکه سابقهٔ قرارداد با همان شرکت) جذب کند.</p>
+
+                <p><strong>۷. انحلال شرکت:</strong> اگر تا پایان مهلت یک‌هفته‌ای، تعداد اعضا هم‌چنان کمتر از ۳ نفر باشد، شرکت منحل می‌شود: تمام قراردادهای آن باطل و سکه‌های مربوطه بی‌اثر می‌شوند، قرارداد اصلی شرکت با استاد لغو می‌گردد (و دوباره قابل واگذاری به تیم‌های دیگر یا همین سرگروه با شرکت تازه می‌شود)، هر یک از اعضای ثابت باقی‌مانده ۱۵ سکه جریمه می‌شوند، و سرگروه باید شرکت جدیدی تشکیل دهد؛ جریمهٔ از‌دست‌رفتنِ سهم «تکمیل پروژه» به‌صورت ۵۰ سکهٔ منفی همراه او به شرکت بعدی منتقل می‌شود.</p>
+
+                <p><strong>۸. فسخ توافقی قرارداد:</strong> هر یک از دو طرف قرارداد (کارفرما/سرگروه یا پیمانکار) می‌تواند درخواست فسخ توافقی ثبت کند؛ طرف مقابل می‌تواند آن را <strong>تایید</strong> کند (قرارداد فوراً و بدون جریمه باطل می‌شود) یا <strong>رد</strong> کند (قرارداد به حالت «در جریان» قبلی بازمی‌گردد).</p>
+
+                <p><strong>۹. فسخ یک‌طرفه قرارداد:</strong> هر طرف می‌تواند با ثبت ادلهٔ مکتوب، درخواست فسخ یک‌طرفه بدهد. تا زمان تعیین‌تکلیف توسط استاد، قرارداد برای هر دو طرف غیرفعال است (نه امکان ارسال گزارش، نه فسخ توافقی). استاد یا درخواست را <strong>رد</strong> می‌کند (قرارداد ادامه می‌یابد و دلیل رد برای طرفین ثبت می‌شود)، یا آن را با تعیین <strong>درصد قصور هر طرف</strong> <strong>تایید</strong> می‌کند؛ به همان نسبت از کیف پول (برای پیمانکار) یا از بودجهٔ قابل تخصیص شرکت (برای سرگروه) جریمه کسر می‌شود.</p>
+
+                <p><strong>۱۰. سکهٔ نهایی پیمانکار:</strong> برای هر بستهٔ کاری سه مقدار کاملاً متفاوت‌اند: «ارزش واقعی کتابچه» (فقط مبنای نمرهٔ سرگروه)، «سکهٔ قراردادی» (مبلغ توافق‌شده، مبنای سقف‌ها و آستانه‌ها)، و «سکهٔ قطعی» که پس از ارزیابی کیفیت توسط استاد این‌گونه محاسبه می‌شود: <strong>سکهٔ قطعی = سکهٔ قراردادی × درصد کیفیت</strong>. مثلاً قرارداد ۱۱۰ سکه‌ای با کیفیت ۹۰٪ درنهایت ۹۹ سکه به پیمانکار می‌دهد.</p>
+
+                <p><strong>۱۱. نمرهٔ پیمانکار:</strong> هر سکهٔ قطعی معادل ۰٫۰۵ نمرهٔ درس است. اگر مجموع سکه‌های <strong>قراردادی</strong> (نه سکهٔ قطعی) یک دانشجو کمتر از ۱۵۰ سکه باشد، او هیچ نمره‌ای بابت پروژه دریافت نمی‌کند، فارغ از کیفیت کارهای انجام‌شده.</p>
+
+                <p><strong>۱۲. نمرهٔ سرگروه:</strong> از سه مولفه تشکیل می‌شود: <strong>کیفیت پروژه (۵۰٪)</strong> بر اساس میانگین وزنی کیفیت همهٔ کتابچه‌ها نسبت به ارزش واقعی‌شان؛ <strong>تکمیل پروژه (۲۵٪)</strong> فقط در صورتی تعلق می‌گیرد که همهٔ کتابچه‌ها تحویل و کیفیت هرکدام حداقل ۸۵٪ باشد، وگرنه صفر است؛ و <strong>بهرهٔ اقتصادی (۲۵٪ مبنا، بدون سقف)</strong> که فقط پس از تحویل کامل پروژه (بدون الزام کیفیت ۸۵٪) بر اساس سکهٔ باقی‌ماندهٔ بودجهٔ مدیریتی (نسبت به ۲۰۰ سکه مرجع) محاسبه می‌شود. مجموع این سه درصد در ۲ ضرب می‌شود تا سکهٔ سرگروه و بر ۲۰ تقسیم می‌شود تا نمرهٔ نهایی او به دست آید.</p>
+
+                <p><strong>۱۳. کیف پول و شفافیت:</strong> کیف پول هر دانشجو همیشه نشان می‌دهد: مجموع سکه‌های قراردادی، سکه‌های قطعی‌شده، جریمه‌های اعمال‌شده، سود یا زیانِ ناشی از کیفیت، سقف مجاز، و نمرهٔ معادل. تمام مکاتبات، پیام‌ها و رویدادهای هر قرارداد در «لاگ سیستم» همان قرارداد قابل مشاهده است.</p>
+
+                <p class="text-slate-500 text-[11px]">با تایید این قوانین، می‌پذیرید که مسئولیت آشنایی کامل با ساز‌وکار سامانه، سقف‌ها، مهلت‌ها و جرایم بر عهدهٔ خودتان است.</p>
             </div>
-            <button onclick="closeTermsModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs">مطالعه شد و مورد تایید است</button>
+            <button onclick="closeTermsModal()" type="button" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">مطالعه شد و مورد تایید است</button>
         </div>
     </div>
 
     <!-- مدال اعلان سفارشی -->
     <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border border-slate-200 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+        <div id="custom-modal-card" class="bg-white border-2 border-emerald-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
             <div id="modal-icon-container" class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-indigo-50 text-indigo-600">🔔</div>
             <div>
                 <h4 id="modal-title" class="text-base font-black text-[#0f284e]">سامانه</h4>
                 <p id="modal-message" class="text-xs text-slate-600 mt-2 leading-relaxed whitespace-pre-line"></p>
             </div>
-            <button onclick="closeCustomModal()" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">متوجه شدم</button>
+            <button onclick="closeCustomModal()" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">متوجه شدم</button>
         </div>
     </div>
 
@@ -1090,6 +1123,7 @@
 
     window.showAppAlert = function(msg, isSuccess, customTitle) {
         var modal = document.getElementById('custom-modal');
+        var card = document.getElementById('custom-modal-card');
         var defaultTitle = (userProfile && userProfile.role === 'professor') ? "سامانه" : "استاد درس";
         document.getElementById('modal-title').innerText = customTitle || defaultTitle;
         document.getElementById('modal-message').innerText = msg;
@@ -1097,9 +1131,11 @@
         if (isSuccess) {
             iconCont.className = "w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-emerald-50 text-emerald-600 border border-emerald-200";
             iconCont.innerText = "✓";
+            if (card) card.className = "bg-white border-2 border-emerald-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center";
         } else {
             iconCont.className = "w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200";
             iconCont.innerText = "⚠️";
+            if (card) card.className = "bg-white border-2 border-amber-400 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center";
         }
         modal.classList.remove('hidden');
     };
@@ -2203,6 +2239,38 @@
         await loadTasks();
     };
 
+    window.rejectMutualTermination = async function(contractId) {
+        if (!confirm('آیا از رد درخواست فسخ توافقی اطمینان دارید؟ در صورت تایید، وضعیت قرارداد به حالت «در جریان» بازمی‌گردد.')) return;
+        var sb = getSupabaseClient();
+
+        var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+        var now = new Date();
+        existingLogs.push({
+            sender: userProfile.role === 'leader' ? 'کارفرما' : 'پیمانکار',
+            date: now.toLocaleDateString('fa-IR'),
+            time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+            type: 'رد درخواست فسخ توافقی'
+        });
+
+        var res = await sb.from('contracts').update({
+            termination_status: 'none',
+            termination_type: null,
+            leader_termination_agreed: false,
+            contractor_termination_agreed: false,
+            action_logs: existingLogs,
+            last_message_at: new Date().toISOString()
+        }).eq('id', contractId).select();
+
+        if (res.error || !res.data || res.data.length === 0) {
+            var em = res.error ? res.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+            return showAppAlert('خطا در ثبت رد درخواست: ' + em, false);
+        }
+
+        showAppAlert('درخواست فسخ توافقی رد شد و وضعیت قرارداد به «در جریان» بازگشت.', true);
+        await loadContracts();
+    };
+
     var pendingDisputeContractId = null;
     var pendingDisputeTaskId = null;
 
@@ -2912,7 +2980,7 @@
         var tasksRes = await sb.from('tasks').select('id, booklet_id, status, allocated_nominal_coins').eq('team_id', teamId);
         var teamTasks = tasksRes.data || [];
 
-        var contractsRes = await sb.from('contracts').select('id, task_id, status, agreed_base_coins, quality_percent').eq('team_id', teamId);
+        var contractsRes = await sb.from('contracts').select('id, task_id, status, agreed_base_coins, quality_percent, leader_penalty_coins').eq('team_id', teamId);
         var teamContracts = contractsRes.data || [];
 
         var contractByTaskId = {};
@@ -2973,7 +3041,11 @@
             return c.status !== 'terminated' ? s + parseFloat(c.agreed_base_coins || 0) : s;
         }, 0);
 
-        var R = mainContractPrice - actualProjectCost;
+        var totalLeaderPenalty = teamContracts.reduce(function(s, c) {
+            return s + parseFloat(c.leader_penalty_coins || 0);
+        }, 0);
+
+        var R = mainContractPrice - actualProjectCost - totalLeaderPenalty;
         var projectFullyDeliveredForEconomics = (!isDissolved && allBookletsDelivered && booklets.length > 0);
         var economicScorePercent = projectFullyDeliveredForEconomics ? (25 * (R / 200)) : 0;
 
@@ -3004,6 +3076,7 @@
             totalMark: totalMark,
             mainContractPrice: mainContractPrice,
             actualProjectCost: actualProjectCost,
+            totalLeaderPenalty: totalLeaderPenalty,
             remainingR: R,
             isDissolved: isDissolved,
             allBookletsDelivered: allBookletsDelivered,
@@ -3155,15 +3228,19 @@
                         if (userProfile.role === 'leader' && c.leader_termination_agreed) mutualBtnText = '✓ تایید شما';
                         if (userProfile.role === 'member' && c.contractor_termination_agreed) mutualBtnText = '✓ تایید شما';
 
-                        var terminationButtons = '<div class="mt-1.5 pt-1.5 border-t border-slate-200 flex gap-1">';
-                        
+                        var terminationButtons = '<div class="mt-1.5 pt-1.5 border-t border-slate-200 flex gap-1 flex-wrap">';
+
                         var isInProgress = (c.status === 'in_progress');
                         var isMutualReq = (c.termination_status === 'mutual_requested');
+                        var myAlreadyAgreed = (userProfile.role === 'leader') ? c.leader_termination_agreed : c.contractor_termination_agreed;
 
-                        if (isInProgress || isMutualReq) {
-                            if (c.termination_status !== 'dispute_requested') {
-                                terminationButtons += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
-                            }
+                        if (isMutualReq && !myAlreadyAgreed) {
+                            terminationButtons += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">✅ تایید فسخ توافقی</button>';
+                            terminationButtons += '<button onclick="rejectMutualTermination(\'' + c.id + '\')" class="bg-rose-100 hover:bg-rose-200 text-rose-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">❌ رد درخواست</button>';
+                        } else if (isMutualReq && myAlreadyAgreed) {
+                            terminationButtons += '<span class="text-[10px] text-amber-700 font-bold px-1">⏳ در انتظار تایید طرف مقابل قرارداد</span>';
+                        } else if (isInProgress && c.termination_status !== 'dispute_requested') {
+                            terminationButtons += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
                         }
 
                         if (isInProgress) {
@@ -3274,8 +3351,7 @@
             }
         }
 
-        document.getElementById('stat-coins').innerText = totalFinal.toFixed(1) + ' سکه';
-
+        
         if (userProfile.role === 'leader' && currentTeam) {
             var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
             var totalContractBudget = mpRes.data ? parseFloat(mpRes.data.allocated_coins) : (currentTeam.budget ? parseFloat(currentTeam.budget) : 0);
@@ -3331,7 +3407,7 @@
 
                 document.getElementById('grade-economic-score').innerText = leaderGrade.economicScorePercent.toFixed(2) + '٪';
                 document.getElementById('grade-economic-detail').innerText = leaderGrade.economicScoreUnlocked
-                    ? 'قرارداد اصلی: ' + roundCoin(leaderGrade.mainContractPrice) + ' − هزینهٔ واقعی: ' + roundCoin(leaderGrade.actualProjectCost) + ' = باقیمانده ' + roundCoin(leaderGrade.remainingR) + ' سکه (مرجع: ۲۰۰ سکه)'
+                    ? 'قرارداد اصلی: ' + roundCoin(leaderGrade.mainContractPrice) + ' − هزینهٔ واقعی: ' + roundCoin(leaderGrade.actualProjectCost) + (leaderGrade.totalLeaderPenalty > 0 ? ' − جریمهٔ سرگروه: ' + roundCoin(leaderGrade.totalLeaderPenalty) : '') + ' = باقیمانده ' + roundCoin(leaderGrade.remainingR) + ' سکه (مرجع: ۲۰۰ سکه)'
                     : '🔒 این مولفه تا تحویل کامل و تایید همهٔ کتابچه‌ها توسط استاد صفر است (بدون الزام حداقل کیفیت ۸۵٪).';
 
                 var dissolutionNote = document.getElementById('grade-dissolution-note');
