@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۷)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۹)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Supabase JS Client -->
     <script src="https://unpkg.com/@supabase/supabase-js@2.39.8/dist/umd/supabase.js"></script>
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <!-- تقویم و انتخابگر تاریخ و ساعت شمسی -->
     <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
@@ -191,9 +192,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۱۷) -->
+            <!-- نسخه سامانه (۲.۳.۱۹) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.17</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.19</span>
             </div>
         </section>
 
@@ -459,7 +460,10 @@
                         <div id="pending-users-list" class="space-y-2 text-xs text-slate-600 max-h-48 overflow-y-auto">در حال بارگذاری...</div>
                     </div>
                     <div class="border border-slate-200 rounded-2xl p-4 bg-white shadow-sm">
-                        <h5 class="text-xs font-black text-slate-800 mb-2">👥 فهرست اعضای فعال و حذف قطعی توسط استاد</h5>
+                        <div class="flex justify-between items-center mb-2">
+                            <h5 class="text-xs font-black text-slate-800">👥 فهرست اعضای فعال و حذف قطعی توسط استاد</h5>
+                            <button type="button" onclick="exportStudentsExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black px-3 py-1.5 rounded-lg cursor-pointer shadow-sm transition whitespace-nowrap">📊 خروجی اکسل سکه‌ها و نمرات</button>
+                        </div>
                         <div id="prof-freelancers-list" class="space-y-2 text-xs text-slate-600 max-h-48 overflow-y-auto">در حال بارگذاری...</div>
                     </div>
                 </div>
@@ -1525,6 +1529,33 @@
         }
     };
 
+    window.extendContractEndDate = async function(projectId) {
+        var sb = getSupabaseClient();
+        var shamsiVal = document.getElementById('mp-enddate-shamsi-' + projectId).value.trim();
+        if (!shamsiVal) return showAppAlert('لطفاً ابتدا یک تاریخ و ساعت از تقویم انتخاب کنید.', false);
+
+        var parsedDate = parseJalaliDateTimeString(shamsiVal);
+        if (!parsedDate || isNaN(parsedDate.getTime())) {
+            return showAppAlert('فرمت تاریخ شمسی واردشده معتبر نیست. لطفاً از طریق تقویم انتخاب کنید.', false);
+        }
+
+        var res = await sb.from('master_projects').update({ contract_end_date: parsedDate.toISOString() }).eq('id', projectId).select();
+        if (res.error || !res.data || res.data.length === 0) {
+            var em = res.error ? res.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+            return showAppAlert('خطا در تنظیم مهلت خاتمه قرارداد: ' + em, false);
+        }
+
+        showAppAlert('مهلت خاتمهٔ قرارداد با موفقیت تنظیم/تمدید شد. از این پس ارسال گزارش توسط پیمانکاران و تایید آن توسط سرگروه‌ها تا این تاریخ امکان‌پذیر است.', true, 'سامانه');
+        await loadMasterProjects();
+    };
+
+    async function isContractPastEndDate(teamId) {
+        var sb = getSupabaseClient();
+        var mpRes = await sb.from('master_projects').select('contract_end_date').eq('awarded_team_id', teamId).eq('status', 'awarded').maybeSingle();
+        if (!mpRes.data || !mpRes.data.contract_end_date) return false;
+        return new Date().getTime() > new Date(mpRes.data.contract_end_date).getTime();
+    }
+
     window.deleteMasterProject = async function(projectId) {
         if (!confirm('استاد گرامی، آیا از حذف این قرارداد اصلی و لغو مناقصه آن اطمینان دارید؟')) return;
         var sb = getSupabaseClient();
@@ -1596,7 +1627,10 @@
 
             if (userProfile.role === 'leader') {
                 if (isAwardedToMyTeam) {
-                    bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/30 text-center py-2 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال شرکت شما (بودجه: ' + roundCoin(p.allocated_coins) + ' سکه)</div>';
+                    var leaderEndDateText = p.contract_end_date
+                        ? ' — مهلت خاتمه قرارداد: ' + new Date(p.contract_end_date).toLocaleDateString('fa-IR', options)
+                        : '';
+                    bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/30 text-center py-2 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال شرکت شما (بودجه: ' + roundCoin(p.allocated_coins) + ' سکه)' + leaderEndDateText + '</div>';
                 } else if (p.status === 'awarded') {
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">منعقد شده با شرکت ' + (p.teams ? p.teams.name : '') + '</div>';
                 } else if (teamAlreadyWon && p.status === 'open') {
@@ -1620,8 +1654,16 @@
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-rose-600">مهلت ارسال پیشنهاد به پایان رسیده است.</div>';
                 }
             } else if (userProfile.role === 'professor') {
+                var endDateText = p.contract_end_date
+                    ? '<span class="text-emerald-700 font-bold">مهلت خاتمه قرارداد: ' + new Date(p.contract_end_date).toLocaleDateString('fa-IR', options) + '</span>'
+                    : '<span class="text-slate-400 font-bold">هنوز مهلت خاتمه قرارداد تعیین نشده</span>';
                 bidArea = '<div class="mt-3 pt-2 border-t border-amber-200 space-y-1.5">' +
                     '<button onclick="openProfessorBidsModal(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\', ' + p.allocated_coins + ')" class="w-full bg-gradient-to-r from-[#0f284e] to-[#1e3a8a] hover:from-[#0a1b35] hover:to-[#172554] text-amber-300 font-bold py-1.5 rounded-lg text-xs transition cursor-pointer shadow-sm">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
+                    '<div class="text-[11px] px-1">' + endDateText + '</div>' +
+                    '<div class="flex gap-2">' +
+                        '<input type="text" id="mp-enddate-shamsi-' + p.id + '" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۱۰/۰۱ ۲۳:۵۹" class="w-full bg-white border border-slate-300 rounded-lg p-1.5 text-[11px] font-bold text-slate-800 cursor-pointer" readonly>' +
+                        '<button onclick="extendContractEndDate(\'' + p.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded-lg text-[11px] transition cursor-pointer whitespace-nowrap">' + (p.contract_end_date ? 'تمدید مهلت' : 'تعیین مهلت') + '</button>' +
+                    '</div>' +
                     '<div class="flex gap-2">' +
                     '<button onclick="toggleMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-1 rounded-lg text-xs transition cursor-pointer">✏️ ویرایش روی کارت</button>' +
                     '<button onclick="deleteMasterProject(\'' + p.id + '\')" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-1 rounded-lg text-xs transition cursor-pointer">🗑️ حذف</button>' +
@@ -1985,6 +2027,11 @@
 
     window.uploadAndSendReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
+        var targetContractForDeadline = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        if (targetContractForDeadline && targetContractForDeadline.team_id) {
+            var pastDeadline1 = await isContractPastEndDate(targetContractForDeadline.team_id);
+            if (pastDeadline1) return showAppAlert('مهلت خاتمهٔ قرارداد اصلی این شرکت به پایان رسیده است؛ امکان ارسال گزارش جدید وجود ندارد. در صورت نیاز از استاد بخواهید مهلت را تمدید کند.', false);
+        }
         var fileInput = document.getElementById('file-' + taskId);
         if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
             return showAppAlert('لطفاً ابتدا فایل گزارش پیشرفت را انتخاب کنید.', false);
@@ -2035,6 +2082,11 @@
 
     window.leaderApproveReport = async function(taskId, contractId) {
         var sb = getSupabaseClient();
+        var targetContractForDeadline2 = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        if (targetContractForDeadline2 && targetContractForDeadline2.team_id) {
+            var pastDeadline2 = await isContractPastEndDate(targetContractForDeadline2.team_id);
+            if (pastDeadline2) return showAppAlert('مهلت خاتمهٔ قرارداد اصلی این شرکت به پایان رسیده است؛ امکان تایید گزارش وجود ندارد. در صورت نیاز از استاد بخواهید مهلت را تمدید کند.', false);
+        }
         var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
         var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
 
@@ -3516,18 +3568,103 @@
             return;
         }
 
-        res.data.forEach(function(m) {
+        for (const m of res.data) {
             var roleTitle = m.role === 'leader' ? 'سرگروه' : 'دانشجو';
+            var statsHtml = '';
+
+            if (m.role === 'member') {
+                var contractsRes = await sb.from('contracts').select('agreed_base_coins, final_payout, status').eq('contractor_id', m.id).neq('status', 'terminated');
+                var committed = 0, settled = 0;
+                (contractsRes.data || []).forEach(function(c) {
+                    committed += parseFloat(c.agreed_base_coins || 0);
+                    if (c.final_payout) settled += parseFloat(c.final_payout);
+                });
+                var grade = committed >= 150 ? roundCoin(settled * 0.05) : 0;
+                statsHtml = '<div class="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] mt-1">' +
+                    '<span class="text-blue-700 font-bold">متعهد: ' + roundCoin(committed) + ' سکه</span>' +
+                    '<span class="text-amber-700 font-bold">قطعی: ' + formatGradeNumber(settled) + ' سکه</span>' +
+                    '<span class="text-emerald-700 font-black">نمره: ' + formatGradeNumber(grade) + '</span>' +
+                    (committed < 150 ? '<span class="text-rose-600 font-bold">(کمتر از ۱۵۰ سکه متعهد — بدون نمره)</span>' : '') +
+                    '</div>';
+            } else if (m.role === 'leader') {
+                var teamRes = await sb.from('teams').select('id, name').eq('leader_id', m.id).neq('status', 'dissolved').maybeSingle();
+                if (teamRes.data) {
+                    var lg = await calculateLeaderGrade(teamRes.data.id);
+                    statsHtml = '<div class="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] mt-1">' +
+                        '<span class="text-slate-500 font-bold">شرکت: ' + teamRes.data.name + '</span>' +
+                        '<span class="text-amber-700 font-bold">سکه سرگروه: ' + formatGradeNumber(lg.totalCoins) + '</span>' +
+                        '<span class="text-emerald-700 font-black">نمره سرگروه: ' + formatGradeNumber(lg.totalMark) + '</span>' +
+                        '</div>';
+                } else {
+                    statsHtml = '<div class="text-[10px] text-slate-400 mt-1">بدون شرکت فعال</div>';
+                }
+            }
+
             div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
                 '<div class="flex flex-col">' +
                     '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
                     '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + m.student_id + '</span>' +
                     '<span class="text-[10px] text-slate-500">نام کاربری (ایمیل): ' + (m.email || 'ثبت‌نشده') + '</span>' +
+                    statsHtml +
                 '</div>' +
-                '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs cursor-pointer">🗑️ حذف کاربر</button>' +
+                '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs cursor-pointer whitespace-nowrap">🗑️ حذف کاربر</button>' +
                 '</div>';
-        });
+        }
     }
+
+    window.exportStudentsExcel = async function() {
+        if (typeof XLSX === 'undefined') {
+            return showAppAlert('کتابخانهٔ تولید اکسل هنوز بارگذاری نشده است؛ چند لحظه صبر کنید و دوباره تلاش کنید.', false);
+        }
+        var sb = getSupabaseClient();
+        var res = await sb.from('profiles').select('*').eq('is_approved', true).neq('role', 'professor');
+        var rows = [];
+
+        for (const m of (res.data || [])) {
+            if (m.role === 'member') {
+                var contractsRes = await sb.from('contracts').select('agreed_base_coins, final_payout, status').eq('contractor_id', m.id).neq('status', 'terminated');
+                var committed = 0, settled = 0;
+                (contractsRes.data || []).forEach(function(c) {
+                    committed += parseFloat(c.agreed_base_coins || 0);
+                    if (c.final_payout) settled += parseFloat(c.final_payout);
+                });
+                var grade = committed >= 150 ? roundCoin(settled * 0.05) : 0;
+                rows.push({
+                    'شماره دانشجویی': m.student_id || '',
+                    'نام و نام خانوادگی': m.full_name || '',
+                    'نقش': 'دانشجو (پیمانکار)',
+                    'شرکت': '',
+                    'سکه متعهدشده': roundCoin(committed),
+                    'سکه قطعی‌شده': roundCoin(settled),
+                    'نمره': grade
+                });
+            } else if (m.role === 'leader') {
+                var teamRes = await sb.from('teams').select('id, name').eq('leader_id', m.id).neq('status', 'dissolved').maybeSingle();
+                var teamName = teamRes.data ? teamRes.data.name : '';
+                var leaderCoins = 0, leaderMark = 0;
+                if (teamRes.data) {
+                    var lg = await calculateLeaderGrade(teamRes.data.id);
+                    leaderCoins = roundCoin(lg.totalCoins);
+                    leaderMark = roundCoin(lg.totalMark);
+                }
+                rows.push({
+                    'شماره دانشجویی': m.student_id || '',
+                    'نام و نام خانوادگی': m.full_name || '',
+                    'نقش': 'سرگروه',
+                    'شرکت': teamName,
+                    'سکه متعهدشده': '',
+                    'سکه قطعی‌شده': leaderCoins,
+                    'نمره': leaderMark
+                });
+            }
+        }
+
+        var ws = XLSX.utils.json_to_sheet(rows);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'سکه‌ها و نمرات');
+        var fileName = 'گزارش-سکه-و-نمره-' + new Date().toISOString().slice(0, 10) + '.xlsx';
+        XLSX.writeFile(wb, fileName);
+    };
 
     // ===================== منطقهٔ خطر: بازنشانی کامل سامانه =====================
     window.executeFullSystemReset = async function() {
