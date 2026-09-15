@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۱۹)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۲۰)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -192,9 +192,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۱۹) -->
+            <!-- نسخه سامانه (۲.۳.۲۰) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.19</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.20</span>
             </div>
         </section>
 
@@ -2248,6 +2248,13 @@
 
     window.voteMutualTermination = async function(contractId, role) {
         var sb = getSupabaseClient();
+
+        var targetContractForDeadline0 = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        if (targetContractForDeadline0 && targetContractForDeadline0.team_id) {
+            var pastDeadline0 = await isContractPastEndDate(targetContractForDeadline0.team_id);
+            if (pastDeadline0) return showAppAlert('مهلت خاتمهٔ قرارداد اصلی این شرکت به پایان رسیده است؛ امکان درخواست فسخ وجود ندارد. در صورت نیاز از استاد بخواهید مهلت را تمدید کند.', false);
+        }
+
         var updatePayload = {};
         if (role === 'leader') updatePayload.leader_termination_agreed = true;
         else if (role === 'member') updatePayload.contractor_termination_agreed = true;
@@ -2326,7 +2333,13 @@
     var pendingDisputeContractId = null;
     var pendingDisputeTaskId = null;
 
-    window.openDisputeModal = function(contractId, taskId) {
+    window.openDisputeModal = async function(contractId, taskId) {
+        var targetContractForDeadline3 = allLoadedContracts.find(function(c) { return c.id === contractId; });
+        if (targetContractForDeadline3 && targetContractForDeadline3.team_id) {
+            var pastDeadline3 = await isContractPastEndDate(targetContractForDeadline3.team_id);
+            if (pastDeadline3) return showAppAlert('مهلت خاتمهٔ قرارداد اصلی این شرکت به پایان رسیده است؛ امکان درخواست فسخ یک‌طرفه وجود ندارد. در صورت نیاز از استاد بخواهید مهلت را تمدید کند.', false);
+        }
+
         pendingDisputeContractId = contractId;
         pendingDisputeTaskId = taskId;
         document.getElementById('dispute-warning-modal').classList.remove('hidden');
