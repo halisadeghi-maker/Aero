@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۲۰)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۲۱)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -192,9 +192,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۲۰) -->
+            <!-- نسخه سامانه (۲.۳.۲۱) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.20</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.21</span>
             </div>
         </section>
 
@@ -437,34 +437,45 @@
                     </div>
                 </div>
 
-                <!-- گزارش KPI اثر منفی فسخ‌ها -->
-                <div class="border border-rose-200 rounded-2xl p-4 bg-gradient-to-br from-rose-50/50 to-amber-50/40 shadow-sm space-y-3">
-                    <h5 class="text-xs font-black text-rose-900 flex items-center gap-2">
-                        <span>⚠️</span> شاخص های کلیدی قراردادها
-                    </h5>
-                    <div id="professor-kpi-terminations" class="text-xs space-y-1 text-slate-700">در حال بارگذاری آمار تخلفات و فسخ‌ها...</div>
+                <!-- شاخص‌های کلیدی قراردادها (منوی کشویی) -->
+                <div class="border border-rose-200 rounded-2xl bg-gradient-to-br from-rose-50/50 to-amber-50/40 shadow-sm overflow-hidden">
+                    <button type="button" onclick="toggleAccordion('acc-kpi')" class="w-full flex justify-between items-center p-4 hover:bg-rose-50/60 transition cursor-pointer">
+                        <h5 class="text-xs font-black text-rose-900 flex items-center gap-2"><span>⚠️</span> شاخص های کلیدی قراردادها</h5>
+                        <span id="acc-kpi-chevron" class="text-rose-400 transition-transform duration-200">▾</span>
+                    </button>
+                    <div id="acc-kpi-content" class="hidden px-4 pb-4">
+                        <div id="professor-kpi-terminations" class="text-xs space-y-1 text-slate-700">در حال بارگذاری آمار تخلفات و فسخ‌ها...</div>
+                    </div>
                 </div>
 
-                <!-- نمرات سرگروهان -->
-                <div class="border border-indigo-200 rounded-2xl p-4 bg-gradient-to-br from-indigo-50/50 to-sky-50/40 shadow-sm space-y-3">
-                    <h5 class="text-xs font-black text-indigo-900 flex items-center gap-2">
-                        <span>🎓</span> نمرات سرگروهان (کیفیت ۵۰٪ + تکمیل پروژه ۲۵٪ + بهره‌وری اقتصادی ۲۵٪)
-                    </h5>
-                    <div id="professor-leader-grades" class="text-xs space-y-1.5 text-slate-700">در حال بارگذاری نمرات...</div>
+                <!-- نمرات سرگروهان (منوی کشویی) -->
+                <div class="border border-indigo-200 rounded-2xl bg-gradient-to-br from-indigo-50/50 to-sky-50/40 shadow-sm overflow-hidden">
+                    <button type="button" onclick="toggleAccordion('acc-grades')" class="w-full flex justify-between items-center p-4 hover:bg-indigo-50/60 transition cursor-pointer">
+                        <h5 class="text-xs font-black text-indigo-900 flex items-center gap-2"><span>🎓</span> نمرات سرگروهان (کیفیت ۵۰٪ + تکمیل پروژه ۲۵٪ + بهره‌وری اقتصادی ۲۵٪)</h5>
+                        <span id="acc-grades-chevron" class="text-indigo-400 transition-transform duration-200">▾</span>
+                    </button>
+                    <div id="acc-grades-content" class="hidden px-4 pb-4">
+                        <div id="professor-leader-grades" class="text-xs space-y-1.5 text-slate-700">در حال بارگذاری نمرات...</div>
+                    </div>
                 </div>
 
                 <!-- تایید یا رد کاربران جدید و مدیریت حذف اعضا -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div class="border border-slate-200 rounded-2xl p-4 bg-white shadow-sm">
-                        <h5 class="text-xs font-black text-slate-800 mb-2">👤 بررسی و تایید یا رد درخواست‌های ثبت‌نام جدید</h5>
-                        <div id="pending-users-list" class="space-y-2 text-xs text-slate-600 max-h-48 overflow-y-auto">در حال بارگذاری...</div>
-                    </div>
-                    <div class="border border-slate-200 rounded-2xl p-4 bg-white shadow-sm">
-                        <div class="flex justify-between items-center mb-2">
-                            <h5 class="text-xs font-black text-slate-800">👥 فهرست اعضای فعال و حذف قطعی توسط استاد</h5>
-                            <button type="button" onclick="exportStudentsExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black px-3 py-1.5 rounded-lg cursor-pointer shadow-sm transition whitespace-nowrap">📊 خروجی اکسل سکه‌ها و نمرات</button>
+                    <div class="border border-emerald-200 rounded-2xl bg-white shadow-sm overflow-hidden">
+                        <div class="w-full flex justify-between items-center p-4">
+                            <h5 class="text-xs font-black text-slate-800 flex items-center gap-2">👤 بررسی و تایید یا رد درخواست‌های ثبت‌نام جدید</h5>
                         </div>
-                        <div id="prof-freelancers-list" class="space-y-2 text-xs text-slate-600 max-h-48 overflow-y-auto">در حال بارگذاری...</div>
+                        <div id="pending-users-list" class="px-4 pb-4 space-y-2 text-xs text-slate-600 max-h-48 overflow-y-auto">در حال بارگذاری...</div>
+                    </div>
+                    <div class="border border-slate-200 rounded-2xl bg-white shadow-sm overflow-hidden">
+                        <button type="button" onclick="toggleAccordion('acc-freelancers')" class="w-full flex justify-between items-center p-4 hover:bg-slate-50 transition cursor-pointer">
+                            <h5 class="text-xs font-black text-slate-800 flex items-center gap-2">👥 فهرست اعضای فعال و حذف قطعی توسط استاد</h5>
+                            <span id="acc-freelancers-chevron" class="text-slate-400 transition-transform duration-200">▾</span>
+                        </button>
+                        <div id="acc-freelancers-content" class="hidden px-4 pb-4">
+                            <button type="button" onclick="exportStudentsExcel()" class="w-full mb-2 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-black px-3 py-1.5 rounded-lg cursor-pointer shadow-sm transition">📊 خروجی اکسل سکه‌ها و نمرات</button>
+                            <div id="prof-freelancers-list" class="space-y-2 text-xs text-slate-600 max-h-48 overflow-y-auto">در حال بارگذاری...</div>
+                        </div>
                     </div>
                 </div>
                 <!-- منطقه خطر: بازنشانی کامل سامانه -->
@@ -497,10 +508,11 @@
 
                 <!-- تشکیل شرکت: روستر اعضای ثابت (حداقل ۳، حداکثر ۶ نفر) -->
                 <div id="company-roster-box" class="pb-4 border-b border-slate-200 hidden">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-sm font-black text-[#0f284e] flex items-center gap-2"><span>🏢</span> تشکیل شرکت (اعضای ثابت)</h3>
+                    <button type="button" onclick="toggleAccordion('acc-roster')" class="w-full flex justify-between items-center mb-2 cursor-pointer">
+                        <h3 class="text-sm font-black text-[#0f284e] flex items-center gap-2"><span>🏢</span> تشکیل شرکت (اعضای ثابت) <span id="acc-roster-chevron" class="text-slate-400 transition-transform duration-200 text-xs">▾</span></h3>
                         <span id="company-status-badge" class="text-[10px] font-black px-2.5 py-1 rounded-full border">در حال محاسبه...</span>
-                    </div>
+                    </button>
+                    <div id="acc-roster-content" class="hidden">
                     <p class="text-[11px] text-slate-500 mb-3 leading-relaxed">قبل از شرکت در مناقصه اصلی، شرکت شما باید بین ۳ تا ۶ عضو ثابت داشته باشد. اعضای ثابت تا قبل از باز شدن بازار آزاد، فقط از همین شرکت قرارداد دریافت می‌کنند.</p>
 
                     <div id="warning-deadline-banner" class="hidden text-[11px] text-rose-800 bg-rose-50 border border-rose-300 rounded-xl p-2.5 font-bold text-center mb-3 leading-relaxed"></div>
@@ -518,6 +530,7 @@
                     <div id="company-active-note" class="hidden text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 font-bold text-center">✅ ترکیب شرکت قطعی شده و اکنون می‌توانید در مناقصه اصلی شرکت کنید.</div>
 
                     <div id="free-market-status" class="hidden mt-3 pt-3 border-t border-slate-200"></div>
+                    </div>
                 </div>
 
                 <div class="flex justify-between items-center">
@@ -970,12 +983,75 @@
         </div>
     </div>
 
+    <!-- مودال تایید عملیات: جایگزین یکسان و جذاب برای confirm() بومی مرورگر در کل سامانه -->
+    <div id="app-confirm-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
+        <div id="app-confirm-card" class="bg-white border-2 border-amber-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+            <div id="app-confirm-icon" class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600">❓</div>
+            <div>
+                <h4 class="text-base font-black text-[#0f284e]">تایید عملیات</h4>
+                <p id="app-confirm-message" class="text-xs text-slate-600 mt-2 leading-relaxed whitespace-pre-line"></p>
+            </div>
+            <div class="flex gap-2 pt-1">
+                <button id="app-confirm-ok-btn" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">تایید</button>
+                <button id="app-confirm-cancel-btn" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+            </div>
+        </div>
+    </div>
+
 <script>
     var currentMode = 'login';
     var SUPABASE_URL = "https://mpidajjallaplccytnjq.supabase.co";
     var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1waWRhamphbGxhcGxjY3l0bmpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxOTQxNjQsImV4cCI6MjEwMzc3MDE2NH0.W6qh3zA-V0QLqLNfPybLpWhjagORAG3_aiBRMoEeUyI";
     var client = null;
     var allLoadedContracts = []; 
+
+    var appConfirmResolve = null;
+    function showConfirmDialog(message, options) {
+        options = options || {};
+        return new Promise(function(resolve) {
+            appConfirmResolve = resolve;
+            document.getElementById('app-confirm-message').innerText = message;
+            var okBtn = document.getElementById('app-confirm-ok-btn');
+            okBtn.innerText = options.confirmLabel || 'تایید';
+            var card = document.getElementById('app-confirm-card');
+            var icon = document.getElementById('app-confirm-icon');
+            if (options.dangerous) {
+                card.className = 'bg-white border-2 border-rose-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center';
+                icon.className = 'w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-rose-50 text-rose-600';
+                icon.innerText = '⚠️';
+                okBtn.className = 'w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer';
+            } else {
+                card.className = 'bg-white border-2 border-amber-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center';
+                icon.className = 'w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600';
+                icon.innerText = '❓';
+                okBtn.className = 'w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer';
+            }
+            document.getElementById('app-confirm-modal').classList.remove('hidden');
+        });
+    }
+    document.getElementById('app-confirm-ok-btn').onclick = function() {
+        document.getElementById('app-confirm-modal').classList.add('hidden');
+        if (appConfirmResolve) appConfirmResolve(true);
+        appConfirmResolve = null;
+    };
+    document.getElementById('app-confirm-cancel-btn').onclick = function() {
+        document.getElementById('app-confirm-modal').classList.add('hidden');
+        if (appConfirmResolve) appConfirmResolve(false);
+        appConfirmResolve = null;
+    };
+
+    window.toggleAccordion = function(id) {
+        var content = document.getElementById(id + '-content');
+        var chevron = document.getElementById(id + '-chevron');
+        if (!content) return;
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            if (chevron) chevron.style.transform = 'rotate(180deg)';
+        } else {
+            content.classList.add('hidden');
+            if (chevron) chevron.style.transform = 'rotate(0deg)';
+        }
+    };
 
     function getSupabaseClient() {
         if (client) return client;
@@ -1557,7 +1633,7 @@
     }
 
     window.deleteMasterProject = async function(projectId) {
-        if (!confirm('استاد گرامی، آیا از حذف این قرارداد اصلی و لغو مناقصه آن اطمینان دارید؟')) return;
+        if (!(await showConfirmDialog('استاد گرامی، آیا از حذف این قرارداد اصلی و لغو مناقصه آن اطمینان دارید؟', { dangerous: true, confirmLabel: 'حذف قرارداد' }))) return;
         var sb = getSupabaseClient();
         await sb.from('project_bids').delete().eq('project_id', projectId);
         var res = await sb.from('master_projects').delete().eq('id', projectId);
@@ -1912,7 +1988,7 @@
                 showAppAlert('کاربر «' + userName + '» با موفقیت تایید شد و دسترسی وی فعال گردید.', true);
             }
         } else {
-            if (!confirm('آیا از رد ثبت‌نام و حذف درخواست کاربر «' + userName + '» اطمینان دارید؟')) return;
+            if (!(await showConfirmDialog('آیا از رد ثبت‌نام و حذف درخواست کاربر «' + userName + '» اطمینان دارید؟', { dangerous: true, confirmLabel: 'رد ثبت‌نام' }))) return;
             await sb.from('contracts').delete().eq('contractor_id', userId);
             var delRes = await sb.from('profiles').delete().eq('id', userId);
             if (delRes.error) {
@@ -2014,7 +2090,7 @@
     };
 
     window.rejectContractByLeader = async function(contractId, taskId) {
-        if (!confirm('آیا از رد شرایط و پیشنهاد قیمت این دانشجو اطمینان دارید؟ بسته کاری مجدداً در بازار برای سایرین باز خواهد شد.')) return;
+        if (!(await showConfirmDialog('آیا از رد شرایط و پیشنهاد قیمت این دانشجو اطمینان دارید؟ بسته کاری مجدداً در بازار برای سایرین باز خواهد شد.', { confirmLabel: 'رد پیشنهاد' }))) return;
         var sb = getSupabaseClient();
 
         await sb.from('contracts').delete().eq('id', contractId);
@@ -2299,7 +2375,7 @@
     };
 
     window.rejectMutualTermination = async function(contractId) {
-        if (!confirm('آیا از رد درخواست فسخ توافقی اطمینان دارید؟ در صورت تایید، وضعیت قرارداد به حالت «در جریان» بازمی‌گردد.')) return;
+        if (!(await showConfirmDialog('آیا از رد درخواست فسخ توافقی اطمینان دارید؟ در صورت تایید، وضعیت قرارداد به حالت «در جریان» بازمی‌گردد.', { confirmLabel: 'رد درخواست' }))) return;
         var sb = getSupabaseClient();
 
         var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
@@ -2528,26 +2604,6 @@
             showAppAlert('درخواست فسخ توسط استاد رد شد و در لاگ ثبت گردید.', true, 'سامانه');
         }
 
-        await loadContracts();
-        await loadTasks();
-    };
-
-    window.confirmMutualTerminationByProfessor = async function(contractId, taskId) {
-        if (!confirm('استاد گرامی، آیا با تایید نهایی فسخ توافقی این قرارداد موافقت می‌فرمایید؟')) return;
-        var sb = getSupabaseClient();
-        var targetContract = allLoadedContracts.find(function(c) { return c.id === contractId; });
-        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
-        var now = new Date();
-        existingLogs.push({
-            sender: 'استاد',
-            date: now.toLocaleDateString('fa-IR'),
-            time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
-            type: 'تایید فسخ توافقی'
-        });
-
-        await sb.from('contracts').update({ status: 'terminated', termination_status: 'mutual_terminated', action_logs: existingLogs }).eq('id', contractId);
-        await sb.from('tasks').update({ status: 'terminated' }).eq('id', taskId);
-        showAppAlert('فسخ توافقی توسط استاد تایید گردید.', true, 'سامانه');
         await loadContracts();
         await loadTasks();
     };
@@ -2841,7 +2897,7 @@
 
     window.awardInternalBid = async function(bidId, taskId, bidderId, proposedCoins) {
         proposedCoins = roundCoin(proposedCoins);
-        if (!confirm('آیا از انتخاب این پیشنهاد به مبلغ ' + proposedCoins + ' سکه اطمینان دارید؟ پس از تایید، این بسته کاری قطعاً به این دانشجو واگذار می‌شود و امکان بازگشت وجود ندارد.')) return;
+        if (!(await showConfirmDialog('آیا از انتخاب این پیشنهاد به مبلغ ' + proposedCoins + ' سکه اطمینان دارید؟ پس از تایید، این بسته کاری قطعاً به این دانشجو واگذار می‌شود و امکان بازگشت وجود ندارد.', { confirmLabel: 'انتخاب پیشنهاد' }))) return;
         var sb = getSupabaseClient();
 
         var existingContractsRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', bidderId).neq('status', 'terminated');
@@ -3279,13 +3335,8 @@
                 if (c.status !== 'completed' && c.status !== 'terminated') {
                     if (userProfile.role === 'professor') {
                         var profButtons = '';
-                        if (c.termination_status === 'dispute_requested' || c.termination_status === 'mutual_requested') {
-                            if (c.termination_status === 'dispute_requested') {
-                                profButtons += '<button onclick="openProfessorDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">⚖️ داوری فسخ یک‌طرفه</button>';
-                            }
-                            if (c.termination_status === 'mutual_requested') {
-                                profButtons += '<button onclick="confirmMutualTerminationByProfessor(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">🤝 تایید فسخ توافقی</button>';
-                            }
+                        if (c.termination_status === 'dispute_requested') {
+                            profButtons += '<button onclick="openProfessorDisputeModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[10px] font-black shadow-sm cursor-pointer">⚖️ داوری فسخ یک‌طرفه</button>';
                         }
                         if (profButtons) actionCol += '<div class="mt-2 pt-2 border-t border-slate-200">' + profButtons + '</div>';
                     } else if (!isFrozenByDispute) {
@@ -3683,8 +3734,8 @@
     window.executeFullSystemReset = async function() {
         var typed = document.getElementById('reset-confirm-input').value.trim();
         if (typed !== 'بازنشانی کامل') return showAppAlert('عبارت تاییدیه را دقیقاً مطابق نمونه وارد کنید.', false);
-        if (!confirm('این عملیات تمام کاربران، شرکت‌ها، قراردادها و فایل‌های سامانه را برای همیشه حذف می‌کند و غیرقابل بازگشت است. آیا کاملاً مطمئن هستید؟')) return;
-        if (!confirm('تاییدیهٔ نهایی: آیا واقعاً می‌خواهید همین الان کل پایگاه‌دادهٔ سامانه را بازنشانی کنید؟')) return;
+        if (!(await showConfirmDialog('این عملیات تمام کاربران، شرکت‌ها، قراردادها و فایل‌های سامانه را برای همیشه حذف می‌کند و غیرقابل بازگشت است. آیا کاملاً مطمئن هستید؟', { dangerous: true, confirmLabel: 'بله، ادامه بده' }))) return;
+        if (!(await showConfirmDialog('تاییدیهٔ نهایی: آیا واقعاً می‌خواهید همین الان کل پایگاه‌دادهٔ سامانه را بازنشانی کنید؟', { dangerous: true, confirmLabel: 'بازنشانی کامل' }))) return;
 
         var sb = getSupabaseClient();
         showAppAlert('در حال بازنشانی کامل سامانه... لطفاً تا پایان عملیات صفحه را نبندید.', true, 'سامانه');
@@ -3719,7 +3770,7 @@
     // =================== پایان منطقهٔ خطر ===================
 
     window.deleteUserByProfessor = async function(userId, name) {
-        if (!confirm('استاد گرامی، آیا از حذف قطعی کاربر «' + name + '» از سامانه اطمینان دارید؟ کلیه قراردادها و تعهدات وابسته به این کاربر نیز پاکسازی خواهد شد.')) return;
+        if (!(await showConfirmDialog('استاد گرامی، آیا از حذف قطعی کاربر «' + name + '» از سامانه اطمینان دارید؟ کلیه قراردادها و تعهدات وابسته به این کاربر نیز پاکسازی خواهد شد.', { dangerous: true, confirmLabel: 'حذف کاربر' }))) return;
         var sb = getSupabaseClient();
         
         await sb.from('contracts').delete().eq('contractor_id', userId);
@@ -3916,7 +3967,7 @@
     };
 
     window.removeFixedMember = async function(memberRowId) {
-        if (!confirm('آیا از حذف این عضو از فهرست اعضای ثابت اطمینان دارید؟')) return;
+        if (!(await showConfirmDialog('آیا از حذف این عضو از فهرست اعضای ثابت اطمینان دارید؟', { dangerous: true, confirmLabel: 'حذف عضو' }))) return;
         var sb = getSupabaseClient();
         var delRes = await sb.from('team_members').delete().eq('id', memberRowId).select();
         if (delRes.error) return showAppAlert('خطا در حذف عضو: ' + delRes.error.message, false);
@@ -3929,7 +3980,7 @@
         var countRes = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', currentTeam.id).eq('status', 'active');
         var cnt = countRes.count || 0;
         if (cnt < 3 || cnt > 6) return showAppAlert('تعداد اعضای ثابت باید بین ۳ تا ۶ نفر باشد.', false);
-        if (!confirm('پس از قطعی‌سازی، امکان تغییر ترکیب اعضای ثابت از این بخش وجود نخواهد داشت. آیا مطمئن هستید؟')) return;
+        if (!(await showConfirmDialog('پس از قطعی‌سازی، امکان تغییر ترکیب اعضای ثابت از این بخش وجود نخواهد داشت. آیا مطمئن هستید؟', { confirmLabel: 'قطعی‌سازی' }))) return;
 
         var updRes = await sb.from('teams').update({ status: 'active' }).eq('id', currentTeam.id).select();
         if (updRes.error || !updRes.data || updRes.data.length === 0) {
@@ -3988,7 +4039,7 @@
         var warnMsg = mainContractSigned
             ? 'قرارداد اصلی این شرکت با استاد منعقد شده است؛ در صورت خروج از عضویت ثابت، ۱۵ سکه از کیف پول نهایی شما کسر خواهد شد. آیا مطمئن هستید؟'
             : 'آیا از خروج از عضویت ثابت این شرکت اطمینان دارید؟ (چون هنوز قرارداد اصلی امضا نشده، جریمه‌ای اعمال نمی‌شود)';
-        if (!confirm(warnMsg)) return;
+        if (!(await showConfirmDialog(warnMsg, { dangerous: mainContractSigned, confirmLabel: 'خروج از شرکت' }))) return;
 
         var updRes = await sb.from('team_members').update({
             status: 'exited',
@@ -4046,7 +4097,7 @@
     }
 
     window.acceptMembershipInvite = async function(inviteId, teamId) {
-        if (!confirm('با قبول این دعوت، رسماً به عضو ثابت این شرکت تبدیل می‌شوید. آیا مطمئن هستید؟')) return;
+        if (!(await showConfirmDialog('با قبول این دعوت، رسماً به عضو ثابت این شرکت تبدیل می‌شوید. آیا مطمئن هستید؟', { confirmLabel: 'قبول عضویت' }))) return;
         var sb = getSupabaseClient();
 
         var updRes = await sb.from('team_members').update({ status: 'active' }).eq('id', inviteId).select();
@@ -4070,7 +4121,7 @@
     };
 
     window.rejectMembershipInvite = async function(inviteId) {
-        if (!confirm('آیا از رد این دعوت عضویت اطمینان دارید؟')) return;
+        if (!(await showConfirmDialog('آیا از رد این دعوت عضویت اطمینان دارید؟', { confirmLabel: 'رد دعوت' }))) return;
         var sb = getSupabaseClient();
         var delRes = await sb.from('team_members').delete().eq('id', inviteId).select();
         if (delRes.error) return showAppAlert('خطا در رد دعوت: ' + delRes.error.message, false);
@@ -4208,7 +4259,7 @@
     // =================== پایان فاز ۵ ===================
 
     window.deleteTask = async function(taskId) {
-        if (!confirm('آیا از حذف این بسته کاری اطمینان دارید؟')) return;
+        if (!(await showConfirmDialog('آیا از حذف این بسته کاری اطمینان دارید؟', { dangerous: true, confirmLabel: 'حذف بسته کاری' }))) return;
         var sb = getSupabaseClient();
         await sb.from('tasks').delete().eq('id', taskId);
         showAppAlert('بسته کاری با موفقیت حذف شد.', true);
