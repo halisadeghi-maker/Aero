@@ -3,9 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۲۳)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۱.۱)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!--
+        ===================== سیستم طراحی مرکزی (Design Tokens) — فاز ۰ بازطراحی بصری =====================
+        این پالت با الهام از زبان طراحی Atlassian/Jira تعریف شده و در فازهای بعدی (کارت‌ها، جداول، مودال‌ها،
+        نوار کناری) به‌تدریج جایگزین رنگ‌ها و کلاس‌های فعلی خواهد شد. تعریف این بخش به‌تنهایی هیچ تغییر
+        بصری در سامانه ایجاد نمی‌کند؛ صرفاً واژگان طراحی مشترک را برای استفادهٔ آیندهٔ همهٔ بخش‌ها آماده می‌کند.
+    -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // آبی اصلی برند (دکمه‌های اصلی، لینک‌ها، تاکیدها) — معادل آبی Atlassian
+                        brand: {
+                            50:  '#DEEBFF',
+                            100: '#B3D4FF',
+                            200: '#4C9AFF',
+                            300: '#2684FF',
+                            400: '#0065FF',
+                            500: '#0052CC',
+                            600: '#0047B3',
+                            700: '#003D99',
+                            800: '#08245c',
+                            900: '#06183d'
+                        },
+                        // خاکستری خنثی برای پس‌زمینه، حاشیه و متن — معادل طیف خاکستری Atlassian
+                        neutral: {
+                            50:  '#FAFBFC',
+                            100: '#F4F5F7',
+                            200: '#EBECF0',
+                            300: '#DFE1E6',
+                            400: '#C1C7D0',
+                            500: '#A5ADBA',
+                            600: '#6B778C',
+                            700: '#42526E',
+                            800: '#253858',
+                            900: '#172B4D'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif']
+                    },
+                    borderRadius: {
+                        'app-sm': '4px',
+                        'app-md': '8px',
+                        'app-lg': '12px'
+                    }
+                }
+            }
+        };
+    </script>
     <!-- Vazirmatn Font -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Supabase JS Client -->
@@ -17,6 +67,22 @@
     <script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
 
     <style>
+        /* ===== توکن‌های طراحی سطح CSS (برای استفاده در کلاس‌های سفارشی مثل glass-card) ===== */
+        :root {
+            --app-brand-50: #DEEBFF;
+            --app-brand-500: #0052CC;
+            --app-brand-600: #0047B3;
+            --app-brand-700: #003D99;
+            --app-neutral-50: #FAFBFC;
+            --app-neutral-100: #F4F5F7;
+            --app-neutral-200: #EBECF0;
+            --app-neutral-300: #DFE1E6;
+            --app-neutral-600: #6B778C;
+            --app-neutral-900: #172B4D;
+            --app-radius-sm: 4px;
+            --app-radius-md: 8px;
+            --app-radius-lg: 12px;
+        }
         body {
             font-family: 'Vazirmatn', sans-serif;
             background-color: #f1f5f9;
@@ -192,9 +258,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۲۳) -->
+            <!-- نسخه سامانه (۳.۱.۱) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.23</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.1.1</span>
             </div>
         </section>
 
