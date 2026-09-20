@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۲۱)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۲.۳.۲۳)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Vazirmatn Font -->
@@ -192,9 +192,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۲.۳.۲۱) -->
+            <!-- نسخه سامانه (۲.۳.۲۳) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">2.3.21</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">2.3.23</span>
             </div>
         </section>
 
@@ -1496,12 +1496,17 @@
                 });
             }
 
-            await loadMasterProjects();
-            await loadBooklets();
-            await loadTasks();
-            await loadContracts();
-            await loadMyMembershipBox();
-            await loadMembershipInvites();
+            // این ۶ بارگذاری کاملاً مستقل از هم هستند (هرکدام جدول/بخش جداگانه‌ای از رابط کاربری را پر می‌کنند)
+            // و پیش‌تر پشت‌سرهم (متوالی) اجرا می‌شدند که باعث کند شدن محسوس ورود به سامانه می‌شد.
+            // اجرای موازی آن‌ها هیچ تغییری در نتیجه یا ترتیب نمایش نهایی ایجاد نمی‌کند، فقط سریع‌تر انجام می‌شود.
+            await Promise.all([
+                loadMasterProjects(),
+                loadBooklets(),
+                loadTasks(),
+                loadContracts(),
+                loadMyMembershipBox(),
+                loadMembershipInvites()
+            ]);
 
         } catch (e) {
             showError("خطا در بارگذاری داده‌ها: " + e.message);
@@ -2767,19 +2772,18 @@
             return;
         }
 
-        var rows = [];
-        for (const team of teams) {
+        var rows = await Promise.all(teams.map(async function(team) {
             var g = await calculateLeaderGrade(team.id);
             var statusLabel = team.status === 'dissolved' ? '⛔ منحل‌شده' : (team.status === 'warning' ? '⚠️ هشدار' : '✅ فعال');
 
-            rows.push('<div class="bg-white p-3 rounded-xl border border-slate-200 flex flex-wrap justify-between items-center gap-2">' +
+            return '<div class="bg-white p-3 rounded-xl border border-slate-200 flex flex-wrap justify-between items-center gap-2">' +
                 '<div><span class="font-black text-slate-800">شرکت ' + team.name + '</span> <span class="text-[10px] text-slate-400">(' + statusLabel + ')</span></div>' +
                 '<div class="text-[11px] flex flex-wrap gap-2 items-center">' +
                     '<span class="text-amber-700 font-black">' + g.totalCoins.toFixed(2) + ' سکه</span>' +
                     '<span class="font-black text-[#0f284e]">' + g.totalMark.toFixed(3) + ' نمره</span>' +
                 '</div>' +
-                '</div>');
-        }
+                '</div>';
+        }));
 
         div.innerHTML = rows.join('');
     }
@@ -2962,13 +2966,16 @@
         var myBidsByTask = {};
         var myRemainingCap = 250;
         if (userProfile.role === 'member') {
-            var myMembershipRes = await sb.from('team_members').select('team_id').eq('profile_id', currentUser.id).eq('status', 'active');
-            myFixedTeamIds = (myMembershipRes.data || []).map(function(r) { return r.team_id; });
+            var memberQueries = await Promise.all([
+                sb.from('team_members').select('team_id').eq('profile_id', currentUser.id).eq('status', 'active'),
+                sb.from('task_bids').select('task_id, proposed_coins').eq('bidder_id', currentUser.id),
+                sb.from('contracts').select('agreed_base_coins').eq('contractor_id', currentUser.id).neq('status', 'terminated')
+            ]);
+            var myMembershipRes = memberQueries[0], myBidsRes = memberQueries[1], myContractsRes = memberQueries[2];
 
-            var myBidsRes = await sb.from('task_bids').select('task_id, proposed_coins').eq('bidder_id', currentUser.id);
+            myFixedTeamIds = (myMembershipRes.data || []).map(function(r) { return r.team_id; });
             (myBidsRes.data || []).forEach(function(b) { myBidsByTask[b.task_id] = b; });
 
-            var myContractsRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', currentUser.id).neq('status', 'terminated');
             var myContractedTotal = 0;
             (myContractsRes.data || []).forEach(function(c) { myContractedTotal += parseFloat(c.agreed_base_coins || 0); });
             myRemainingCap = Math.max(0, 250 - myContractedTotal);
@@ -3089,19 +3096,24 @@
     async function calculateLeaderGrade(teamId) {
         var sb = getSupabaseClient();
 
-        var teamRes = await sb.from('teams').select('status, completion_score_zeroed, leader_id').eq('id', teamId).single();
+        var results = await Promise.all([
+            sb.from('teams').select('status, completion_score_zeroed, leader_id').eq('id', teamId).single(),
+            sb.from('booklets').select('id, nominal_coins').order('booklet_number'),
+            sb.from('tasks').select('id, booklet_id, status, allocated_nominal_coins').eq('team_id', teamId),
+            sb.from('contracts').select('id, task_id, status, agreed_base_coins, quality_percent, leader_penalty_coins').eq('team_id', teamId),
+            sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', teamId).eq('status', 'awarded').maybeSingle()
+        ]);
+        var teamRes = results[0], bookletsRes = results[1], tasksRes = results[2], contractsRes = results[3], mpRes = results[4];
+
         var team = teamRes.data || {};
         var isDissolved = team.status === 'dissolved' || !!team.completion_score_zeroed;
 
-        var bookletsRes = await sb.from('booklets').select('id, nominal_coins').order('booklet_number');
         var booklets = bookletsRes.data || [];
         var totalIntrinsicValue = booklets.reduce(function(s, b) { return s + parseFloat(b.nominal_coins || 0); }, 0);
         if (!totalIntrinsicValue) totalIntrinsicValue = 1200;
 
-        var tasksRes = await sb.from('tasks').select('id, booklet_id, status, allocated_nominal_coins').eq('team_id', teamId);
         var teamTasks = tasksRes.data || [];
 
-        var contractsRes = await sb.from('contracts').select('id, task_id, status, agreed_base_coins, quality_percent, leader_penalty_coins').eq('team_id', teamId);
         var teamContracts = contractsRes.data || [];
 
         var contractByTaskId = {};
@@ -3155,7 +3167,6 @@
 
         var completionScorePercent = (!isDissolved && allBookletsDelivered && allQualityAbove85 && booklets.length > 0) ? 25 : 0;
 
-        var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', teamId).eq('status', 'awarded').maybeSingle();
         var mainContractPrice = mpRes.data ? parseFloat(mpRes.data.allocated_coins) : 0;
 
         var actualProjectCost = teamContracts.reduce(function(s, c) {
@@ -3632,7 +3643,7 @@
             return;
         }
 
-        for (const m of res.data) {
+        var rowsHtml = await Promise.all(res.data.map(async function(m) {
             var roleTitle = m.role === 'leader' ? 'سرگروه' : 'دانشجو';
             var statsHtml = '';
 
@@ -3664,7 +3675,7 @@
                 }
             }
 
-            div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
+            return '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
                 '<div class="flex flex-col">' +
                     '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
                     '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + m.student_id + '</span>' +
@@ -3673,7 +3684,9 @@
                 '</div>' +
                 '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs cursor-pointer whitespace-nowrap">🗑️ حذف کاربر</button>' +
                 '</div>';
-        }
+        }));
+
+        div.innerHTML = rowsHtml.join('');
     }
 
     window.exportStudentsExcel = async function() {
@@ -3901,20 +3914,25 @@
 
     async function loadFreeAgentOptions(restrictedToWarningRecruitment) {
         var sb = getSupabaseClient();
-        var allMembersRes = await sb.from('profiles').select('id, full_name').eq('role', 'member').eq('is_approved', true);
-        var takenRes = await sb.from('team_members').select('profile_id').in('status', ['active', 'pending']);
+        var initialResults = await Promise.all([
+            sb.from('profiles').select('id, full_name').eq('role', 'member').eq('is_approved', true),
+            sb.from('team_members').select('profile_id').in('status', ['active', 'pending'])
+        ]);
+        var allMembersRes = initialResults[0], takenRes = initialResults[1];
         var takenIds = (takenRes.data || []).map(function(r) { return r.profile_id; });
         var select = document.getElementById('free-agent-select');
         var available = (allMembersRes.data || []).filter(function(p) { return takenIds.indexOf(p.id) === -1; });
 
         if (restrictedToWarningRecruitment) {
-            var eligible = [];
-            for (const p of available) {
-                var cRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', p.id).eq('team_id', currentTeam.id).neq('status', 'terminated');
+            var contractResults = await Promise.all(available.map(function(p) {
+                return sb.from('contracts').select('agreed_base_coins').eq('contractor_id', p.id).eq('team_id', currentTeam.id).neq('status', 'terminated');
+            }));
+            var eligible = available.filter(function(p, idx) {
+                var cRes = contractResults[idx];
                 var total = 0;
                 (cRes.data || []).forEach(function(c) { total += parseFloat(c.agreed_base_coins || 0); });
-                if (total >= 150) eligible.push(p);
-            }
+                return total >= 150;
+            });
             available = eligible;
             if (available.length === 0) {
                 select.innerHTML = '<option value="">هیچ پیمانکار واجد شرایطی (حداقل ۱۵۰ سکه سابقه قرارداد با این شرکت) یافت نشد</option>';
@@ -4210,16 +4228,20 @@
         var members = membersRes.data || [];
         if (members.length === 0) return { ready: false, progress: [] };
 
+        var contractResults = await Promise.all(members.map(function(m) {
+            return sb.from('contracts').select('agreed_base_coins').eq('contractor_id', m.profile_id).neq('status', 'terminated');
+        }));
+
         var progress = [];
         var allReached = true;
-        for (const m of members) {
-            var cRes = await sb.from('contracts').select('agreed_base_coins').eq('contractor_id', m.profile_id).neq('status', 'terminated');
+        members.forEach(function(m, idx) {
+            var cRes = contractResults[idx];
             var total = 0;
             (cRes.data || []).forEach(function(c) { total += parseFloat(c.agreed_base_coins || 0); });
             var reached = total >= 150;
             if (!reached) allReached = false;
             progress.push({ name: m.profiles ? m.profiles.full_name : 'نامشخص', total: total, reached: reached });
-        }
+        });
 
         if (allReached) {
             var openRes = await sb.from('tasks').select('id').eq('team_id', teamId).eq('status', 'open').eq('market_phase', 'internal');
