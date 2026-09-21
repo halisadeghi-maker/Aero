@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۱.۱)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۱.۴)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!--
@@ -98,11 +98,9 @@
             background-attachment: fixed;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.90);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.07);
+            background: #FFFFFF;
+            border: 1px solid var(--app-neutral-300);
+            box-shadow: 0 1px 2px rgba(23, 43, 77, 0.08);
         }
         .kpi-card {
             position: relative;
@@ -152,7 +150,7 @@
             </div>
         </div>
         <div id="user-nav" class="flex items-center space-x-3 space-x-reverse">
-            <button onclick="openChangePasswordModal()" type="button" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-xl border border-slate-300 font-bold transition shadow-2xs">🔑 تغییر رمز</button>
+            <button onclick="openChangePasswordModal()" type="button" class="text-xs bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-3.5 py-1.5 rounded-xl border border-slate-300 font-bold transition shadow-2xs">🔑 تغییر رمز</button>
             <span id="nav-user-info" class="text-xs md:text-sm bg-emerald-50 text-emerald-900 px-4 py-1.5 rounded-full border border-emerald-200 font-bold shadow-2xs"></span>
             <button id="logout-btn" type="button" class="text-xs md:text-sm text-rose-700 hover:text-white font-bold bg-rose-50 hover:bg-rose-600 px-3.5 py-1.5 rounded-xl border border-rose-200 transition shadow-2xs">خروج</button>
         </div>
@@ -165,13 +163,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                 
                 <!-- کارت ۱: برندینگ -->
-                <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#fbbf24] to-[#d97706] border-2 border-amber-200">
+                <div class="interactive-card rounded-xl p-8 md:p-10 shadow-2xl flex flex-col justify-between text-slate-950 relative overflow-hidden bg-gradient-to-br from-[#f59e0b] via-[#fbbf24] to-[#d97706] border-2 border-amber-200">
                     <div class="absolute -top-20 -left-20 w-64 h-64 bg-white/30 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-yellow-200/30 rounded-full blur-3xl pointer-events-none"></div>
 
                     <div class="relative z-10 space-y-6">
                         <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 sm:space-x-reverse text-center sm:text-right">
-                            <div class="p-3 bg-white/95 rounded-3xl shadow-xl inline-block border-2 border-amber-300">
+                            <div class="p-3 bg-white/95 rounded-xl shadow-xl inline-block border-2 border-amber-300">
                                 <img src="kntu-logo.png" alt="لوگو دانشگاه" class="w-32 h-32 object-contain" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/e/e5/K._N._Toosi_University_of_Technology_logo.png';">
                             </div>
                             <div class="pt-2">
@@ -202,7 +200,7 @@
                 </div>
 
                 <!-- کارت ۲: ورود / ثبت‌نام -->
-                <div class="interactive-card rounded-3xl p-8 md:p-10 shadow-2xl border-2 border-teal-300 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#0d9488] via-[#14b8a6] to-[#0f766e] text-white">
+                <div class="interactive-card rounded-xl p-8 md:p-10 shadow-2xl border-2 border-teal-300 flex flex-col justify-center relative overflow-hidden bg-gradient-to-br from-[#0d9488] via-[#14b8a6] to-[#0f766e] text-white">
                     <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-300/20 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-200/20 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -258,9 +256,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۳.۱.۱) -->
+            <!-- نسخه سامانه (۳.۱.۴) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.1.1</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.1.4</span>
             </div>
         </section>
 
@@ -269,27 +267,27 @@
 
             <!-- کارت‌های KPI -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
+                <div class="glass-card kpi-card p-5 rounded-xl flex items-center justify-between">
                     <div>
                         <span class="text-slate-500 text-xs font-bold">نقش شما در سامانه</span>
-                        <h3 id="stat-role" class="text-base font-black text-[#0f284e] mt-1">-</h3>
+                        <h3 id="stat-role" class="text-base font-black text-neutral-900 mt-1">-</h3>
                     </div>
                     <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center font-black text-xl shadow-inner">👤</div>
                 </div>
 
-                <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
+                <div class="glass-card kpi-card p-5 rounded-xl flex items-center justify-between">
                     <div>
                         <span class="text-slate-500 text-xs font-bold">شرکت طراحی هواپیما</span>
-                        <h3 id="stat-team" class="text-base font-black text-[#0f284e] mt-1">-</h3>
+                        <h3 id="stat-team" class="text-base font-black text-neutral-900 mt-1">-</h3>
                     </div>
                     <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 border border-sky-200 flex items-center justify-center font-black text-xl shadow-inner">🛡️</div>
                 </div>
 
-                <div class="glass-card kpi-card p-5 rounded-3xl flex items-center justify-between">
+                <div class="glass-card kpi-card p-5 rounded-xl flex items-center justify-between">
                     <div>
                         <span id="stat-contracts-title" class="text-slate-500 text-xs font-bold">قراردادهای من</span>
                         <div id="stat-contracts-container" class="mt-1">
-                            <h3 id="stat-contracts" class="text-lg font-black text-[#0f284e]">۰</h3>
+                            <h3 id="stat-contracts" class="text-lg font-black text-neutral-900">۰</h3>
                         </div>
                     </div>
                     <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center font-black text-xl shadow-inner">📝</div>
@@ -297,7 +295,7 @@
             </div>
 
             <!-- مناقصات پروژه‌های اصلی استاد -->
-            <section class="glass-card p-6 rounded-3xl shadow-sm border border-amber-300/70 bg-gradient-to-r from-amber-50/60 via-white/80 to-amber-50/40 space-y-4">
+            <section class="glass-card p-6 rounded-xl shadow-sm border border-amber-300/70 bg-gradient-to-r from-amber-50/60 via-white/80 to-amber-50/40 space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-2 border-b border-amber-200/70">
                     <div>
                         <h3 class="text-base font-black text-amber-900 flex items-center gap-2">
@@ -314,10 +312,10 @@
             </section>
 
             <!-- نمودار دوناتی پایش بودجه سرگروه -->
-            <section id="leader-budget-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200">
+            <section id="leader-budget-panel" class="hidden glass-card p-6 rounded-xl shadow-sm border-slate-200">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="space-y-2 text-right">
-                        <h3 class="text-sm font-black text-[#0f284e] flex items-center gap-2">
+                        <h3 class="text-sm font-black text-neutral-900 flex items-center gap-2">
                             <span>📊</span> نمودار مصرف بودجه تخصیص‌یافته از قرارداد اصلی سرگروه
                         </h3>
                         <p class="text-xs text-slate-500 max-w-xl">
@@ -330,7 +328,7 @@
                             </span>
                             <span class="flex items-center gap-2 bg-indigo-50/80 px-3 py-1.5 rounded-xl border border-indigo-100">
                                 <span class="w-3.5 h-3.5 rounded-full bg-[#0f284e]"></span>
-                                بودجه کل: <span id="donut-total-text" class="text-[#0f284e] font-black">۰</span> سکه
+                                بودجه کل: <span id="donut-total-text" class="text-neutral-900 font-black">۰</span> سکه
                             </span>
                             <span class="flex items-center gap-2 bg-red-50/80 px-3 py-1.5 rounded-xl border border-red-100">
                                 <span class="w-3.5 h-3.5 rounded-full bg-red-600"></span>
@@ -353,7 +351,7 @@
                             <circle id="donut-circle-spent" cx="50" cy="50" r="38" stroke="#0f284e" stroke-width="14" fill="transparent" stroke-dasharray="238.76" stroke-dashoffset="238.76" stroke-linecap="round" class="transition-all duration-700"/>
                         </svg>
                         <div class="absolute text-center">
-                            <span id="donut-center-percent" class="text-sm font-black text-[#0f284e] block">۰٪</span>
+                            <span id="donut-center-percent" class="text-sm font-black text-neutral-900 block">۰٪</span>
                             <span class="text-[9px] text-slate-400 font-bold">مصرف بودجه</span>
                         </div>
                     </div>
@@ -361,16 +359,16 @@
             </section>
 
             <!-- نمره نهایی سرگروه -->
-            <section id="leader-grade-box" class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-3 hidden">
-                <h3 class="text-sm font-black text-[#0f284e] flex items-center gap-2"><span>🎓</span> نمرهٔ نهایی سرگروه (برآورد لحظه‌ای)</h3>
-                <div class="bg-[#0f284e] rounded-2xl p-4 grid grid-cols-2 gap-3 text-center">
+            <section id="leader-grade-box" class="glass-card p-6 rounded-xl shadow-sm border-slate-200 space-y-3 hidden">
+                <h3 class="text-sm font-black text-neutral-900 flex items-center gap-2"><span>🎓</span> نمرهٔ نهایی سرگروه (برآورد لحظه‌ای)</h3>
+                <div class="bg-brand-500 rounded-2xl p-4 grid grid-cols-2 gap-3 text-center">
                     <div>
                         <span class="text-[10px] text-amber-200 font-bold block mb-1">سکهٔ سرگروه</span>
-                        <span id="grade-total-coins" class="text-2xl font-black text-amber-300">۰ سکه</span>
+                        <span id="grade-total-coins" class="text-2xl font-black text-white">۰ سکه</span>
                     </div>
                     <div>
                         <span class="text-[10px] text-amber-200 font-bold block mb-1">نمرهٔ درس</span>
-                        <span id="grade-total-mark" class="text-2xl font-black text-amber-300">۰</span>
+                        <span id="grade-total-mark" class="text-2xl font-black text-white">۰</span>
                     </div>
                 </div>
                 <button onclick="document.getElementById('grade-details-box').classList.toggle('hidden')" type="button" class="w-full text-[11px] text-slate-500 hover:text-slate-700 font-bold text-center cursor-pointer transition">جزئیات و اطلاعات بیشتر ▾</button>
@@ -395,10 +393,10 @@
             </section>
 
             <!-- کیف سکه دانشجو (پیمانکار) -->
-            <section id="member-tank-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
+            <section id="member-tank-panel" class="hidden glass-card p-6 rounded-xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
+                        <h3 class="text-base font-black text-neutral-900 flex items-center gap-2">
                             <span>👛</span> کیف سکه دانشجو (حداقل مجاز: ۱۵۰ سکه | هدف نمره کامل: ۲۰۰ سکه | سقف مجاز مطلق: ۲۵۰ سکه)
                         </h3>
                         <p class="text-xs text-slate-500 mt-1">سامانه به صورت خودکار از عقد هرگونه قرارداد مازاد بر سقف ۲۵۰ سکه برای پیمانکاران ممانعت به عمل می‌آورد.</p>
@@ -454,16 +452,16 @@
                 <div id="my-membership-box" class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
                     <div class="text-xs text-slate-700">
                         <span class="font-bold">🏢 وضعیت عضویت ثابت شما: </span>
-                        <span id="my-membership-text" class="font-black text-[#0f284e]"></span>
+                        <span id="my-membership-text" class="font-black text-neutral-900"></span>
                     </div>
                     <button id="exit-fixed-membership-btn" type="button" class="hidden bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold px-4 py-2 rounded-xl transition cursor-pointer whitespace-nowrap">خروج از عضویت ثابت شرکت</button>
                 </div>
             </section>
 
             <!-- پنل ویژه مدیریت استاد -->
-            <section id="professor-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-6 border border-indigo-200">
+            <section id="professor-panel" class="hidden glass-card p-6 rounded-xl shadow-sm space-y-6 border border-indigo-200">
                 <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
-                    <h3 class="text-base font-black text-[#0f284e] flex items-center gap-2">
+                    <h3 class="text-base font-black text-neutral-900 flex items-center gap-2">
                         <span>🎓</span> میز کارفرمایی و نظارت عالیه استاد درس
                     </h3>
                     <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-bold border border-indigo-200">دسترسی رگولاتور ارشد</span>
@@ -498,7 +496,7 @@
                             <input type="file" id="rfp-file" class="w-full bg-white border border-slate-300 rounded-xl p-1.5 text-xs">
                         </div>
                         <div class="md:col-span-2 flex items-end">
-                            <button onclick="createMasterProject()" type="button" class="w-full bg-gradient-to-r from-[#0f284e] to-[#1e3a8a] hover:from-[#0a1b35] hover:to-[#172554] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition">انتشار مناقصه پروژه اصلی با کارت طلایی</button>
+                            <button onclick="createMasterProject()" type="button" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition">انتشار مناقصه پروژه اصلی با کارت طلایی</button>
                         </div>
                     </div>
                 </div>
@@ -562,20 +560,20 @@
             </section>
 
             <!-- پنل سرگروه -->
-            <section id="leader-panel" class="hidden glass-card p-6 rounded-3xl shadow-sm space-y-4 border-slate-200">
+            <section id="leader-panel" class="hidden glass-card p-6 rounded-xl shadow-sm space-y-4 border-slate-200">
                 <div id="prior-dissolution-notice" class="hidden pb-4 border-b border-slate-200 text-[11px] text-rose-800 bg-rose-50 border border-rose-300 rounded-2xl p-3 font-bold leading-relaxed"></div>
                 <div id="create-team-box" class="pb-4 border-b border-slate-200 hidden">
                     <h3 class="text-sm font-bold text-amber-800 mb-2">ثبت نام شرکت طراحی هواپیما</h3>
                     <div class="flex space-x-2 space-x-reverse">
-                        <input type="text" id="team-name-input" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs w-80 text-slate-800" placeholder="نام شرکت (مثلاً: شرکت ققنوس)">
-                        <button id="register-team-btn" type="button" class="bg-[#0f284e] hover:bg-[#193a6b] text-white px-4 rounded-xl text-xs font-bold transition cursor-pointer shadow-sm">ثبت شرکت</button>
+                        <input type="text" id="team-name-input" class="bg-neutral-50 border border-neutral-300 rounded-lg px-4 py-2 text-xs w-80 text-slate-800" placeholder="نام شرکت (مثلاً: شرکت ققنوس)">
+                        <button id="register-team-btn" type="button" class="bg-brand-500 hover:bg-brand-600 text-white px-4 rounded-xl text-xs font-bold transition cursor-pointer shadow-sm">ثبت شرکت</button>
                     </div>
                 </div>
 
                 <!-- تشکیل شرکت: روستر اعضای ثابت (حداقل ۳، حداکثر ۶ نفر) -->
                 <div id="company-roster-box" class="pb-4 border-b border-slate-200 hidden">
                     <button type="button" onclick="toggleAccordion('acc-roster')" class="w-full flex justify-between items-center mb-2 cursor-pointer">
-                        <h3 class="text-sm font-black text-[#0f284e] flex items-center gap-2"><span>🏢</span> تشکیل شرکت (اعضای ثابت) <span id="acc-roster-chevron" class="text-slate-400 transition-transform duration-200 text-xs">▾</span></h3>
+                        <h3 class="text-sm font-black text-neutral-900 flex items-center gap-2"><span>🏢</span> تشکیل شرکت (اعضای ثابت) <span id="acc-roster-chevron" class="text-slate-400 transition-transform duration-200 text-xs">▾</span></h3>
                         <span id="company-status-badge" class="text-[10px] font-black px-2.5 py-1 rounded-full border">در حال محاسبه...</span>
                     </button>
                     <div id="acc-roster-content" class="hidden">
@@ -584,7 +582,7 @@
                     <div id="warning-deadline-banner" class="hidden text-[11px] text-rose-800 bg-rose-50 border border-rose-300 rounded-xl p-2.5 font-bold text-center mb-3 leading-relaxed"></div>
 
                     <div id="roster-add-controls" class="flex gap-2 mb-3">
-                        <select id="free-agent-select" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <select id="free-agent-select" class="flex-1 bg-neutral-50 border border-neutral-300 rounded-lg px-3 py-2 text-xs text-slate-800">
                             <option value="">در حال بارگذاری پیمانکاران آزاد...</option>
                         </select>
                         <button id="add-fixed-member-btn" type="button" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 rounded-xl text-xs font-bold transition cursor-pointer shadow-sm whitespace-nowrap">➕ افزودن</button>
@@ -592,7 +590,7 @@
 
                     <div id="roster-list" class="space-y-1.5 mb-3"></div>
 
-                    <button id="finalize-company-btn" type="button" class="hidden w-full bg-gradient-to-r from-[#0f284e] to-[#1e3a8a] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">✅ قطعی‌سازی ترکیب شرکت و ورود به مناقصه اصلی</button>
+                    <button id="finalize-company-btn" type="button" class="hidden w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">✅ قطعی‌سازی ترکیب شرکت و ورود به مناقصه اصلی</button>
                     <div id="company-active-note" class="hidden text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 font-bold text-center">✅ ترکیب شرکت قطعی شده و اکنون می‌توانید در مناقصه اصلی شرکت کنید.</div>
 
                     <div id="free-market-status" class="hidden mt-3 pt-3 border-t border-slate-200"></div>
@@ -600,28 +598,28 @@
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <h3 class="text-sm font-black text-[#0f284e]">➕ تعریف بسته کاری جدید در سقف بودجه مصوب قرارداد اصلی</h3>
+                    <h3 class="text-sm font-black text-neutral-900">➕ تعریف بسته کاری جدید در سقف بودجه مصوب قرارداد اصلی</h3>
                     <span id="team-budget-badge" class="text-xs font-black text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">بودجه مصوب: در حال محاسبه</span>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">کتابچه</label>
-                        <select id="task-booklet-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800"></select>
+                        <select id="task-booklet-select" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800"></select>
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs font-bold text-slate-600 mb-1">عنوان و شرح بسته کاری</label>
-                        <input type="text" id="task-title-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="مثلاً: استخراج قطبی پسا و CLmax بر اساس روش روزکام">
+                        <input type="text" id="task-title-input" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800" placeholder="مثلاً: استخراج قطبی پسا و CLmax بر اساس روش روزکام">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">قیمت پیشنهادی قرارداد این بسته کاری (سکه)</label>
                         <div class="flex space-x-2 space-x-reverse">
-                            <input type="number" id="task-coins-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800" placeholder="سکه">
-                            <button id="create-task-btn" type="button" class="bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 px-4 rounded-xl text-xs font-bold shadow-md transition cursor-pointer">ایجاد</button>
+                            <input type="number" id="task-coins-input" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800" placeholder="سکه">
+                            <button id="create-task-btn" type="button" class="bg-brand-500 hover:bg-brand-600 text-white px-4 rounded-xl text-xs font-bold shadow-md transition cursor-pointer">ایجاد</button>
                         </div>
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-xs font-bold text-slate-600 mb-1">مهلت مناقصهٔ داخلی (فقط اعضای ثابت شرکت شما تا این تاریخ می‌توانند پیشنهاد بدهند)</label>
-                        <input type="text" id="task-deadline-shamsi" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۰۶/۱۵ ۱۴:۰۰" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-800 cursor-pointer" readonly>
+                        <input type="text" id="task-deadline-shamsi" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۰۶/۱۵ ۱۴:۰۰" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs font-bold text-slate-800 cursor-pointer" readonly>
                         <span class="text-[10px] text-slate-400 block mt-0.5">خالی بگذارید تا مهلت پیش‌فرض (۳ روز از الان) اعمال شود.</span>
                     </div>
                     <div id="booklet-real-value-note" class="md:col-span-4 text-[11px] text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-1.5 font-bold hidden"></div>
@@ -629,9 +627,9 @@
             </section>
 
             <!-- بازار بسته‌های کاری باز -->
-            <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
+            <section class="glass-card p-6 rounded-xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
-                    <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
+                    <h3 class="text-sm md:text-base font-black text-neutral-900 flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500 ml-2 animate-pulse"></span>
                         📋 بازار بسته‌های کاری باز و نیازمند پیمانکار
                     </h3>
@@ -643,32 +641,32 @@
             </section>
 
             <!-- قراردادهای هوشمند -->
-            <section class="glass-card p-6 rounded-3xl shadow-sm border-slate-200 space-y-4">
+            <section class="glass-card p-6 rounded-xl shadow-sm border-slate-200 space-y-4">
                 <div class="flex justify-between items-center pb-2 border-b border-slate-200">
-                    <h3 class="text-sm md:text-base font-black text-[#0f284e] flex items-center">
+                    <h3 class="text-sm md:text-base font-black text-neutral-900 flex items-center">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ml-2"></span>
                         📜 قراردادهای هوشمند و نظارت عالیه (جهت مشاهده جدول تفکیکی لاگ‌ها، روی نام کتابچه کلیک کنید)
                     </h3>
                     <span id="contracts-filter-info" class="text-xs text-slate-500 font-medium">دسترسی کامل به تاریخچه مکاتبات و مستندات</span>
                 </div>
 
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto rounded-lg border border-neutral-300">
                     <table class="w-full text-right text-xs">
-                        <thead class="bg-slate-100/90 text-slate-700 border-b border-slate-200">
+                        <thead class="bg-neutral-100 text-neutral-600 border-b border-neutral-300">
                             <tr>
-                                <th class="p-3 font-bold">#</th>
-                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('booklet')">کتابچه (مشاهده لاگ جدول 🔍) <span id="sort-arrow-booklet"></span></th>
-                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('team')">شرکت <span id="sort-arrow-team"></span></th>
-                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('task')">بسته کاری <span id="sort-arrow-task"></span></th>
-                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('contractor')">پیمانکار <span id="sort-arrow-contractor"></span></th>
-                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('value')">ارزش قرارداد <span id="sort-arrow-value"></span></th>
-                                <th class="p-3 font-bold">پیام جدید</th>
-                                <th class="p-3 font-bold cursor-pointer select-none hover:bg-slate-200/70 transition" onclick="sortContractsTable('status')">وضعیت قرارداد <span id="sort-arrow-status"></span></th>
-                                <th class="p-3 font-bold">عملیات نظارت، ارزیابی و قضاوت</th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide">#</th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide cursor-pointer select-none hover:bg-neutral-200 transition" onclick="sortContractsTable('booklet')">کتابچه (مشاهده لاگ جدول 🔍) <span id="sort-arrow-booklet"></span></th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide cursor-pointer select-none hover:bg-neutral-200 transition" onclick="sortContractsTable('team')">شرکت <span id="sort-arrow-team"></span></th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide cursor-pointer select-none hover:bg-neutral-200 transition" onclick="sortContractsTable('task')">بسته کاری <span id="sort-arrow-task"></span></th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide cursor-pointer select-none hover:bg-neutral-200 transition" onclick="sortContractsTable('contractor')">پیمانکار <span id="sort-arrow-contractor"></span></th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide cursor-pointer select-none hover:bg-neutral-200 transition" onclick="sortContractsTable('value')">ارزش قرارداد <span id="sort-arrow-value"></span></th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide">پیام جدید</th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide cursor-pointer select-none hover:bg-neutral-200 transition" onclick="sortContractsTable('status')">وضعیت قرارداد <span id="sort-arrow-status"></span></th>
+                                <th class="p-3 font-bold text-[11px] tracking-wide">عملیات نظارت، ارزیابی و قضاوت</th>
                             </tr>
                         </thead>
-                        <tbody id="contracts-table-body" class="divide-y divide-slate-100">
-                            <tr><td colspan="9" class="p-6 text-center text-slate-400">قراردادی ثبت نشده است.</td></tr>
+                        <tbody id="contracts-table-body" class="divide-y divide-neutral-200">
+                            <tr><td colspan="9" class="p-6 text-center text-neutral-500">قراردادی ثبت نشده است.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -685,7 +683,7 @@
 
     <!-- مدال جذاب هشدار فسخ یک‌طرفه -->
     <div id="dispute-warning-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+        <div class="bg-white border border-amber-300 max-w-md w-full rounded-xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">⚠️</div>
             <div>
                 <h4 class="text-base font-black text-amber-900">هشدار قوانین داوری و فسخ یک‌طرفه</h4>
@@ -695,14 +693,14 @@
             </div>
             <div class="flex gap-2 pt-2">
                 <button id="confirm-dispute-warning-btn" type="button" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ادامه و ثبت ادله فسخ</button>
-                <button onclick="closeDisputeWarningModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button onclick="closeDisputeWarningModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال جذاب داوری فسخ یک‌طرفه توسط استاد با تعیین درصد قصور -->
     <div id="professor-dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-rose-300 max-w-lg w-full rounded-3xl p-6 shadow-2xl space-y-4">
+        <div class="bg-white border border-rose-300 max-w-lg w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                 <h4 class="text-sm font-black text-rose-900">⚖️ داوری و تعیین درصد قصور فسخ یک‌طرفه</h4>
                 <button onclick="closeProfessorDisputeModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
@@ -742,15 +740,15 @@
                 </div>
             </div>
             <div class="flex gap-2 pt-2">
-                <button id="confirm-prof-dispute-btn" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت و اعمال تصمیم داوری</button>
-                <button onclick="closeProfessorDisputeModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button id="confirm-prof-dispute-btn" type="button" class="w-1/2 bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت و اعمال تصمیم داوری</button>
+                <button onclick="closeProfessorDisputeModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال ارزیابی نهایی و امتیازدهی استاد -->
     <div id="professor-award-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-indigo-300 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+        <div class="bg-white border border-brand-200 max-w-md w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                 <h4 class="text-sm font-black text-indigo-900 flex items-center gap-2"><span>🎓</span> ارزیابی نهایی و امتیازدهی استاد</h4>
                 <button onclick="closeProfessorAwardModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
@@ -770,18 +768,18 @@
                 <span id="prof-award-grade-preview" class="text-[11px] text-emerald-600 font-bold block">معادل ۰ نمره (هر سکه = ۰٫۰۵ نمره)</span>
             </div>
             <div class="flex gap-2 pt-2">
-                <button id="confirm-prof-award-btn" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">✅ ثبت نهایی امتیاز</button>
-                <button onclick="closeProfessorAwardModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button id="confirm-prof-award-btn" type="button" class="w-1/2 bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">✅ ثبت نهایی امتیاز</button>
+                <button onclick="closeProfessorAwardModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال تاریخچه و لاگ جدول‌بندی شده قرارداد -->
     <div id="contract-history-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-indigo-200 max-w-4xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+        <div class="bg-white border border-brand-200 max-w-4xl w-full rounded-xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-3">
                 <div>
-                    <h4 class="text-sm font-black text-[#0f284e]">📜 لاگ جامع و جدول‌بندی شده مکاتبات، فایل‌ها و رویدادهای قرارداد</h4>
+                    <h4 class="text-sm font-black text-neutral-900">📜 لاگ جامع و جدول‌بندی شده مکاتبات، فایل‌ها و رویدادهای قرارداد</h4>
                     <p id="history-modal-subtitle" class="text-[11px] text-slate-500 mt-0.5"></p>
                 </div>
                 <button onclick="closeContractHistoryModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
@@ -805,13 +803,13 @@
                 </table>
             </div>
 
-            <button onclick="closeContractHistoryModal()" type="button" class="w-full bg-[#0f284e] text-amber-300 font-bold py-2.5 rounded-xl text-xs mt-2 cursor-pointer">بستن پنجره لاگ</button>
+            <button onclick="closeContractHistoryModal()" type="button" class="w-full bg-brand-500 text-white font-bold py-2.5 rounded-xl text-xs mt-2 cursor-pointer">بستن پنجره لاگ</button>
         </div>
     </div>
 
     <!-- مدال ادله فسخ یک‌طرفه -->
     <div id="dispute-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-rose-300 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+        <div class="bg-white border border-rose-300 max-w-md w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                 <h4 class="text-sm font-black text-rose-800">⚖️ ثبت ادله فسخ یک‌طرفه جهت ارجاع به استاد درس</h4>
                 <button onclick="closeDisputeModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
@@ -820,14 +818,14 @@
             <textarea id="dispute-reason-input" rows="4" placeholder="دلایل و مستندات عدم انجام تعهدات..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs"></textarea>
             <div class="flex gap-2">
                 <button id="confirm-dispute-btn" type="button" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ارسال درخواست فسخ</button>
-                <button onclick="closeDisputeModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button onclick="closeDisputeModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال رد گزارش توسط سرگروه -->
     <div id="leader-reject-report-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-rose-300 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+        <div class="bg-white border border-rose-300 max-w-md w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                 <h4 class="text-sm font-black text-rose-800">❌ ثبت دلیل و پیام رد گزارش توسط سرگروه</h4>
                 <button onclick="closeLeaderRejectModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
@@ -836,16 +834,16 @@
             <textarea id="leader-reject-reason-input" rows="5" placeholder="دلیل رد گزارش..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs"></textarea>
             <div class="flex gap-2">
                 <button id="confirm-leader-reject-btn" type="button" class="w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت و ارسال به پیمانکار</button>
-                <button onclick="closeLeaderRejectModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button onclick="closeLeaderRejectModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال تغییر رمز عبور -->
     <div id="password-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-slate-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
+        <div class="bg-white border border-neutral-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
-                <h4 class="text-sm font-black text-[#0f284e]">🔑 تغییر رمز عبور کاربری</h4>
+                <h4 class="text-sm font-black text-neutral-900">🔑 تغییر رمز عبور کاربری</h4>
                 <button onclick="closePasswordModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
             <div>
@@ -853,17 +851,17 @@
                 <input type="password" id="new-password-input" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs">
             </div>
             <div class="flex gap-2">
-                <button onclick="submitChangePassword()" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت تغییر</button>
-                <button onclick="closePasswordModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button onclick="submitChangePassword()" type="button" class="w-1/2 bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت تغییر</button>
+                <button onclick="closePasswordModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال فراموشی رمز عبور: ارسال لینک بازیابی به ایمیل -->
     <div id="forgot-password-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-slate-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
+        <div class="bg-white border border-neutral-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
-                <h4 class="text-sm font-black text-[#0f284e]">🔓 بازیابی رمز عبور</h4>
+                <h4 class="text-sm font-black text-neutral-900">🔓 بازیابی رمز عبور</h4>
                 <button onclick="closeForgotPasswordModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
             <p class="text-[11px] text-slate-500 leading-relaxed">ایمیلی که با آن ثبت‌نام کرده‌اید را وارد کنید؛ لینک بازیابی رمز عبور به آن ارسال می‌شود.</p>
@@ -873,63 +871,63 @@
             </div>
             <div id="forgot-password-status" class="hidden text-[11px] font-bold p-2 rounded-lg"></div>
             <div class="flex gap-2">
-                <button id="send-reset-link-btn" onclick="submitForgotPassword()" type="button" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ارسال لینک بازیابی</button>
-                <button onclick="closeForgotPasswordModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button id="send-reset-link-btn" onclick="submitForgotPassword()" type="button" class="w-1/2 bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ارسال لینک بازیابی</button>
+                <button onclick="closeForgotPasswordModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال تعیین رمز عبور جدید (بعد از کلیک روی لینک ایمیل بازیابی) -->
     <div id="set-new-password-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-slate-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4">
+        <div class="bg-white border border-neutral-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex items-center gap-2 border-b border-slate-200 pb-2">
-                <h4 class="text-sm font-black text-[#0f284e]">🔑 تعیین رمز عبور جدید</h4>
+                <h4 class="text-sm font-black text-neutral-900">🔑 تعیین رمز عبور جدید</h4>
             </div>
             <p class="text-[11px] text-slate-500 leading-relaxed">هویت شما از طریق لینک ایمیل تایید شد. رمز عبور جدید خود را وارد کنید.</p>
             <div>
                 <label class="block text-xs font-bold text-slate-600 mb-1">رمز عبور جدید (حداقل ۶ کاراکتر)</label>
                 <input type="password" id="recovery-new-password" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs">
             </div>
-            <button onclick="submitSetNewPassword()" type="button" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت رمز عبور جدید و ورود</button>
+            <button onclick="submitSetNewPassword()" type="button" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">ثبت رمز عبور جدید و ورود</button>
         </div>
     </div>
 
     <!-- مدال هشدار تکراری بودن کتابچه -->
     <div id="duplicate-booklet-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+        <div class="bg-white border border-amber-300 max-w-md w-full rounded-xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">⚠️</div>
             <div>
-                <h4 class="text-base font-black text-[#0f284e]">اخطار تکرار کتابچه</h4>
+                <h4 class="text-base font-black text-neutral-900">اخطار تکرار کتابچه</h4>
                 <p id="duplicate-modal-text" class="text-xs text-slate-700 font-bold mt-2 leading-relaxed whitespace-pre-line"></p>
             </div>
             <div class="flex gap-2 pt-2">
                 <button id="duplicate-yes-btn" type="button" class="w-1/2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">بله، اطمینان دارم</button>
-                <button onclick="closeDuplicateModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button onclick="closeDuplicateModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال تایید قطعی پیشنهاد مناقصه -->
     <div id="bid-confirm-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-amber-400 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+        <div class="bg-white border border-amber-300 max-w-md w-full rounded-xl p-6 shadow-2xl space-y-4 text-center">
             <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200">👨‍🏫</div>
             <div>
-                <h4 class="text-base font-black text-[#0f284e]">استاد درس</h4>
+                <h4 class="text-base font-black text-neutral-900">استاد درس</h4>
                 <p id="bid-confirm-text" class="text-xs text-slate-700 font-bold mt-2 leading-relaxed whitespace-pre-line"></p>
             </div>
             <div class="flex gap-2 pt-2">
                 <button id="bid-confirm-yes-btn" type="button" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">بله، تایید و ثبت نهایی</button>
-                <button onclick="closeBidConfirmModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف و بازبینی</button>
+                <button onclick="closeBidConfirmModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف و بازبینی</button>
             </div>
         </div>
     </div>
 
     <!-- مدال بررسی پیشنهادهای مناقصه توسط استاد -->
     <div id="professor-bids-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-indigo-200 max-w-2xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+        <div class="bg-white border border-brand-200 max-w-2xl w-full rounded-xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                 <div>
-                    <h4 class="text-sm font-black text-[#0f284e]">📋 بررسی پیشنهادهای مناقصه و عقد قرارداد با سرگروه منتخب</h4>
+                    <h4 class="text-sm font-black text-neutral-900">📋 بررسی پیشنهادهای مناقصه و عقد قرارداد با سرگروه منتخب</h4>
                     <p id="prof-bids-modal-subtitle" class="text-[11px] text-slate-500 mt-0.5"></p>
                 </div>
                 <button onclick="closeProfessorBidsModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
@@ -951,15 +949,15 @@
             </div>
 
             <div class="flex gap-2 pt-2">
-                <button id="prof-award-bid-btn" type="button" class="w-2/3 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">تایید تیک انتخابی و تخصیص بودجه به این شرکت</button>
-                <button onclick="closeProfessorBidsModal()" type="button" class="w-1/3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button id="prof-award-bid-btn" type="button" class="w-2/3 bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">تایید تیک انتخابی و تخصیص بودجه به این شرکت</button>
+                <button onclick="closeProfessorBidsModal()" type="button" class="w-1/3 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال بررسی و انتخاب پیشنهادهای مناقصه داخلی -->
     <div id="internal-bids-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-indigo-300 max-w-lg w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
+        <div class="bg-white border border-brand-200 max-w-lg w-full rounded-xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                 <h4 class="text-sm font-black text-indigo-900 flex items-center gap-2"><span>📥</span> پیشنهادهای مناقصه داخلی</h4>
                 <button onclick="closeInternalBidsModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
@@ -972,16 +970,16 @@
 
     <!-- مدال قبول بسته کاری -->
     <div id="accept-task-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-emerald-300 max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4">
+        <div class="bg-white border border-emerald-300 max-w-md w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
-                <h4 class="text-sm font-black text-[#0f284e]">📝 امضا و ارسال پیشنهاد همکاری به کارفرما</h4>
+                <h4 class="text-sm font-black text-neutral-900">📝 امضا و ارسال پیشنهاد همکاری به کارفرما</h4>
                 <button onclick="closeAcceptModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
             <p class="text-xs text-slate-500">قیمت پیشنهادی و شرایط خاص خود (حداکثر ۲۰۰ کلمه) را ثبت کنید.</p>
             
             <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">قیمت پیشنهادی شما (سکه)</label>
-                <input type="number" id="contractor-bid-coins-input" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-black text-amber-800 focus:ring-2 focus:ring-amber-500" placeholder="مبلغ پیشنهادی به سکه">
+                <input type="number" id="contractor-bid-coins-input" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs font-black text-amber-800 focus:ring-2 focus:ring-brand-400" placeholder="مبلغ پیشنهادی به سکه">
                 <span class="text-[10px] text-slate-400 block mt-0.5">سقف کل قراردادهای دانشجو حداکثر ۲۵۰ سکه می‌باشد.</span>
             </div>
 
@@ -992,16 +990,16 @@
 
             <div class="flex gap-2">
                 <button id="confirm-accept-btn" type="button" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">امضا و ارسال به کارفرما</button>
-                <button onclick="closeAcceptModal()" type="button" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button onclick="closeAcceptModal()" type="button" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
 
     <!-- مدال قوانین و مقررات -->
     <div id="terms-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div class="bg-white border-2 border-slate-300 max-w-xl w-full rounded-3xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
+        <div class="bg-white border border-neutral-300 max-w-xl w-full rounded-xl p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
-                <h4 class="text-sm font-black text-[#0f284e]">📜 قوانین، مقررات و راهنمای بازار کار درس طراحی هواپیما</h4>
+                <h4 class="text-sm font-black text-neutral-900">📜 قوانین، مقررات و راهنمای بازار کار درس طراحی هواپیما</h4>
                 <button onclick="closeTermsModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
             <div class="text-xs text-slate-600 leading-relaxed space-y-3 text-justify">
@@ -1033,33 +1031,33 @@
 
                 <p class="text-slate-500 text-[11px]">با تایید این قوانین، می‌پذیرید که مسئولیت آشنایی کامل با ساز‌وکار سامانه، سقف‌ها، مهلت‌ها و جرایم بر عهدهٔ خودتان است.</p>
             </div>
-            <button onclick="closeTermsModal()" type="button" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">مطالعه شد و مورد تایید است</button>
+            <button onclick="closeTermsModal()" type="button" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">مطالعه شد و مورد تایید است</button>
         </div>
     </div>
 
     <!-- مدال اعلان سفارشی -->
     <div id="custom-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div id="custom-modal-card" class="bg-white border-2 border-emerald-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+        <div id="custom-modal-card" class="bg-white border border-emerald-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4 text-center">
             <div id="modal-icon-container" class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-indigo-50 text-indigo-600">🔔</div>
             <div>
-                <h4 id="modal-title" class="text-base font-black text-[#0f284e]">سامانه</h4>
+                <h4 id="modal-title" class="text-base font-black text-neutral-900">سامانه</h4>
                 <p id="modal-message" class="text-xs text-slate-600 mt-2 leading-relaxed whitespace-pre-line"></p>
             </div>
-            <button onclick="closeCustomModal()" class="w-full bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">متوجه شدم</button>
+            <button onclick="closeCustomModal()" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">متوجه شدم</button>
         </div>
     </div>
 
     <!-- مودال تایید عملیات: جایگزین یکسان و جذاب برای confirm() بومی مرورگر در کل سامانه -->
     <div id="app-confirm-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
-        <div id="app-confirm-card" class="bg-white border-2 border-amber-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center">
+        <div id="app-confirm-card" class="bg-white border border-amber-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4 text-center">
             <div id="app-confirm-icon" class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600">❓</div>
             <div>
-                <h4 class="text-base font-black text-[#0f284e]">تایید عملیات</h4>
+                <h4 class="text-base font-black text-neutral-900">تایید عملیات</h4>
                 <p id="app-confirm-message" class="text-xs text-slate-600 mt-2 leading-relaxed whitespace-pre-line"></p>
             </div>
             <div class="flex gap-2 pt-1">
-                <button id="app-confirm-ok-btn" class="w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">تایید</button>
-                <button id="app-confirm-cancel-btn" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
+                <button id="app-confirm-ok-btn" class="w-1/2 bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">تایید</button>
+                <button id="app-confirm-cancel-btn" class="w-1/2 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-bold py-2.5 rounded-xl text-xs transition cursor-pointer">انصراف</button>
             </div>
         </div>
     </div>
@@ -1082,15 +1080,15 @@
             var card = document.getElementById('app-confirm-card');
             var icon = document.getElementById('app-confirm-icon');
             if (options.dangerous) {
-                card.className = 'bg-white border-2 border-rose-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center';
+                card.className = 'bg-white border border-rose-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4 text-center';
                 icon.className = 'w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-rose-50 text-rose-600';
                 icon.innerText = '⚠️';
                 okBtn.className = 'w-1/2 bg-rose-600 hover:bg-rose-700 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer';
             } else {
-                card.className = 'bg-white border-2 border-amber-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center';
+                card.className = 'bg-white border border-amber-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4 text-center';
                 icon.className = 'w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600';
                 icon.innerText = '❓';
-                okBtn.className = 'w-1/2 bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer';
+                okBtn.className = 'w-1/2 bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer';
             }
             document.getElementById('app-confirm-modal').classList.remove('hidden');
         });
@@ -1277,11 +1275,11 @@
         if (isSuccess) {
             iconCont.className = "w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-emerald-50 text-emerald-600 border border-emerald-200";
             iconCont.innerText = "✓";
-            if (card) card.className = "bg-white border-2 border-emerald-300 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center";
+            if (card) card.className = "bg-white border border-emerald-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4 text-center";
         } else {
             iconCont.className = "w-14 h-14 mx-auto rounded-2xl flex items-center justify-center text-2xl shadow-inner bg-amber-50 text-amber-600 border border-amber-200";
             iconCont.innerText = "⚠️";
-            if (card) card.className = "bg-white border-2 border-amber-400 max-w-sm w-full rounded-3xl p-6 shadow-2xl space-y-4 text-center";
+            if (card) card.className = "bg-white border border-amber-300 max-w-sm w-full rounded-xl p-6 shadow-2xl space-y-4 text-center";
         }
         modal.classList.remove('hidden');
     };
@@ -1794,7 +1792,7 @@
                         '</div>';
                 } else if (!isExpired && p.status === 'open') {
                     bidArea = '<div class="mt-3 pt-3 border-t border-amber-200 flex gap-2 items-center">' +
-                        '<input type="number" id="bid-coins-' + p.id + '" placeholder="قیمت پیشنهادی شما (سکه)" class="w-full bg-white border border-amber-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-amber-500">' +
+                        '<input type="number" id="bid-coins-' + p.id + '" placeholder="قیمت پیشنهادی شما (سکه)" class="w-full bg-white border border-amber-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-brand-400">' +
                         '<button type="button" onclick="promptBidConfirmation(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\')" class="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">ثبت پیشنهاد مناقصه</button>' +
                         '</div>';
                 } else {
@@ -1805,10 +1803,10 @@
                     ? '<span class="text-emerald-700 font-bold">مهلت خاتمه قرارداد: ' + new Date(p.contract_end_date).toLocaleDateString('fa-IR', options) + '</span>'
                     : '<span class="text-slate-400 font-bold">هنوز مهلت خاتمه قرارداد تعیین نشده</span>';
                 bidArea = '<div class="mt-3 pt-2 border-t border-amber-200 space-y-1.5">' +
-                    '<button onclick="openProfessorBidsModal(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\', ' + p.allocated_coins + ')" class="w-full bg-gradient-to-r from-[#0f284e] to-[#1e3a8a] hover:from-[#0a1b35] hover:to-[#172554] text-amber-300 font-bold py-1.5 rounded-lg text-xs transition cursor-pointer shadow-sm">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
+                    '<button onclick="openProfessorBidsModal(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\', ' + p.allocated_coins + ')" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-bold py-1.5 rounded-lg text-xs transition cursor-pointer shadow-sm">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
                     '<div class="text-[11px] px-1">' + endDateText + '</div>' +
                     '<div class="flex gap-2">' +
-                        '<input type="text" id="mp-enddate-shamsi-' + p.id + '" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۱۰/۰۱ ۲۳:۵۹" class="w-full bg-white border border-slate-300 rounded-lg p-1.5 text-[11px] font-bold text-slate-800 cursor-pointer" readonly>' +
+                        '<input type="text" id="mp-enddate-shamsi-' + p.id + '" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۱۰/۰۱ ۲۳:۵۹" class="w-full bg-white border border-neutral-300 rounded-lg p-1.5 text-[11px] font-bold text-slate-800 cursor-pointer" readonly>' +
                         '<button onclick="extendContractEndDate(\'' + p.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded-lg text-[11px] transition cursor-pointer whitespace-nowrap">' + (p.contract_end_date ? 'تمدید مهلت' : 'تعیین مهلت') + '</button>' +
                     '</div>' +
                     '<div class="flex gap-2">' +
@@ -1830,7 +1828,7 @@
             }
 
             cont.innerHTML += 
-                '<div class="interactive-card rounded-3xl p-5 shadow-lg flex flex-col justify-between ' + cardBgClass + ' ' + cardOpacity + '" id="mp-card-' + p.id + '">' +
+                '<div class="interactive-card rounded-xl p-5 shadow-lg flex flex-col justify-between ' + cardBgClass + ' ' + cardOpacity + '" id="mp-card-' + p.id + '">' +
                     '<div class="space-y-2">' +
                         '<div class="flex justify-between items-start">' +
                             '<span class="text-[11px] font-black ' + (hasSubmittedBid && !isAwardedToMyTeam ? 'text-slate-800 bg-slate-300/80' : 'text-amber-900 bg-amber-200/80') + ' px-2.5 py-0.5 rounded-full">پروژه اصلی استاد</span>' +
@@ -1838,7 +1836,7 @@
                         '</div>' +
 
                         '<div id="mp-view-' + p.id + '" class="space-y-2">' +
-                            '<h4 class="text-sm font-black ' + (isAwardedToMyTeam ? 'text-emerald-950' : 'text-[#0f284e]') + '">' + p.title + '</h4>' +
+                            '<h4 class="text-sm font-black ' + (isAwardedToMyTeam ? 'text-emerald-950' : 'text-neutral-900') + '">' + p.title + '</h4>' +
                             '<div class="text-xs font-bold text-slate-700">رده: ' + p.aircraft_type + '</div>' +
                             '<p class="text-xs text-slate-600 leading-relaxed bg-white/70 p-2.5 rounded-xl border border-slate-200/80">' + p.specifications + '</p>' +
                             rfpDownloadLink +
@@ -1859,7 +1857,7 @@
                             '<textarea id="mp-edit-specs-' + p.id + '" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' + (p.specifications || '') + '</textarea>' +
                             '<div class="flex gap-2 pt-1">' +
                                 '<button onclick="saveMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded-lg text-xs shadow-sm">ذخیره تغییرات</button>' +
-                                '<button onclick="toggleMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-1.5 rounded-lg text-xs">انصراف</button>' +
+                                '<button onclick="toggleMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-1.5 rounded-lg text-xs">انصراف</button>' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -1974,7 +1972,7 @@
 
                 tbody.innerHTML += '<tr class="hover:bg-slate-50 transition cursor-pointer">' +
                     '<td class="p-3 text-center">' +
-                        '<input type="radio" name="selected_team_bid" value="' + b.team_id + '" data-team-name="' + teamName + '" data-coins="' + b.proposed_coins + '" ' + isChecked + ' class="w-4 h-4 text-[#0f284e] focus:ring-indigo-500 cursor-pointer">' +
+                        '<input type="radio" name="selected_team_bid" value="' + b.team_id + '" data-team-name="' + teamName + '" data-coins="' + b.proposed_coins + '" ' + isChecked + ' class="w-4 h-4 text-neutral-900 focus:ring-indigo-500 cursor-pointer">' +
                     '</td>' +
                     '<td class="p-3 font-black text-slate-800">' + teamName + '</td>' +
                     '<td class="p-3 text-slate-600">' + leaderName + '</td>' +
@@ -2036,7 +2034,7 @@
 
         res.data.forEach(function(u) {
             var roleTitle = u.role === 'leader' ? 'سرگروه' : (u.role === 'professor' ? 'استاد' : 'دانشجو');
-            div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
+            div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-neutral-50 border border-neutral-300 rounded-lg">' +
                 '<div class="flex flex-col">' +
                     '<span class="font-bold text-slate-800">' + u.full_name + ' (' + roleTitle + ')</span>' +
                     '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + u.student_id + '</span>' +
@@ -2720,7 +2718,7 @@
 
                 tbody.innerHTML += '<tr class="hover:bg-slate-50 transition">' +
                     '<td class="p-3 text-center font-bold">' + (idx + 1) + '</td>' +
-                    '<td class="p-3 font-black text-[#0f284e]">' + (log.sender || 'سامانه') + '</td>' +
+                    '<td class="p-3 font-black text-neutral-900">' + (log.sender || 'سامانه') + '</td>' +
                     '<td class="p-3 text-center text-slate-600">' + (log.date || '-') + '</td>' +
                     '<td class="p-3 text-center text-slate-600">' + (log.time || '-') + '</td>' +
                     '<td class="p-3 font-medium text-slate-800">' + typeDesc + '</td>' +
@@ -2846,7 +2844,7 @@
                 '<div><span class="font-black text-slate-800">شرکت ' + team.name + '</span> <span class="text-[10px] text-slate-400">(' + statusLabel + ')</span></div>' +
                 '<div class="text-[11px] flex flex-wrap gap-2 items-center">' +
                     '<span class="text-amber-700 font-black">' + g.totalCoins.toFixed(2) + ' سکه</span>' +
-                    '<span class="font-black text-[#0f284e]">' + g.totalMark.toFixed(3) + ' نمره</span>' +
+                    '<span class="font-black text-neutral-900">' + g.totalMark.toFixed(3) + ' نمره</span>' +
                 '</div>' +
                 '</div>';
         }));
@@ -2952,7 +2950,7 @@
                         '<div class="text-xs font-black text-slate-800 flex items-center gap-1.5">' + bidderName + ' ' + badge + '</div>' +
                         '<div class="text-[11px] text-slate-500">پیشنهاد: <strong class="text-indigo-700">' + roundCoin(b.proposed_coins) + ' سکه</strong></div>' +
                     '</div>' +
-                    '<button onclick="awardInternalBid(\'' + b.id + '\', \'' + taskId + '\', \'' + b.bidder_id + '\', ' + b.proposed_coins + ')" class="bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[10px] font-black px-3 py-1.5 rounded-lg cursor-pointer shadow-sm whitespace-nowrap">انتخاب این پیشنهاد</button>' +
+                    '<button onclick="awardInternalBid(\'' + b.id + '\', \'' + taskId + '\', \'' + b.bidder_id + '\', ' + b.proposed_coins + ')" class="bg-brand-500 hover:bg-brand-600 text-white text-[10px] font-black px-3 py-1.5 rounded-lg cursor-pointer shadow-sm whitespace-nowrap">انتخاب این پیشنهاد</button>' +
                     '</div>';
             }).join('');
         }
@@ -3075,7 +3073,7 @@
                     } else {
                         actionArea = '<div class="space-y-1">' +
                             '<div class="flex gap-2">' +
-                                '<input type="number" id="internal-bid-input-' + t.id + '" value="' + (myBid ? myBid.proposed_coins : '') + '" placeholder="پیشنهاد قیمت شما (سکه)" class="w-full bg-white border border-indigo-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-indigo-500">' +
+                                '<input type="number" id="internal-bid-input-' + t.id + '" value="' + (myBid ? myBid.proposed_coins : '') + '" placeholder="پیشنهاد قیمت شما (سکه)" class="w-full bg-white border border-brand-200 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-brand-400">' +
                                 '<button onclick="submitInternalBid(\'' + t.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">' + (myBid ? 'به‌روزرسانی' : 'ثبت پیشنهاد') + '</button>' +
                             '</div>' +
                             '<div class="text-[10px] text-slate-400 text-center">سقف باقیماندهٔ شما تا انعقاد قرارداد جدید: <strong class="text-slate-600">' + roundCoin(myRemainingCap) + ' سکه</strong> (از سقف کلی ۲۵۰ سکه)</div>' +
@@ -3097,11 +3095,11 @@
             }
 
             container.innerHTML += 
-                '<div class="interactive-card rounded-3xl p-5 shadow-md flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '" id="card-' + t.id + '">' +
+                '<div class="interactive-card rounded-xl p-5 shadow-md flex flex-col justify-between" style="' + color.bgStyle + ' ' + color.borderStyle + '" id="card-' + t.id + '">' +
                     '<div class="space-y-3">' +
                         '<div class="flex justify-between items-start">' +
                             '<div class="flex items-center space-x-2 space-x-reverse">' +
-                                '<div class="p-2 rounded-xl bg-white/95 border border-slate-200 text-[#0f284e] shadow-xs">' +
+                                '<div class="p-2 rounded-xl bg-white/95 border border-slate-200 text-neutral-900 shadow-xs">' +
                                     '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">' +
                                         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />' +
                                     '</svg>' +
@@ -3379,7 +3377,7 @@
                     if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
                         actionCol = '<div class="space-y-1.5">' +
                             '<input type="file" id="file-' + c.task_id + '" class="text-[10px] text-slate-600 block w-40 border border-slate-200 p-1 rounded-lg bg-slate-50">' +
-                            '<button onclick="uploadAndSendReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-[#0f284e] hover:bg-[#193a6b] text-amber-300 text-[10px] px-2.5 py-1 rounded-lg font-black shadow-xs cursor-pointer">📤 آپلود و ارسال گزارش</button>' +
+                            '<button onclick="uploadAndSendReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-brand-500 hover:bg-brand-600 text-white text-[10px] px-2.5 py-1 rounded-lg font-black shadow-xs cursor-pointer">📤 آپلود و ارسال گزارش</button>' +
                             '</div>';
                     } else {
                         actionCol = '<span class="text-slate-400 text-xs">در حال انجام کار</span>';
@@ -3433,7 +3431,7 @@
                         } else if (isMutualReq && myAlreadyAgreed) {
                             terminationButtons += '<span class="text-[10px] text-amber-700 font-bold px-1">⏳ در انتظار تایید طرف مقابل قرارداد</span>';
                         } else if (isInProgress && c.termination_status !== 'dispute_requested') {
-                            terminationButtons += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
+                            terminationButtons += '<button onclick="voteMutualTermination(\'' + c.id + '\', \'' + userProfile.role + '\')" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">' + mutualBtnText + '</button> ';
                         }
 
                         if (isInProgress) {
@@ -3447,7 +3445,7 @@
                     }
                 }
 
-                var bookletCellHtml = '<a href="javascript:void(0)" onclick="openContractHistory(\'' + c.id + '\')" class="font-black text-[#0f284e] hover:text-indigo-600 underline decoration-indigo-300 decoration-2 transition flex items-center gap-1">' +
+                var bookletCellHtml = '<a href="javascript:void(0)" onclick="openContractHistory(\'' + c.id + '\')" class="font-black text-neutral-900 hover:text-indigo-600 underline decoration-indigo-300 decoration-2 transition flex items-center gap-1">' +
                     '<span>کتابچه ' + (c.tasks?.booklets?.booklet_number || '-') + '</span>' +
                     '<span class="text-[10px] bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded border border-indigo-200">🔍 لاگ جدول</span>' +
                     '</a>';
@@ -3463,7 +3461,7 @@
                     '<td class="p-3">' + bookletCellHtml + '</td>' +
                     '<td class="p-3 font-bold">' + (c.teams ? c.teams.name : '') + '</td>' +
                     '<td class="p-3">' + (c.tasks ? c.tasks.title : '') + '</td>' +
-                    '<td class="p-3">' + (c.profiles ? c.profiles.full_name : '') + '</td>' +
+                    '<td class="p-3"><div class="flex items-center gap-2">' + renderAvatar(c.profiles ? c.profiles.full_name : '') + '<span>' + (c.profiles ? c.profiles.full_name : '') + '</span></div></td>' +
                     '<td class="p-3 font-black text-amber-700 text-sm">' + roundCoin(c.agreed_base_coins || 0) + ' سکه</td>' +
                     '<td class="p-3 text-center" id="new-msg-cell-' + c.id + '">' + newMessageCell + '</td>' +
                     '<td class="p-3">' + statusBadge + '</td>' +
@@ -3631,47 +3629,57 @@
         document.getElementById('stat-contracts-container').innerHTML = kpiHtml;
     }
 
+    var avatarPalette = ['#0052CC', '#00875A', '#B25000', '#5243AA', '#0065FF', '#006644', '#403294', '#8777D9'];
+    function renderAvatar(name) {
+        var safeName = (name || '؟').trim();
+        var initial = safeName.charAt(0) || '؟';
+        var hash = 0;
+        for (var i = 0; i < safeName.length; i++) hash = (hash + safeName.charCodeAt(i)) % avatarPalette.length;
+        var color = avatarPalette[hash];
+        return '<span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-white text-[10px] font-black shrink-0" style="background:' + color + '">' + initial + '</span>';
+    }
+
     function getPersianStatusBadgeSync(c, userRole) {
         if (c.status === 'terminated') {
             if (c.termination_status === 'mutual_terminated') {
-                return '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-rose-300">باطل شده (فسخ توافقی)</span>';
+                return '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full text-[11px] font-bold">باطل شده (فسخ توافقی)</span>';
             }
             if (c.termination_status === 'dispute_terminated') {
-                return '<span class="bg-red-100 text-red-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-red-300">باطل شده (فسخ یک طرفه)</span>';
+                return '<span class="bg-red-100 text-red-900 px-2 py-0.5 rounded-full text-[11px] font-bold">باطل شده (فسخ یک طرفه)</span>';
             }
-            return '<span class="bg-rose-100 text-rose-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-rose-300">❌ قرارداد فسخ‌شده</span>';
+            return '<span class="bg-rose-100 text-rose-800 px-2 py-0.5 rounded-full text-[11px] font-bold">❌ قرارداد فسخ‌شده</span>';
         }
 
         if (c.termination_status === 'mutual_requested') {
-            return '<span class="bg-amber-100 text-amber-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-300 animate-pulse">درخواست فسخ توافقی</span>';
+            return '<span class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full text-[11px] font-bold animate-pulse">درخواست فسخ توافقی</span>';
         }
 
         if (c.termination_status === 'dispute_requested' || c.status === 'dispute_requested') {
             var reqRoleText = (c.termination_requester_id === c.contractor_id) ? '(پیمانکار)' : '(کارفرما)';
-            return '<span class="bg-red-100 text-red-900 px-2.5 py-1 rounded-full text-[11px] font-black border border-red-300 animate-pulse">درخواست فسخ یک طرفه ' + reqRoleText + '</span>';
+            return '<span class="bg-red-100 text-red-900 px-2 py-0.5 rounded-full text-[11px] font-bold animate-pulse">درخواست فسخ یک طرفه ' + reqRoleText + '</span>';
         }
 
         if (c.status === 'pending_leader_signature') {
-            return '<span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-amber-200">⏳ در انتظار تایید سرگروه</span>';
+            return '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-[11px] font-bold">⏳ در انتظار تایید سرگروه</span>';
         }
 
         if (c.status === 'in_progress') {
-            return '<span class="bg-sky-100 text-sky-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-sky-200">در حال انجام</span>';
+            return '<span class="bg-brand-50 text-brand-700 px-2 py-0.5 rounded-full text-[11px] font-bold">در حال انجام</span>';
         }
 
         if (c.status === 'leader_review') {
-            return '<span class="bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-indigo-200">در انتظار تایید سرگروه</span>';
+            return '<span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full text-[11px] font-bold">در انتظار تایید سرگروه</span>';
         }
 
         if (c.status === 'professor_review') {
-            return '<span class="bg-purple-100 text-purple-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-purple-200">در انتظار ارزیابی استاد</span>';
+            return '<span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-[11px] font-bold">در انتظار ارزیابی استاد</span>';
         }
 
         if (c.status === 'completed') {
-            return '<span class="bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full text-[11px] font-black border border-emerald-300">اتمام یافته</span>';
+            return '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[11px] font-bold">اتمام یافته</span>';
         }
 
-        return '<span class="bg-slate-100 text-slate-800 px-2 py-0.5 rounded text-[11px] font-bold">درحال بررسی</span>';
+        return '<span class="bg-neutral-200 text-neutral-700 px-2 py-0.5 rounded-full text-[11px] font-bold">درحال بررسی</span>';
     }
 
     async function loadBooklets() {
@@ -3741,7 +3749,7 @@
                 }
             }
 
-            return '<div class="flex justify-between items-center p-2.5 bg-slate-50 border border-slate-200 rounded-xl">' +
+            return '<div class="flex justify-between items-center p-2.5 bg-neutral-50 border border-neutral-300 rounded-lg">' +
                 '<div class="flex flex-col">' +
                     '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
                     '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + m.student_id + '</span>' +
