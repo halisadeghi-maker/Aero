@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۱.۴)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۲.۱)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!--
@@ -256,9 +256,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۳.۱.۴) -->
+            <!-- نسخه سامانه (۳.۲.۱) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.1.4</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.2.1</span>
             </div>
         </section>
 
@@ -601,7 +601,7 @@
                     <h3 class="text-sm font-black text-neutral-900">➕ تعریف بسته کاری جدید در سقف بودجه مصوب قرارداد اصلی</h3>
                     <span id="team-budget-badge" class="text-xs font-black text-amber-900 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">بودجه مصوب: در حال محاسبه</span>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">کتابچه</label>
                         <select id="task-booklet-select" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800"></select>
@@ -612,17 +612,22 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">قیمت پیشنهادی قرارداد این بسته کاری (سکه)</label>
+                        <input type="number" id="task-coins-input" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800" placeholder="سکه">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">سهم این بسته از کل کتابچه (٪)</label>
                         <div class="flex space-x-2 space-x-reverse">
-                            <input type="number" id="task-coins-input" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800" placeholder="سکه">
-                            <button id="create-task-btn" type="button" class="bg-brand-500 hover:bg-brand-600 text-white px-4 rounded-xl text-xs font-bold shadow-md transition cursor-pointer">ایجاد</button>
+                            <input type="number" id="task-share-percent-input" min="1" max="100" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800" placeholder="مثال: 50">
+                            <button id="create-task-btn" type="button" class="bg-brand-500 hover:bg-brand-600 text-white px-4 rounded-xl text-xs font-bold shadow-md transition cursor-pointer whitespace-nowrap">ایجاد</button>
                         </div>
                     </div>
-                    <div class="md:col-span-2">
+                    <div id="booklet-share-note" class="md:col-span-5 text-[11px] text-slate-500 hidden"></div>
+                    <div class="md:col-span-5">
                         <label class="block text-xs font-bold text-slate-600 mb-1">مهلت مناقصهٔ داخلی (فقط اعضای ثابت شرکت شما تا این تاریخ می‌توانند پیشنهاد بدهند)</label>
                         <input type="text" id="task-deadline-shamsi" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۰۶/۱۵ ۱۴:۰۰" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs font-bold text-slate-800 cursor-pointer" readonly>
                         <span class="text-[10px] text-slate-400 block mt-0.5">خالی بگذارید تا مهلت پیش‌فرض (۳ روز از الان) اعمال شود.</span>
                     </div>
-                    <div id="booklet-real-value-note" class="md:col-span-4 text-[11px] text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-1.5 font-bold hidden"></div>
+                    <div id="booklet-real-value-note" class="md:col-span-5 text-[11px] text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-1.5 font-bold hidden"></div>
                 </div>
             </section>
 
@@ -750,22 +755,23 @@
     <div id="professor-award-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center hidden p-4">
         <div class="bg-white border border-brand-200 max-w-md w-full rounded-xl p-6 shadow-2xl space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 pb-2">
-                <h4 class="text-sm font-black text-indigo-900 flex items-center gap-2"><span>🎓</span> ارزیابی نهایی و امتیازدهی استاد</h4>
+                <h4 id="prof-award-title" class="text-sm font-black text-indigo-900 flex items-center gap-2"><span>🎓</span> ارزیابی نهایی و امتیازدهی استاد</h4>
                 <button onclick="closeProfessorAwardModal()" class="text-slate-400 hover:text-slate-600 font-black text-lg cursor-pointer">✕</button>
             </div>
             <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-2xl text-xs text-indigo-900 leading-relaxed space-y-1.5">
                 <div class="flex justify-between text-slate-500"><span>ارزش واقعی کتابچه (فقط جهت اطلاع؛ در این محاسبه استفاده نمی‌شود):</span><strong id="prof-award-nominal-coins" class="text-slate-500">۰</strong></div>
-                <div class="flex justify-between"><span>مبلغ قرارداد پیمانکار (مبنای محاسبه):</span><strong id="prof-award-agreed-coins" class="text-indigo-950">۰</strong></div>
+                <div id="prof-award-group-note" class="hidden text-indigo-700 font-bold pt-1 border-t border-indigo-200">این کتابچه بین چند پیمانکار تقسیم شده؛ درصد کیفیت واحدی که وارد می‌کنید روی سهم هر پیمانکار به‌طور جداگانه اعمال می‌شود.</div>
             </div>
+            <div id="prof-award-members-list" class="space-y-1.5 max-h-40 overflow-y-auto"></div>
             <div>
-                <label class="block text-xs font-bold text-slate-700 mb-2">درصد کیفیت این بسته کاری (۰ تا ۱۰۰):</label>
+                <label class="block text-xs font-bold text-slate-700 mb-2">درصد کیفیت این کتابچه (۰ تا ۱۰۰):</label>
                 <input type="number" id="prof-award-score-input" min="0" max="100" step="1" oninput="updateProfAwardPreview()" placeholder="مثال: 90" class="w-full bg-slate-50 border-2 border-indigo-200 focus:border-indigo-400 focus:outline-none rounded-xl p-3 text-lg font-black text-slate-800 text-center transition">
-                <span class="text-[10px] text-slate-400 block mt-1">طبق فرمول نمره‌دهی: سکهٔ نهایی = (درصد کیفیت ÷ ۱۰۰) × ارزش واقعی کتابچه — مستقل از قیمت توافقی قرارداد.</span>
+                <span class="text-[10px] text-slate-400 block mt-1">طبق فرمول نمره‌دهی: سکهٔ نهایی هر پیمانکار = (درصد کیفیت ÷ ۱۰۰) × سکهٔ قراردادی همان پیمانکار.</span>
             </div>
             <div class="bg-emerald-50 border-2 border-emerald-200 p-4 rounded-2xl text-center space-y-1">
-                <span class="text-[10px] text-emerald-700 font-bold block">💰 سکهٔ نهایی قابل واریز به کیف پول دانشجو</span>
+                <span class="text-[10px] text-emerald-700 font-bold block">💰 مجموع سکهٔ نهایی قابل واریز</span>
                 <span id="prof-award-final-preview" class="text-2xl font-black text-emerald-800">۰ سکه</span>
-                <span id="prof-award-grade-preview" class="text-[11px] text-emerald-600 font-bold block">معادل ۰ نمره (هر سکه = ۰٫۰۵ نمره)</span>
+                <span id="prof-award-grade-preview" class="text-[11px] text-emerald-600 font-bold block">معادل ۰ نمره (هر ۲۰ سکه = ۱ نمره)</span>
             </div>
             <div class="flex gap-2 pt-2">
                 <button id="confirm-prof-award-btn" type="button" class="w-1/2 bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">✅ ثبت نهایی امتیاز</button>
@@ -2243,22 +2249,53 @@
             sender: 'کارفرما',
             date: dateStr,
             time: timeStr,
-            type: 'تایید گزارش و ارسال به استاد',
+            type: 'تایید گزارش توسط کارفرما',
             file_url: null,
             file_name: null
         });
 
-        await sb.from('tasks').update({ leader_approved: true, status: 'professor_review' }).eq('id', taskId);
+        await sb.from('tasks').update({ leader_approved: true, status: 'leader_approved' }).eq('id', taskId);
         await sb.from('contracts').update({ 
             leader_signed: true, 
-            status: 'professor_review', 
+            status: 'leader_approved', 
             action_logs: existingLogs 
         }).eq('id', contractId);
 
-        showAppAlert('گزارش توسط سرگروه تایید شد و رویداد در لاگ ثبت گردید.', true);
+        var taskRowRes = await sb.from('tasks').select('booklet_id').eq('id', taskId).single();
+        var bookletId = taskRowRes.data ? taskRowRes.data.booklet_id : null;
+        var groupResult = await tryFinalizeBookletGroupForProfessor(targetContract.team_id, bookletId);
+
+        if (groupResult.ready) {
+            showAppAlert('گزارش تایید شد. چون این آخرین بستهٔ باقی‌ماندهٔ این کتابچه بود، کل کتابچه (' + groupResult.count + ' پیمانکار) هم‌زمان برای ارزیابی استاد ارسال شد.', true, 'سامانه');
+        } else if (groupResult.totalShare < 99.99) {
+            showAppAlert('گزارش این بخش تایید و ثبت شد. چون سهم تعریف‌شدهٔ این کتابچه هنوز به ۱۰۰٪ نرسیده است (' + roundCoin(groupResult.totalShare) + '٪)، تا تعریف و تکمیل باقی بسته‌های این کتابچه، برای ارزیابی استاد ارسال نخواهد شد.', true);
+        } else {
+            showAppAlert('گزارش این بخش تایید و ثبت شد. به‌محض تایید گزارش سایر پیمانکاران همین کتابچه توسط شما، همگی با هم برای ارزیابی استاد ارسال خواهند شد.', true);
+        }
+
         await loadContracts();
         await loadTasks();
     };
+
+    async function tryFinalizeBookletGroupForProfessor(teamId, bookletId) {
+        var sb = getSupabaseClient();
+        if (!bookletId || !teamId) return { ready: false, totalShare: 0 };
+
+        var tasksRes = await sb.from('tasks').select('id, status, booklet_share_percent').eq('team_id', teamId).eq('booklet_id', bookletId).neq('status', 'terminated');
+        var tasksForBooklet = tasksRes.data || [];
+        var totalShare = tasksForBooklet.reduce(function(s, t) { return s + parseFloat(t.booklet_share_percent || 0); }, 0);
+
+        if (totalShare < 99.99) return { ready: false, totalShare: totalShare };
+
+        var allApproved = tasksForBooklet.length > 0 && tasksForBooklet.every(function(t) { return t.status === 'leader_approved'; });
+        if (!allApproved) return { ready: false, totalShare: totalShare };
+
+        var taskIds = tasksForBooklet.map(function(t) { return t.id; });
+        await sb.from('tasks').update({ status: 'professor_review' }).in('id', taskIds);
+        await sb.from('contracts').update({ status: 'professor_review' }).eq('team_id', teamId).in('task_id', taskIds);
+
+        return { ready: true, totalShare: totalShare, count: tasksForBooklet.length };
+    }
 
     var currentRejectContractId = null;
     var currentRejectTaskId = null;
@@ -2313,19 +2350,37 @@
         await loadTasks();
     };
 
-    window.professorAwardFinalPayout = async function(contractId, taskId, bookletId, agreedCoins) {
+    window.professorAwardFinalPayout = async function(contractId, taskId, bookletId, agreedCoins, teamId) {
         var sb = getSupabaseClient();
 
         var bRes = await sb.from('booklets').select('nominal_coins').eq('id', bookletId).single();
         var nominalCoins = bRes.data ? parseFloat(bRes.data.nominal_coins) : 100;
-
-        pendingAwardContractId = contractId;
-        pendingAwardTaskId = taskId;
-        pendingAwardAgreedCoins = parseFloat(agreedCoins);
         pendingAwardNominalCoins = nominalCoins;
 
+        // یافتن همهٔ اعضای همین کتابچه که آمادهٔ ارزیابی استاد هستند (ممکن است کتابچه بین چند پیمانکار تقسیم شده باشد)
+        var groupRes = await sb.from('contracts').select('id, task_id, agreed_base_coins, profiles!contractor_id(full_name), tasks!inner(booklet_id)').eq('team_id', teamId).eq('status', 'professor_review').eq('tasks.booklet_id', bookletId);
+        var groupContracts = groupRes.data || [];
+
+        // اگر به هر دلیلی کوئری فیلتر تودرتو نتیجه نداد (پشتیبانی متفاوت پستگرست)، حداقل همین یک قرارداد را در گروه قرار بده
+        if (groupContracts.length === 0) {
+            groupContracts = [{ id: contractId, task_id: taskId, agreed_base_coins: agreedCoins, profiles: null }];
+        }
+
+        pendingAwardGroup = groupContracts.map(function(gc) {
+            return { contractId: gc.id, taskId: gc.task_id, agreedCoins: parseFloat(gc.agreed_base_coins), name: gc.profiles ? gc.profiles.full_name : 'پیمانکار' };
+        });
+
         document.getElementById('prof-award-nominal-coins').innerText = roundCoin(nominalCoins) + ' سکه';
-        document.getElementById('prof-award-agreed-coins').innerText = roundCoin(pendingAwardAgreedCoins) + ' سکه';
+        document.getElementById('prof-award-title').innerText = pendingAwardGroup.length > 1 ? '🎓 ارزیابی گروهی کتابچهٔ تقسیم‌شده' : '🎓 ارزیابی نهایی و امتیازدهی استاد';
+        document.getElementById('prof-award-group-note').classList.toggle('hidden', pendingAwardGroup.length <= 1);
+
+        document.getElementById('prof-award-members-list').innerHTML = pendingAwardGroup.map(function(m) {
+            return '<div class="flex justify-between items-center bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs">' +
+                '<span class="font-bold text-slate-700">' + m.name + '</span>' +
+                '<span class="text-slate-500">سکهٔ قراردادی: <strong class="text-indigo-900">' + roundCoin(m.agreedCoins) + '</strong></span>' +
+                '</div>';
+        }).join('');
+
         document.getElementById('prof-award-score-input').value = '';
         document.getElementById('prof-award-final-preview').innerText = '۰ سکه';
         document.getElementById('professor-award-modal').classList.remove('hidden');
@@ -2339,9 +2394,10 @@
             document.getElementById('prof-award-grade-preview').innerText = 'معادل ۰ نمره (هر ۲۰ سکه = ۱ نمره درس)';
             return;
         }
-        var finalPayout = calculateFinalContractCoins(pendingAwardAgreedCoins, quality);
-        var gradePoints = finalPayout / 20;
-        document.getElementById('prof-award-final-preview').innerText = formatGradeNumber(finalPayout) + ' سکه';
+        var totalFinal = 0;
+        pendingAwardGroup.forEach(function(m) { totalFinal += calculateFinalContractCoins(m.agreedCoins, quality); });
+        var gradePoints = totalFinal / 20;
+        document.getElementById('prof-award-final-preview').innerText = formatGradeNumber(totalFinal) + ' سکه';
         document.getElementById('prof-award-grade-preview').innerText = 'معادل ' + formatGradeNumber(gradePoints) + ' نمره (هر ۲۰ سکه = ۱ نمره درس)';
     };
 
@@ -2349,6 +2405,7 @@
         document.getElementById('professor-award-modal').classList.add('hidden');
         pendingAwardContractId = null;
         pendingAwardTaskId = null;
+        pendingAwardGroup = [];
     };
 
     document.getElementById('confirm-prof-award-btn').onclick = async function() {
@@ -2356,38 +2413,46 @@
         var qualityStr = document.getElementById('prof-award-score-input').value;
         var quality = parseFloat(qualityStr);
         if (!qualityStr || isNaN(quality) || quality < 0 || quality > 100) return showAppAlert('لطفاً درصد کیفیتی معتبر بین ۰ تا ۱۰۰ وارد کنید.', false);
+        if (pendingAwardGroup.length === 0) return showAppAlert('اطلاعات ارزیابی یافت نشد.', false);
 
-        var finalPayout = calculateFinalContractCoins(pendingAwardAgreedCoins, quality);
+        var totalFinalAll = 0;
+        for (const member of pendingAwardGroup) {
+            var finalPayout = calculateFinalContractCoins(member.agreedCoins, quality);
+            totalFinalAll += finalPayout;
 
-        var targetContract = allLoadedContracts.find(function(c) { return c.id === pendingAwardContractId; });
-        var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
-        var now = new Date();
-        existingLogs.push({
-            sender: 'استاد',
-            date: now.toLocaleDateString('fa-IR'),
-            time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
-            type: 'اتمام پروژه',
-            details: 'کیفیت ' + quality + '٪ ارزیابی شد و مبلغ ' + formatGradeNumber(finalPayout) + ' سکه (بر اساس مبلغ قرارداد × درصد کیفیت) تایید و به کیف پول دانشجو تخصیص یافت.'
-        });
+            var targetContract = allLoadedContracts.find(function(c) { return c.id === member.contractId; });
+            var existingLogs = targetContract && targetContract.action_logs ? targetContract.action_logs : [];
+            var now = new Date();
+            existingLogs.push({
+                sender: 'استاد',
+                date: now.toLocaleDateString('fa-IR'),
+                time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'}),
+                type: 'اتمام پروژه',
+                details: (pendingAwardGroup.length > 1 ? 'کیفیت کل کتابچه ' : 'کیفیت ') + quality + '٪ ارزیابی شد و مبلغ ' + formatGradeNumber(finalPayout) + ' سکه (بر اساس سهم قراردادی این پیمانکار × درصد کیفیت) تایید و به کیف پول دانشجو تخصیص یافت.'
+            });
 
-        var awardRes = await sb.from('contracts').update({
-            status: 'completed',
-            final_payout: finalPayout,
-            quality_percent: quality,
-            action_logs: existingLogs,
-            last_message_at: new Date().toISOString()
-        }).eq('id', pendingAwardContractId).select();
+            var awardRes = await sb.from('contracts').update({
+                status: 'completed',
+                final_payout: finalPayout,
+                quality_percent: quality,
+                action_logs: existingLogs,
+                last_message_at: new Date().toISOString()
+            }).eq('id', member.contractId).select();
 
-        if (awardRes.error || !awardRes.data || awardRes.data.length === 0) {
-            var errMsgAward = awardRes.error ? awardRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
-            showAppAlert('خطا در ثبت ارزیابی نهایی: ' + errMsgAward, false);
-            return;
+            if (awardRes.error || !awardRes.data || awardRes.data.length === 0) {
+                var errMsgAward = awardRes.error ? awardRes.error.message : 'به‌روزرسانی در پایگاه‌داده اعمال نشد.';
+                showAppAlert('خطا در ثبت ارزیابی نهایی برای «' + member.name + '»: ' + errMsgAward, false);
+                return;
+            }
+
+            await sb.from('tasks').update({ status: 'completed' }).eq('id', member.taskId);
         }
 
-        await sb.from('tasks').update({ status: 'completed' }).eq('id', pendingAwardTaskId);
-
         closeProfessorAwardModal();
-        showAppAlert('ارزیابی و امتیازدهی با موفقیت ثبت شد.\nمبلغ ' + formatGradeNumber(finalPayout) + ' سکه نهایی به کیف پول دانشجو واریز گردید.', true, 'سامانه');
+        var successMsg = pendingAwardGroup.length > 1
+            ? 'ارزیابی گروهی این کتابچه ثبت شد.\nمجموعاً ' + formatGradeNumber(totalFinalAll) + ' سکه بین ' + pendingAwardGroup.length + ' پیمانکار (متناسب با سهم قراردادی هرکدام) تقسیم و نهایی گردید.'
+            : 'ارزیابی و امتیازدهی با موفقیت ثبت شد.\nمبلغ ' + formatGradeNumber(totalFinalAll) + ' سکه نهایی به کیف پول دانشجو واریز گردید.';
+        showAppAlert(successMsg, true, 'سامانه');
         await loadContracts();
     };
 
@@ -2552,6 +2617,7 @@
     var pendingAwardTaskId = null;
     var pendingAwardAgreedCoins = 0;
     var pendingAwardNominalCoins = 100;
+    var pendingAwardGroup = [];
     var currentProfDisputeTaskId = null;
 
     window.openProfessorDisputeModal = function(contractId, taskId) {
@@ -3395,10 +3461,13 @@
                     } else {
                         actionCol = '<span class="text-indigo-700 font-bold text-xs">در انتظار تایید سرگروه</span>';
                     }
+                } else if (c.status === 'leader_approved') {
+                    var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش</a>' : '';
+                    actionCol = '<div>' + fileLink + '<span class="text-amber-700 font-bold text-xs">✅ تایید سرگروه — در انتظار تکمیل سایر بسته‌های همین کتابچه</span></div>';
                 } else if (c.status === 'professor_review') {
                     var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش نهایی</a>' : '';
                     if (userProfile.role === 'professor') {
-                        actionCol = '<div>' + fileLink + '<button onclick="professorAwardFinalPayout(\'' + c.id + '\', \'' + c.task_id + '\', ' + (c.tasks?.booklets?.id || 1) + ', ' + c.agreed_base_coins + ')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-sm">🎓 ارزیابی و امتیازدهی سکه</button></div>';
+                        actionCol = '<div>' + fileLink + '<button onclick="professorAwardFinalPayout(\'' + c.id + '\', \'' + c.task_id + '\', ' + (c.tasks?.booklets?.id || 1) + ', ' + c.agreed_base_coins + ', \'' + c.team_id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-sm">🎓 ارزیابی و امتیازدهی سکه</button></div>';
                     } else {
                         actionCol = '<div>' + fileLink + '<span class="text-purple-700 font-bold text-xs">در انتظار ارزیابی استاد</span></div>';
                     }
@@ -3671,6 +3740,10 @@
             return '<span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full text-[11px] font-bold">در انتظار تایید سرگروه</span>';
         }
 
+        if (c.status === 'leader_approved') {
+            return '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-[11px] font-bold">✅ تایید سرگروه (در انتظار تکمیل کتابچه)</span>';
+        }
+
         if (c.status === 'professor_review') {
             return '<span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full text-[11px] font-bold">در انتظار ارزیابی استاد</span>';
         }
@@ -3693,6 +3766,7 @@
                 sel.innerHTML += opt;
             });
             updateBookletRealValueNote();
+            updateBookletShareNote();
         }
     }
 
@@ -3706,6 +3780,30 @@
         note.classList.remove('hidden');
     }
     document.getElementById('task-booklet-select').addEventListener('change', updateBookletRealValueNote);
+    document.getElementById('task-booklet-select').addEventListener('change', updateBookletShareNote);
+
+    async function updateBookletShareNote() {
+        var sel = document.getElementById('task-booklet-select');
+        var note = document.getElementById('booklet-share-note');
+        if (!sel || !note || !sel.value || !currentTeam) { if (note) note.classList.add('hidden'); return; }
+
+        var sb = getSupabaseClient();
+        var res = await sb.from('tasks').select('booklet_share_percent').eq('team_id', currentTeam.id).eq('booklet_id', sel.value).neq('status', 'terminated');
+        var usedPercent = (res.data || []).reduce(function(sum, t) { return sum + parseFloat(t.booklet_share_percent || 0); }, 0);
+        var remaining = Math.max(0, 100 - usedPercent);
+
+        note.classList.remove('hidden');
+        if (usedPercent >= 100) {
+            note.className = 'md:col-span-5 text-[11px] text-rose-700 bg-rose-50 border border-rose-200 rounded-lg px-3 py-1.5 font-bold';
+            note.innerText = '⛔ سهم این کتابچه از قبل به ۱۰۰٪ رسیده است؛ بستهٔ کاری جدیدی برای آن نمی‌توانید تعریف کنید مگر یکی از بسته‌های موجود را حذف کنید.';
+        } else if (usedPercent > 0) {
+            note.className = 'md:col-span-5 text-[11px] text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 font-bold';
+            note.innerText = '📊 تاکنون ' + roundCoin(usedPercent) + '٪ از این کتابچه به بسته‌های دیگر اختصاص یافته؛ حداکثر ' + roundCoin(remaining) + '٪ برای این بسته باقی مانده است.';
+        } else {
+            note.className = 'md:col-span-5 text-[11px] text-slate-500';
+            note.innerText = 'هنوز هیچ بسته‌ای برای این کتابچه تعریف نشده؛ اگر این بسته کل کتابچه را پوشش می‌دهد، عدد ۱۰۰ را وارد کنید.';
+        }
+    }
 
     async function loadProfessorSummary() {
         var sb = getSupabaseClient();
@@ -4382,8 +4480,17 @@
         var bId = document.getElementById('task-booklet-select').value;
         var title = document.getElementById('task-title-input').value.trim();
         var coins = roundCoin(document.getElementById('task-coins-input').value);
+        var sharePercent = parseFloat(document.getElementById('task-share-percent-input').value);
         var deadlineShamsi = document.getElementById('task-deadline-shamsi').value.trim();
         if (!title || isNaN(coins) || coins <= 0 || !currentTeam) return showAppAlert('اطلاعات بسته کاری را کامل وارد نمایید.', false);
+        if (isNaN(sharePercent) || sharePercent <= 0 || sharePercent > 100) return showAppAlert('سهم این بسته از کل کتابچه را عددی بین ۱ تا ۱۰۰ درصد وارد کنید.', false);
+
+        var sb = getSupabaseClient();
+        var shareCheckRes = await sb.from('tasks').select('booklet_share_percent').eq('team_id', currentTeam.id).eq('booklet_id', parseInt(bId)).neq('status', 'terminated');
+        var usedShare = (shareCheckRes.data || []).reduce(function(sum, t) { return sum + parseFloat(t.booklet_share_percent || 0); }, 0);
+        if (usedShare + sharePercent > 100.01) {
+            return showAppAlert('مجموع سهم بسته‌های این کتابچه از ۱۰۰٪ عبور می‌کند (تاکنون ' + roundCoin(usedShare) + '٪ اختصاص یافته). سهم واردشده را کاهش دهید.', false);
+        }
 
         var deadlineIso;
         if (deadlineShamsi) {
@@ -4398,17 +4505,15 @@
             deadlineIso = d.toISOString();
         }
 
-        var sb = getSupabaseClient();
-
         var existingBookletTasks = await sb.from('tasks').select('id, title').eq('team_id', currentTeam.id).eq('booklet_id', parseInt(bId)).neq('status', 'terminated');
         if (existingBookletTasks.data && existingBookletTasks.data.length > 0) {
-            pendingTaskInsertData = { bookletId: parseInt(bId), title: title, coins: coins, deadline: deadlineIso };
+            pendingTaskInsertData = { bookletId: parseInt(bId), title: title, coins: coins, sharePercent: sharePercent, deadline: deadlineIso };
             document.getElementById('duplicate-modal-text').innerText = 'شما قبلاً از این شماره کتابچه بسته کاری دیگری تعریف کرده‌اید.\nآیا اطمینان دارید که می‌خواهید بسته کاری اضافه تری از این کتابچه تعریف کنید؟';
             document.getElementById('duplicate-booklet-modal').classList.remove('hidden');
             return;
         }
 
-        executeTaskCreation(parseInt(bId), title, coins, deadlineIso);
+        executeTaskCreation(parseInt(bId), title, coins, deadlineIso, sharePercent);
     };
 
     window.closeDuplicateModal = function() {
@@ -4421,10 +4526,10 @@
         if (!pendingTaskInsertData) return;
         var data = pendingTaskInsertData;
         closeDuplicateModal();
-        await executeTaskCreation(data.bookletId, data.title, data.coins, data.deadline);
+        await executeTaskCreation(data.bookletId, data.title, data.coins, data.deadline, data.sharePercent);
     };
 
-    async function executeTaskCreation(bookletId, title, coins, deadlineIso) {
+    async function executeTaskCreation(bookletId, title, coins, deadlineIso, sharePercent) {
         var sb = getSupabaseClient();
         var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
         if (!mpRes.data) {
@@ -4458,6 +4563,7 @@
             booklet_id: bookletId,
             title: title,
             allocated_nominal_coins: coins,
+            booklet_share_percent: sharePercent,
             status: 'open',
             market_phase: initialMarketPhase,
             bidding_deadline: deadlineIso
@@ -4471,9 +4577,11 @@
             showAppAlert(successMsg, true);
             document.getElementById('task-title-input').value = '';
             document.getElementById('task-coins-input').value = '';
+            document.getElementById('task-share-percent-input').value = '';
             document.getElementById('task-deadline-shamsi').value = '';
             await loadTasks();
             await loadContracts();
+            await updateBookletShareNote();
         }
     }
 
