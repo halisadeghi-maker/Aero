@@ -2254,12 +2254,21 @@
             file_name: null
         });
 
-        await sb.from('tasks').update({ leader_approved: true, status: 'leader_approved' }).eq('id', taskId);
-        await sb.from('contracts').update({ 
+        var taskStatusRes = await sb.from('tasks').update({ leader_approved: true, status: 'leader_approved' }).eq('id', taskId).select();
+        if (taskStatusRes.error || !taskStatusRes.data || taskStatusRes.data.length === 0) {
+            var emTask = taskStatusRes.error ? taskStatusRes.error.message : 'به‌روزرسانی بسته کاری اعمال نشد.';
+            return showAppAlert('خطا در ثبت تایید سرگروه (بسته کاری): ' + emTask, false);
+        }
+
+        var contractStatusRes = await sb.from('contracts').update({ 
             leader_signed: true, 
             status: 'leader_approved', 
             action_logs: existingLogs 
-        }).eq('id', contractId);
+        }).eq('id', contractId).select();
+        if (contractStatusRes.error || !contractStatusRes.data || contractStatusRes.data.length === 0) {
+            var emContract = contractStatusRes.error ? contractStatusRes.error.message : 'به‌روزرسانی قرارداد اعمال نشد.';
+            return showAppAlert('خطا در ثبت تایید سرگروه (قرارداد): ' + emContract, false);
+        }
 
         var taskRowRes = await sb.from('tasks').select('booklet_id').eq('id', taskId).single();
         var bookletId = taskRowRes.data ? taskRowRes.data.booklet_id : null;
@@ -2277,22 +2286,49 @@
         await loadTasks();
     };
 
+    window.recheckBookletGroupStatus = async function(teamId, bookletId) {
+        if (!bookletId) return showAppAlert('شناسهٔ کتابچه یافت نشد.', false);
+        var groupResult = await tryFinalizeBookletGroupForProfessor(teamId, bookletId);
+        if (groupResult.ready) {
+            showAppAlert('این کتابچه اکنون کامل است؛ همهٔ بسته‌های آن (' + groupResult.count + ' پیمانکار) هم‌زمان برای ارزیابی استاد ارسال شد.', true, 'سامانه');
+        } else if (!groupResult.error) {
+            showAppAlert('هنوز آمادهٔ ارسال نیست (سهم تعریف‌شده تاکنون: ' + roundCoin(groupResult.totalShare) + '٪، یا هنوز همهٔ بسته‌ها تایید نشده‌اند).', true);
+        }
+        await loadContracts();
+        await loadTasks();
+    };
+
     async function tryFinalizeBookletGroupForProfessor(teamId, bookletId) {
         var sb = getSupabaseClient();
-        if (!bookletId || !teamId) return { ready: false, totalShare: 0 };
+        if (!bookletId || !teamId) return { ready: false, totalShare: 0, debug: 'بسته یا شرکت نامعتبر (bookletId=' + bookletId + ', teamId=' + teamId + ')' };
 
         var tasksRes = await sb.from('tasks').select('id, status, booklet_share_percent').eq('team_id', teamId).eq('booklet_id', bookletId).neq('status', 'terminated');
+        if (tasksRes.error) {
+            showAppAlert('خطا در بررسی وضعیت کتابچه: ' + tasksRes.error.message + ' — احتمالاً ستون booklet_share_percent هنوز در پایگاه‌داده اضافه نشده است.', false);
+            return { ready: false, totalShare: 0, error: true };
+        }
         var tasksForBooklet = tasksRes.data || [];
         var totalShare = tasksForBooklet.reduce(function(s, t) { return s + parseFloat(t.booklet_share_percent || 0); }, 0);
+        var debugInfo = 'تعداد بسته‌های یافت‌شده برای این کتابچه: ' + tasksForBooklet.length + ' | وضعیت هرکدام: ' + tasksForBooklet.map(function(t){ return t.status + '(' + t.booklet_share_percent + '٪)'; }).join('، ');
 
-        if (totalShare < 99.99) return { ready: false, totalShare: totalShare };
+        if (totalShare < 99.99) return { ready: false, totalShare: totalShare, debug: debugInfo };
 
         var allApproved = tasksForBooklet.length > 0 && tasksForBooklet.every(function(t) { return t.status === 'leader_approved'; });
-        if (!allApproved) return { ready: false, totalShare: totalShare };
+        if (!allApproved) return { ready: false, totalShare: totalShare, debug: debugInfo };
 
         var taskIds = tasksForBooklet.map(function(t) { return t.id; });
-        await sb.from('tasks').update({ status: 'professor_review' }).in('id', taskIds);
-        await sb.from('contracts').update({ status: 'professor_review' }).eq('team_id', teamId).in('task_id', taskIds);
+        var taskUpdRes = await sb.from('tasks').update({ status: 'professor_review' }).in('id', taskIds).select();
+        var contractUpdRes = await sb.from('contracts').update({ status: 'professor_review' }).eq('team_id', teamId).in('task_id', taskIds).select();
+
+        if (taskUpdRes.error || contractUpdRes.error) {
+            var em = (taskUpdRes.error ? taskUpdRes.error.message : contractUpdRes.error.message);
+            showAppAlert('خطا در ارسال کتابچه برای ارزیابی استاد: ' + em, false);
+            return { ready: false, totalShare: totalShare, error: true };
+        }
+
+        if (!contractUpdRes.data || contractUpdRes.data.length !== taskIds.length) {
+            showAppAlert('هشدار فنی: تعداد قراردادهای به‌روزرسانی‌شده (' + (contractUpdRes.data ? contractUpdRes.data.length : 0) + ') با تعداد بسته‌های کاری (' + taskIds.length + ') یکی نیست. ممکن است برخی قراردادها team_id متفاوتی داشته باشند.', false);
+        }
 
         return { ready: true, totalShare: totalShare, count: tasksForBooklet.length };
     }
@@ -3463,7 +3499,14 @@
                     }
                 } else if (c.status === 'leader_approved') {
                     var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش</a>' : '';
-                    actionCol = '<div>' + fileLink + '<span class="text-amber-700 font-bold text-xs">✅ تایید سرگروه — در انتظار تکمیل سایر بسته‌های همین کتابچه</span></div>';
+                    if (userProfile.role === 'leader') {
+                        actionCol = '<div>' + fileLink +
+                            '<span class="text-amber-700 font-bold text-xs block mb-1">✅ تایید سرگروه — در انتظار تکمیل سایر بسته‌های همین کتابچه</span>' +
+                            '<button onclick="recheckBookletGroupStatus(\'' + c.team_id + '\', ' + (c.tasks?.booklet_id || 'null') + ')" class="bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer">🔄 بررسی مجدد وضعیت کتابچه</button>' +
+                            '</div>';
+                    } else {
+                        actionCol = '<div>' + fileLink + '<span class="text-amber-700 font-bold text-xs">✅ تایید سرگروه — در انتظار تکمیل سایر بسته‌های همین کتابچه</span></div>';
+                    }
                 } else if (c.status === 'professor_review') {
                     var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش نهایی</a>' : '';
                     if (userProfile.role === 'professor') {
