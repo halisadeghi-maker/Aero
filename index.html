@@ -2299,47 +2299,89 @@
         var sb = getSupabaseClient();
         if (!bookletId || !teamId) return { ready: false, totalShare: 0 };
 
-        // ابتدا خود بسته‌های همین کتابچه را به‌صورت مستقل می‌خوانیم؛
-        // این مسیر عمداً به joinهای تو در تو وابسته نیست تا ارزیابی استاد برای
-        // کتابچه‌های تک‌بسته‌ای و چندبسته‌ای هر دو به‌درستی فعال شود.
+        // همه بسته‌های فعال همین کتابچه را مستقل از joinهای تو در تو می‌خوانیم.
+        // بسته فسخ‌شده سهمی از کتابچه ندارد و نباید مانع ارزیابی استاد شود.
         var tasksRes = await sb.from('tasks')
-            .select('id, status, booklet_share_percent')
+            .select('id, status, leader_approved, booklet_share_percent')
             .eq('team_id', teamId)
-            .eq('booklet_id', bookletId)
-            .neq('status', 'terminated');
+            .eq('booklet_id', bookletId);
 
         if (tasksRes.error) {
             console.error('tryFinalizeBookletGroupForProfessor tasks error:', tasksRes.error);
             return { ready: false, totalShare: 0, error: tasksRes.error.message };
         }
 
-        var tasksForBooklet = tasksRes.data || [];
+        var tasksForBooklet = (tasksRes.data || []).filter(function(t) {
+            return t.status !== 'terminated';
+        });
+
         var totalShare = tasksForBooklet.reduce(function(s, t) {
             return s + parseFloat(t.booklet_share_percent || 0);
         }, 0);
 
-        // برای ورود به ارزیابی استاد، کل کتابچه باید پوشش داده شده باشد.
-        if (totalShare < 99.99) return { ready: false, totalShare: totalShare };
-
-        // همه بسته‌های تعریف‌شده برای این کتابچه باید گزارششان توسط سرگروه تایید شده باشد.
-        var allApproved = tasksForBooklet.length > 0 && tasksForBooklet.every(function(t) {
-            return t.status === 'leader_approved';
-        });
-        if (!allApproved) return { ready: false, totalShare: totalShare };
+        // تا زمانی که 100٪ حجم کتابچه در بسته‌های فعال تعریف نشده،
+        // حتی اگر بعضی بسته‌ها تایید شده باشند، ارزیابی استاد آغاز نمی‌شود.
+        if (tasksForBooklet.length === 0 || totalShare < 99.99) {
+            return { ready: false, totalShare: totalShare };
+        }
 
         var taskIds = tasksForBooklet.map(function(t) { return t.id; });
 
-        var taskUpdateRes = await sb.from('tasks').update({ status: 'professor_review' }).in('id', taskIds);
+        // تایید واقعی هر بسته را از قرارداد متناظر می‌خوانیم. این کار دو مشکل را حل می‌کند:
+        // ۱) اگر status مربوط به task و contract لحظه‌ای از هم عقب افتاده باشند،
+        //    task صرفاً به دلیل status خودش مانع ارزیابی نمی‌شود؛
+        // ۲) بسته‌ای که قبلاً به professor_review رفته است دوباره مانع گروه نمی‌شود.
+        var contractsRes = await sb.from('contracts')
+            .select('id, task_id, status, leader_signed')
+            .eq('team_id', teamId)
+            .in('task_id', taskIds);
+
+        if (contractsRes.error) {
+            console.error('tryFinalizeBookletGroupForProfessor contracts error:', contractsRes.error);
+            return { ready: false, totalShare: totalShare, error: contractsRes.error.message };
+        }
+
+        var contractsByTask = {};
+        (contractsRes.data || []).forEach(function(c) {
+            // برای هر task یک قرارداد فعال/نهایی‌شده کافی است. قرارداد فسخ‌شده
+            // نباید به‌عنوان تاییدکننده بسته محسوب شود.
+            if (c.status !== 'terminated') contractsByTask[c.task_id] = c;
+        });
+
+        var allApproved = tasksForBooklet.every(function(t) {
+            var c = contractsByTask[t.id];
+            return !!c && (
+                t.status === 'professor_review' ||
+                t.status === 'leader_approved' ||
+                t.leader_approved === true
+            ) && (
+                c.status === 'professor_review' ||
+                c.status === 'leader_approved' ||
+                c.status === 'completed' ||
+                c.leader_signed === true
+            );
+        });
+
+        if (!allApproved) {
+            return { ready: false, totalShare: totalShare };
+        }
+
+        // کتابچه‌ای که 100٪ آن پوشش داده و همه بسته‌هایش توسط سرگروه تایید شده‌اند،
+        // باید یکجا وارد ارزیابی استاد شود؛ این منطق هم برای یک بسته 100٪ و هم
+        // برای چند بسته 50٪+50٪، 30٪+70٪ و مانند آن یکسان عمل می‌کند.
+        var taskUpdateRes = await sb.from('tasks')
+            .update({ status: 'professor_review' })
+            .in('id', taskIds);
         if (taskUpdateRes.error) {
             console.error('tryFinalizeBookletGroupForProfessor task update error:', taskUpdateRes.error);
             return { ready: false, totalShare: totalShare, error: taskUpdateRes.error.message };
         }
 
-        // قراردادها را نیز مستقل و صریحاً بر اساس task_id به مرحله ارزیابی استاد می‌بریم.
         var contractUpdateRes = await sb.from('contracts')
             .update({ status: 'professor_review' })
             .eq('team_id', teamId)
             .in('task_id', taskIds)
+            .neq('status', 'terminated')
             .select('id');
 
         if (contractUpdateRes.error) {
