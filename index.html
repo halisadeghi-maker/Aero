@@ -4711,8 +4711,11 @@
         if (isNaN(sharePercent) || sharePercent <= 0 || sharePercent > 100) return showAppAlert('سهم این بسته از کل کتابچه را عددی بین ۱ تا ۱۰۰ درصد وارد کنید.', false);
 
         var sb = getSupabaseClient();
-        var shareCheckRes = await sb.from('tasks').select('booklet_share_percent').eq('team_id', currentTeam.id).eq('booklet_id', parseInt(bId)).neq('status', 'terminated');
-        var usedShare = (shareCheckRes.data || []).reduce(function(sum, t) { return sum + parseFloat(t.booklet_share_percent || 0); }, 0);
+        // فقط بسته‌های فعال سهم کتابچه را اشغال می‌کنند؛ بسته‌های فسخ‌شده باید
+        // سهم ۱۰۰٪ قبلی را آزاد کنند تا امکان تعریف بسته جدید وجود داشته باشد.
+        var shareCheckRes = await sb.from('tasks').select('id, booklet_share_percent, status').eq('team_id', currentTeam.id).eq('booklet_id', parseInt(bId));
+        var activeShareRows = (shareCheckRes.data || []).filter(function(t) { return t.status !== 'terminated'; });
+        var usedShare = activeShareRows.reduce(function(sum, t) { return sum + parseFloat(t.booklet_share_percent || 0); }, 0);
         if (usedShare + sharePercent > 100.01) {
             return showAppAlert('مجموع سهم بسته‌های این کتابچه از ۱۰۰٪ عبور می‌کند (تاکنون ' + roundCoin(usedShare) + '٪ اختصاص یافته). سهم واردشده را کاهش دهید.', false);
         }
@@ -4730,7 +4733,9 @@
             deadlineIso = d.toISOString();
         }
 
-        var existingBookletTasks = await sb.from('tasks').select('id, title').eq('team_id', currentTeam.id).eq('booklet_id', parseInt(bId)).neq('status', 'terminated');
+        // بسته‌های فسخ‌شده نباید مانع تعریف بسته جدید برای همان کتابچه شوند.
+        var existingBookletTasks = await sb.from('tasks').select('id, title, status').eq('team_id', currentTeam.id).eq('booklet_id', parseInt(bId));
+        existingBookletTasks.data = (existingBookletTasks.data || []).filter(function(t) { return t.status !== 'terminated'; });
         if (existingBookletTasks.data && existingBookletTasks.data.length > 0) {
             pendingTaskInsertData = { bookletId: parseInt(bId), title: title, coins: coins, sharePercent: sharePercent, deadline: deadlineIso };
             document.getElementById('duplicate-modal-text').innerText = 'شما قبلاً از این شماره کتابچه بسته کاری دیگری تعریف کرده‌اید.\nآیا اطمینان دارید که می‌خواهید بسته کاری اضافه تری از این کتابچه تعریف کنید؟';
@@ -4770,10 +4775,12 @@
         }
         var allocatableBudget = Math.max(0, totalBudget - totalPenalty);
 
-        var teamTasks = await sb.from('tasks').select('allocated_nominal_coins').eq('team_id', currentTeam.id).neq('status', 'terminated');
+        var teamTasks = await sb.from('tasks').select('allocated_nominal_coins, status').eq('team_id', currentTeam.id);
         var currentSpent = 0;
         if (teamTasks.data) {
-            teamTasks.data.forEach(function(t) { currentSpent += parseFloat(t.allocated_nominal_coins || 0); });
+            teamTasks.data.forEach(function(t) {
+                if (t.status !== 'terminated') currentSpent += parseFloat(t.allocated_nominal_coins || 0);
+            });
         }
 
         if (currentSpent + coins > allocatableBudget) {
