@@ -2235,8 +2235,7 @@
 
         await sb.from('tasks').update({
             submission_url: downloadUrl,
-            status: 'leader_review',
-            leader_approved: false
+            status: 'leader_review'
         }).eq('id', taskId);
 
         await sb.from('contracts').update({
@@ -2272,7 +2271,7 @@
             file_name: null
         });
 
-        await sb.from('tasks').update({ leader_approved: true, status: 'leader_approved' }).eq('id', taskId);
+        await sb.from('tasks').update({ status: 'leader_approved' }).eq('id', taskId);
         await sb.from('contracts').update({ 
             leader_signed: true, 
             status: 'leader_approved', 
@@ -2302,7 +2301,7 @@
         // فقط بسته‌های فعال همین کتابچه در پوشش 100٪ محاسبه می‌شوند.
         // بسته فسخ‌شده سهمی از کتابچه ندارد و مانع تعریف/ارزیابی بسته جدید نیست.
         var tasksRes = await sb.from('tasks')
-            .select('id, status, leader_approved, booklet_share_percent')
+            .select('id, status, booklet_share_percent')
             .eq('team_id', teamId)
             .eq('booklet_id', bookletId);
 
