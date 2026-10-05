@@ -1019,7 +1019,7 @@
 
                 <p><strong>۵. سقف‌ها و ممنوعیت‌های قرارداد:</strong> سقف کل قراردادهای هر دانشجو (فارغ از این‌که با چند شرکت باشد) <strong>۲۵۰ سکه</strong> است و سامانه به‌طور خودکار از عبور از این سقف جلوگیری می‌کند. یک دانشجو می‌تواند چند بستهٔ کاری از <strong>یک کتابچهٔ همان شرکت</strong> را بگیرد، اما هرگز نمی‌تواند یک کتابچهٔ مشابه را هم‌زمان از <strong>دو شرکت مختلف</strong> دریافت کند.</p>
 
-                <p><strong>۶. خروج از عضویت ثابت و وضعیت هشدار:</strong> عضو ثابت هر زمان می‌تواند از شرکت خارج شود. اگر این خروج <strong>بعد از امضای قرارداد اصلی</strong> شرکت با استاد رخ دهد، <strong>۱۵ سکه</strong> از کیف پول نهایی همان عضو کسر می‌شود (اخراج عضو توسط سرگروه نیز <strong>۱۵ سکه</strong> از سکه‌های سرگروه کم می‌کند). <u>تا پیش از امضای قرارداد اصلی، خروج یا اخراج اعضا هیچ جریمه‌ای ندارد، وضعیت هشدار/انحلال صادر نمی‌شود، شرط ۱۵۰ سکه برای جذب عضو جدید اعمال نمی‌شود و شرکت در صورت کمتر شدن از ۳ عضو به حالت «در حال تشکیل» برمی‌گردد.</u> پس از امضای قرارداد اصلی، اگر با این خروج تعداد اعضای ثابت به کمتر از ۳ نفر برسد، شرکت وارد «وضعیت هشدار» می‌شود و سرگروه یک هفته فرصت دارد عضو ثابت جدیدی (با حداقل ۱۵۰ سکه سابقهٔ قرارداد با همان شرکت) جذب کند.</p>
+                <p><strong>۶. خروج از عضویت ثابت و وضعیت هشدار:</strong> عضو ثابت هر زمان می‌تواند از شرکت خارج شود. اگر این خروج <strong>بعد از امضای قرارداد اصلی</strong> شرکت با استاد رخ دهد، <strong>۱۵ سکه</strong> از کیف پول نهایی همان عضو کسر می‌شود (اخراج عضو توسط سرگروه نیز <strong>۱۵ سکه</strong> از سکه‌های سرگروه کم می‌کند). <u>تا پیش از امضای قرارداد اصلی، خروج یا اخراج اعضا هیچ جریمه‌ای ندارد، وضعیت هشدار/انحلال صادر نمی‌شود، شرط ۱۵۰ سکه برای جذب عضو جدید اعمال نمی‌شود و شرکت فعال می‌ماند؛ فقط تا رسیدن دوباره به ۳ عضو نمی‌تواند در مناقصه شرکت کند.</u> پس از امضای قرارداد اصلی، اگر با این خروج تعداد اعضای ثابت به کمتر از ۳ نفر برسد، شرکت وارد «وضعیت هشدار» می‌شود و سرگروه یک هفته فرصت دارد عضو ثابت جدیدی (با حداقل ۱۵۰ سکه سابقهٔ قرارداد با همان شرکت) جذب کند.</p>
 
                 <p><strong>۷. انحلال شرکت:</strong> اگر تا پایان مهلت یک‌هفته‌ای، تعداد اعضا هم‌چنان کمتر از ۳ نفر باشد، شرکت منحل می‌شود: تمام قراردادهای آن باطل و سکه‌های مربوطه بی‌اثر می‌شوند، قرارداد اصلی شرکت با استاد لغو می‌گردد (و دوباره قابل واگذاری به تیم‌های دیگر یا همین سرگروه با شرکت تازه می‌شود)، هر یک از اعضای ثابت باقی‌مانده ۱۵ سکه جریمه می‌شوند، و سرگروه باید شرکت جدیدی تشکیل دهد؛ جریمهٔ از‌دست‌رفتنِ سهم «تکمیل پروژه» به‌صورت ۵۰ سکهٔ منفی همراه او به شرکت بعدی منتقل می‌شود.</p>
 
@@ -1906,6 +1906,10 @@
 
         if (currentTeam.status !== 'active') {
             return showAppAlert('برای شرکت در مناقصه اصلی، ابتدا باید شرکت خود را با حداقل ۳ و حداکثر ۶ عضو ثابت تشکیل داده و ترکیب آن را قطعی کنید.', false);
+        }
+        var bidMemberCntRes = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', currentTeam.id).eq('status', 'active');
+        if ((bidMemberCntRes.count || 0) < 3) {
+            return showAppAlert('تعداد اعضای ثابت شرکت شما کمتر از ۳ نفر است؛ برای شرکت در مناقصه ابتدا عضو جدید اضافه کنید.', false);
         }
 
         var wonCheck = await sb.from('master_projects').select('id').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
@@ -4240,9 +4244,22 @@
         var activeNote = document.getElementById('company-active-note');
 
         if (currentTeam.status === 'active') {
-            addControls.classList.add('hidden');
             finalizeBtn.classList.add('hidden');
             activeNote.classList.remove('hidden');
+            if (!rosterHasContract && members.length < 3) {
+                activeNote.className = 'text-[11px] text-amber-800 bg-amber-50 border border-amber-200 rounded-xl p-2.5 font-bold text-center';
+                activeNote.innerText = '⚠️ تعداد اعضای ثابت کمتر از ۳ نفر است. چون هنوز قرارداد اصلی ندارید، جریمه یا هشداری اعمال نمی‌شود؛ اما برای شرکت در مناقصه باید دوباره حداقل ۳ عضو داشته باشید.';
+            } else {
+                activeNote.className = 'text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 font-bold text-center';
+                activeNote.innerText = '✅ ترکیب شرکت قطعی شده و اکنون می‌توانید در مناقصه اصلی شرکت کنید.';
+            }
+            // تا پیش از قرارداد اصلی، سرگروه می‌تواند آزادانه عضو اضافه کند (تا سقف ۶ نفر)
+            if (!rosterHasContract && members.length < 6) {
+                addControls.classList.remove('hidden');
+                await loadFreeAgentOptions(false);
+            } else {
+                addControls.classList.add('hidden');
+            }
             await renderFreeMarketStatus(members);
         } else if (currentTeam.status === 'warning') {
             activeNote.classList.add('hidden');
@@ -4351,14 +4368,6 @@
         return !!(r.data);
     }
 
-    // اگر شرکت قرارداد ندارد و تعداد اعضای فعال به کمتر از ۳ برسد: بدون هشدار/انحلال،
-    // شرکت به حالت «در حال تشکیل» برمی‌گردد تا سرگروه بتواند عضو جدید اضافه و دوباره قطعی کند.
-    async function revertTeamToFormingIfNeeded(teamId, activeCount) {
-        var sb = getSupabaseClient();
-        if (activeCount >= 3) return;
-        await sb.from('teams').update({ status: 'forming', warning_started_at: null }).eq('id', teamId).in('status', ['active', 'warning']);
-    }
-
     window.expelFixedMemberByLeader = async function(memberRowId) {
         if (!currentTeam || !['active', 'warning'].includes(currentTeam.status)) {
             return showAppAlert('اخراج عضو فقط پس از قطعی‌شدن شرکت امکان‌پذیر است.', false);
@@ -4369,7 +4378,7 @@
 
         var confirmMsg = hasContract
             ? 'با اخراج این عضو، ۱۵ سکه جریمه از سکه‌های سرگروه (نمرهٔ نهایی شما) کسر می‌شود. در صورت رسیدن تعداد اعضای فعال به کمتر از ۳ نفر، شرکت وارد وضعیت هشدار و مهلت جذب عضو جدید خواهد شد. آیا ادامه می‌دهید؟'
-            : 'چون هنوز قرارداد اصلی با استاد منعقد نشده است، این اخراج جریمه‌ای ندارد و وضعیت هشدار/انحلال هم صادر نمی‌شود. در صورت کمتر شدن اعضا از ۳ نفر، شرکت به حالت «در حال تشکیل» برمی‌گردد تا عضو جدید اضافه کنید. آیا ادامه می‌دهید؟';
+            : 'چون هنوز قرارداد اصلی با استاد منعقد نشده است، این اخراج جریمه‌ای ندارد و وضعیت هشدار/انحلال هم صادر نمی‌شود. (برای شرکت در مناقصه باید دوباره حداقل ۳ عضو داشته باشید.) آیا ادامه می‌دهید؟';
         if (!(await showConfirmDialog(confirmMsg, { dangerous: hasContract, confirmLabel: 'اخراج عضو' }))) return;
         var EXPEL_PENALTY_COINS = 15;
 
@@ -4423,9 +4432,9 @@
                         warning_started_at: new Date().toISOString()
                     }).eq('id', currentTeam.id);
                 }
-            } else {
-                await revertTeamToFormingIfNeeded(currentTeam.id, remainCount);
             }
+            // بدون قرارداد اصلی: وضعیت شرکت «فعال» می‌ماند (بدون هشدار/انحلال/جریمه)؛
+            // فقط تا رسیدن دوباره به ۳ عضو امکان شرکت در مناقصه وجود ندارد.
         }
 
         showAppAlert(hasContract
@@ -4533,9 +4542,8 @@
                 if (teamRes.data && teamRes.data.status !== 'warning') {
                     await sb.from('teams').update({ status: 'warning', warning_started_at: new Date().toISOString() }).eq('id', teamId);
                 }
-            } else {
-                await revertTeamToFormingIfNeeded(teamId, remainCount);
             }
+            // بدون قرارداد اصلی: وضعیت شرکت تغییری نمی‌کند و هشداری صادر نمی‌شود.
         }
 
         showAppAlert(mainContractSigned
@@ -4620,7 +4628,7 @@
         if (!(await teamHasMainContract(teamId))) {
             var cntR = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', teamId).eq('status', 'active');
             var cntA = cntR.count || 0;
-            await sb.from('teams').update({ status: cntA >= 3 ? 'active' : 'forming', warning_started_at: null }).eq('id', teamId).eq('status', 'warning');
+            await sb.from('teams').update({ status: 'active', warning_started_at: null }).eq('id', teamId).eq('status', 'warning');
             return false;
         }
 
