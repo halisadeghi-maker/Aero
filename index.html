@@ -1019,7 +1019,7 @@
 
                 <p><strong>۵. سقف‌ها و ممنوعیت‌های قرارداد:</strong> سقف کل قراردادهای هر دانشجو (فارغ از این‌که با چند شرکت باشد) <strong>۲۵۰ سکه</strong> است و سامانه به‌طور خودکار از عبور از این سقف جلوگیری می‌کند. یک دانشجو می‌تواند چند بستهٔ کاری از <strong>یک کتابچهٔ همان شرکت</strong> را بگیرد، اما هرگز نمی‌تواند یک کتابچهٔ مشابه را هم‌زمان از <strong>دو شرکت مختلف</strong> دریافت کند.</p>
 
-                <p><strong>۶. خروج از عضویت ثابت و وضعیت هشدار:</strong> عضو ثابت هر زمان می‌تواند از شرکت خارج شود. اگر این خروج <strong>بعد از امضای قرارداد اصلی</strong> شرکت با استاد رخ دهد، <strong>۱۵ سکه</strong> از کیف پول نهایی همان عضو کسر می‌شود (اخراج عضو توسط سرگروه نیز <strong>۱۵ سکه</strong> از سکه‌های سرگروه کم می‌کند). <u>تا پیش از امضای قرارداد اصلی، خروج یا اخراج اعضا هیچ جریمه‌ای ندارد، وضعیت هشدار/انحلال صادر نمی‌شود، شرط ۱۵۰ سکه برای جذب عضو جدید اعمال نمی‌شود و شرکت فعال می‌ماند؛ فقط تا رسیدن دوباره به ۳ عضو نمی‌تواند در مناقصه شرکت کند.</u> پس از امضای قرارداد اصلی، اگر با این خروج تعداد اعضای ثابت به کمتر از ۳ نفر برسد، شرکت وارد «وضعیت هشدار» می‌شود و سرگروه یک هفته فرصت دارد عضو ثابت جدیدی (با حداقل ۱۵۰ سکه سابقهٔ قرارداد با همان شرکت) جذب کند.</p>
+                <p><strong>۶. خروج از عضویت ثابت و وضعیت هشدار:</strong> عضو ثابت هر زمان می‌تواند از شرکت خارج شود. اگر این خروج <strong>بعد از امضای قرارداد اصلی</strong> شرکت با استاد رخ دهد، <strong>۱۵ سکه</strong> از کیف پول نهایی همان عضو کسر می‌شود (اخراج عضو توسط سرگروه نیز <strong>۱۵ سکه</strong> جریمه دارد که از <strong>بودجهٔ قرارداد اصلی شرکت</strong> کسر و در بخش جریمهٔ نمودار بودجه نمایش داده می‌شود؛ این مبلغ مستقیماً وارد نمرهٔ سرگروه نمی‌شود و فقط با کاهش نقدینگیِ باقی‌مانده بر بهرهٔ اقتصادی او اثر می‌گذارد). <u>تا پیش از امضای قرارداد اصلی، خروج یا اخراج اعضا هیچ جریمه‌ای ندارد، وضعیت هشدار/انحلال صادر نمی‌شود، شرط ۱۵۰ سکه برای جذب عضو جدید اعمال نمی‌شود و شرکت فعال می‌ماند؛ فقط تا رسیدن دوباره به ۳ عضو نمی‌تواند در مناقصه شرکت کند.</u> پس از امضای قرارداد اصلی، اگر با این خروج تعداد اعضای ثابت به کمتر از ۳ نفر برسد، شرکت وارد «وضعیت هشدار» می‌شود و سرگروه یک هفته فرصت دارد عضو ثابت جدیدی (با حداقل ۱۵۰ سکه سابقهٔ قرارداد با همان شرکت) جذب کند.</p>
 
                 <p><strong>۷. انحلال شرکت:</strong> اگر تا پایان مهلت یک‌هفته‌ای، تعداد اعضا هم‌چنان کمتر از ۳ نفر باشد، شرکت منحل می‌شود: تمام قراردادهای آن باطل و سکه‌های مربوطه بی‌اثر می‌شوند، قرارداد اصلی شرکت با استاد لغو می‌گردد (و دوباره قابل واگذاری به تیم‌های دیگر یا همین سرگروه با شرکت تازه می‌شود)، هر یک از اعضای ثابت باقی‌مانده ۱۵ سکه جریمه می‌شوند، و سرگروه باید شرکت جدیدی تشکیل دهد؛ جریمهٔ از‌دست‌رفتنِ سهم «تکمیل پروژه» به‌صورت ۵۰ سکهٔ منفی همراه او به شرکت بعدی منتقل می‌شود.</p>
 
@@ -1558,7 +1558,7 @@
                     if (priorDissolvedRes.data) {
                         priorNoticeBox.classList.remove('hidden');
                         priorNoticeBox.innerText = '⛔ شرکت قبلی شما («' + priorDissolvedRes.data.name + '») منحل شده و قرارداد اصلی آن با استاد لغو گردید. ' +
-                            (accumulatedPenalty > 0 ? 'مجموع ' + accumulatedPenalty + ' سکه جریمهٔ دائمی (انحلال/اخراج اعضا) از نمرهٔ نهایی شما کسر خواهد شد. ' : '') +
+                            (accumulatedPenalty > 0 ? 'مجموع ' + accumulatedPenalty + ' سکه جریمهٔ دائمی از نمرهٔ نهایی شرکت بعدی شما کسر خواهد شد. ' : '') +
                             'برای ادامهٔ کار، یک شرکت جدید تشکیل دهید و دوباره در مناقصهٔ اصلی شرکت کنید؛ تمام قوانین برای شرکت جدید مانند قبل برقرار است.';
                     } else {
                         priorNoticeBox.classList.add('hidden');
@@ -3412,7 +3412,7 @@
         var sb = getSupabaseClient();
 
         var results = await Promise.all([
-            sb.from('teams').select('status, completion_score_zeroed, leader_id').eq('id', teamId).single(),
+            sb.from('teams').select('*').eq('id', teamId).single(),
             sb.from('booklets').select('id, nominal_coins').order('booklet_number'),
             sb.from('tasks').select('id, booklet_id, status, allocated_nominal_coins').eq('team_id', teamId),
             sb.from('contracts').select('id, task_id, status, agreed_base_coins, quality_percent, leader_penalty_coins').eq('team_id', teamId),
@@ -3491,6 +3491,9 @@
         var totalLeaderPenalty = teamContracts.reduce(function(s, c) {
             return s + parseFloat(c.leader_penalty_coins || 0);
         }, 0);
+
+        // جریمهٔ اخراج اعضا نیز از بودجهٔ شرکت کسر می‌شود و از مسیر باقی‌ماندهٔ بودجه (R) در بهرهٔ اقتصادی اثر می‌گذارد.
+        totalLeaderPenalty += parseFloat(team.expel_penalty_coins || 0);
 
         var R = mainContractPrice - actualProjectCost - totalLeaderPenalty;
         var projectFullyDeliveredForEconomics = (!isDissolved && allBookletsDelivered && booklets.length > 0);
@@ -3811,6 +3814,7 @@
             if (teamPenaltyRes.data) {
                 teamPenaltyRes.data.forEach(function(c) { totalLeaderPenalty += parseFloat(c.leader_penalty_coins || 0); });
             }
+            totalLeaderPenalty += await getTeamExpelPenalty(currentTeam.id);
 
             var allocatableBudget = Math.max(0, totalContractBudget - totalLeaderPenalty);
 
@@ -3863,7 +3867,7 @@
                 var dissolutionNote = document.getElementById('grade-dissolution-note');
                 if (leaderGrade.dissolutionPenaltyCoins > 0) {
                     dissolutionNote.classList.remove('hidden');
-                    dissolutionNote.innerText = '⛔ به دلیل جریمه‌های ثبت‌شده (انحلال شرکت قبلی و/یا اخراج اعضا: هر اخراج ۱۵ سکه)، ' + roundCoin(leaderGrade.dissolutionPenaltyCoins) + ' سکه از نمرهٔ نهاییِ سرگروه کسر شده است (نمرهٔ خام قبل از کسر جریمه: ' + roundCoin(leaderGrade.rawCoins) + ' سکه).';
+                    dissolutionNote.innerText = '⛔ به دلیل انحلال یکی از شرکت‌های قبلی شما، ' + roundCoin(leaderGrade.dissolutionPenaltyCoins) + ' سکه جریمهٔ دائمی از نمرهٔ نهاییِ شرکتِ فعلی شما کسر شده است (نمرهٔ خام قبل از کسر جریمه: ' + roundCoin(leaderGrade.rawCoins) + ' سکه).';
                 } else {
                     dissolutionNote.classList.add('hidden');
                 }
@@ -4360,6 +4364,15 @@
         await loadCompanyRosterBox();
     };
 
+    // جریمهٔ اخراج اعضا (۱۵ سکه به ازای هر اخراج پس از عقد قرارداد اصلی) روی ستون teams.expel_penalty_coins
+    // نگه‌داری می‌شود و فقط از بودجهٔ شرکت کسر می‌شود؛ وارد جریمهٔ دائمی پروفایل سرگروه نمی‌شود.
+    // اگر ستون هنوز در پایگاه‌داده ساخته نشده باشد مقدار صفر در نظر گرفته می‌شود.
+    async function getTeamExpelPenalty(teamId) {
+        var sb = getSupabaseClient();
+        var r = await sb.from('teams').select('*').eq('id', teamId).maybeSingle();
+        return (r.data && r.data.expel_penalty_coins) ? parseFloat(r.data.expel_penalty_coins) : 0;
+    }
+
     // آیا این شرکت قرارداد اصلی منعقدشده با استاد دارد؟
     // تمام جریمه‌ها، وضعیت هشدار/انحلال و شرط ۱۵۰ سکهٔ جذب عضو فقط در صورت وجود قرارداد اصلی اعمال می‌شوند.
     async function teamHasMainContract(teamId) {
@@ -4377,7 +4390,7 @@
         var hasContract = await teamHasMainContract(currentTeam.id);
 
         var confirmMsg = hasContract
-            ? 'با اخراج این عضو، ۱۵ سکه جریمه از سکه‌های سرگروه (نمرهٔ نهایی شما) کسر می‌شود. در صورت رسیدن تعداد اعضای فعال به کمتر از ۳ نفر، شرکت وارد وضعیت هشدار و مهلت جذب عضو جدید خواهد شد. آیا ادامه می‌دهید؟'
+            ? 'با اخراج این عضو، ۱۵ سکه جریمه از بودجهٔ قرارداد اصلی شرکت کسر می‌شود (در بخش «مبلغ جریمه» نمودار بودجه ثبت می‌شود). در صورت رسیدن تعداد اعضای فعال به کمتر از ۳ نفر، شرکت وارد وضعیت هشدار و مهلت جذب عضو جدید خواهد شد. آیا ادامه می‌دهید؟'
             : 'چون هنوز قرارداد اصلی با استاد منعقد نشده است، این اخراج جریمه‌ای ندارد و وضعیت هشدار/انحلال هم صادر نمی‌شود. (برای شرکت در مناقصه باید دوباره حداقل ۳ عضو داشته باشید.) آیا ادامه می‌دهید؟';
         if (!(await showConfirmDialog(confirmMsg, { dangerous: hasContract, confirmLabel: 'اخراج عضو' }))) return;
         var EXPEL_PENALTY_COINS = 15;
@@ -4393,27 +4406,23 @@
             return showAppAlert('خطا در اخراج عضو: ' + (updRes.error ? updRes.error.message : 'عضو فعال یافت نشد.'), false);
         }
 
-        // ۲) جریمهٔ ۱۵ سکه‌ای از سکه‌های خود سرگروه کسر می‌شود.
-        //    سکه‌های سرگروه = نمرهٔ نهایی او در calculateLeaderGrade که
-        //    «جریمهٔ دائمی سطح پروفایل» (dissolution_penalty_coins) را از مجموع کسر می‌کند.
-        //    (قبلاً این جریمه به‌اشتباه از مبلغ قرارداد اصلی master_projects کم می‌شد؛ آن جدول
-        //     توسط سرگروه قابل ویرایش نیست و جریمه عملاً اعمال نمی‌شد.)
+        // ۲) جریمهٔ ۱۵ سکه‌ای فقط از بودجهٔ شرکت کسر می‌شود (teams.expel_penalty_coins) و در بخش
+        //    «مبلغ جریمه» نمودار بودجه نمایش داده می‌شود. وارد نمرهٔ سرگروه به‌صورت جریمهٔ دائمی نمی‌شود؛
+        //    فقط از طریق کاهش باقی‌ماندهٔ بودجه (کسری نقدینگی) در بهرهٔ اقتصادی اثر می‌گذارد.
         if (hasContract) {
-        var profRes = await sb.from('profiles').select('dissolution_penalty_coins').eq('id', currentUser.id).maybeSingle();
-        var priorPenalty = (profRes.data && profRes.data.dissolution_penalty_coins) ? parseFloat(profRes.data.dissolution_penalty_coins) : 0;
-        var newPenalty = priorPenalty + EXPEL_PENALTY_COINS;
+            var priorExpel = await getTeamExpelPenalty(currentTeam.id);
+            var penRes = await sb.from('teams')
+                .update({ expel_penalty_coins: priorExpel + EXPEL_PENALTY_COINS })
+                .eq('id', currentTeam.id)
+                .select('id');
 
-        var penRes = await sb.from('profiles')
-            .update({ dissolution_penalty_coins: newPenalty })
-            .eq('id', currentUser.id)
-            .select('dissolution_penalty_coins');
-
-        if (penRes.error || !penRes.data || penRes.data.length === 0) {
-            // اگر جریمه ثبت نشد، اخراج را برمی‌گردانیم تا اخراج بدون جریمه انجام نشود.
-            await sb.from('team_members').update({ status: 'active', exited_at: null, exit_penalty_applied: false }).eq('id', memberRowId);
-            return showAppAlert('اخراج انجام نشد؛ ثبت جریمهٔ ۱۵ سکه‌ای سرگروه با خطا مواجه شد: ' +
-                (penRes.error ? penRes.error.message : 'به‌روزرسانی پایگاه‌داده انجام نشد (احتمالاً دسترسی ویرایش پروفایل در Supabase مسدود است).'), false);
-        }
+            if (penRes.error || !penRes.data || penRes.data.length === 0) {
+                // اگر جریمه ثبت نشد، اخراج را برمی‌گردانیم تا اخراج بدون جریمه انجام نشود.
+                await sb.from('team_members').update({ status: 'active', exited_at: null, exit_penalty_applied: false }).eq('id', memberRowId);
+                return showAppAlert('اخراج انجام نشد؛ ثبت جریمهٔ ۱۵ سکه‌ای در بودجهٔ شرکت با خطا مواجه شد: ' +
+                    (penRes.error ? penRes.error.message : 'به‌روزرسانی پایگاه‌داده انجام نشد') +
+                    '\nاگر پیام مربوط به نبودن ستون است، در Supabase دستور زیر را اجرا کنید:\nalter table teams add column if not exists expel_penalty_coins numeric default 0;', false);
+            }
         }
 
         var remainCountRes = await sb.from('team_members')
@@ -4438,7 +4447,7 @@
         }
 
         showAppAlert(hasContract
-            ? 'عضو با موفقیت از شرکت اخراج شد و ۱۵ سکه جریمه از سکه‌های سرگروه کسر گردید.'
+            ? 'عضو با موفقیت از شرکت اخراج شد و ۱۵ سکه جریمه از بودجهٔ کل شرکت کسر گردید.'
             : 'عضو بدون جریمه از شرکت حذف شد (قرارداد اصلی هنوز منعقد نشده است).', true, 'سامانه');
 
         var freshTeamRes = await sb.from('teams').select('*').eq('id', currentTeam.id).single();
@@ -4857,6 +4866,7 @@
         if (penaltyRes.data) {
             penaltyRes.data.forEach(function(c) { totalPenalty += parseFloat(c.leader_penalty_coins || 0); });
         }
+        totalPenalty += await getTeamExpelPenalty(currentTeam.id);
         var allocatableBudget = Math.max(0, totalBudget - totalPenalty);
 
         var teamTasks = await sb.from('tasks').select('allocated_nominal_coins, status').eq('team_id', currentTeam.id);
