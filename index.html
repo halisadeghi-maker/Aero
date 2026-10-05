@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۲.۱)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۲.۲)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!--
@@ -256,9 +256,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۳.۲.۱) -->
+            <!-- نسخه سامانه (۳.۲.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.2.1</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.2.2</span>
             </div>
         </section>
 
@@ -1019,7 +1019,7 @@
 
                 <p><strong>۵. سقف‌ها و ممنوعیت‌های قرارداد:</strong> سقف کل قراردادهای هر دانشجو (فارغ از این‌که با چند شرکت باشد) <strong>۲۵۰ سکه</strong> است و سامانه به‌طور خودکار از عبور از این سقف جلوگیری می‌کند. یک دانشجو می‌تواند چند بستهٔ کاری از <strong>یک کتابچهٔ همان شرکت</strong> را بگیرد، اما هرگز نمی‌تواند یک کتابچهٔ مشابه را هم‌زمان از <strong>دو شرکت مختلف</strong> دریافت کند.</p>
 
-                <p><strong>۶. خروج از عضویت ثابت و وضعیت هشدار:</strong> عضو ثابت هر زمان می‌تواند از شرکت خارج شود. اگر این خروج <strong>بعد از امضای قرارداد اصلی</strong> شرکت با استاد رخ دهد، <strong>۱۵ سکه</strong> از کیف پول نهایی همان عضو کسر می‌شود. اگر با این خروج تعداد اعضای ثابت به کمتر از ۳ نفر برسد، شرکت وارد «وضعیت هشدار» می‌شود و سرگروه یک هفته فرصت دارد عضو ثابت جدیدی (با حداقل ۱۵۰ سکه سابقهٔ قرارداد با همان شرکت) جذب کند.</p>
+                <p><strong>۶. خروج از عضویت ثابت و وضعیت هشدار:</strong> عضو ثابت هر زمان می‌تواند از شرکت خارج شود. اگر این خروج <strong>بعد از امضای قرارداد اصلی</strong> شرکت با استاد رخ دهد، <strong>۱۵ سکه</strong> از کیف پول نهایی همان عضو کسر می‌شود (اخراج عضو توسط سرگروه نیز <strong>۱۵ سکه</strong> از سکه‌های سرگروه کم می‌کند). <u>تا پیش از امضای قرارداد اصلی، خروج یا اخراج اعضا هیچ جریمه‌ای ندارد، وضعیت هشدار/انحلال صادر نمی‌شود، شرط ۱۵۰ سکه برای جذب عضو جدید اعمال نمی‌شود و شرکت در صورت کمتر شدن از ۳ عضو به حالت «در حال تشکیل» برمی‌گردد.</u> پس از امضای قرارداد اصلی، اگر با این خروج تعداد اعضای ثابت به کمتر از ۳ نفر برسد، شرکت وارد «وضعیت هشدار» می‌شود و سرگروه یک هفته فرصت دارد عضو ثابت جدیدی (با حداقل ۱۵۰ سکه سابقهٔ قرارداد با همان شرکت) جذب کند.</p>
 
                 <p><strong>۷. انحلال شرکت:</strong> اگر تا پایان مهلت یک‌هفته‌ای، تعداد اعضا هم‌چنان کمتر از ۳ نفر باشد، شرکت منحل می‌شود: تمام قراردادهای آن باطل و سکه‌های مربوطه بی‌اثر می‌شوند، قرارداد اصلی شرکت با استاد لغو می‌گردد (و دوباره قابل واگذاری به تیم‌های دیگر یا همین سرگروه با شرکت تازه می‌شود)، هر یک از اعضای ثابت باقی‌مانده ۱۵ سکه جریمه می‌شوند، و سرگروه باید شرکت جدیدی تشکیل دهد؛ جریمهٔ از‌دست‌رفتنِ سهم «تکمیل پروژه» به‌صورت ۵۰ سکهٔ منفی همراه او به شرکت بعدی منتقل می‌شود.</p>
 
@@ -4166,11 +4166,9 @@
         var sb = getSupabaseClient();
 
         if (currentTeam.status === 'warning') {
-            var justDissolved = await dissolveCompanyIfExpired(currentTeam.id);
-            if (justDissolved) {
-                var freshTeamRes = await sb.from('teams').select('*').eq('id', currentTeam.id).single();
-                if (freshTeamRes.data) currentTeam = freshTeamRes.data;
-            }
+            await dissolveCompanyIfExpired(currentTeam.id);
+            var freshTeamRes = await sb.from('teams').select('*').eq('id', currentTeam.id).single();
+            if (freshTeamRes.data) currentTeam = freshTeamRes.data;
         }
 
         if (currentTeam.status === 'dissolved') {
@@ -4183,6 +4181,7 @@
         var members = allRows.filter(function(r) { return r.status === 'active'; });
         var pendingInvites = allRows.filter(function(r) { return r.status === 'pending'; });
 
+        var rosterHasContract = await teamHasMainContract(currentTeam.id);
         var statusBadge = document.getElementById('company-status-badge');
         var warningBanner = document.getElementById('warning-deadline-banner');
 
@@ -4220,7 +4219,7 @@
                 var actionHtml = currentTeam.status === 'forming'
                     ? '<button onclick="removeFixedMember(\'' + m.id + '\')" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold cursor-pointer">حذف</button>'
                     : (canRemove
-                        ? '<button onclick="expelFixedMemberByLeader(\'' + m.id + '\')" class="text-rose-700 hover:text-white hover:bg-rose-600 bg-rose-50 border border-rose-200 px-2 py-1 rounded-lg text-[10px] font-black cursor-pointer">اخراج (۱۵ سکه جریمه)</button>'
+                        ? '<button onclick="expelFixedMemberByLeader(\'' + m.id + '\')" class="text-rose-700 hover:text-white hover:bg-rose-600 bg-rose-50 border border-rose-200 px-2 py-1 rounded-lg text-[10px] font-black cursor-pointer">' + (rosterHasContract ? 'اخراج (۱۵ سکه جریمه)' : 'حذف عضو (بدون جریمه)') + '</button>'
                         : '<span class="text-[10px] text-slate-400 font-bold">عضو ثابت</span>');
                 return '<div class="flex justify-between items-center bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs">' +
                     '<span class="font-bold text-slate-700">' + (m.profiles ? m.profiles.full_name : 'نامشخص') + '</span>' +
@@ -4253,7 +4252,7 @@
                 addControls.classList.add('hidden');
             } else {
                 addControls.classList.remove('hidden');
-                await loadFreeAgentOptions(true);
+                await loadFreeAgentOptions(rosterHasContract);
             }
         } else {
             activeNote.classList.add('hidden');
@@ -4344,17 +4343,34 @@
         await loadCompanyRosterBox();
     };
 
+    // آیا این شرکت قرارداد اصلی منعقدشده با استاد دارد؟
+    // تمام جریمه‌ها، وضعیت هشدار/انحلال و شرط ۱۵۰ سکهٔ جذب عضو فقط در صورت وجود قرارداد اصلی اعمال می‌شوند.
+    async function teamHasMainContract(teamId) {
+        var sb = getSupabaseClient();
+        var r = await sb.from('master_projects').select('id').eq('awarded_team_id', teamId).eq('status', 'awarded').maybeSingle();
+        return !!(r.data);
+    }
+
+    // اگر شرکت قرارداد ندارد و تعداد اعضای فعال به کمتر از ۳ برسد: بدون هشدار/انحلال،
+    // شرکت به حالت «در حال تشکیل» برمی‌گردد تا سرگروه بتواند عضو جدید اضافه و دوباره قطعی کند.
+    async function revertTeamToFormingIfNeeded(teamId, activeCount) {
+        var sb = getSupabaseClient();
+        if (activeCount >= 3) return;
+        await sb.from('teams').update({ status: 'forming', warning_started_at: null }).eq('id', teamId).in('status', ['active', 'warning']);
+    }
+
     window.expelFixedMemberByLeader = async function(memberRowId) {
         if (!currentTeam || !['active', 'warning'].includes(currentTeam.status)) {
             return showAppAlert('اخراج عضو فقط پس از قطعی‌شدن شرکت امکان‌پذیر است.', false);
         }
 
-        if (!(await showConfirmDialog(
-            'با اخراج این عضو، ۱۵ سکه جریمه از سکه‌های سرگروه (نمرهٔ نهایی شما) کسر می‌شود. در صورت رسیدن تعداد اعضای فعال به کمتر از ۳ نفر، شرکت وارد وضعیت هشدار و مهلت جذب عضو جدید خواهد شد. آیا ادامه می‌دهید؟',
-            { dangerous: true, confirmLabel: 'اخراج عضو' }
-        ))) return;
-
         var sb = getSupabaseClient();
+        var hasContract = await teamHasMainContract(currentTeam.id);
+
+        var confirmMsg = hasContract
+            ? 'با اخراج این عضو، ۱۵ سکه جریمه از سکه‌های سرگروه (نمرهٔ نهایی شما) کسر می‌شود. در صورت رسیدن تعداد اعضای فعال به کمتر از ۳ نفر، شرکت وارد وضعیت هشدار و مهلت جذب عضو جدید خواهد شد. آیا ادامه می‌دهید؟'
+            : 'چون هنوز قرارداد اصلی با استاد منعقد نشده است، این اخراج جریمه‌ای ندارد و وضعیت هشدار/انحلال هم صادر نمی‌شود. در صورت کمتر شدن اعضا از ۳ نفر، شرکت به حالت «در حال تشکیل» برمی‌گردد تا عضو جدید اضافه کنید. آیا ادامه می‌دهید؟';
+        if (!(await showConfirmDialog(confirmMsg, { dangerous: hasContract, confirmLabel: 'اخراج عضو' }))) return;
         var EXPEL_PENALTY_COINS = 15;
 
         // ۱) ابتدا عضو اخراج می‌شود (فقط اگر هنوز فعال باشد؛ از اخراج و جریمهٔ دوباره جلوگیری می‌شود)
@@ -4373,6 +4389,7 @@
         //    «جریمهٔ دائمی سطح پروفایل» (dissolution_penalty_coins) را از مجموع کسر می‌کند.
         //    (قبلاً این جریمه به‌اشتباه از مبلغ قرارداد اصلی master_projects کم می‌شد؛ آن جدول
         //     توسط سرگروه قابل ویرایش نیست و جریمه عملاً اعمال نمی‌شد.)
+        if (hasContract) {
         var profRes = await sb.from('profiles').select('dissolution_penalty_coins').eq('id', currentUser.id).maybeSingle();
         var priorPenalty = (profRes.data && profRes.data.dissolution_penalty_coins) ? parseFloat(profRes.data.dissolution_penalty_coins) : 0;
         var newPenalty = priorPenalty + EXPEL_PENALTY_COINS;
@@ -4388,6 +4405,7 @@
             return showAppAlert('اخراج انجام نشد؛ ثبت جریمهٔ ۱۵ سکه‌ای سرگروه با خطا مواجه شد: ' +
                 (penRes.error ? penRes.error.message : 'به‌روزرسانی پایگاه‌داده انجام نشد (احتمالاً دسترسی ویرایش پروفایل در Supabase مسدود است).'), false);
         }
+        }
 
         var remainCountRes = await sb.from('team_members')
             .select('id', { count: 'exact', head: true })
@@ -4397,16 +4415,22 @@
         var remainCount = remainCountRes.count || 0;
 
         if (remainCount < 3) {
-            var teamRes = await sb.from('teams').select('status, warning_started_at').eq('id', currentTeam.id).single();
-            if (teamRes.data && teamRes.data.status !== 'warning') {
-                await sb.from('teams').update({
-                    status: 'warning',
-                    warning_started_at: new Date().toISOString()
-                }).eq('id', currentTeam.id);
+            if (hasContract) {
+                var teamRes = await sb.from('teams').select('status, warning_started_at').eq('id', currentTeam.id).single();
+                if (teamRes.data && teamRes.data.status !== 'warning') {
+                    await sb.from('teams').update({
+                        status: 'warning',
+                        warning_started_at: new Date().toISOString()
+                    }).eq('id', currentTeam.id);
+                }
+            } else {
+                await revertTeamToFormingIfNeeded(currentTeam.id, remainCount);
             }
         }
 
-        showAppAlert('عضو با موفقیت از شرکت اخراج شد و ۱۵ سکه جریمه از سکه‌های سرگروه کسر گردید.', true, 'سامانه');
+        showAppAlert(hasContract
+            ? 'عضو با موفقیت از شرکت اخراج شد و ۱۵ سکه جریمه از سکه‌های سرگروه کسر گردید.'
+            : 'عضو بدون جریمه از شرکت حذف شد (قرارداد اصلی هنوز منعقد نشده است).', true, 'سامانه');
 
         var freshTeamRes = await sb.from('teams').select('*').eq('id', currentTeam.id).single();
         if (freshTeamRes.data) currentTeam = freshTeamRes.data;
@@ -4487,7 +4511,7 @@
 
         var warnMsg = mainContractSigned
             ? 'قرارداد اصلی این شرکت با استاد منعقد شده است؛ در صورت خروج از عضویت ثابت، ۱۵ سکه از کیف پول نهایی شما کسر خواهد شد. آیا مطمئن هستید؟'
-            : 'آیا از خروج از عضویت ثابت این شرکت اطمینان دارید؟ (چون هنوز قرارداد اصلی امضا نشده، جریمه‌ای اعمال نمی‌شود)';
+            : 'آیا از خروج از عضویت ثابت این شرکت اطمینان دارید؟ (چون هنوز قرارداد اصلی امضا نشده، جریمه‌ای اعمال نمی‌شود و وضعیت هشدار/انحلال هم صادر نخواهد شد)';
         if (!(await showConfirmDialog(warnMsg, { dangerous: mainContractSigned, confirmLabel: 'خروج از شرکت' }))) return;
 
         var updRes = await sb.from('team_members').update({
@@ -4504,9 +4528,13 @@
         var remainCountRes = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', teamId).eq('status', 'active');
         var remainCount = remainCountRes.count || 0;
         if (remainCount < 3) {
-            var teamRes = await sb.from('teams').select('status, warning_started_at').eq('id', teamId).single();
-            if (teamRes.data && teamRes.data.status !== 'warning') {
-                await sb.from('teams').update({ status: 'warning', warning_started_at: new Date().toISOString() }).eq('id', teamId);
+            if (mainContractSigned) {
+                var teamRes = await sb.from('teams').select('status, warning_started_at').eq('id', teamId).single();
+                if (teamRes.data && teamRes.data.status !== 'warning') {
+                    await sb.from('teams').update({ status: 'warning', warning_started_at: new Date().toISOString() }).eq('id', teamId);
+                }
+            } else {
+                await revertTeamToFormingIfNeeded(teamId, remainCount);
             }
         }
 
@@ -4587,6 +4615,14 @@
         if (!team) return false;
         if (team.status === 'dissolved') return true;
         if (team.status !== 'warning' || !team.warning_started_at) return false;
+
+        // بدون قرارداد اصلی، انحلال و جریمه‌ای وجود ندارد؛ هشدارِ احتمالی قدیمی لغو می‌شود.
+        if (!(await teamHasMainContract(teamId))) {
+            var cntR = await sb.from('team_members').select('id', { count: 'exact', head: true }).eq('team_id', teamId).eq('status', 'active');
+            var cntA = cntR.count || 0;
+            await sb.from('teams').update({ status: cntA >= 3 ? 'active' : 'forming', warning_started_at: null }).eq('id', teamId).eq('status', 'warning');
+            return false;
+        }
 
         var deadline = new Date(team.warning_started_at);
         deadline.setDate(deadline.getDate() + 7);
