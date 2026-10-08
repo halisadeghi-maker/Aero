@@ -546,7 +546,7 @@
                 <div class="border-2 border-rose-400 rounded-2xl p-4 bg-gradient-to-br from-rose-50 to-rose-100/60 shadow-sm space-y-3">
                     <h5 class="text-xs font-black text-rose-900 flex items-center gap-2"><span>☢️</span> منطقهٔ خطر — بازنشانی کامل سامانه</h5>
                     <p class="text-[11px] text-rose-800 leading-relaxed font-bold">
-                        این عملیات تمام کاربران (سرگروه‌ها و پیمانکاران)، شرکت‌ها، پروژه‌های اصلی، کتابچه‌ها، بسته‌های کاری، پیشنهادها، قراردادها و فایل‌های آپلودشده (RFP و گزارش‌ها) را برای همیشه حذف می‌کند. فقط حساب کاربری خودِ شما (استاد) باقی می‌ماند. این عملیات <u>غیرقابل بازگشت</u> است.
+                        این عملیات تمام کاربران (سرگروه‌ها و پیمانکاران)، شرکت‌ها، پروژه‌های اصلی، بسته‌های کاری، پیشنهادها، قراردادها و فایل‌های آپلودشده (RFP و گزارش‌ها) را برای همیشه حذف می‌کند. فقط حساب کاربری خودِ شما (استاد) و <strong>فهرست کتابچه‌ها (عنوان و سکهٔ واقعی آن‌ها)</strong> باقی می‌ماند. این عملیات <u>غیرقابل بازگشت</u> است.
                     </p>
                     <p class="text-[10px] text-rose-700 leading-relaxed">
                         ⚠️ توجه فنی: این دکمه فقط اطلاعات داخل پایگاه‌داده و فایل‌ها را پاک می‌کند. حساب‌های ورود (ایمیل/رمز عبور) دانشجویان در سامانهٔ احراز هویت Supabase باقی می‌مانند و باید جداگانه از پنل Authentication در Supabase حذف شوند (این کار از داخل مرورگر با دسترسی سطح استاد ممکن نیست).
@@ -4128,7 +4128,7 @@
     window.executeFullSystemReset = async function() {
         var typed = document.getElementById('reset-confirm-input').value.trim();
         if (typed !== 'بازنشانی کامل') return showAppAlert('عبارت تاییدیه را دقیقاً مطابق نمونه وارد کنید.', false);
-        if (!(await showConfirmDialog('این عملیات تمام کاربران، شرکت‌ها، قراردادها و فایل‌های سامانه را برای همیشه حذف می‌کند و غیرقابل بازگشت است. آیا کاملاً مطمئن هستید؟', { dangerous: true, confirmLabel: 'بله، ادامه بده' }))) return;
+        if (!(await showConfirmDialog('این عملیات تمام کاربران، شرکت‌ها، قراردادها و فایل‌های سامانه را برای همیشه حذف می‌کند (فهرست کتابچه‌ها و سکهٔ واقعی آن‌ها حفظ می‌شود) و غیرقابل بازگشت است. آیا کاملاً مطمئن هستید؟', { dangerous: true, confirmLabel: 'بله، ادامه بده' }))) return;
         if (!(await showConfirmDialog('تاییدیهٔ نهایی: آیا واقعاً می‌خواهید همین الان کل پایگاه‌دادهٔ سامانه را بازنشانی کنید؟', { dangerous: true, confirmLabel: 'بازنشانی کامل' }))) return;
 
         var sb = getSupabaseClient();
@@ -4142,7 +4142,8 @@
             await sb.from('project_bids').delete().not('id', 'is', null);
             await sb.from('master_projects').delete().not('id', 'is', null);
             await sb.from('teams').delete().not('id', 'is', null);
-            await sb.from('booklets').delete().not('id', 'is', null);
+            // توجه: جدول booklets (عنوان و سکهٔ واقعی کتابچه‌ها) عمداً حذف نمی‌شود؛ این‌ها داده‌های پایهٔ درس‌اند
+            // و سرگروه‌ها در «تعریف بسته‌های کاری» از روی آن‌ها انتخاب می‌کنند و محاسبهٔ نمره به آن‌ها وابسته است.
 
             var reportFiles = await sb.storage.from('reports').list();
             if (reportFiles.data && reportFiles.data.length > 0) {
