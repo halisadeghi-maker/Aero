@@ -2291,20 +2291,26 @@
             file_name: null
         });
 
-        await sb.from('tasks').update({ leader_approved: true, status: 'leader_approved' }).eq('id', taskId);
-        await sb.from('contracts').update({ 
+        var taskApproveRes = await sb.from('tasks').update({ leader_approved: true, status: 'leader_approved' }).eq('id', taskId);
+        if (taskApproveRes.error) console.warn('leaderApproveReport task update warning:', taskApproveRes.error);
+        var contractApproveRes = await sb.from('contracts').update({ 
             leader_signed: true, 
             status: 'leader_approved', 
             action_logs: existingLogs 
-        }).eq('id', contractId);
+        }).eq('id', contractId).select('id');
+        if (contractApproveRes.error || !contractApproveRes.data || contractApproveRes.data.length === 0) {
+            return showAppAlert('تایید گزارش در پایگاه‌داده ثبت نشد: ' + (contractApproveRes.error ? contractApproveRes.error.message : 'دسترسی به‌روزرسانی قرارداد مجاز نیست.'), false);
+        }
 
         var taskRowRes = await sb.from('tasks').select('booklet_id').eq('id', taskId).single();
         var bookletId = taskRowRes.data ? taskRowRes.data.booklet_id : null;
         var groupResult = await tryFinalizeBookletGroupForProfessor(targetContract.team_id, bookletId);
 
-        if (groupResult.ready) {
+        if (groupResult.error) {
+            showAppAlert('گزارش تایید شد، اما ارسال کتابچه برای ارزیابی استاد با خطا مواجه شد: ' + groupResult.error + '\nاین خطا معمولاً به محدودیت دسترسی/وضعیت مجاز قرارداد در پایگاه‌داده مربوط است. با ورود استاد به پنل، ارسال دوباره به‌صورت خودکار تلاش می‌شود.', false);
+        } else if (groupResult.ready) {
             showAppAlert('گزارش تایید شد. چون این آخرین بستهٔ باقی‌ماندهٔ این کتابچه بود، کل کتابچه (' + groupResult.count + ' پیمانکار) هم‌زمان برای ارزیابی استاد ارسال شد.', true, 'سامانه');
-        } else if (groupResult.totalShare < 99.99) {
+        } else if (groupResult.totalShare < 99.9) {
             showAppAlert('گزارش این بخش تایید و ثبت شد. چون سهم تعریف‌شدهٔ این کتابچه هنوز به ۱۰۰٪ نرسیده است (' + roundCoin(groupResult.totalShare) + '٪)، تا تعریف و تکمیل باقی بسته‌های این کتابچه، برای ارزیابی استاد ارسال نخواهد شد.', true);
         } else {
             showAppAlert('گزارش این بخش تایید و ثبت شد. به‌محض تایید گزارش سایر پیمانکاران همین کتابچه توسط شما، همگی با هم برای ارزیابی استاد ارسال خواهند شد.', true);
@@ -2339,7 +2345,7 @@
         }, 0);
 
         // کتابچه فقط زمانی آماده ارزیابی است که 100٪ آن توسط بسته‌های فعال پوشش داده شده باشد.
-        if (tasksForBooklet.length === 0 || totalShare < 99.99) {
+        if (tasksForBooklet.length === 0 || totalShare < 99.9) {
             return { ready: false, totalShare: totalShare };
         }
 
@@ -2402,7 +2408,7 @@
                 .update({ status: 'professor_review' })
                 .eq('team_id', teamId)
                 .in('id', approvedContractIds)
-                .neq('status', 'terminated')
+                .eq('status', 'leader_approved')
                 .select('id');
 
             if (contractUpdateRes.error) {
@@ -2412,6 +2418,25 @@
         }
 
         return { ready: true, totalShare: totalShare, count: tasksForBooklet.length };
+    }
+
+    // همگام‌سازی: هر کتابچه‌ای که ۱۰۰٪ بسته‌های آن تعریف و توسط سرگروه تایید شده است
+    // (حتی اگر در لحظهٔ تایید، ارسال به استاد انجام نشده باشد) برای ارزیابی استاد ارسال می‌شود.
+    async function syncReadyBookletGroups() {
+        var groups = {};
+        (allLoadedContracts || []).forEach(function(c) {
+            if (c.status !== 'leader_approved' || !c.team_id) return;
+            var bid = c.tasks ? (c.tasks.booklet_id || (c.tasks.booklets ? c.tasks.booklets.id : null)) : null;
+            if (!bid) return;
+            groups[c.team_id + '|' + bid] = { teamId: c.team_id, bookletId: bid };
+        });
+        var changed = false;
+        for (const key of Object.keys(groups)) {
+            var before = (allLoadedContracts || []).filter(function(c) { return c.team_id === groups[key].teamId && c.status === 'leader_approved'; }).length;
+            var r = await tryFinalizeBookletGroupForProfessor(groups[key].teamId, groups[key].bookletId);
+            if (r && r.ready && before > 0) changed = true;
+        }
+        return changed;
     }
 
     var currentRejectContractId = null;
@@ -2480,7 +2505,7 @@
             .select('id, booklet_share_percent')
             .eq('team_id', teamId)
             .eq('booklet_id', bookletId)
-            .eq('status', 'professor_review');
+            .neq('status', 'terminated');
 
         var reviewTasks = reviewTasksRes.data || [];
         var reviewTaskIds = reviewTasks.map(function(t) { return t.id; });
@@ -3566,6 +3591,17 @@
             return;
         }
         allLoadedContracts = res.data || []; 
+
+        // ارسال خودکار کتابچه‌های کامل‌شده (۱۰۰٪ + تایید همهٔ بسته‌ها) به پنل استاد
+        if (!window._syncingBooklets && (userProfile.role === 'professor' || userProfile.role === 'leader')) {
+            var syncChanged = false;
+            try { syncChanged = await syncReadyBookletGroups(); } catch (syncErr) { console.warn('syncReadyBookletGroups error:', syncErr); }
+            if (syncChanged) {
+                window._syncingBooklets = true;
+                try { await loadContracts(); } finally { window._syncingBooklets = false; }
+                return;
+            }
+        }
         applyContractsSort();
         var tbody = document.getElementById('contracts-table-body');
         tbody.innerHTML = '';
