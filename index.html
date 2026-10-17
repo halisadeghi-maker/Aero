@@ -2291,7 +2291,7 @@
             file_name: null
         });
 
-        var taskApproveRes = await sb.from('tasks').update({ leader_approved: true, status: 'leader_approved' }).eq('id', taskId);
+        var taskApproveRes = await sb.from('tasks').update({ status: 'leader_approved' }).eq('id', taskId);
         if (taskApproveRes.error) console.warn('leaderApproveReport task update warning:', taskApproveRes.error);
         var contractApproveRes = await sb.from('contracts').update({ 
             leader_signed: true, 
@@ -2327,7 +2327,7 @@
         // فقط بسته‌های فعال همین کتابچه در پوشش 100٪ محاسبه می‌شوند.
         // بسته فسخ‌شده سهمی از کتابچه ندارد و مانع تعریف/ارزیابی بسته جدید نیست.
         var tasksRes = await sb.from('tasks')
-            .select('id, status, leader_approved, booklet_share_percent')
+            .select('id, status, booklet_share_percent')
             .eq('team_id', teamId)
             .eq('booklet_id', bookletId);
 
