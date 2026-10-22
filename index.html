@@ -258,7 +258,7 @@
 
             <!-- نسخه سامانه (۳.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.3.2</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.3.3</span>
             </div>
         </section>
 
@@ -1422,9 +1422,9 @@
 
         var sb = getSupabaseClient();
         if (sb) {
-            var profCheck = await sb.from('profiles').select('id').eq('role', 'professor').maybeSingle();
+            var profCheck = await sb.rpc('professor_exists');
             var profOption = document.getElementById('option-prof-role');
-            if (profCheck.data) {
+            if (profCheck.data === true) {
                 if (profOption) profOption.style.display = 'none';
             } else {
                 if (profOption) profOption.style.display = 'block';
@@ -1477,10 +1477,8 @@
 
             var isFirstProfessor = false;
             if (role === 'professor') {
-                var existingProf = await sb.from('profiles').select('id').eq('role', 'professor').maybeSingle();
-                if (!existingProf.data) {
-                    isFirstProfessor = true;
-                } else {
+                var existingProf = await sb.rpc('professor_exists');
+                if (existingProf.data === true) {
                     return showError('استاد اول قبلاً در سامانه ثبت‌نام کرده است. ثبت‌نام به عنوان استاد غیرفعال می‌باشد.');
                 }
             }
@@ -1495,20 +1493,10 @@
 
             currentUser = signRes.data.user;
             if (currentUser) {
-                var profileUpsertRes = await sb.from('profiles').upsert([
-                    { 
-                        id: currentUser.id, 
-                        full_name: fullName, 
-                        student_id: studentId, 
-                        role: role, 
-                        is_approved: isFirstProfessor ? true : false 
-                    }
-                ]);
-
-                if (profileUpsertRes.error) {
-                    console.error('Profile registration error:', profileUpsertRes.error);
-                    await sb.auth.signOut();
-                    return showError('حساب ایجاد شد اما درخواست ثبت‌نام در پروفایل سامانه ثبت نشد: ' + profileUpsertRes.error.message + ' — تنظیمات دسترسی جدول profiles را بررسی کنید.');
+                // پروفایل را خود پایگاه داده می‌سازد (نقش و تایید از مرورگر پذیرفته نمی‌شود).
+                if (signRes.data.session) {
+                    var myNewProf = await sb.from('profiles').select('role, is_approved').eq('id', currentUser.id).maybeSingle();
+                    isFirstProfessor = !!(myNewProf.data && myNewProf.data.role === 'professor' && myNewProf.data.is_approved);
                 }
 
                 await sb.auth.signOut();
@@ -1533,12 +1521,8 @@
         var sb = getSupabaseClient();
         try {
             var pRes = await sb.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
-            userProfile = pRes.data || { 
-                role: currentUser.user_metadata?.role || 'member', 
-                full_name: currentUser.user_metadata?.full_name || currentUser.email, 
-                student_id: currentUser.user_metadata?.student_id || '0000',
-                is_approved: true
-            };
+            if (!pRes.data) throw new Error('پروفایل کاربری یافت نشد.');
+            userProfile = pRes.data;
 
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('dashboard-section').classList.remove('hidden');
@@ -4310,7 +4294,7 @@
                 { key: 'marker', value: BACKUP_APP_MARKER },
                 { key: 'created_at', value: now.toISOString() },
                 { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
-                { key: 'app_version', value: '3.3.2' }
+                { key: 'app_version', value: '3.3.3' }
             ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
 
