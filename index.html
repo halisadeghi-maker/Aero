@@ -542,6 +542,25 @@
                         </div>
                     </div>
                 </div>
+                <!-- پشتیبان‌گیری و بازیابی پایگاه‌داده (اکسل) -->
+                <div class="border-2 border-sky-300 rounded-2xl p-4 bg-gradient-to-br from-sky-50 to-sky-100/60 shadow-sm space-y-3">
+                    <h5 class="text-xs font-black text-sky-900 flex items-center gap-2"><span>💾</span> پشتیبان‌گیری و بازیابی پایگاه‌داده (فایل اکسل)</h5>
+                    <p class="text-[11px] text-sky-900 leading-relaxed font-bold">
+                        با «دریافت پشتیبان»، تمام جدول‌های پایگاه‌داده (کاربران، شرکت‌ها، کتابچه‌ها، پروژه‌ها، بسته‌های کاری، پیشنهادها، قراردادها و ...) در یک فایل اکسل ذخیره می‌شود. با «بازیابی از پشتیبان»، اطلاعات همان فایل در پایگاه‌داده درج یا به‌روز می‌شود.
+                    </p>
+                    <ul class="text-[10px] text-sky-800 leading-relaxed list-disc pr-4 space-y-0.5">
+                        <li>بازیابی به‌صورت «درج یا به‌روزرسانی» بر اساس شناسهٔ ردیف است و هیچ ردیف موجودی را حذف نمی‌کند.</li>
+                        <li>فایل‌های آپلودشده (گزارش‌ها و RFP) داخل اکسل نیستند؛ فقط نشانی آن‌ها ذخیره می‌شود. برای پشتیبان خودِ فایل‌ها از بخش Storage در Supabase استفاده کنید.</li>
+                        <li>حساب‌های ورود (ایمیل/رمز) در سامانهٔ احراز هویت Supabase هستند و در اکسل ذخیره نمی‌شوند. ردیف پروفایلِ کاربری فقط در صورتی بازیابی می‌شود که حساب ورود او در Supabase وجود داشته باشد.</li>
+                        <li>فایل پشتیبان شامل اطلاعات شخصی کاربران است؛ آن را در جای امن نگه دارید.</li>
+                    </ul>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <button id="backup-download-btn" onclick="backupDatabaseToExcel()" type="button" class="bg-sky-700 hover:bg-sky-800 disabled:bg-slate-300 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">⬇️ دریافت پشتیبان (اکسل)</button>
+                        <button id="backup-restore-btn" onclick="document.getElementById('backup-restore-file').click()" type="button" class="bg-amber-600 hover:bg-amber-700 disabled:bg-slate-300 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">⬆️ بازیابی از پشتیبان (اکسل)</button>
+                    </div>
+                    <input type="file" id="backup-restore-file" accept=".xlsx,.xls" class="hidden" onchange="restoreDatabaseFromExcel(this)">
+                    <div id="backup-status" class="hidden text-[11px] font-bold rounded-xl p-2.5 whitespace-pre-line leading-relaxed"></div>
+                </div>
                 <!-- منطقه خطر: بازنشانی کامل سامانه -->
                 <div class="border-2 border-rose-400 rounded-2xl p-4 bg-gradient-to-br from-rose-50 to-rose-100/60 shadow-sm space-y-3">
                     <h5 class="text-xs font-black text-rose-900 flex items-center gap-2"><span>☢️</span> منطقهٔ خطر — بازنشانی کامل سامانه</h5>
@@ -4198,6 +4217,209 @@
         var fileName = 'گزارش-سکه-و-نمره-' + new Date().toISOString().slice(0, 10) + '.xlsx';
         XLSX.writeFile(wb, fileName);
     };
+
+    // ===================== پشتیبان‌گیری و بازیابی پایگاه‌داده (اکسل) =====================
+    // ترتیب جدول‌ها بر اساس وابستگی کلید خارجی (والد قبل از فرزند) است و برای بازیابی استفاده می‌شود.
+    var BACKUP_TABLES = ['booklets', 'profiles', 'teams', 'master_projects', 'team_members', 'project_bids', 'tasks', 'task_bids', 'contracts'];
+    var BACKUP_META_SHEET = '_backup_info';
+    var BACKUP_APP_MARKER = 'peyman-3-2-1-grouped-evaluation-backup';
+    var BACKUP_JSON_PREFIX = '__json__:';
+    var BACKUP_CELL_LIMIT = 32000;
+
+    function setBackupStatus(msg, kind) {
+        var el = document.getElementById('backup-status');
+        if (!el) return;
+        el.classList.remove('hidden', 'bg-white', 'text-sky-900', 'bg-emerald-50', 'text-emerald-800', 'bg-rose-50', 'text-rose-800', 'border', 'border-sky-200', 'border-emerald-200', 'border-rose-200');
+        var cls = kind === 'ok' ? ['bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200']
+                : kind === 'error' ? ['bg-rose-50', 'text-rose-800', 'border', 'border-rose-200']
+                : ['bg-white', 'text-sky-900', 'border', 'border-sky-200'];
+        cls.forEach(function(c) { el.classList.add(c); });
+        el.innerText = msg;
+    }
+
+    function setBackupButtonsDisabled(disabled) {
+        ['backup-download-btn', 'backup-restore-btn'].forEach(function(id) {
+            var b = document.getElementById(id);
+            if (b) b.disabled = disabled;
+        });
+    }
+
+    // خواندن تمام ردیف‌های یک جدول با صفحه‌بندی (محدودیت ۱۰۰۰ ردیف در هر درخواست Supabase)
+    async function fetchAllRowsForBackup(sb, table) {
+        var all = [];
+        var pageSize = 1000;
+        var from = 0;
+        var useOrder = true;
+        while (true) {
+            var q = sb.from(table).select('*');
+            if (useOrder) q = q.order('id', { ascending: true });
+            var res = await q.range(from, from + pageSize - 1);
+            if (res.error && useOrder) { useOrder = false; continue; }
+            if (res.error) throw new Error(res.error.message);
+            var rows = res.data || [];
+            all = all.concat(rows);
+            if (rows.length < pageSize) break;
+            from += pageSize;
+        }
+        return all;
+    }
+
+    window.backupDatabaseToExcel = async function() {
+        if (typeof XLSX === 'undefined') {
+            return showAppAlert('کتابخانهٔ تولید اکسل هنوز بارگذاری نشده است؛ چند لحظه صبر کنید و دوباره تلاش کنید.', false);
+        }
+        var sb = getSupabaseClient();
+        setBackupButtonsDisabled(true);
+        try {
+            var wb = XLSX.utils.book_new();
+            var metaRows = [];
+            var warnings = [];
+            var summary = [];
+
+            for (const table of BACKUP_TABLES) {
+                setBackupStatus('در حال خواندن جدول «' + table + '» ...', 'info');
+                var rows = await fetchAllRowsForBackup(sb, table);
+
+                // ستون‌ها = اجتماع کلیدهای همهٔ ردیف‌ها
+                var colSet = {};
+                var cols = [];
+                rows.forEach(function(r) { Object.keys(r).forEach(function(k) { if (!colSet[k]) { colSet[k] = true; cols.push(k); } }); });
+
+                var outRows = rows.map(function(r) {
+                    var o = {};
+                    cols.forEach(function(k) {
+                        var v = r[k];
+                        if (v === null || v === undefined) return; // سلول خالی = null
+                        if (typeof v === 'object') {
+                            var js = BACKUP_JSON_PREFIX + JSON.stringify(v);
+                            if (js.length > BACKUP_CELL_LIMIT) {
+                                warnings.push('جدول ' + table + '، ستون ' + k + ': محتوا از حد مجاز سلول اکسل بزرگ‌تر است و بریده شد.');
+                                js = js.slice(0, BACKUP_CELL_LIMIT);
+                            }
+                            o[k] = js;
+                        } else if (typeof v === 'string' && v.length > BACKUP_CELL_LIMIT) {
+                            warnings.push('جدول ' + table + '، ستون ' + k + ': متن از حد مجاز سلول اکسل بزرگ‌تر است و بریده شد.');
+                            o[k] = v.slice(0, BACKUP_CELL_LIMIT);
+                        } else {
+                            o[k] = v;
+                        }
+                    });
+                    return o;
+                });
+
+                var ws = cols.length > 0 ? XLSX.utils.json_to_sheet(outRows, { header: cols }) : XLSX.utils.aoa_to_sheet([['(جدول خالی)']]);
+                XLSX.utils.book_append_sheet(wb, ws, table);
+                metaRows.push({ table: table, row_count: rows.length, columns: cols.join(',') });
+                summary.push(table + ': ' + rows.length);
+            }
+
+            var now = new Date();
+            var metaSheetRows = [
+                { key: 'marker', value: BACKUP_APP_MARKER },
+                { key: 'created_at', value: now.toISOString() },
+                { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
+                { key: 'app_version', value: '3.2.2' }
+            ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
+
+            var stamp = now.toISOString().slice(0, 19).replace(/[:T]/g, '-');
+            XLSX.writeFile(wb, 'پشتیبان-پایگاه-داده-' + stamp + '.xlsx');
+
+            setBackupStatus('✅ پشتیبان با موفقیت دریافت شد.\n' + summary.join(' | ') + (warnings.length ? '\n⚠️ ' + warnings.join('\n⚠️ ') : ''), warnings.length ? 'info' : 'ok');
+        } catch (err) {
+            setBackupStatus('❌ خطا در پشتیبان‌گیری: ' + (err && err.message ? err.message : err), 'error');
+        } finally {
+            setBackupButtonsDisabled(false);
+        }
+    };
+
+    window.restoreDatabaseFromExcel = async function(inputEl) {
+        var file = inputEl && inputEl.files && inputEl.files[0];
+        if (inputEl) inputEl.value = '';
+        if (!file) return;
+        if (typeof XLSX === 'undefined') {
+            return showAppAlert('کتابخانهٔ اکسل هنوز بارگذاری نشده است؛ چند لحظه صبر کنید و دوباره تلاش کنید.', false);
+        }
+
+        var wb;
+        try {
+            var buf = await file.arrayBuffer();
+            wb = XLSX.read(buf, { type: 'array' });
+        } catch (e) {
+            return showAppAlert('فایل اکسل قابل خواندن نیست: ' + (e && e.message ? e.message : e), false);
+        }
+
+        // اعتبارسنجی فایل: باید توسط همین سامانه ساخته شده باشد
+        var metaWs = wb.Sheets[BACKUP_META_SHEET];
+        var metaRows = metaWs ? XLSX.utils.sheet_to_json(metaWs, { defval: null }) : [];
+        var marker = metaRows.find(function(r) { return r.key === 'marker'; });
+        if (!marker || marker.value !== BACKUP_APP_MARKER) {
+            return showAppAlert('این فایل، پشتیبان معتبر این سامانه نیست (برگهٔ اطلاعات پشتیبان یافت نشد). فقط فایل‌های دریافت‌شده از دکمهٔ «دریافت پشتیبان» قابل بازیابی هستند.', false);
+        }
+        var createdAt = (metaRows.find(function(r) { return r.key === 'created_at'; }) || {}).value || 'نامشخص';
+
+        var plan = [];
+        BACKUP_TABLES.forEach(function(t) {
+            var ws = wb.Sheets[t];
+            if (!ws) return;
+            var rows = XLSX.utils.sheet_to_json(ws, { defval: null, raw: true });
+            if (rows.length === 1 && Object.keys(rows[0]).length === 1 && Object.keys(rows[0])[0] === '(جدول خالی)') rows = [];
+            plan.push({ table: t, rows: rows });
+        });
+        if (plan.length === 0) return showAppAlert('هیچ جدولی در فایل پیدا نشد.', false);
+
+        var planText = plan.map(function(p) { return p.table + ': ' + p.rows.length + ' ردیف'; }).join('\n');
+        if (!(await showConfirmDialog('پشتیبان تاریخ ' + createdAt + ' بازیابی می‌شود:\n' + planText + '\n\nاطلاعات این فایل در پایگاه‌داده درج یا (در صورت وجود شناسهٔ یکسان) جایگزین می‌شود. ردیفی حذف نمی‌شود. ادامه می‌دهید؟', { dangerous: true, confirmLabel: 'بازیابی' }))) return;
+
+        var sb = getSupabaseClient();
+        setBackupButtonsDisabled(true);
+        var report = [];
+        var anyFailed = false;
+
+        function decodeRow(r) {
+            var o = {};
+            Object.keys(r).forEach(function(k) {
+                var v = r[k];
+                if (v === null || v === undefined || v === '') { o[k] = null; return; }
+                if (typeof v === 'string' && v.indexOf(BACKUP_JSON_PREFIX) === 0) {
+                    try { o[k] = JSON.parse(v.slice(BACKUP_JSON_PREFIX.length)); } catch (e) { o[k] = null; }
+                    return;
+                }
+                o[k] = v;
+            });
+            return o;
+        }
+
+        try {
+            for (const step of plan) {
+                if (step.rows.length === 0) { report.push('✔ ' + step.table + ': ردیفی برای بازیابی نبود'); continue; }
+                setBackupStatus('در حال بازیابی جدول «' + step.table + '» (' + step.rows.length + ' ردیف) ...', 'info');
+                var decoded = step.rows.map(decodeRow);
+                var ok = 0, failed = 0, firstErr = '';
+                var chunkSize = 200;
+                for (var i = 0; i < decoded.length; i += chunkSize) {
+                    var chunk = decoded.slice(i, i + chunkSize);
+                    var res = await sb.from(step.table).upsert(chunk);
+                    if (!res.error) { ok += chunk.length; continue; }
+                    // اگر دسته با خطا مواجه شد، ردیف‌به‌ردیف تلاش می‌کنیم تا ردیف‌های سالم از دست نروند
+                    for (const row of chunk) {
+                        var r1 = await sb.from(step.table).upsert(row);
+                        if (r1.error) { failed++; if (!firstErr) firstErr = r1.error.message; } else { ok++; }
+                    }
+                }
+                if (failed > 0) anyFailed = true;
+                report.push((failed > 0 ? '⚠️ ' : '✔ ') + step.table + ': ' + ok + ' ردیف بازیابی شد' + (failed > 0 ? '، ' + failed + ' ردیف ناموفق (' + firstErr + ')' : ''));
+            }
+            setBackupStatus((anyFailed ? '⚠️ بازیابی با برخی خطاها پایان یافت:\n' : '✅ بازیابی با موفقیت انجام شد:\n') + report.join('\n') +
+                (anyFailed ? '\nدلیل رایج: نبودن حساب ورود کاربر در Supabase Authentication برای ردیف‌های profiles، یا محدودیت دسترسی (RLS).' : ''), anyFailed ? 'error' : 'ok');
+            try { await loadContracts(); } catch (e) {}
+        } catch (err) {
+            setBackupStatus('❌ خطا در بازیابی: ' + (err && err.message ? err.message : err) + '\n' + report.join('\n'), 'error');
+        } finally {
+            setBackupButtonsDisabled(false);
+        }
+    };
+    // =================== پایان پشتیبان‌گیری و بازیابی ===================
 
     // ===================== منطقهٔ خطر: بازنشانی کامل سامانه =====================
     window.executeFullSystemReset = async function() {
