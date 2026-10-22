@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۳.۱)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۳.۲)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!--
@@ -256,9 +256,9 @@
 
             </div>
 
-            <!-- نسخه سامانه (۳.۳.۱) -->
+            <!-- نسخه سامانه (۳.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.3.1</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.3.2</span>
             </div>
         </section>
 
@@ -480,8 +480,9 @@
                             <input type="text" id="rfp-type" placeholder="مثال: ترابری سبک دو موتوره" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-600 mb-1">بودجه اسمی اولیه (سکه)</label>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">قیمت پیشنهادی استاد / سقف پیشنهاد سرگروه‌ها (سکه)</label>
                             <input type="number" id="rfp-coins" placeholder="مثال: 1400" class="w-full bg-white border border-slate-300 rounded-xl p-2 text-xs">
+                            <p class="text-[10px] text-amber-700 font-bold mt-1">برای جلوگیری از تبانی، سرگروه‌ها فقط می‌توانند قیمتی <u>برابر یا کمتر</u> از این مبلغ پیشنهاد دهند.</p>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-[11px] font-bold text-slate-600 mb-1">ویژگی‌های کلی و نیازمندی‌های ماموریت</label>
@@ -647,37 +648,6 @@
                         <span class="text-[10px] text-slate-400 block mt-0.5">خالی بگذارید تا مهلت پیش‌فرض (۳ روز از الان) اعمال شود.</span>
                     </div>
                     <div id="booklet-real-value-note" class="md:col-span-5 text-[11px] text-indigo-700 bg-indigo-50 border border-indigo-200 rounded-lg px-3 py-1.5 font-bold hidden"></div>
-                </div>
-            </section>
-
-            <!-- بسته کاری مخصوص خود سرگروه -->
-            <section id="leader-self-task-section" class="glass-card p-6 rounded-xl shadow-sm border-indigo-200 space-y-4">
-                <div class="flex justify-between items-center flex-wrap gap-2">
-                    <h3 class="text-sm font-black text-neutral-900">🧑‍💼 تعریف بسته کاری مخصوص سرگروه (انجام توسط خودِ سرگروه)</h3>
-                    <span id="self-task-cap-badge" class="text-xs font-black text-indigo-900 bg-indigo-100 px-3 py-1 rounded-full border border-indigo-300">سقف ۲۰۰ سکه</span>
-                </div>
-                <p class="text-[11px] text-slate-500 leading-relaxed">سرگروه می‌تواند تا مجموع <strong>۲۰۰ سکه</strong> بسته کاری را خودش انجام دهد. این امکان فقط برای کتابچه‌ای است که <strong>هیچ بسته کاری از آن (برای دیگران، فسخ‌شده یا باطل‌شده) قبلاً تعریف نشده باشد</strong>. گزارش این بسته‌ها بدون نیاز به تایید جداگانه، پس از آپلود، تایید سرگروه تلقی می‌شود و در صورت تکمیل ۱۰۰٪ کتابچه برای استاد ارسال می‌گردد.</p>
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">کتابچه</label>
-                        <select id="self-task-booklet-select" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800"></select>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-xs font-bold text-slate-600 mb-1">عنوان و شرح بسته کاری</label>
-                        <input type="text" id="self-task-title-input" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800" placeholder="عنوان بسته کاری که خودتان انجام می‌دهید">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">مبلغ قرارداد (سکه، حداکثر ۲۰۰)</label>
-                        <input type="number" id="self-task-coins-input" min="1" max="200" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800" placeholder="سکه">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">سهم از کل کتابچه (٪)</label>
-                        <div class="flex space-x-2 space-x-reverse">
-                            <input type="number" id="self-task-share-input" min="1" max="100" value="100" class="w-full bg-neutral-50 border border-neutral-300 rounded-lg p-2.5 text-xs text-slate-800" placeholder="مثال: 100">
-                            <button id="create-self-task-btn" type="button" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 rounded-xl text-xs font-bold shadow-md transition cursor-pointer whitespace-nowrap">ایجاد</button>
-                        </div>
-                    </div>
-                    <div id="self-task-note" class="md:col-span-5 text-[11px] font-bold hidden rounded-lg px-3 py-1.5"></div>
                 </div>
             </section>
 
@@ -1063,7 +1033,7 @@
 
                 <p><strong>۲. تشکیل شرکت و وضعیت‌های آن:</strong> هر سرگروه ابتدا برای شرکت خود نام تعیین می‌کند (وضعیت <strong>«در حال تشکیل»</strong>). سپس با «دعوت» دانشجویان، <strong>حداقل ۳ و حداکثر ۶ عضو ثابت</strong> جذب می‌کند؛ عضویت فقط با «تایید خودِ دانشجو» در پنل او رسمی می‌شود و هیچ‌کس هم‌زمان نمی‌تواند عضو ثابت یا دارای دعوتِ در انتظار در بیش از یک شرکت باشد. تا زمانی که سرگروه ثبت شرکت را <strong>قطعی</strong> نکرده باشد، شرکت «در حال تشکیل» است و می‌تواند اعضا را آزادانه اضافه یا حذف کند. با قطعی‌سازیِ ترکیب (حداقل ۳ عضو تاییدشده)، وضعیت شرکت <strong>«تشکیل‌شده»</strong> می‌شود. چرخهٔ وضعیت‌ها: در حال تشکیل ← تشکیل‌شده ← (فقط پس از قرارداد اصلی و افتِ اعضا به کمتر از ۳ نفر) هشدار انحلال ← منحل‌شده.</p>
 
-                <p><strong>۳. مناقصهٔ اصلی و بسته‌های کاری:</strong> پروژه شامل چند کتابچهٔ طراحی است که استاد برای هرکدام یک «ارزش واقعی» (فقط برای محاسبهٔ نمره) تعیین می‌کند. فقط شرکت‌های در وضعیت «تشکیل‌شده» (قطعی‌شده با حداقل ۳ عضو) می‌توانند در مناقصهٔ اصلی شرکت کنند و استاد نیز تنها با چنین شرکتی می‌تواند قرارداد اصلی ببندد؛ برندهٔ مناقصه، پیمانکار اصلی پروژه می‌شود. سپس سرگروه هر کتابچه را به یک یا چند «بستهٔ کاری» تقسیم و برای هرکدام «قیمت پیشنهادی قرارداد» تعیین می‌کند — این قیمت می‌تواند کمتر یا بیشتر از ارزش واقعی کتابچه باشد.</p>
+                <p><strong>۳. مناقصهٔ اصلی و بسته‌های کاری:</strong> پروژه شامل چند کتابچهٔ طراحی است که استاد برای هرکدام یک «ارزش واقعی» (فقط برای محاسبهٔ نمره) تعیین می‌کند. فقط شرکت‌های در وضعیت «تشکیل‌شده» (قطعی‌شده با حداقل ۳ عضو) می‌توانند در مناقصهٔ اصلی شرکت کنند و استاد نیز تنها با چنین شرکتی می‌تواند قرارداد اصلی ببندد؛ برندهٔ مناقصه، پیمانکار اصلی پروژه می‌شود. <u>برای جلوگیری از تبانی، سرگروه‌ها فقط می‌توانند قیمتی برابر یا کمتر از «قیمت پیشنهادی استاد» برای مناقصه پیشنهاد دهند و پیشنهادِ بالاتر ثبت یا پذیرفته نمی‌شود.</u> سپس سرگروه هر کتابچه را به یک یا چند «بستهٔ کاری» تقسیم و برای هرکدام «قیمت پیشنهادی قرارداد» تعیین می‌کند — این قیمت می‌تواند کمتر یا بیشتر از ارزش واقعی کتابچه باشد.</p>
 
                 <p><strong>۴. مناقصهٔ داخلی و بازار آزاد:</strong> ابتدا فقط اعضای ثابتِ همان شرکت مجازند برای بسته‌های کاری آن شرکت پیشنهاد قیمت ثبت کنند (تا پایان مهلت تعیین‌شده)؛ سرگروه از میان پیشنهادها (نه لزوماً ارزان‌ترین) یکی را انتخاب می‌کند. وقتی <strong>همهٔ</strong> اعضای ثابت یک شرکت به سقف <strong>۱۵۰ سکهٔ قرارداد</strong> برسند، بسته‌های باقی‌ماندهٔ همان شرکت وارد «بازار آزاد» می‌شوند و از آن پس هر دانشجویی (عضو ثابت سایر شرکت‌ها یا پیمانکار آزاد) می‌تواند برایشان پیشنهاد بدهد.</p>
 
@@ -1093,7 +1063,7 @@
 
                 <p><strong>۱۴. کیف پول و شفافیت:</strong> کیف پول هر دانشجو همیشه نشان می‌دهد: مجموع سکه‌های قراردادی، سکه‌های قطعی‌شده، جریمه‌های اعمال‌شده، سود یا زیانِ ناشی از کیفیت، سقف مجاز، و نمرهٔ معادل. تمام مکاتبات، پیام‌ها و رویدادهای هر قرارداد در «لاگ سیستم» همان قرارداد قابل مشاهده است.</p>
 
-                <p class="text-slate-500 text-[11px]">با تایید این قوانین، می‌پذیرید که مسئولیت آشنایی کامل با ساز‌وکار سامانه، سقف‌ها، مهلت‌ها و جرایم بر عهدهٔ خودتان است. (آخرین به‌روزرسانی قوانین: نسخهٔ ۳.۳.۱)</p>
+                <p class="text-slate-500 text-[11px]">با تایید این قوانین، می‌پذیرید که مسئولیت آشنایی کامل با ساز‌وکار سامانه، سقف‌ها، مهلت‌ها و جرایم بر عهدهٔ خودتان است. (آخرین به‌روزرسانی قوانین: نسخهٔ ۳.۳.۲)</p>
             </div>
             <button onclick="closeTermsModal()" type="button" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">مطالعه شد و مورد تایید است</button>
         </div>
@@ -1873,10 +1843,12 @@
                         '🔒 برای شرکت در مناقصه اصلی، ابتدا باید شرکت خود را با حداقل ۳ و حداکثر ۶ عضو ثابت تشکیل داده و ترکیب آن را قطعی کنید (بخش «تشکیل شرکت» در پنل سرگروه).' +
                         '</div>';
                 } else if (!isExpired && p.status === 'open') {
-                    bidArea = '<div class="mt-3 pt-3 border-t border-amber-200 flex gap-2 items-center">' +
-                        '<input type="number" id="bid-coins-' + p.id + '" placeholder="قیمت پیشنهادی شما (سکه)" class="w-full bg-white border border-amber-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-brand-400">' +
+                    bidArea = '<div class="mt-3 pt-3 border-t border-amber-200">' +
+                        '<div class="text-[10px] font-bold text-amber-800 mb-1.5">⚠️ فقط قیمت برابر یا کمتر از ' + roundCoin(p.allocated_coins) + ' سکه (قیمت پیشنهادی استاد) پذیرفته می‌شود.</div>' +
+                        '<div class="flex gap-2 items-center">' +
+                        '<input type="number" id="bid-coins-' + p.id + '" max="' + p.allocated_coins + '" placeholder="قیمت شما (حداکثر ' + roundCoin(p.allocated_coins) + ' سکه)" class="w-full bg-white border border-amber-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-brand-400">' +
                         '<button type="button" onclick="promptBidConfirmation(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\')" class="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">ثبت پیشنهاد مناقصه</button>' +
-                        '</div>';
+                        '</div></div>';
                 } else {
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-rose-600">مهلت ارسال پیشنهاد به پایان رسیده است.</div>';
                 }
@@ -1982,6 +1954,13 @@
             return showAppAlert('لطفاً مبلغ معتبر پیشنهادی (سکه) را وارد کنید.', false);
         }
 
+        // محدودیت ضد تبانی: قیمت پیشنهادی نباید از قیمت پیشنهادی استاد بیشتر باشد (مقدار معتبر از پایگاه‌داده خوانده می‌شود)
+        var priceRes = await getSupabaseClient().from('master_projects').select('allocated_coins').eq('id', projectId).maybeSingle();
+        var professorPrice = priceRes.data ? parseFloat(priceRes.data.allocated_coins) : NaN;
+        if (!isNaN(professorPrice) && roundCoin(coins) > professorPrice) {
+            return showAppAlert('قیمت پیشنهادی شما (' + roundCoin(coins) + ' سکه) از قیمت پیشنهادی استاد (' + roundCoin(professorPrice) + ' سکه) بیشتر است. فقط قیمت برابر یا کمتر از قیمت استاد پذیرفته می‌شود.', false);
+        }
+
         pendingBidProjectId = projectId;
         pendingBidCoins = roundCoin(coins);
 
@@ -2002,6 +1981,13 @@
     document.getElementById('bid-confirm-yes-btn').onclick = async function() {
         if (!pendingBidProjectId || !pendingBidCoins) return;
         var sb = getSupabaseClient();
+
+        // بازبینی نهایی سقف قیمت هنگام ثبت (ممکن است استاد در فاصلهٔ تایید، قیمت را تغییر داده باشد)
+        var priceRes2 = await sb.from('master_projects').select('allocated_coins').eq('id', pendingBidProjectId).maybeSingle();
+        if (priceRes2.data && pendingBidCoins > parseFloat(priceRes2.data.allocated_coins)) {
+            closeBidConfirmModal();
+            return showAppAlert('پیشنهاد ثبت نشد: قیمت شما از قیمت پیشنهادی استاد (' + roundCoin(priceRes2.data.allocated_coins) + ' سکه) بیشتر است.', false);
+        }
 
         var existingBid = await sb.from('project_bids')
             .select('id')
@@ -2056,12 +2042,13 @@
                 var leaderName = (b.teams && b.teams.profiles) ? b.teams.profiles.full_name : 'نامشخص';
                 var bDate = new Date(b.created_at).toLocaleDateString('fa-IR');
                 // فقط شرکت «تشکیل‌شده» (قطعی‌شده با حداقل ۳ عضو) امکان عقد قرارداد اصلی دارد
-                var eligible = !!(b.teams && b.teams.status === 'active');
+                var overPrice = (currentReviewProjectCoins !== null && currentReviewProjectCoins !== undefined && !isNaN(parseFloat(currentReviewProjectCoins)) && parseFloat(b.proposed_coins) > parseFloat(currentReviewProjectCoins));
+                var eligible = !!(b.teams && b.teams.status === 'active') && !overPrice;
                 if (eligible) anyEligible = true;
                 var isChecked = (eligible && !firstEligibleDone) ? 'checked' : '';
                 if (eligible) firstEligibleDone = true;
                 var disabledAttr = eligible ? '' : 'disabled';
-                var ineligibleBadge = eligible ? '' : ' <span class="text-[10px] font-black text-rose-700 bg-rose-50 border border-rose-200 rounded px-1.5 py-0.5">شرکت در حال تشکیل/هشدار؛ امکان عقد قرارداد ندارد</span>';
+                var ineligibleBadge = eligible ? '' : ' <span class="text-[10px] font-black text-rose-700 bg-rose-50 border border-rose-200 rounded px-1.5 py-0.5">' + (overPrice ? 'قیمت بالاتر از قیمت پیشنهادی استاد؛ نامعتبر' : 'شرکت در حال تشکیل/هشدار؛ امکان عقد قرارداد ندارد') + '</span>';
 
                 tbody.innerHTML += '<tr class="hover:bg-slate-50 transition cursor-pointer">' +
                     '<td class="p-3 text-center">' +
@@ -2095,6 +2082,12 @@
         var agreedCoins = parseFloat(selectedRadio.getAttribute('data-coins'));
 
         var sb = getSupabaseClient();
+
+        // محافظ ضد تبانی: پیشنهاد برنده نباید از قیمت پیشنهادی استاد بیشتر باشد
+        var awPrice = await sb.from('master_projects').select('allocated_coins').eq('id', currentReviewProjectId).maybeSingle();
+        if (awPrice.data && agreedCoins > parseFloat(awPrice.data.allocated_coins)) {
+            return showAppAlert('قیمت این پیشنهاد (' + roundCoin(agreedCoins) + ' سکه) از قیمت پیشنهادی استاد (' + roundCoin(awPrice.data.allocated_coins) + ' سکه) بیشتر است و قابل پذیرش نیست.', false);
+        }
 
         // محافظ ماشین حالت: عقد قرارداد اصلی فقط با شرکتِ «تشکیل‌شده» و دارای حداقل ۳ عضو فعال
         var awTeam = await sb.from('teams').select('status').eq('id', teamId).maybeSingle();
@@ -3736,13 +3729,7 @@
                 } else if (c.status === 'terminated') {
                     actionCol = '<span class="text-rose-600 font-bold text-xs">قرارداد باطل گردید</span>';
                 } else if (c.status === 'in_progress') {
-                    if (userProfile.role === 'leader' && c.contractor_id === currentUser.id) {
-                        actionCol = '<div class="space-y-1.5">' +
-                            '<span class="text-[10px] font-black text-indigo-700 bg-indigo-50 border border-indigo-200 rounded px-1.5 py-0.5 inline-block">🧑‍💼 بسته کاری مخصوص سرگروه</span>' +
-                            '<input type="file" id="file-' + c.task_id + '" class="text-[10px] text-slate-600 block w-40 border border-slate-200 p-1 rounded-lg bg-slate-50">' +
-                            '<button onclick="leaderUploadSelfReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] px-2.5 py-1 rounded-lg font-black shadow-xs cursor-pointer">📤 آپلود و ارسال گزارش برای استاد</button>' +
-                            '</div>';
-                    } else if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
+                    if (userProfile.role === 'member' && c.contractor_id === currentUser.id) {
                         actionCol = '<div class="space-y-1.5">' +
                             '<input type="file" id="file-' + c.task_id + '" class="text-[10px] text-slate-600 block w-40 border border-slate-200 p-1 rounded-lg bg-slate-50">' +
                             '<button onclick="uploadAndSendReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-brand-500 hover:bg-brand-600 text-white text-[10px] px-2.5 py-1 rounded-lg font-black shadow-xs cursor-pointer">📤 آپلود و ارسال گزارش</button>' +
@@ -4073,11 +4060,8 @@
                 var opt = '<option value="' + b.id + '" data-real-value="' + b.nominal_coins + '">کتابچه ' + b.booklet_number + ': ' + b.title + ' (' + roundCoin(b.nominal_coins) + ' سکه)</option>';
                 sel.innerHTML += opt;
             });
-            var selfSel = document.getElementById('self-task-booklet-select');
-            if (selfSel) selfSel.innerHTML = sel.innerHTML;
             updateBookletRealValueNote();
             updateBookletShareNote();
-            if (typeof updateSelfTaskNote === 'function') updateSelfTaskNote();
         }
     }
 
@@ -4326,7 +4310,7 @@
                 { key: 'marker', value: BACKUP_APP_MARKER },
                 { key: 'created_at', value: now.toISOString() },
                 { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
-                { key: 'app_version', value: '3.3.1' }
+                { key: 'app_version', value: '3.3.2' }
             ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
 
@@ -5198,202 +5182,6 @@
         var data = pendingTaskInsertData;
         closeDuplicateModal();
         await executeTaskCreation(data.bookletId, data.title, data.coins, data.deadline, data.sharePercent);
-    };
-
-    // =================== بسته کاری مخصوص سرگروه ===================
-    var SELF_TASK_MAX_COINS = 200;
-
-    // مجموع قراردادهای فعال خودِ سرگروه (به‌عنوان پیمانکار) در این شرکت
-    async function getLeaderSelfCoinsUsed() {
-        var sb = getSupabaseClient();
-        var r = await sb.from('contracts').select('agreed_base_coins, status').eq('contractor_id', currentUser.id).eq('team_id', currentTeam.id);
-        return (r.data || []).filter(function(c) { return c.status !== 'terminated'; })
-            .reduce(function(sum, c) { return sum + parseFloat(c.agreed_base_coins || 0); }, 0);
-    }
-
-    // آیا از این کتابچه (در هر وضعیتی، حتی فسخ‌شده) بسته‌ای برای این شرکت تعریف شده است؟
-    async function bookletHasAnyTaskForTeam(bookletId) {
-        var sb = getSupabaseClient();
-        var r = await sb.from('tasks').select('id').eq('team_id', currentTeam.id).eq('booklet_id', bookletId).limit(1);
-        return !!(r.data && r.data.length > 0);
-    }
-
-    async function updateSelfTaskNote() {
-        var sel = document.getElementById('self-task-booklet-select');
-        var note = document.getElementById('self-task-note');
-        var badge = document.getElementById('self-task-cap-badge');
-        if (!sel || !note || !currentTeam) return;
-        try {
-            var used = await getLeaderSelfCoinsUsed();
-            if (badge) badge.innerText = 'استفاده‌شده: ' + roundCoin(used) + ' از ' + SELF_TASK_MAX_COINS + ' سکه | باقی‌مانده: ' + roundCoin(Math.max(0, SELF_TASK_MAX_COINS - used)) + ' سکه';
-            if (!sel.value) { note.classList.add('hidden'); return; }
-            var hasAny = await bookletHasAnyTaskForTeam(parseInt(sel.value));
-            note.classList.remove('hidden');
-            if (hasAny) {
-                note.className = 'md:col-span-5 text-[11px] font-bold rounded-lg px-3 py-1.5 text-rose-800 bg-rose-50 border border-rose-200';
-                note.innerText = '⛔ از این کتابچه قبلاً بسته کاری تعریف شده است (برای دیگران یا فسخ/باطل‌شده)؛ سرگروه نمی‌تواند بسته‌ای از آن را خودش انجام دهد.';
-            } else {
-                note.className = 'md:col-span-5 text-[11px] font-bold rounded-lg px-3 py-1.5 text-emerald-800 bg-emerald-50 border border-emerald-200';
-                note.innerText = '✅ از این کتابچه هنوز بسته‌ای تعریف نشده است؛ می‌توانید خودتان آن را انجام دهید.';
-            }
-        } catch (e) { console.warn('updateSelfTaskNote error:', e); }
-    }
-    document.getElementById('self-task-booklet-select').addEventListener('change', updateSelfTaskNote);
-
-    document.getElementById('create-self-task-btn').onclick = async function() {
-        if (!currentTeam || !currentUser) return showAppAlert('ابتدا شرکت شما باید ثبت شود.', false);
-        var bookletId = parseInt(document.getElementById('self-task-booklet-select').value);
-        var title = document.getElementById('self-task-title-input').value.trim();
-        var coins = roundCoin(document.getElementById('self-task-coins-input').value);
-        var sharePercent = parseFloat(document.getElementById('self-task-share-input').value);
-
-        if (!bookletId || !title || isNaN(coins) || coins <= 0) return showAppAlert('کتابچه، عنوان و مبلغ بسته کاری را کامل وارد کنید.', false);
-        if (isNaN(sharePercent) || sharePercent <= 0 || sharePercent > 100) return showAppAlert('سهم این بسته از کل کتابچه را عددی بین ۱ تا ۱۰۰ درصد وارد کنید.', false);
-        if (coins > SELF_TASK_MAX_COINS) return showAppAlert('مبلغ بسته کاری مخصوص سرگروه نمی‌تواند از ' + SELF_TASK_MAX_COINS + ' سکه بیشتر باشد.', false);
-
-        var sb = getSupabaseClient();
-
-        // ۱) قرارداد اصلی و مهلت
-        var mpRes = await sb.from('master_projects').select('allocated_coins').eq('awarded_team_id', currentTeam.id).eq('status', 'awarded').maybeSingle();
-        if (!mpRes.data) return showAppAlert('خطا: شرکت شما هنوز قرارداد اصلی با استاد درس امضا نکرده است؛ تعریف بسته کاری ممکن نیست.', false);
-        if (await isContractPastEndDate(currentTeam.id)) return showAppAlert('مهلت خاتمهٔ قرارداد اصلی این شرکت به پایان رسیده است.', false);
-
-        // ۲) فقط کتابچه‌ای که هیچ بسته‌ای از آن (در هر وضعیتی) تعریف نشده باشد
-        if (await bookletHasAnyTaskForTeam(bookletId)) {
-            return showAppAlert('از این کتابچه قبلاً بسته کاری تعریف شده است (برای دیگران، فسخ‌شده یا باطل‌شده). سرگروه فقط می‌تواند بسته‌ای از کتابچه‌ای را خودش انجام دهد که هیچ بسته‌ای از آن تعریف نکرده باشد.', false);
-        }
-
-        // ۳) همان کتابچه را از شرکت دیگری نگرفته باشد
-        var dupRes = await sb.from('contracts').select('id, team_id, status, tasks(booklet_id)').eq('contractor_id', currentUser.id);
-        var tookFromOther = (dupRes.data || []).some(function(c) {
-            return c.status !== 'terminated' && c.tasks && c.tasks.booklet_id === bookletId && c.team_id !== currentTeam.id;
-        });
-        if (tookFromOther) return showAppAlert('شما قبلاً یک بسته کاری از همین کتابچه را در شرکت دیگری انجام داده‌اید.', false);
-
-        // ۴) سقف مجموع ۲۰۰ سکه برای کارهای خودِ سرگروه
-        var used = await getLeaderSelfCoinsUsed();
-        if (roundCoin(used + coins) > SELF_TASK_MAX_COINS) {
-            return showAppAlert('سقف ۲۰۰ سکه: تاکنون ' + roundCoin(used) + ' سکه بسته کاری برای خودتان تعریف کرده‌اید؛ با این بسته مجموع به ' + roundCoin(used + coins) + ' سکه می‌رسد.', false);
-        }
-
-        // ۵) سقف بودجه قابل تخصیص شرکت (مانند سایر بسته‌ها)
-        var totalBudget = parseFloat(mpRes.data.allocated_coins);
-        var penaltyRes = await sb.from('contracts').select('leader_penalty_coins').eq('team_id', currentTeam.id);
-        var totalPenalty = 0;
-        (penaltyRes.data || []).forEach(function(c) { totalPenalty += parseFloat(c.leader_penalty_coins || 0); });
-        totalPenalty += await getTeamExpelPenalty(currentTeam.id);
-        var allocatableBudget = Math.max(0, totalBudget - totalPenalty);
-        var teamTasks = await sb.from('tasks').select('allocated_nominal_coins, status').eq('team_id', currentTeam.id);
-        var currentSpent = 0;
-        (teamTasks.data || []).forEach(function(t) { if (t.status !== 'terminated') currentSpent += parseFloat(t.allocated_nominal_coins || 0); });
-        if (currentSpent + coins > allocatableBudget) {
-            return showAppAlert('خطای سقف بودجه: مجموع بودجه بسته‌های شرکت (' + roundCoin(currentSpent + coins) + ' سکه) از سقف بودجه قابل تخصیص (' + roundCoin(allocatableBudget) + ' سکه) فراتر می‌رود.', false);
-        }
-
-        if (!(await showConfirmDialog('این بسته کاری توسط خودِ شما (سرگروه) انجام می‌شود و بدون مناقصه مستقیماً در وضعیت «در حال انجام» قرار می‌گیرد. مبلغ ' + roundCoin(coins) + ' سکه از بودجه شرکت کسر می‌شود. ادامه می‌دهید؟', { confirmLabel: 'ایجاد بسته کاری مخصوص من' }))) return;
-
-        // ۶) ایجاد بسته کاری + قرارداد (سرگروه به‌عنوان پیمانکار)
-        var taskIns = await sb.from('tasks').insert([{
-            team_id: currentTeam.id,
-            booklet_id: bookletId,
-            title: title,
-            allocated_nominal_coins: coins,
-            booklet_share_percent: sharePercent,
-            status: 'in_progress',
-            market_phase: 'internal',
-            bidding_deadline: new Date().toISOString()
-        }]).select();
-        if (taskIns.error || !taskIns.data || taskIns.data.length === 0) {
-            return showAppAlert('خطا در ایجاد بسته کاری: ' + (taskIns.error ? taskIns.error.message : 'ثبت انجام نشد.'), false);
-        }
-        var newTaskId = taskIns.data[0].id;
-
-        var now = new Date();
-        var conIns = await sb.from('contracts').insert([{
-            task_id: newTaskId,
-            team_id: currentTeam.id,
-            contractor_id: currentUser.id,
-            agreed_base_coins: coins,
-            leader_signed: true,
-            status: 'in_progress',
-            termination_status: 'none',
-            action_logs: [{
-                sender: 'سرگروه',
-                date: now.toLocaleDateString('fa-IR'),
-                time: now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute: '2-digit'}),
-                type: 'تعریف بسته کاری مخصوص سرگروه و آغاز انجام کار',
-                file_url: null
-            }]
-        }]).select();
-        if (conIns.error || !conIns.data || conIns.data.length === 0) {
-            await sb.from('tasks').delete().eq('id', newTaskId);
-            return showAppAlert('خطا در ثبت قرارداد بسته کاری مخصوص سرگروه: ' + (conIns.error ? conIns.error.message : 'ثبت انجام نشد.'), false);
-        }
-
-        showAppAlert('بسته کاری مخصوص سرگروه ایجاد شد. از بخش «قراردادهای هوشمند» می‌توانید گزارش را آپلود کنید.', true);
-        document.getElementById('self-task-title-input').value = '';
-        document.getElementById('self-task-coins-input').value = '';
-        document.getElementById('self-task-share-input').value = '100';
-        await loadTasks();
-        await loadContracts();
-        await updateBookletShareNote();
-        await updateSelfTaskNote();
-    };
-
-    // آپلود گزارش بسته کاری مخصوص سرگروه: تایید سرگروه به‌صورت خودکار ثبت و در صورت تکمیل ۱۰۰٪ کتابچه برای استاد ارسال می‌شود.
-    window.leaderUploadSelfReport = async function(taskId, contractId) {
-        var sb = getSupabaseClient();
-        var c = allLoadedContracts.find(function(x) { return x.id === contractId; });
-        if (!c || c.contractor_id !== currentUser.id || userProfile.role !== 'leader') {
-            return showAppAlert('این قرارداد، بسته کاری مخصوص شما (سرگروه) نیست.', false);
-        }
-        if (c.team_id && await isContractPastEndDate(c.team_id)) {
-            return showAppAlert('مهلت خاتمهٔ قرارداد اصلی این شرکت به پایان رسیده است؛ امکان ارسال گزارش وجود ندارد.', false);
-        }
-        var fileInput = document.getElementById('file-' + taskId);
-        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            return showAppAlert('لطفاً ابتدا فایل گزارش را انتخاب کنید.', false);
-        }
-
-        var file = fileInput.files[0];
-        var fName = 'report_' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '');
-        var upRes = await sb.storage.from('reports').upload(fName, file);
-        if (upRes.error) return showAppAlert('خطا در آپلود فایل: ' + upRes.error.message, false);
-        var downloadUrl = sb.storage.from('reports').getPublicUrl(fName).data.publicUrl;
-
-        var logs = c.action_logs ? c.action_logs.slice() : [];
-        var now = new Date();
-        var dateStr = now.toLocaleDateString('fa-IR');
-        var timeStr = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute: '2-digit'});
-        logs.push({ sender: 'سرگروه (پیمانکار)', date: dateStr, time: timeStr, type: 'ارسال گزارش بسته کاری مخصوص سرگروه', file_url: downloadUrl, file_name: file.name });
-        logs.push({ sender: 'کارفرما', date: dateStr, time: timeStr, type: 'تایید خودکار گزارش (بسته کاری مخصوص سرگروه)', file_url: null });
-
-        var tRes = await sb.from('tasks').update({ submission_url: downloadUrl, status: 'leader_approved' }).eq('id', taskId);
-        if (tRes.error) console.warn('leaderUploadSelfReport task update warning:', tRes.error);
-
-        var cRes = await sb.from('contracts').update({
-            leader_signed: true,
-            status: 'leader_approved',
-            submission_url: downloadUrl,
-            action_logs: logs
-        }).eq('id', contractId).select('id');
-        if (cRes.error || !cRes.data || cRes.data.length === 0) {
-            return showAppAlert('ثبت گزارش در پایگاه‌داده انجام نشد: ' + (cRes.error ? cRes.error.message : 'دسترسی به‌روزرسانی قرارداد مجاز نیست.'), false);
-        }
-
-        var bookletId = c.tasks ? (c.tasks.booklet_id || (c.tasks.booklets ? c.tasks.booklets.id : null)) : null;
-        var groupResult = await tryFinalizeBookletGroupForProfessor(c.team_id, bookletId);
-
-        if (groupResult.error) {
-            showAppAlert('گزارش ثبت شد، اما ارسال کتابچه برای ارزیابی استاد با خطا مواجه شد: ' + groupResult.error, false);
-        } else if (groupResult.ready) {
-            showAppAlert('گزارش شما ثبت و تایید شد. چون مجموع بسته‌های این کتابچه ۱۰۰٪ شده و همه تایید شده‌اند، کتابچه برای ارزیابی و امتیازدهی به پنل استاد ارسال شد.', true);
-        } else {
-            showAppAlert('گزارش شما ثبت و تایید شد. این کتابچه تا تکمیل ۱۰۰٪ و تایید سایر بسته‌های آن (مجموع فعلی: ' + roundCoin(groupResult.totalShare || 0) + '٪) منتظر می‌ماند.', true);
-        }
-        await loadContracts();
-        await loadTasks();
-        await updateSelfTaskNote();
     };
 
     async function executeTaskCreation(bookletId, title, coins, deadlineIso, sharePercent) {
