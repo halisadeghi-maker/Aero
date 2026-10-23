@@ -258,7 +258,7 @@
 
             <!-- نسخه سامانه (۳.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.3.5</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.3.6</span>
             </div>
         </section>
 
@@ -4304,7 +4304,7 @@
                 { key: 'marker', value: BACKUP_APP_MARKER },
                 { key: 'created_at', value: now.toISOString() },
                 { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
-                { key: 'app_version', value: '3.3.5' }
+                { key: 'app_version', value: '3.3.6' }
             ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
 
@@ -4971,47 +4971,15 @@
         deadline.setDate(deadline.getDate() + 7);
         if (new Date().getTime() < deadline.getTime()) return false;
 
-        // مهلت یک‌هفته‌ای بدون جذب عضو ثابت جدید به پایان رسیده؛ اجرای پیامدهای انحلال:
-
-        // ۱) لغو تمام قراردادهای شرکت و باطل شدن سکه‌های آن‌ها
-        await sb.from('contracts').update({ status: 'terminated', termination_status: 'company_dissolved' })
-            .eq('team_id', teamId)
-            .neq('status', 'terminated')
-            .neq('status', 'completed');
-
-        // ۲) توقف تمام بسته‌های کاری این شرکت (چون خود شرکت دیگر وجود ندارد)
-        await sb.from('tasks').update({ status: 'terminated' })
-            .eq('team_id', teamId)
-            .neq('status', 'terminated')
-            .neq('status', 'completed');
-
-        // ۳) جریمه ۱۵ سکه‌ای برای تمام اعضای ثابت باقی‌مانده (مسئولیت جمعی)
-        var remainingMembersRes = await sb.from('team_members').select('id').eq('team_id', teamId).eq('status', 'active');
-        var remainingIds = (remainingMembersRes.data || []).map(function(m) { return m.id; });
-        if (remainingIds.length > 0) {
-            await sb.from('team_members').update({ status: 'exited', exited_at: new Date().toISOString(), exit_penalty_applied: true }).in('id', remainingIds);
+        // مهلت یک‌هفته‌ای بدون جذب عضو ثابت جدید به پایان رسیده؛ پیامدهای انحلال
+        // (فسخ قراردادها و بسته‌ها، جریمه اعضا و سرگروه، آزادسازی قرارداد اصلی و ثبت انحلال)
+        // به‌صورت «یک عمل واحد و امن» در پایگاه داده اجرا می‌شود.
+        var disRes = await sb.rpc('dissolve_company', { p_team: teamId });
+        if (disRes.error) {
+            console.warn('dissolveCompanyIfExpired error:', disRes.error);
+            return false;
         }
-
-        // ۴) لغو قرارداد اصلی شرکت با استاد؛ پروژه به حالت باز برمی‌گردد تا سرگروه با شرکت جدید دوباره در مناقصه شرکت کند
-        await sb.from('master_projects').update({ awarded_team_id: null, status: 'open' }).eq('awarded_team_id', teamId).eq('status', 'awarded');
-
-        // ۵) جریمهٔ از دست دادن سهم ۲۵٪ تکمیل پروژه، به سکهٔ منفی تبدیل و به‌صورت دائمی روی پروفایل سرگروه ثبت می‌شود
-        //    (نه روی خود شرکت، چون شرکت منحل شده و سرگروه باید شرکت جدیدی تشکیل دهد؛ این جریمه باید همراه او بماند)
-        //    ۲۵٪ از سهم نمره = ۵۰ سکه، طبق تبدیل رسمی «۱۰۰٪ نمره سرگروه = ۲۰۰ سکه»
-        var DISSOLUTION_PENALTY_COINS = 50;
-        var leaderProfileRes = await sb.from('profiles').select('dissolution_penalty_coins').eq('id', team.leader_id).maybeSingle();
-        var priorPenalty = leaderProfileRes.data ? parseFloat(leaderProfileRes.data.dissolution_penalty_coins || 0) : 0;
-        await sb.from('profiles').update({ dissolution_penalty_coins: priorPenalty + DISSOLUTION_PENALTY_COINS }).eq('id', team.leader_id);
-
-        // ۶) ثبت وضعیت نهایی انحلال شرکت (برای تاریخچه) و صفر شدن سهم «تکمیل پروژه» این شرکت خاص
-        await sb.from('teams').update({
-            status: 'dissolved',
-            dissolved_at: new Date().toISOString(),
-            leader_dissolution_penalty_coins: DISSOLUTION_PENALTY_COINS,
-            completion_score_zeroed: true
-        }).eq('id', teamId);
-
-        return true;
+        return disRes.data === true;
     }
 
     function renderDissolvedCompanyBox() {
