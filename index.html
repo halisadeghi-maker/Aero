@@ -258,7 +258,7 @@
 
             <!-- نسخه سامانه (۳.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.3.4</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.3.5</span>
             </div>
         </section>
 
@@ -3233,7 +3233,7 @@
             return showAppAlert('با قیمت پیشنهادی، تعداد سکه‌های قراردادهای شما از سقف مجاز عبور می‌کند.', false);
         }
 
-        var existing = await sb.from('task_bids').select('id').eq('task_id', taskId).eq('bidder_id', currentUser.id).maybeSingle();
+        var existing = await sb.from('task_bids').select('id').eq('task_id', taskId).eq('bidder_id', currentUser.id).eq('status', 'pending').order('created_at', { ascending: false }).limit(1).maybeSingle();
         var res;
         if (existing.data) {
             res = await sb.from('task_bids').update({ proposed_coins: coins }).eq('id', existing.data.id).select();
@@ -3256,6 +3256,16 @@
         var sb = getSupabaseClient();
         var bidsRes = await sb.from('task_bids').select('*, profiles(full_name)').eq('task_id', taskId).eq('status', 'pending').order('proposed_coins', { ascending: true });
         var bids = bidsRes.data || [];
+        // برای هر پیمانکار فقط «آخرین» پیشنهاد او نمایش داده می‌شود (و همان مبنای قرارداد است)
+        var latestByBidder = {};
+        bids.forEach(function(b) {
+            var prev = latestByBidder[b.bidder_id];
+            var newer = !prev || new Date(b.created_at) > new Date(prev.created_at) ||
+                        (b.created_at === prev.created_at && String(b.id) > String(prev.id));
+            if (newer) latestByBidder[b.bidder_id] = b;
+        });
+        bids = Object.keys(latestByBidder).map(function(k) { return latestByBidder[k]; })
+            .sort(function(a, b) { return parseFloat(a.proposed_coins) - parseFloat(b.proposed_coins); });
         var list = document.getElementById('internal-bids-list');
 
         if (bids.length === 0) {
@@ -3353,7 +3363,7 @@
         if (userProfile.role === 'member') {
             var memberQueries = await Promise.all([
                 sb.from('team_members').select('team_id').eq('profile_id', currentUser.id).eq('status', 'active'),
-                sb.from('task_bids').select('task_id, proposed_coins').eq('bidder_id', currentUser.id),
+                sb.from('task_bids').select('task_id, proposed_coins, created_at').eq('bidder_id', currentUser.id).order('created_at', { ascending: true }),
                 sb.from('contracts').select('agreed_base_coins').eq('contractor_id', currentUser.id).neq('status', 'terminated')
             ]);
             var myMembershipRes = memberQueries[0], myBidsRes = memberQueries[1], myContractsRes = memberQueries[2];
@@ -4294,7 +4304,7 @@
                 { key: 'marker', value: BACKUP_APP_MARKER },
                 { key: 'created_at', value: now.toISOString() },
                 { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
-                { key: 'app_version', value: '3.3.4' }
+                { key: 'app_version', value: '3.3.5' }
             ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
 
