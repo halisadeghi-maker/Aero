@@ -258,7 +258,7 @@
 
             <!-- نسخه سامانه (۳.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.3.3</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.3.4</span>
             </div>
         </section>
 
@@ -4294,7 +4294,7 @@
                 { key: 'marker', value: BACKUP_APP_MARKER },
                 { key: 'created_at', value: now.toISOString() },
                 { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
-                { key: 'app_version', value: '3.3.3' }
+                { key: 'app_version', value: '3.3.4' }
             ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
 
