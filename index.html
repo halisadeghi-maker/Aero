@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۳.۲)</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <!--
         ===================== سیستم طراحی مرکزی (Design Tokens) — فاز ۰ بازطراحی بصری =====================
         این پالت با الهام از زبان طراحی Atlassian/Jira تعریف شده و در فازهای بعدی (کارت‌ها، جداول، مودال‌ها،
@@ -59,12 +59,12 @@
     <!-- Vazirmatn Font -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Supabase JS Client -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2.39.8/dist/umd/supabase.js"></script>
-    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2.39.8/dist/umd/supabase.js" integrity="sha384-b4JKVkST7Jkb2qRVyZEamH2WA+trxThEkVN6z3JXWfUDFNZd14MnE/qRvt/zy2J5" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- تقویم و انتخابگر تاریخ و ساعت شمسی -->
-    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-    <script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker@1.0.0/dist/jalalidatepicker.min.css" integrity="sha384-UHJlbROGJEKAbBtqDq793M5b5rE2Uy3F0fgL0QgBlI38G3ybbU5AsitYzcQ7G5Ij" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://unpkg.com/@majidh1/jalalidatepicker@1.0.0/dist/jalalidatepicker.min.js" integrity="sha384-OHbrAEEPTxuW3OvYHJ065SKAvdkqiYjPW+Kqd/Vfy4aHia8puUyLWlZrWS+lyrio" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <style>
         /* ===== توکن‌های طراحی سطح CSS (برای استفاده در کلاس‌های سفارشی مثل glass-card) ===== */
@@ -258,7 +258,7 @@
 
             <!-- نسخه سامانه (۳.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.3.6</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.3.7</span>
             </div>
         </section>
 
@@ -1103,6 +1103,19 @@
     var client = null;
     var allLoadedContracts = []; 
 
+    // ---- ابزارهای امنیتی نمایش متن (نسخه 3.3.7) ----
+    // هر متنی که از پایگاه داده یا ورودی کاربر داخل HTML چاپ می‌شود باید از esc() عبور کند.
+    function esc(v) {
+        return String(v === null || v === undefined ? '' : v)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    // فقط لینک فایل‌های ذخیره‌شده در پوشه‌های همین سامانه مجاز است (جلوگیری از javascript: و سایت‌های بیرونی)
+    function safeUrl(u) {
+        var s = String(u || '');
+        return /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/(reports|rfp_files)\/[^<>"'` ]+$/i.test(s) ? s : '';
+    }
+
     var appConfirmResolve = null;
     function showConfirmDialog(message, options) {
         options = options || {};
@@ -1813,7 +1826,7 @@
                         : '';
                     bidArea = '<div class="mt-3 pt-2 border-t border-amber-600/30 text-center py-2 bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-xl text-xs font-black shadow-sm">🏆 قرارداد اصلی مصوب و فعال شرکت شما (بودجه: ' + roundCoin(p.allocated_coins) + ' سکه)' + leaderEndDateText + '</div>';
                 } else if (p.status === 'awarded') {
-                    bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">منعقد شده با شرکت ' + (p.teams ? p.teams.name : '') + '</div>';
+                    bidArea = '<div class="mt-2 text-center text-xs font-bold text-slate-500">منعقد شده با شرکت ' + esc(p.teams ? p.teams.name : '') + '</div>';
                 } else if (teamAlreadyWon && p.status === 'open') {
                     bidArea = '<div class="mt-3 pt-3 border-t border-slate-300 text-center text-xs font-bold text-rose-700 bg-rose-50 p-2.5 rounded-xl border border-rose-200">' +
                         '🔒 از آنجا که شرکت شما در مناقصه‌ای برنده شده و قرارداد منعقد کرده است، امکان شرکت در سایر مناقصات باز را ندارد.' +
@@ -1831,7 +1844,7 @@
                         '<div class="text-[10px] font-bold text-amber-800 mb-1.5">⚠️ فقط قیمت برابر یا کمتر از ' + roundCoin(p.allocated_coins) + ' سکه (قیمت پیشنهادی استاد) پذیرفته می‌شود.</div>' +
                         '<div class="flex gap-2 items-center">' +
                         '<input type="number" id="bid-coins-' + p.id + '" max="' + p.allocated_coins + '" placeholder="قیمت شما (حداکثر ' + roundCoin(p.allocated_coins) + ' سکه)" class="w-full bg-white border border-amber-300 rounded-lg p-2 text-xs text-slate-800 font-bold focus:ring-2 focus:ring-brand-400">' +
-                        '<button type="button" onclick="promptBidConfirmation(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\')" class="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">ثبت پیشنهاد مناقصه</button>' +
+                        '<button type="button" data-pid="' + esc(p.id) + '" data-ptitle="' + esc(p.title) + '" onclick="promptBidConfirmation(this.dataset.pid, this.dataset.ptitle)" class="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white text-xs font-black px-3.5 py-2 rounded-lg whitespace-nowrap shadow-md cursor-pointer transition">ثبت پیشنهاد مناقصه</button>' +
                         '</div></div>';
                 } else {
                     bidArea = '<div class="mt-2 text-center text-xs font-bold text-rose-600">مهلت ارسال پیشنهاد به پایان رسیده است.</div>';
@@ -1841,7 +1854,7 @@
                     ? '<span class="text-emerald-700 font-bold">مهلت خاتمه قرارداد: ' + new Date(p.contract_end_date).toLocaleDateString('fa-IR', options) + '</span>'
                     : '<span class="text-slate-400 font-bold">هنوز مهلت خاتمه قرارداد تعیین نشده</span>';
                 bidArea = '<div class="mt-3 pt-2 border-t border-amber-200 space-y-1.5">' +
-                    '<button onclick="openProfessorBidsModal(\'' + p.id + '\', \'' + p.title.replace(/'/g, "\\'") + '\', ' + p.allocated_coins + ')" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-bold py-1.5 rounded-lg text-xs transition cursor-pointer shadow-sm">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
+                    '<button data-pid="' + esc(p.id) + '" data-ptitle="' + esc(p.title) + '" data-pcoins="' + esc(p.allocated_coins) + '" onclick="openProfessorBidsModal(this.dataset.pid, this.dataset.ptitle, parseFloat(this.dataset.pcoins))" class="w-full bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-bold py-1.5 rounded-lg text-xs transition cursor-pointer shadow-sm">بررسی پیشنهادها و امضای قرارداد با سرگروه</button>' +
                     '<div class="text-[11px] px-1">' + endDateText + '</div>' +
                     '<div class="flex gap-2">' +
                         '<input type="text" id="mp-enddate-shamsi-' + p.id + '" data-jdp data-jdp-min-date="today" placeholder="۱۴۰۵/۱۰/۰۱ ۲۳:۵۹" class="w-full bg-white border border-neutral-300 rounded-lg p-1.5 text-[11px] font-bold text-slate-800 cursor-pointer" readonly>' +
@@ -1854,11 +1867,11 @@
                     '</div>';
             }
 
-            var rfpDownloadLink = p.rfp_file_url ? '<a href="' + p.rfp_file_url + '" target="_blank" class="text-xs text-blue-700 font-bold underline block mt-1">📥 دانلود سند RFP پروژه</a>' : '<span class="text-[11px] text-slate-400 block mt-1">سند فایلی ضمیمه نشده است</span>';
+            var rfpDownloadLink = safeUrl(p.rfp_file_url) ? '<a href="' + esc(safeUrl(p.rfp_file_url)) + '" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-700 font-bold underline block mt-1">📥 دانلود سند RFP پروژه</a>' : '<span class="text-[11px] text-slate-400 block mt-1">سند فایلی ضمیمه نشده است</span>';
             
             var awardedTeamInfo = '';
             if (p.awarded_team_id && p.teams) {
-                awardedTeamInfo = '<span class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-xs">تخصیص‌یافته به: ' + p.teams.name + '</span>';
+                awardedTeamInfo = '<span class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[11px] px-3 py-1 rounded-full font-black shadow-xs">تخصیص‌یافته به: ' + esc(p.teams.name) + '</span>';
             } else if (userProfile.role === 'leader' && hasSubmittedBid) {
                 awardedTeamInfo = '<span class="bg-slate-600 text-white text-[11px] px-2.5 py-0.5 rounded-full font-bold">پیشنهاد شما ارسال شد</span>';
             } else {
@@ -1874,9 +1887,9 @@
                         '</div>' +
 
                         '<div id="mp-view-' + p.id + '" class="space-y-2">' +
-                            '<h4 class="text-sm font-black ' + (isAwardedToMyTeam ? 'text-emerald-950' : 'text-neutral-900') + '">' + p.title + '</h4>' +
-                            '<div class="text-xs font-bold text-slate-700">رده: ' + p.aircraft_type + '</div>' +
-                            '<p class="text-xs text-slate-600 leading-relaxed bg-white/70 p-2.5 rounded-xl border border-slate-200/80">' + p.specifications + '</p>' +
+                            '<h4 class="text-sm font-black ' + (isAwardedToMyTeam ? 'text-emerald-950' : 'text-neutral-900') + '">' + esc(p.title) + '</h4>' +
+                            '<div class="text-xs font-bold text-slate-700">رده: ' + esc(p.aircraft_type) + '</div>' +
+                            '<p class="text-xs text-slate-600 leading-relaxed bg-white/70 p-2.5 rounded-xl border border-slate-200/80">' + esc(p.specifications) + '</p>' +
                             rfpDownloadLink +
                             '<div class="pt-2 flex justify-between items-center text-xs font-bold">' +
                                 '<span>مبلغ قرارداد: <span class="text-amber-800 font-black text-sm">' + roundCoin(p.allocated_coins) + ' سکه</span></span>' +
@@ -1886,13 +1899,13 @@
 
                         '<div id="mp-edit-' + p.id + '" class="hidden space-y-2 p-3 bg-white/95 rounded-2xl border border-amber-400 shadow-md">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">عنوان پروژه:</label>' +
-                            '<input type="text" id="mp-edit-title-' + p.id + '" value="' + p.title + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 font-bold">' +
+                            '<input type="text" id="mp-edit-title-' + p.id + '" value="' + esc(p.title) + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 font-bold">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">نوع و رده هواپیما:</label>' +
-                            '<input type="text" id="mp-edit-type-' + p.id + '" value="' + p.aircraft_type + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<input type="text" id="mp-edit-type-' + p.id + '" value="' + esc(p.aircraft_type) + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">مبلغ بودجه (سکه):</label>' +
                             '<input type="number" id="mp-edit-coins-' + p.id + '" value="' + p.allocated_coins + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800 font-bold">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">شرح و ویژگی‌ها:</label>' +
-                            '<textarea id="mp-edit-specs-' + p.id + '" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' + (p.specifications || '') + '</textarea>' +
+                            '<textarea id="mp-edit-specs-' + p.id + '" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' + esc(p.specifications || '') + '</textarea>' +
                             '<div class="flex gap-2 pt-1">' +
                                 '<button onclick="saveMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 rounded-lg text-xs shadow-sm">ذخیره تغییرات</button>' +
                                 '<button onclick="toggleMasterProjectCardEdit(\'' + p.id + '\')" class="w-1/2 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-bold py-1.5 rounded-lg text-xs">انصراف</button>' +
@@ -2036,10 +2049,10 @@
 
                 tbody.innerHTML += '<tr class="hover:bg-slate-50 transition cursor-pointer">' +
                     '<td class="p-3 text-center">' +
-                        '<input type="radio" name="selected_team_bid" value="' + b.team_id + '" data-team-name="' + teamName + '" data-coins="' + b.proposed_coins + '" ' + isChecked + ' ' + disabledAttr + ' class="w-4 h-4 text-neutral-900 focus:ring-indigo-500 cursor-pointer">' +
+                        '<input type="radio" name="selected_team_bid" value="' + b.team_id + '" data-team-name="' + esc(teamName) + '" data-coins="' + b.proposed_coins + '" ' + isChecked + ' ' + disabledAttr + ' class="w-4 h-4 text-neutral-900 focus:ring-indigo-500 cursor-pointer">' +
                     '</td>' +
-                    '<td class="p-3 font-black text-slate-800">' + teamName + ineligibleBadge + '</td>' +
-                    '<td class="p-3 text-slate-600">' + leaderName + '</td>' +
+                    '<td class="p-3 font-black text-slate-800">' + esc(teamName) + ineligibleBadge + '</td>' +
+                    '<td class="p-3 text-slate-600">' + esc(leaderName) + '</td>' +
                     '<td class="p-3 font-black text-amber-700 text-center text-sm">' + roundCoin(b.proposed_coins) + ' سکه</td>' +
                     '<td class="p-3 text-slate-500 text-center">' + bDate + '</td>' +
                     '</tr>';
@@ -2114,13 +2127,13 @@
             var roleTitle = u.role === 'leader' ? 'سرگروه' : (u.role === 'professor' ? 'استاد' : 'دانشجو');
             div.innerHTML += '<div class="flex justify-between items-center p-2.5 bg-neutral-50 border border-neutral-300 rounded-lg">' +
                 '<div class="flex flex-col">' +
-                    '<span class="font-bold text-slate-800">' + u.full_name + ' (' + roleTitle + ')</span>' +
-                    '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + u.student_id + '</span>' +
-                    '<span class="text-[10px] text-slate-500">نام کاربری (ایمیل): ' + (u.email || 'ثبت‌نشده') + '</span>' +
+                    '<span class="font-bold text-slate-800">' + esc(u.full_name) + ' (' + roleTitle + ')</span>' +
+                    '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + esc(u.student_id) + '</span>' +
+                    '<span class="text-[10px] text-slate-500">نام کاربری (ایمیل): ' + esc(u.email || 'ثبت‌نشده') + '</span>' +
                 '</div>' +
                 '<div class="flex gap-1.5">' +
-                    '<button type="button" onclick="approveUser(\'' + u.id + '\', true, \'' + u.full_name + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer">✓ تایید</button>' +
-                    '<button type="button" onclick="approveUser(\'' + u.id + '\', false, \'' + u.full_name + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer">✕ رد و حذف</button>' +
+                    '<button type="button" data-uid=\"' + esc(u.id) + '\" data-uname=\"' + esc(u.full_name) + '\" onclick=\"approveUser(this.dataset.uid, true, this.dataset.uname)\" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer">✓ تایید</button>' +
+                    '<button type="button" data-uid=\"' + esc(u.id) + '\" data-uname=\"' + esc(u.full_name) + '\" onclick=\"approveUser(this.dataset.uid, false, this.dataset.uname)\" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer">✕ رد و حذف</button>' +
                 '</div></div>';
         });
     }
@@ -2261,7 +2274,13 @@
         }
 
         var file = fileInput.files[0];
-        var fName = 'report_' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '');
+        if (/\.(html?|xhtml|svg|xml|js|mjs|php|exe|bat|cmd|sh|msi|jar|dll|vbs|ps1|apk|swf)$/i.test(file.name)) {
+            return showAppAlert('این نوع فایل برای ارسال گزارش مجاز نیست. لطفاً گزارش را به صورت PDF، Word، Excel، تصویر یا فایل فشرده (ZIP) ارسال کنید.', false);
+        }
+        if (file.size > 50 * 1024 * 1024) {
+            return showAppAlert('حجم فایل بیش از ۵۰ مگابایت است. لطفاً فایل را فشرده یا کم‌حجم‌تر کنید.', false);
+        }
+        var fName = 'report_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8) + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '').slice(-80);
         var upRes = await sb.storage.from('reports').upload(fName, file);
         if (upRes.error) {
             return showAppAlert('خطا در آپلود فایل: ' + upRes.error.message, false);
@@ -2587,7 +2606,7 @@
 
         document.getElementById('prof-award-members-list').innerHTML = pendingAwardGroup.map(function(m) {
             return '<div class="flex justify-between items-center bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs">' +
-                '<span class="font-bold text-slate-700">' + m.name + '</span>' +
+                '<span class="font-bold text-slate-700">' + esc(m.name) + '</span>' +
                 '<span class="text-slate-500">سهم بسته: <strong class="text-indigo-900">' + roundCoin((function(){ var cc = allLoadedContracts.find(function(x){return x.id===m.contractId;}); return cc && cc.tasks ? (cc.tasks.booklet_share_percent || 0) : 0; })()) + '٪</strong> | سکهٔ قراردادی: <strong class="text-indigo-900">' + roundCoin(m.agreedCoins) + '</strong></span>' +
                 '</div>';
         }).join('');
@@ -2987,19 +3006,19 @@
             tbody.innerHTML = '<tr><td colspan="6" class="p-6 text-center text-slate-400">هنوز رویداد یا فایلی در این قرارداد ثبت نشده است.</td></tr>';
         } else {
             logs.forEach(function(log, idx) {
-                var fileCell = log.file_url ? '<a href="' + log.file_url + '" target="_blank" class="text-blue-700 underline font-black">📥 دانلود فایل (' + (log.file_name || 'گزارش') + ')</a>' : '<span class="text-slate-400">-</span>';
-                var typeDesc = log.type;
+                var fileCell = safeUrl(log.file_url) ? '<a href="' + esc(safeUrl(log.file_url)) + '" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline font-black">📥 دانلود فایل (' + esc(log.file_name || 'گزارش') + ')</a>' : '<span class="text-slate-400">-</span>';
+                var typeDesc = esc(log.type);
                 var historyShare = c.tasks ? parseFloat(c.tasks.booklet_share_percent || 0) : 0;
                 typeDesc += '<br><span class="text-[10px] text-indigo-700 font-bold">سهم بسته از کل کتابچه: ' + roundCoin(historyShare) + '٪</span>';
                 if (log.details) {
-                    typeDesc += '<br><span class="text-[11px] text-slate-600 font-normal">توضیح: ' + log.details + '</span>';
+                    typeDesc += '<br><span class="text-[11px] text-slate-600 font-normal">توضیح: ' + esc(log.details) + '</span>';
                 }
 
                 tbody.innerHTML += '<tr class="hover:bg-slate-50 transition">' +
                     '<td class="p-3 text-center font-bold">' + (idx + 1) + '</td>' +
-                    '<td class="p-3 font-black text-neutral-900">' + (log.sender || 'سامانه') + '</td>' +
-                    '<td class="p-3 text-center text-slate-600">' + (log.date || '-') + '</td>' +
-                    '<td class="p-3 text-center text-slate-600">' + (log.time || '-') + '</td>' +
+                    '<td class="p-3 font-black text-neutral-900">' + esc(log.sender || 'سامانه') + '</td>' +
+                    '<td class="p-3 text-center text-slate-600">' + esc(log.date || '-') + '</td>' +
+                    '<td class="p-3 text-center text-slate-600">' + esc(log.time || '-') + '</td>' +
                     '<td class="p-3 font-medium text-slate-800">' + typeDesc + '</td>' +
                     '<td class="p-3 text-center">' + fileCell + '</td>' +
                     '</tr>';
@@ -3076,7 +3095,7 @@
         for (var t in teamStats) {
             var s = teamStats[t];
             html += '<div class="flex justify-between items-center text-slate-700 py-1 border-b border-slate-100 last:border-0 gap-2">' +
-                '<span class="font-bold whitespace-nowrap">شرکت ' + t + '</span>' +
+                '<span class="font-bold whitespace-nowrap">شرکت ' + esc(t) + '</span>' +
                 '<span class="text-[10px] flex flex-wrap gap-1.5 justify-end">' +
                     '<span class="text-sky-700">جاری: ' + s.ongoing + '</span>' +
                     '<span class="text-amber-700">توافقی: ' + s.mutual + '</span>' +
@@ -3093,7 +3112,7 @@
             html += '<span class="text-slate-400 font-medium">موردی ثبت نشده است.</span>';
         }
         for (var u in userTermCounts) {
-            html += '<div class="flex justify-between text-slate-700 py-0.5"><span>پیمانکار ' + u + ':</span><span class="font-black text-rose-600">' + userTermCounts[u] + ' فسخ</span></div>';
+            html += '<div class="flex justify-between text-slate-700 py-0.5"><span>پیمانکار ' + esc(u) + ':</span><span class="font-black text-rose-600">' + userTermCounts[u] + ' فسخ</span></div>';
         }
         html += '</div>';
 
@@ -3159,7 +3178,7 @@
                 ? '<button type="button" onclick="extendCompanyRecruitmentDeadline(\'' + team.id + '\')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-2.5 py-1 rounded-lg text-[10px] font-black cursor-pointer">⏱ تمدید مهلت جذب عضو</button>'
                 : '';
             return '<div class="bg-white p-3 rounded-xl border border-slate-200 flex flex-wrap justify-between items-center gap-2">' +
-                '<div><span class="font-black text-slate-800">شرکت ' + team.name + '</span> <span class="text-[10px] text-slate-400">(' + statusLabel + ')</span>' +
+                '<div><span class="font-black text-slate-800">شرکت ' + esc(team.name) + '</span> <span class="text-[10px] text-slate-400">(' + statusLabel + ')</span>' +
                 (team.status === 'warning' && team.warning_started_at ? '<div class="text-[10px] text-rose-700 font-bold mt-1">شروع مهلت: ' + new Date(team.warning_started_at).toLocaleDateString('fa-IR') + '</div>' : '') +
                 '</div>' +
                 '<div class="text-[11px] flex flex-wrap gap-2 items-center">' +
@@ -3278,7 +3297,7 @@
                 var bidderName = b.profiles ? b.profiles.full_name : 'ناشناس';
                 return '<div class="border ' + boxClass + ' rounded-xl p-3 flex justify-between items-center gap-2">' +
                     '<div>' +
-                        '<div class="text-xs font-black text-slate-800 flex items-center gap-1.5">' + bidderName + ' ' + badge + '</div>' +
+                        '<div class="text-xs font-black text-slate-800 flex items-center gap-1.5">' + esc(bidderName) + ' ' + badge + '</div>' +
                         '<div class="text-[11px] text-slate-500">پیشنهاد: <strong class="text-indigo-700">' + roundCoin(b.proposed_coins) + ' سکه</strong></div>' +
                     '</div>' +
                     '<button onclick="awardInternalBid(\'' + b.id + '\', \'' + taskId + '\', \'' + b.bidder_id + '\', ' + b.proposed_coins + ')" class="bg-brand-500 hover:bg-brand-600 text-white text-[10px] font-black px-3 py-1.5 rounded-lg cursor-pointer shadow-sm whitespace-nowrap">انتخاب این پیشنهاد</button>' +
@@ -3437,25 +3456,25 @@
                                 '</div>' +
                                 '<div>' +
                                     '<span class="text-[10px] text-slate-500 block font-bold">شرکت کارفرما</span>' +
-                                    '<span class="text-xs font-black" style="' + color.textStyle + '">' + teamName + '</span>' +
+                                    '<span class="text-xs font-black" style="' + color.textStyle + '">' + esc(teamName) + '</span>' +
                                 '</div>' +
                             '</div>' +
                             '<span class="text-[10px] font-black px-2.5 py-1 rounded-full shadow-xs" style="' + color.badgeStyle + '">کتابچه ' + bNum + '</span>' +
                         '</div>' +
 
-                        '<div class="text-[11px] font-bold text-slate-700 line-clamp-1">' + bTitle + '</div>' +
+                        '<div class="text-[11px] font-bold text-slate-700 line-clamp-1">' + esc(bTitle) + '</div>' +
                         '<div class="flex items-center justify-between text-[10px] font-black pt-1">' +
                             '<span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded-full">سهم بسته از کل کتابچه: ' + roundCoin(t.booklet_share_percent || 0) + '٪</span>' +
                             '<span class="text-slate-500">کتابچه ' + bNum + '</span>' +
                         '</div>' +
 
                         '<div id="view-section-' + t.id + '" class="p-3 bg-white/90 border border-slate-200/90 rounded-2xl text-xs font-medium text-slate-800 leading-relaxed min-h-[55px] shadow-xs">' +
-                            t.title +
+                            esc(t.title) +
                         '</div>' +
 
                         '<div id="edit-section-' + t.id + '" class="hidden space-y-2 p-3 bg-white border border-slate-300 rounded-2xl shadow-md">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">ویرایش شرح بسته کاری:</label>' +
-                            '<input type="text" id="edit-title-' + t.id + '" value="' + t.title + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
+                            '<input type="text" id="edit-title-' + t.id + '" value="' + esc(t.title) + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
                             '<label class="text-[10px] font-bold text-slate-600 block">ویرایش سکه:</label>' +
                             '<input type="number" id="edit-coins-' + t.id + '" value="' + t.allocated_nominal_coins + '" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-1.5 text-xs text-slate-800">' +
                             '<div class="flex gap-2">' +
@@ -3630,7 +3649,7 @@
 
         var res = await query;
         if (res.error) {
-            document.getElementById('contracts-table-body').innerHTML = '<tr><td colspan="9" class="p-6 text-center text-rose-600 font-bold">خطا در بارگذاری قراردادها: ' + res.error.message + '</td></tr>';
+            document.getElementById('contracts-table-body').innerHTML = '<tr><td colspan="9" class="p-6 text-center text-rose-600 font-bold">خطا در بارگذاری قراردادها: ' + esc(res.error.message) + '</td></tr>';
             console.error('loadContracts error:', res.error);
             return;
         }
@@ -3683,17 +3702,17 @@
                 var documentsAndMessages = '';
                 if (c.leader_rejection_message) {
                     documentsAndMessages += '<div class="text-[10px] text-rose-700 font-bold bg-rose-50 p-2 rounded mt-1.5 border border-rose-200 leading-relaxed">' +
-                        '❌ <strong>آخرین پیام رد گزارش:</strong><br>' + c.leader_rejection_message +
+                        '❌ <strong>آخرین پیام رد گزارش:</strong><br>' + esc(c.leader_rejection_message) +
                         '</div>';
                 }
                 if (c.termination_reason) {
                     documentsAndMessages += '<div class="text-[10px] text-amber-800 font-bold bg-amber-50 p-2 rounded mt-1.5 border border-amber-200 leading-relaxed">' +
-                        '⚖️ <strong>ادله فسخ یک‌طرفه:</strong><br>' + c.termination_reason +
+                        '⚖️ <strong>ادله فسخ یک‌طرفه:</strong><br>' + esc(c.termination_reason) +
                         '</div>';
                 }
                 if (c.professor_rejection_message) {
                     documentsAndMessages += '<div class="text-[10px] text-indigo-800 font-bold bg-indigo-50 p-2 rounded mt-1.5 border border-indigo-200 leading-relaxed">' +
-                        '👨‍🏫 <strong>دلیل رد درخواست فسخ توسط استاد:</strong><br>' + c.professor_rejection_message +
+                        '👨‍🏫 <strong>دلیل رد درخواست فسخ توسط استاد:</strong><br>' + esc(c.professor_rejection_message) +
                         '</div>';
                 }
                 if (c.contractor_penalty_coins) {
@@ -3733,22 +3752,22 @@
                     }
                 } else if (c.status === 'leader_review') {
                     if (userProfile.role === 'leader') {
-                        var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش جدید</a>' : '<span class="text-slate-400 block mb-1">فایلی آپلود نشده</span>';
+                        var fileLink = safeUrl(c.submission_url) ? '<a href="' + esc(safeUrl(c.submission_url)) + '" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش جدید</a>' : '<span class="text-slate-400 block mb-1">فایلی آپلود نشده</span>';
                         actionCol = '<div>' + fileLink + '<div class="flex gap-1.5">' +
                             '<button onclick="leaderApproveReport(\'' + c.task_id + '\', \'' + c.id + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-xs">تایید گزارش</button>' +
                             '<button onclick="openLeaderRejectModal(\'' + c.id + '\', \'' + c.task_id + '\')" class="bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded text-[10px] font-black cursor-pointer shadow-xs">رد گزارش</button>' +
                             '</div></div>';
                     } else if (userProfile.role === 'professor') {
-                        var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش (مشاهده ناظر)</a>' : '<span class="text-slate-400 text-xs">فایلی موجود نیست</span>';
+                        var fileLink = safeUrl(c.submission_url) ? '<a href="' + esc(safeUrl(c.submission_url)) + '" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش (مشاهده ناظر)</a>' : '<span class="text-slate-400 text-xs">فایلی موجود نیست</span>';
                         actionCol = '<div>' + fileLink + '<span class="text-indigo-700 font-bold text-xs">در دست بررسی کارفرما</span></div>';
                     } else {
                         actionCol = '<span class="text-indigo-700 font-bold text-xs">در انتظار تایید سرگروه</span>';
                     }
                 } else if (c.status === 'leader_approved') {
-                    var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش</a>' : '';
+                    var fileLink = safeUrl(c.submission_url) ? '<a href="' + esc(safeUrl(c.submission_url)) + '" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش</a>' : '';
                     actionCol = '<div>' + fileLink + '<span class="text-amber-700 font-bold text-xs">✅ تایید سرگروه — در انتظار تکمیل سایر بسته‌های همین کتابچه</span></div>';
                 } else if (c.status === 'professor_review') {
-                    var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش نهایی</a>' : '';
+                    var fileLink = safeUrl(c.submission_url) ? '<a href="' + esc(safeUrl(c.submission_url)) + '" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline font-black block mb-1.5">📥 دانلود گزارش نهایی</a>' : '';
                     if (userProfile.role === 'professor') {
                         var reviewBookletId = c.tasks && c.tasks.booklets ? c.tasks.booklets.id : null;
                         var reviewBookletShare = c.tasks ? parseFloat(c.tasks.booklet_share_percent || 0) : 0;
@@ -3759,7 +3778,7 @@
                         actionCol = '<div>' + fileLink + '<span class="text-purple-700 font-bold text-xs">در انتظار ارزیابی استاد</span></div>';
                     }
                 } else if (c.status === 'completed') {
-                    var fileLink = c.submission_url ? '<a href="' + c.submission_url + '" target="_blank" class="text-blue-700 underline block mb-1">📥 دانلود گزارش تسویه‌شده</a>' : '';
+                    var fileLink = safeUrl(c.submission_url) ? '<a href="' + esc(safeUrl(c.submission_url)) + '" target="_blank" rel="noopener noreferrer" class="text-blue-700 underline block mb-1">📥 دانلود گزارش تسویه‌شده</a>' : '';
                     actionCol = '<div>' + fileLink + '<span class="text-emerald-700 font-bold text-xs">اتمام‌یافته (' + (c.final_payout || 0) + ' سکه)</span></div>';
                 }
 
@@ -3815,10 +3834,10 @@
                 tbody.innerHTML += '<tr class="hover:bg-slate-50/80 transition">' +
                     '<td class="p-3 text-slate-400 font-bold">' + (rowIdx + 1) + '</td>' +
                     '<td class="p-3">' + bookletCellHtml + '</td>' +
-                    '<td class="p-3 font-bold">' + (c.teams ? c.teams.name : '') + '</td>' +
-                    '<td class="p-3">' + (c.tasks ? c.tasks.title : '') +
+                    '<td class="p-3 font-bold">' + esc(c.teams ? c.teams.name : '') + '</td>' +
+                    '<td class="p-3">' + esc(c.tasks ? c.tasks.title : '') +
                     '<div class="text-[10px] text-indigo-700 font-bold mt-1">سهم کتابچه: ' + (c.tasks ? roundCoin(c.tasks.booklet_share_percent || 0) : 0) + '٪</div></td>' +
-                    '<td class="p-3"><div class="flex items-center gap-2">' + renderAvatar(c.profiles ? c.profiles.full_name : '') + '<span>' + (c.profiles ? c.profiles.full_name : '') + '</span></div></td>' +
+                    '<td class="p-3"><div class="flex items-center gap-2">' + renderAvatar(c.profiles ? c.profiles.full_name : '') + '<span>' + esc(c.profiles ? c.profiles.full_name : '') + '</span></div></td>' +
                     '<td class="p-3 font-black text-amber-700 text-sm">' + roundCoin(c.agreed_base_coins || 0) + ' سکه</td>' +
                     '<td class="p-3 text-center" id="new-msg-cell-' + c.id + '">' + newMessageCell + '</td>' +
                     '<td class="p-3">' + statusBadge + '</td>' +
@@ -3994,7 +4013,7 @@
         var hash = 0;
         for (var i = 0; i < safeName.length; i++) hash = (hash + safeName.charCodeAt(i)) % avatarPalette.length;
         var color = avatarPalette[hash];
-        return '<span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-white text-[10px] font-black shrink-0" style="background:' + color + '">' + initial + '</span>';
+        return '<span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-white text-[10px] font-black shrink-0" style="background:' + color + '">' + esc(initial) + '</span>';
     }
 
     function getPersianStatusBadgeSync(c, userRole) {
@@ -4051,7 +4070,7 @@
         if (res.data) {
             sel.innerHTML = '';
             res.data.forEach(function(b) {
-                var opt = '<option value="' + b.id + '" data-real-value="' + b.nominal_coins + '">کتابچه ' + b.booklet_number + ': ' + b.title + ' (' + roundCoin(b.nominal_coins) + ' سکه)</option>';
+                var opt = '<option value="' + b.id + '" data-real-value="' + b.nominal_coins + '">کتابچه ' + b.booklet_number + ': ' + esc(b.title) + ' (' + roundCoin(b.nominal_coins) + ' سکه)</option>';
                 sel.innerHTML += opt;
             });
             updateBookletRealValueNote();
@@ -4127,7 +4146,7 @@
                 if (teamRes.data) {
                     var lg = await calculateLeaderGrade(teamRes.data.id);
                     statsHtml = '<div class="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] mt-1">' +
-                        '<span class="text-slate-500 font-bold">شرکت: ' + teamRes.data.name + '</span>' +
+                        '<span class="text-slate-500 font-bold">شرکت: ' + esc(teamRes.data.name) + '</span>' +
                         '<span class="text-amber-700 font-bold">سکه سرگروه: ' + formatGradeNumber(lg.totalCoins) + '</span>' +
                         '<span class="text-emerald-700 font-black">نمره سرگروه: ' + formatGradeNumber(lg.totalMark) + '</span>' +
                         '</div>';
@@ -4138,12 +4157,12 @@
 
             return '<div class="flex justify-between items-center p-2.5 bg-neutral-50 border border-neutral-300 rounded-lg">' +
                 '<div class="flex flex-col">' +
-                    '<span class="font-bold text-slate-800">' + m.full_name + ' (' + roleTitle + ')</span>' +
-                    '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + m.student_id + '</span>' +
-                    '<span class="text-[10px] text-slate-500">نام کاربری (ایمیل): ' + (m.email || 'ثبت‌نشده') + '</span>' +
+                    '<span class="font-bold text-slate-800">' + esc(m.full_name) + ' (' + roleTitle + ')</span>' +
+                    '<span class="text-[10px] text-slate-500">شماره دانشجویی: ' + esc(m.student_id) + '</span>' +
+                    '<span class="text-[10px] text-slate-500">نام کاربری (ایمیل): ' + esc(m.email || 'ثبت‌نشده') + '</span>' +
                     statsHtml +
                 '</div>' +
-                '<button type="button" onclick="deleteUserByProfessor(\'' + m.id + '\', \'' + m.full_name + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs cursor-pointer whitespace-nowrap">🗑️ حذف کاربر</button>' +
+                '<button type="button" data-uid="' + esc(m.id) + '" data-uname="' + esc(m.full_name) + '" onclick="deleteUserByProfessor(this.dataset.uid, this.dataset.uname)" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-300 text-xs px-2.5 py-1.5 rounded-lg font-bold transition shadow-2xs cursor-pointer whitespace-nowrap">🗑️ حذف کاربر</button>' +
                 '</div>';
         }));
 
@@ -4304,7 +4323,7 @@
                 { key: 'marker', value: BACKUP_APP_MARKER },
                 { key: 'created_at', value: now.toISOString() },
                 { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
-                { key: 'app_version', value: '3.3.6' }
+                { key: 'app_version', value: '3.3.7' }
             ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
 
@@ -4536,13 +4555,13 @@
                         ? '<button onclick="expelFixedMemberByLeader(\'' + m.id + '\')" class="text-rose-700 hover:text-white hover:bg-rose-600 bg-rose-50 border border-rose-200 px-2 py-1 rounded-lg text-[10px] font-black cursor-pointer">' + (rosterHasContract ? 'اخراج (۱۵ سکه جریمه)' : 'حذف عضو (بدون جریمه)') + '</button>'
                         : '<span class="text-[10px] text-slate-400 font-bold">عضو ثابت</span>');
                 return '<div class="flex justify-between items-center bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs">' +
-                    '<span class="font-bold text-slate-700">' + (m.profiles ? m.profiles.full_name : 'نامشخص') + '</span>' +
+                    '<span class="font-bold text-slate-700">' + esc(m.profiles ? m.profiles.full_name : 'نامشخص') + '</span>' +
                     actionHtml +
                     '</div>';
             }).join('');
             var pendingRowsHtml = pendingInvites.map(function(m) {
                 return '<div class="flex justify-between items-center bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5 text-xs">' +
-                    '<span class="font-bold text-amber-800">⏳ ' + (m.profiles ? m.profiles.full_name : 'نامشخص') + ' <span class="font-normal text-amber-600">(در انتظار تایید دانشجو)</span></span>' +
+                    '<span class="font-bold text-amber-800">⏳ ' + esc(m.profiles ? m.profiles.full_name : 'نامشخص') + ' <span class="font-normal text-amber-600">(در انتظار تایید دانشجو)</span></span>' +
                     '<button onclick="removeFixedMember(\'' + m.id + '\')" class="text-rose-600 hover:text-rose-800 text-[10px] font-bold cursor-pointer">لغو دعوت</button>' +
                     '</div>';
             }).join('');
@@ -4620,7 +4639,7 @@
                 return;
             }
             select.innerHTML = '<option value="">— انتخاب دانشجوی واجد شرایط —</option>' + available.map(function(p) {
-                return '<option value="' + p.id + '">' + p.full_name + '</option>';
+                return '<option value="' + p.id + '">' + esc(p.full_name) + '</option>';
             }).join('');
             return;
         }
@@ -4630,7 +4649,7 @@
             return;
         }
         select.innerHTML = '<option value="">— انتخاب دانشجو —</option>' + available.map(function(p) {
-            return '<option value="' + p.id + '">' + p.full_name + '</option>';
+            return '<option value="' + p.id + '">' + esc(p.full_name) + '</option>';
         }).join('');
     }
 
@@ -4903,7 +4922,7 @@
         box.innerHTML = invites.map(function(inv) {
             var teamName = inv.teams ? inv.teams.name : 'نامشخص';
             return '<div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">' +
-                '<div class="text-xs text-indigo-900"><span class="font-black">📩 دعوت عضویت ثابت: </span>شرکت «' + teamName + '» شما را به عضویت ثابت خود دعوت کرده است.</div>' +
+                '<div class="text-xs text-indigo-900"><span class="font-black">📩 دعوت عضویت ثابت: </span>شرکت «' + esc(teamName) + '» شما را به عضویت ثابت خود دعوت کرده است.</div>' +
                 '<div class="flex gap-2">' +
                     '<button onclick="acceptMembershipInvite(\'' + inv.id + '\', \'' + inv.team_id + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black px-4 py-2 rounded-xl cursor-pointer shadow-sm transition">قبول عضویت</button>' +
                     '<button onclick="rejectMembershipInvite(\'' + inv.id + '\')" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold px-4 py-2 rounded-xl cursor-pointer transition">رد دعوت</button>' +
@@ -5050,7 +5069,7 @@
             var pct = Math.min(100, Math.round((p.total / 150) * 100));
             var barColor = p.reached ? 'bg-emerald-500' : 'bg-amber-500';
             return '<div class="flex items-center justify-between text-[11px] py-1">' +
-                '<span class="font-bold text-slate-700">' + (p.reached ? '✅' : '⏳') + ' ' + p.name + '</span>' +
+                '<span class="font-bold text-slate-700">' + (p.reached ? '✅' : '⏳') + ' ' + esc(p.name) + '</span>' +
                 '<span class="font-black ' + (p.reached ? 'text-emerald-700' : 'text-amber-700') + '">' + p.total + ' / ۱۵۰ سکه</span>' +
                 '</div>' +
                 '<div class="w-full bg-slate-100 rounded-full h-1.5 mb-1.5"><div class="h-1.5 rounded-full ' + barColor + '" style="width:' + pct + '%"></div></div>';
