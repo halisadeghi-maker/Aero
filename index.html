@@ -258,7 +258,7 @@
 
             <!-- نسخه سامانه (۳.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.3.7</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.3.8</span>
             </div>
         </section>
 
@@ -562,11 +562,27 @@
                     <input type="file" id="backup-restore-file" accept=".xlsx,.xls" class="hidden" onchange="restoreDatabaseFromExcel(this)">
                     <div id="backup-status" class="hidden text-[11px] font-bold rounded-xl p-2.5 whitespace-pre-line leading-relaxed"></div>
                 </div>
+                <!-- نسخه‌های ایمنی و سابقه تغییرات -->
+                <div class="border-2 border-emerald-300 rounded-2xl p-4 bg-gradient-to-br from-emerald-50 to-emerald-100/60 shadow-sm space-y-3">
+                    <h5 class="text-xs font-black text-emerald-900 flex items-center gap-2"><span>🛟</span> نسخه‌های ایمنی خودکار و سابقهٔ تغییرات</h5>
+                    <p class="text-[11px] text-emerald-900 leading-relaxed font-bold">
+                        قبل از هر «بازنشانی کامل» و هر «بازیابی از اکسل»، یک کپی از کل اطلاعات سامانه به‌صورت خودکار داخل پایگاه‌داده ذخیره می‌شود (۳۰ نسخهٔ آخر). در صورت اشتباه می‌توانید یکی از آن‌ها را بازگردانید. فهرست کتابچه‌ها و حساب‌های ورود (ایمیل/رمز) هیچ‌گاه تغییر نمی‌کنند.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <button type="button" onclick="loadSafetySnapshots()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">🛟 نمایش نسخه‌های ایمنی</button>
+                        <button type="button" onclick="createManualSnapshot()" class="bg-sky-700 hover:bg-sky-800 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">➕ ساخت نسخهٔ ایمنی همین حالا</button>
+                        <button type="button" onclick="loadAuditLog()" class="bg-slate-700 hover:bg-slate-800 text-white font-black py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">📜 نمایش سابقهٔ تغییرات</button>
+                    </div>
+                    <div id="safety-panel-box" class="hidden text-[11px] bg-white border border-emerald-200 rounded-xl p-2.5 max-h-72 overflow-y-auto space-y-1.5"></div>
+                </div>
                 <!-- منطقه خطر: بازنشانی کامل سامانه -->
                 <div class="border-2 border-rose-400 rounded-2xl p-4 bg-gradient-to-br from-rose-50 to-rose-100/60 shadow-sm space-y-3">
                     <h5 class="text-xs font-black text-rose-900 flex items-center gap-2"><span>☢️</span> منطقهٔ خطر — بازنشانی کامل سامانه</h5>
                     <p class="text-[11px] text-rose-800 leading-relaxed font-bold">
                         این عملیات تمام کاربران (سرگروه‌ها و پیمانکاران)، شرکت‌ها، پروژه‌های اصلی، بسته‌های کاری، پیشنهادها، قراردادها و فایل‌های آپلودشده (RFP و گزارش‌ها) را برای همیشه حذف می‌کند. فقط حساب کاربری خودِ شما (استاد) و <strong>فهرست کتابچه‌ها (عنوان و سکهٔ واقعی آن‌ها)</strong> باقی می‌ماند. این عملیات <u>غیرقابل بازگشت</u> است.
+                    </p>
+                    <p class="text-[10px] text-emerald-800 leading-relaxed font-bold">
+                        🛟 قبل از بازنشانی، یک نسخهٔ ایمنی خودکار از کل اطلاعات ساخته می‌شود و از بخش «نسخه‌های ایمنی خودکار» (بالاتر) قابل بازگردانی است. بازنشانی یک عمل واحد است: یا کامل انجام می‌شود یا هیچ‌چیز تغییر نمی‌کند.
                     </p>
                     <p class="text-[10px] text-rose-700 leading-relaxed">
                         ⚠️ توجه فنی: این دکمه فقط اطلاعات داخل پایگاه‌داده و فایل‌ها را پاک می‌کند. حساب‌های ورود (ایمیل/رمز عبور) دانشجویان در سامانهٔ احراز هویت Supabase باقی می‌مانند و باید جداگانه از پنل Authentication در Supabase حذف شوند (این کار از داخل مرورگر با دسترسی سطح استاد ممکن نیست).
@@ -4323,7 +4339,7 @@
                 { key: 'marker', value: BACKUP_APP_MARKER },
                 { key: 'created_at', value: now.toISOString() },
                 { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
-                { key: 'app_version', value: '3.3.7' }
+                { key: 'app_version', value: '3.3.8' }
             ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
 
@@ -4381,6 +4397,14 @@
         var report = [];
         var anyFailed = false;
 
+        // قبل از هر تغییری یک نسخهٔ ایمنی از وضعیت فعلی گرفته می‌شود؛ اگر ساخته نشود، بازیابی انجام نمی‌شود
+        var safeRes = await sb.rpc('take_snapshot', { p_label: 'before-excel-restore' });
+        if (safeRes.error) {
+            setBackupButtonsDisabled(false);
+            return showAppAlert('ساخت نسخهٔ ایمنی ناموفق بود و برای حفظ امنیت داده‌ها بازیابی انجام نشد: ' + safeRes.error.message, false);
+        }
+        report.push('🛟 نسخهٔ ایمنی شمارهٔ ' + safeRes.data + ' قبل از بازیابی ساخته شد');
+
         function decodeRow(r) {
             var o = {};
             Object.keys(r).forEach(function(k) {
@@ -4426,26 +4450,115 @@
     };
     // =================== پایان پشتیبان‌گیری و بازیابی ===================
 
+    // ===================== نسخه‌های ایمنی و سابقهٔ تغییرات =====================
+    function snapshotLabelFa(l) {
+        l = String(l || '');
+        if (l === 'before-reset') return 'قبل از بازنشانی کامل';
+        if (l === 'before-excel-restore') return 'قبل از بازیابی از اکسل';
+        if (l === 'manual') return 'ساخته‌شده توسط استاد';
+        if (l.indexOf('before-restore-of-') === 0) return 'قبل از بازگردانی نسخهٔ ' + l.slice('before-restore-of-'.length);
+        return l;
+    }
+    window.createManualSnapshot = async function() {
+        var sb = getSupabaseClient();
+        var r = await sb.rpc('take_snapshot', { p_label: 'manual' });
+        if (r.error) return showAppAlert('خطا در ساخت نسخهٔ ایمنی: ' + r.error.message, false);
+        showAppAlert('نسخهٔ ایمنی شمارهٔ ' + r.data + ' ساخته شد.', true, 'سامانه');
+        await loadSafetySnapshots();
+    };
+    window.loadSafetySnapshots = async function() {
+        var sb = getSupabaseClient();
+        var box = document.getElementById('safety-panel-box');
+        box.classList.remove('hidden');
+        box.innerHTML = '<div class="text-slate-500">در حال بارگذاری...</div>';
+        var r = await sb.from('app_snapshots').select('id, created_at, label, table_counts').order('id', { ascending: false }).limit(30);
+        if (r.error) { box.innerHTML = '<div class="text-rose-700 font-bold">' + esc(r.error.message) + '</div>'; return; }
+        var rows = r.data || [];
+        if (rows.length === 0) { box.innerHTML = '<div class="text-slate-500">هنوز نسخهٔ ایمنی ساخته نشده است.</div>'; return; }
+        box.innerHTML = rows.map(function(sn) {
+            var tc = sn.table_counts || {};
+            return '<div class="flex justify-between items-center gap-2 border-b border-slate-100 pb-1.5">' +
+                '<div class="flex flex-col">' +
+                '<span class="font-black text-slate-800">#' + esc(sn.id) + ' — ' + esc(snapshotLabelFa(sn.label)) + '</span>' +
+                '<span class="text-[10px] text-slate-500">' + esc(new Date(sn.created_at).toLocaleString('fa-IR')) +
+                ' | کاربران: ' + esc(tc.profiles || 0) + '، شرکت‌ها: ' + esc(tc.teams || 0) +
+                '، قراردادها: ' + esc(tc.contracts || 0) + '، بسته‌های کاری: ' + esc(tc.tasks || 0) + '</span>' +
+                '</div>' +
+                '<button type="button" data-sid="' + esc(sn.id) + '" onclick="restoreSafetySnapshot(this.dataset.sid)" class="bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-black px-2.5 py-1.5 rounded-lg cursor-pointer whitespace-nowrap">↩️ بازگردانی</button>' +
+                '</div>';
+        }).join('');
+    };
+    window.restoreSafetySnapshot = async function(id) {
+        var sid = parseInt(id, 10);
+        if (!sid) return;
+        if (!(await showConfirmDialog('اطلاعات فعلی سامانه (کاربران، شرکت‌ها، قراردادها و ...) با نسخهٔ ایمنی شمارهٔ ' + sid + ' جایگزین می‌شود. قبل از آن، از وضعیت فعلی هم یک نسخهٔ ایمنی ساخته می‌شود. ادامه می‌دهید؟', { dangerous: true, confirmLabel: 'بازگردانی' }))) return;
+        var sb = getSupabaseClient();
+        var r = await sb.rpc('restore_snapshot', { p_id: sid, p_confirm: 'بازیابی نسخه ایمنی' });
+        if (r.error) return showAppAlert('بازگردانی انجام نشد و هیچ اطلاعاتی تغییر نکرد: ' + r.error.message, false);
+        showAppAlert('نسخهٔ ایمنی بازگردانی شد. صفحه اکنون مجدداً بارگذاری می‌شود.', true, 'سامانه');
+        setTimeout(function() { window.location.reload(); }, 2000);
+    };
+
+    var AUDIT_KEY_FA = {
+        status: 'وضعیت', role: 'نقش', is_approved: 'تایید', dissolution_penalty_coins: 'جریمهٔ انحلال (پروفایل)',
+        awarded_team_id: 'شرکت برنده', allocated_coins: 'بودجهٔ پروژه', deadline: 'مهلت', contract_end_date: 'پایان قرارداد',
+        budget: 'بودجهٔ شرکت', expel_penalty_coins: 'جریمهٔ اخراج', warning_started_at: 'شروع هشدار',
+        leader_dissolution_penalty_coins: 'جریمهٔ انحلال سرگروه', dissolved_at: 'زمان انحلال',
+        completion_score_zeroed: 'صفر شدن نمرهٔ تکمیل', exit_penalty_applied: 'جریمهٔ خروج',
+        agreed_base_coins: 'مبلغ قرارداد', final_payout: 'مبلغ نهایی', quality_percent: 'درصد کیفیت',
+        contractor_penalty_coins: 'جریمهٔ پیمانکار', leader_penalty_coins: 'جریمهٔ کارفرما', termination_status: 'وضعیت فسخ',
+        allocated_nominal_coins: 'مبلغ بسته'
+    };
+    var AUDIT_SRC_FA = { app: 'برنامه', system: 'سیستمی', signup: 'ثبت‌نام', admin: 'مدیر پایگاه‌داده' };
+    function auditShort(v) {
+        if (v === null || v === undefined) return '—';
+        var t = (typeof v === 'object') ? JSON.stringify(v) : String(v);
+        return t.length > 28 ? t.slice(0, 26) + '…' : t;
+    }
+    window.loadAuditLog = async function() {
+        var sb = getSupabaseClient();
+        var box = document.getElementById('safety-panel-box');
+        box.classList.remove('hidden');
+        box.innerHTML = '<div class="text-slate-500">در حال بارگذاری...</div>';
+        var r = await sb.from('audit_log').select('id, at, actor_name, source, summary, action, details').order('id', { ascending: false }).limit(100);
+        if (r.error) { box.innerHTML = '<div class="text-rose-700 font-bold">' + esc(r.error.message) + '</div>'; return; }
+        var rows = r.data || [];
+        if (rows.length === 0) { box.innerHTML = '<div class="text-slate-500">هنوز تغییری ثبت نشده است.</div>'; return; }
+        box.innerHTML = '<div class="text-[10px] text-slate-500 pb-1">۱۰۰ تغییر آخر (جدیدترین بالا)</div>' + rows.map(function(a) {
+            var base = String(a.summary || '').split(':')[0];
+            var d = a.details || {};
+            var lines = '';
+            if (a.action === 'update') {
+                lines = Object.keys(d).map(function(k) {
+                    var ch = d[k] || {};
+                    return '<div class="text-[10px] text-slate-600">' + esc(AUDIT_KEY_FA[k] || k) + ': ' + esc(auditShort(ch.old)) + ' ← ' + esc(auditShort(ch['new'])) + '</div>';
+                }).join('');
+            }
+            return '<div class="border-b border-slate-100 pb-1.5">' +
+                '<div class="flex justify-between gap-2"><span class="font-black text-slate-800">' + esc(base) + '</span>' +
+                '<span class="text-[10px] text-slate-400 whitespace-nowrap">' + esc(new Date(a.at).toLocaleString('fa-IR')) + '</span></div>' +
+                '<div class="text-[10px] text-slate-500">توسط: ' + esc(a.actor_name || (AUDIT_SRC_FA[a.source] || '—')) + ' (' + esc(AUDIT_SRC_FA[a.source] || a.source) + ')</div>' +
+                lines + '</div>';
+        }).join('');
+    };
+
     // ===================== منطقهٔ خطر: بازنشانی کامل سامانه =====================
     window.executeFullSystemReset = async function() {
         var typed = document.getElementById('reset-confirm-input').value.trim();
         if (typed !== 'بازنشانی کامل') return showAppAlert('عبارت تاییدیه را دقیقاً مطابق نمونه وارد کنید.', false);
-        if (!(await showConfirmDialog('این عملیات تمام کاربران، شرکت‌ها، قراردادها و فایل‌های سامانه را برای همیشه حذف می‌کند (فهرست کتابچه‌ها و سکهٔ واقعی آن‌ها حفظ می‌شود) و غیرقابل بازگشت است. آیا کاملاً مطمئن هستید؟', { dangerous: true, confirmLabel: 'بله، ادامه بده' }))) return;
+        if (!(await showConfirmDialog('این عملیات تمام کاربران، شرکت‌ها، قراردادها و فایل‌های سامانه را برای همیشه حذف می‌کند (فهرست کتابچه‌ها و سکهٔ واقعی آن‌ها حفظ می‌شود) و فقط از طریق «نسخهٔ ایمنی خودکار» (که قبل از آن ساخته می‌شود) قابل بازگشت است. آیا کاملاً مطمئن هستید؟', { dangerous: true, confirmLabel: 'بله، ادامه بده' }))) return;
         if (!(await showConfirmDialog('تاییدیهٔ نهایی: آیا واقعاً می‌خواهید همین الان کل پایگاه‌دادهٔ سامانه را بازنشانی کنید؟', { dangerous: true, confirmLabel: 'بازنشانی کامل' }))) return;
 
         var sb = getSupabaseClient();
         showAppAlert('در حال بازنشانی کامل سامانه... لطفاً تا پایان عملیات صفحه را نبندید.', true, 'سامانه');
 
         try {
-            await sb.from('task_bids').delete().not('id', 'is', null);
-            await sb.from('contracts').delete().not('id', 'is', null);
-            await sb.from('tasks').delete().not('id', 'is', null);
-            await sb.from('team_members').delete().not('id', 'is', null);
-            await sb.from('project_bids').delete().not('id', 'is', null);
-            await sb.from('master_projects').delete().not('id', 'is', null);
-            await sb.from('teams').delete().not('id', 'is', null);
-            // توجه: جدول booklets (عنوان و سکهٔ واقعی کتابچه‌ها) عمداً حذف نمی‌شود؛ این‌ها داده‌های پایهٔ درس‌اند
-            // و سرگروه‌ها در «تعریف بسته‌های کاری» از روی آن‌ها انتخاب می‌کنند و محاسبهٔ نمره به آن‌ها وابسته است.
+            // بازنشانی پایگاه‌داده به‌صورت «یک عمل واحد» در خود پایگاه‌داده انجام می‌شود
+            // (قبل از آن یک نسخهٔ ایمنی خودکار ساخته می‌شود). جدول booklets و حساب استاد حفظ می‌شود.
+            var resetRes = await sb.rpc('reset_system', { p_confirm: 'بازنشانی کامل' });
+            if (resetRes.error) {
+                return showAppAlert('بازنشانی انجام نشد و هیچ اطلاعاتی تغییر نکرد: ' + resetRes.error.message, false);
+            }
 
             var reportFiles = await sb.storage.from('reports').list();
             if (reportFiles.data && reportFiles.data.length > 0) {
@@ -4456,12 +4569,10 @@
                 await sb.storage.from('rfp_files').remove(rfpFilesList.data.map(function(f) { return f.name; }));
             }
 
-            await sb.from('profiles').delete().neq('id', currentUser.id);
-
-            showAppAlert('بازنشانی کامل سامانه با موفقیت انجام شد. صفحه اکنون مجدداً بارگذاری می‌شود.', true, 'سامانه');
+            showAppAlert('بازنشانی کامل سامانه با موفقیت انجام شد (یک نسخهٔ ایمنی خودکار هم ساخته شد). صفحه اکنون مجدداً بارگذاری می‌شود.', true, 'سامانه');
             setTimeout(function() { window.location.reload(); }, 2500);
         } catch (e) {
-            showAppAlert('خطا در حین بازنشانی سامانه: ' + e.message + '\nممکن است بخشی از داده‌ها پاک شده باشد؛ وضعیت را بررسی کنید.', false);
+            showAppAlert('خطا در حین بازنشانی سامانه: ' + e.message + '\nبازنشانی پایگاه‌داده یک عمل واحد است؛ اگر پیام «بازنشانی انجام نشد» ندیده‌اید ممکن است فقط پاک‌سازی فایل‌ها ناقص مانده باشد (بخش Storage در Supabase را بررسی کنید).', false);
         }
     };
     // =================== پایان منطقهٔ خطر ===================
@@ -4470,8 +4581,8 @@
         if (!(await showConfirmDialog('استاد گرامی، آیا از حذف قطعی کاربر «' + name + '» از سامانه اطمینان دارید؟ کلیه قراردادها و تعهدات وابسته به این کاربر نیز پاکسازی خواهد شد.', { dangerous: true, confirmLabel: 'حذف کاربر' }))) return;
         var sb = getSupabaseClient();
         
-        await sb.from('contracts').delete().eq('contractor_id', userId);
-        var res = await sb.from('profiles').delete().eq('id', userId);
+        // حذف قراردادهای کاربر و خودِ کاربر به‌صورت یک عمل واحد (اگر حذف ممکن نباشد، هیچ‌چیز پاک نمی‌شود)
+        var res = await sb.rpc('delete_user_cascade', { p_user: userId });
         
         if (res.error) {
             showAppAlert('خطا در حذف کاربر: ' + res.error.message, false);
