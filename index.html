@@ -2,8 +2,15 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <!--
+        سیاست امنیتی محتوا (CSP): صفحه فقط اجازه دارد به سرور Supabase همین پروژه وصل شود.
+        حتی اگر روزی کدی مخرب داخل صفحه اجرا شود، نمی‌تواند اطلاعات را به سرور دیگری بفرستد،
+        اسکریپت بیرونی بارگذاری کند یا فرمی به بیرون ارسال کند.
+        اگر نشانی Supabase پروژه را عوض کردید، نشانی آن را در همین خط هم عوض کنید.
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; font-src data:; img-src 'self' file: data: blob: https://upload.wikimedia.org; connect-src https://mpidajjallaplccytnjq.supabase.co wss://mpidajjallaplccytnjq.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۴.۱)</title>
+    <title>بازار کار درس طراحی هواپیما | دکتر علیصادقی - دانشگاه صنعتی خواجه نصیرالدین طوسی (نسخه ۳.۴.۴)</title>
     <!--
         ===================== سیستم طراحی مرکزی (Design Tokens) — فاز ۰ بازطراحی بصری =====================
         این پالت با الهام از زبان طراحی Atlassian/Jira تعریف شده و در فازهای بعدی (کارت‌ها، جداول، مودال‌ها،
@@ -251,7 +258,7 @@ jdp-overlay{width:0;height:0}@media only screen and (max-width:481px){jdp-overla
 
             <!-- نسخه سامانه (۳.۳.۲) -->
             <div class="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest">
-                نسخه سامانه: <span class="text-teal-700 font-black">3.4.1</span>
+                نسخه سامانه: <span class="text-teal-700 font-black">3.4.4</span>
             </div>
         </section>
 
@@ -1072,7 +1079,7 @@ jdp-overlay{width:0;height:0}@media only screen and (max-width:481px){jdp-overla
 
                 <p><strong>۱۴. کیف پول و شفافیت:</strong> کیف پول هر دانشجو همیشه نشان می‌دهد: مجموع سکه‌های قراردادی، سکه‌های قطعی‌شده، جریمه‌های اعمال‌شده، سود یا زیانِ ناشی از کیفیت، سقف مجاز، و نمرهٔ معادل. تمام مکاتبات، پیام‌ها و رویدادهای هر قرارداد در «لاگ سیستم» همان قرارداد قابل مشاهده است.</p>
 
-                <p class="text-slate-500 text-[11px]">با تایید این قوانین، می‌پذیرید که مسئولیت آشنایی کامل با ساز‌وکار سامانه، سقف‌ها، مهلت‌ها و جرایم بر عهدهٔ خودتان است. (آخرین به‌روزرسانی قوانین: نسخهٔ ۳.۴.۱)</p>
+                <p class="text-slate-500 text-[11px]">با تایید این قوانین، می‌پذیرید که مسئولیت آشنایی کامل با ساز‌وکار سامانه، سقف‌ها، مهلت‌ها و جرایم بر عهدهٔ خودتان است. (آخرین به‌روزرسانی قوانین: نسخهٔ ۳.۴.۴)</p>
             </div>
             <button onclick="closeTermsModal()" type="button" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition cursor-pointer">مطالعه شد و مورد تایید است</button>
         </div>
@@ -4415,7 +4422,7 @@ jdp-overlay{width:0;height:0}@media only screen and (max-width:481px){jdp-overla
                 { key: 'marker', value: BACKUP_APP_MARKER },
                 { key: 'created_at', value: now.toISOString() },
                 { key: 'created_by', value: (userProfile && userProfile.full_name) ? userProfile.full_name : '' },
-                { key: 'app_version', value: '3.4.1' }
+                { key: 'app_version', value: '3.4.4' }
             ].concat(metaRows.map(function(m) { return { key: 'table:' + m.table, value: String(m.row_count), columns: m.columns }; }));
             XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(metaSheetRows), BACKUP_META_SHEET);
 
